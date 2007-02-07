@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Log in{% endblock %}
+
+{% block content %}
+<h2>Log in</h2>
+<form method="post" action="?next=/snippets/">
+<dl>
+<dt><label for="id_username">Username:</label>{% if form.username.errors %} {{ form.username.errors|join:", " }}{% endif %}</dt>
+<dd>{{ form.username }}</dd>
+<dt><label for="id_password">Password:</label>{% if form.password.errors %} {{ form.password.errors|join:", " }}{% endif %}</dt>
+<dd>{{ form.password }}</dd>
+<dt><input type="submit" value="Log in" /></dt>
+</dl>
+</form>
+{% endblock %}

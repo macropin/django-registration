@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Sign up{% endblock %}
+
+{% block content %}
+<h2>Sign up</h2>
+<p>Fill out the form below, and your account will be created; you'll be sent an email
+with instructions on how to finish your registration.</p>
+<form method="post" action="">
+<dl>
+<dt><label for="id_username">Username:</label>{% if form.username.errors %} {{ form.username.errors|join:", " }}{% endif %}</dt>
+<dd>{{ form.username }}</dd>
+<dt><label for="id_email">Email address:</label>{% if form.email.errors %} {{ form.email.errors|join:", " }}{% endif %}</dd>
+<dd>{{ form.email }}</dd>
+<dt><label for="id_password1">Password:</label>{% if form.password1.errors %} {{ form.password2.errors|join:", " }}{% endif %}</dt>
+<dd>{{ form.password1 }}</dd>
+<dt><label for="id_password2">Password (type again to catch any typos):</label>{% if form.password2.errors %} {{ form.password2.errors|join:", " }}{% endif %}</dt>
+<dd>{{ form.password2 }}</dd>
+<dt><input type="submit" value="Register" /></dt>
+</dl>
+</form>
+{% endblock %}
