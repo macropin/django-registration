@@ -9,7 +9,7 @@ from django.conf import settings
 
 class RegistrationManager(models.Manager):
     """
-    Custom manager for the Profile model,
+    Custom manager for the RegistrationProfile model,
     making it easier to manage profiles.
     
     """
