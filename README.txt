@@ -72,3 +72,7 @@ of templates; here's what they do:
 
   * ``logout.html`` is a simple template to display after a user logs
     out.
+
+So long as you have ``django.template.loaders.app_directories.load_template_source``
+in your ``TEMPlATE_LOADERS`` setting, Django should pick up these
+templates automatically without any need to move them.
