@@ -15,11 +15,11 @@ class RegistrationManager(models.Manager):
     """
     def create_inactive_user(self, username, password, email, send_email=True):
         """
-        Creates a new User and a new Profile
+        Creates a new User and a new RegistrationProfile
         for that User, generates an activation key, and mails
         it.
 
-        Pass send_email=False to disable sending the email.
+        Pass ``send_email=False`` to disable sending the email.
         
         """
         # Create the user.
