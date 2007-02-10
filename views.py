@@ -22,6 +22,7 @@ def activate(request, activation_key):
         registration/activate.html
     
     """
+    activation_key = activation_key.lower()
     account = RegistrationProfile.objects.activate_user(activation_key)
     return render_to_response('registration/activate.html',
                               {'account': account,
