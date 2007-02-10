@@ -58,7 +58,7 @@ class RegistrationManager(models.Manager):
         """
         try:
             user_profile = self.get(activation_key=activation_key)
-        except Profile.DoesNotExist:
+        except self.model.DoesNotExist:
             return False
         if not user_profile.activation_key_expired():
             # Account exists and has a non-expired key. Activate it.
