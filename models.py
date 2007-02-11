@@ -2,12 +2,12 @@
 A registration profile model and associated manager.
 
 The RegistrationProfile model and especially its custom manager
-implement nearly all the logic needed to handle user registration
-and account activation, so before implementing something in a view
-or form, check here to see if they can take care of it for you.
+implement nearly all the logic needed to handle user registration and
+account activation, so before implementing something in a view or
+form, check here to see if they can take care of it for you.
 
-Also, be sure to see the note on RegistrationProfile about use of
-the ``AUTH_PROFILE_MODULE`` setting.
+Also, be sure to see the note on RegistrationProfile about use of the
+``AUTH_PROFILE_MODULE`` setting.
 
 """
 
@@ -30,8 +30,8 @@ class RegistrationManager(models.Manager):
     """
     def activate_user(self, activation_key):
         """
-        Given the activation key, makes a User's account active if
-        the activation key is valid and has not expired.
+        Given the activation key, makes a User's account active if the
+        activation key is valid and has not expired.
         
         Returns the User if successful, or False if the account was
         not found or the key had expired.
@@ -55,9 +55,8 @@ class RegistrationManager(models.Manager):
     
     def create_inactive_user(self, username, password, email, send_email=True):
         """
-        Creates a new User and a new RegistrationProfile
-        for that User, generates an activation key, and mails
-        it.
+        Creates a new User and a new RegistrationProfile for that
+        User, generates an activation key, and mails it.
         
         Pass ``send_email=False`` to disable sending the email.
         
@@ -91,38 +90,40 @@ class RegistrationManager(models.Manager):
         """
         Removes unused profiles and their associated accounts.
 
-        This is provided largely as a convenience for maintenance purposes;
-        if a RegistrationProfile's key expires without the account being
-        activated, then both the RegistrationProfile and the associated User
-        become clutter in the database, and (more importantly) it won't be
-        possible for anyone to ever come back and claim the username. For best
-        results, set this up to run regularly as a cron job.
+        This is provided largely as a convenience for maintenance
+        purposes; if a RegistrationProfile's key expires without the
+        account being activated, then both the RegistrationProfile and
+        the associated User become clutter in the database, and (more
+        importantly) it won't be possible for anyone to ever come back
+        and claim the username. For best results, set this up to run
+        regularly as a cron job.
         
-        If you have a User whose account you want to keep in the database even
-        though it's inactive (say, to prevent a troublemaker from accessing or
-        re-creating his account), just delete that User's RegistrationProfile
-        and this method will leave it alone.
+        If you have a User whose account you want to keep in the
+        database even though it's inactive (say, to prevent a
+        troublemaker from accessing or re-creating his account), just
+        delete that User's RegistrationProfile and this method will
+        leave it alone.
         
         """
         for profile in self.all():
-            user = profile.user
-            if profile.activation_key_expired and not user.is_active:
-                user.delete() # Removing the User will remove the RegistrationProfile, too.
+            if profile.activation_key_expired:
+                user = profile.user
+                if not user.is_active:
+                    user.delete() # Removing the User will remove the RegistrationProfile, too.
 
 
 class RegistrationProfile(models.Model):
     """
-    Simple profile model for a User, storing a registration
-    date and an activation key for the account.
+    Simple profile model for a User, storing a registration date and
+    an activation key for the account.
     
     While it is possible to use this model as the value of the
-    ``AUTH_PROFILE_MODULE`` setting, it's not recommended that
-    you do so. This model is intended solely to store some data
-    needed for user registration, and can do that regardless of
-    what you set in ``AUTH_PROFILE_MODULE``, so if you want to
-    use user profiles in a project, it's far better to develop
-    a customized model for that purpose and just let this one
-    handle registration.
+    ``AUTH_PROFILE_MODULE`` setting, it's not recommended that you do
+    so. This model is intended solely to store some data needed for
+    user registration, and can do that regardless of what you set in
+    ``AUTH_PROFILE_MODULE``, so if you want to use user profiles in a
+    project, it's far better to develop a customized model for that
+    purpose and just let this one handle registration.
     
     """
     user = models.ForeignKey(User, unique=True)
@@ -144,8 +145,9 @@ class RegistrationProfile(models.Model):
     
     def activation_key_expired(self):
         """
-        Determines whether this Profile's activation key has expired, based
-        on the value of the setting ``ACCOUNT_ACTIVATION_DAYS``.
+        Determines whether this Profile's activation key has expired,
+        based on the value of the setting ``ACCOUNT_ACTIVATION_DAYS``.
         
         """
-        return self.key_generated + datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS) <= datetime.datetime.now()
+        expiration_date = datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
+        return self.key_generated + expiration_date <= datetime.datetime.now()

@@ -12,8 +12,8 @@ from forms import RegistrationForm
 
 def activate(request, activation_key):
     """
-    Activates a user's account, if their key is valid
-    and hasn't expired.
+    Activates a user's account, if their key is valid and hasn't
+    expired.
 
     Context::
         account
@@ -38,14 +38,13 @@ def register(request, success_url='/accounts/register/complete/'):
     """
     Allows a new user to register an account.
 
-    On successful registration, an email will be sent to the new
-    user with an activation link to click to make the account
-    active. This view will then redirect to ``success_url``,
-    which defaults to '/accounts/register/complete/'. This
-    application has a URL pattern for that URL and routes it to
-    the ``direct_to_template`` generic view to display a short
-    message telling the user to check their email for the
-    account activation link.
+    On successful registration, an email will be sent to the new user
+    with an activation link to click to make the account active. This
+    view will then redirect to ``success_url``, which defaults to
+    '/accounts/register/complete/'. This application has a URL pattern
+    for that URL and routes it to the ``direct_to_template`` generic
+    view to display a short message telling the user to check their
+    email for the account activation link.
     
     Context::
         form
