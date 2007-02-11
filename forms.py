@@ -14,10 +14,15 @@ class RegistrationForm(forms.Form):
     and that the username is not already taken.
     
     """
-    username = forms.CharField(max_length=30, widget=forms.TextInput(attrs=attrs_dict))
-    email = forms.EmailField(widget=forms.TextInput(attrs=attrs_dict))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict))
+    username = forms.CharField(max_length=30,
+                               widget=forms.TextInput(attrs=attrs_dict),
+                               label=u'Username')
+    email = forms.EmailField(widget=forms.TextInput(attrs=attrs_dict),
+                             label=u'Email address')
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict),
+                                label=u'Password')
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict),
+                                label=u'Password (again, to catch typos)')
 
     def clean_username(self):
         """
