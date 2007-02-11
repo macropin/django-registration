@@ -1,3 +1,8 @@
+"""
+Form and validation code for user registration.
+
+"""
+
 from django import newforms as forms
 from django.contrib.auth.models import User
 
@@ -45,4 +50,3 @@ class RegistrationForm(forms.Form):
            self.clean_data['password1'] == self.clean_data['password2']:
             return self.clean_data['password2']
         raise forms.ValidationError(u'You must type the same password each time')
-

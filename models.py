@@ -1,6 +1,18 @@
+"""
+A registration profile model and associated manager.
+
+The RegistrationProfile model and especially its custom manager
+implement nearly all the logic needed to handle user registration
+and account activation, so before implementing something in a view
+or form, check here to see if they can handle it.
+
+Also, be sure to see the note on RegistrationProfile about use of
+the ``AUTH_PROFILE_MODULE`` setting.
+
+"""
+
 import datetime, random, re, sha
 from django.db import models
-from django.core.mail import send_mail
 from django.template import Context, loader
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
@@ -9,8 +21,10 @@ from django.conf import settings
 
 class RegistrationManager(models.Manager):
     """
-    Custom manager for the RegistrationProfile model,
-    making it easier to manage profiles.
+    Custom manager for the RegistrationProfile model.
+    
+    The two methods defined here should be all that's needed to
+    handle account creation and activation.
     
     """
     def activate_user(self, activation_key):
@@ -37,13 +51,13 @@ class RegistrationManager(models.Manager):
                 user.save()
                 return user
         return False
-
+    
     def create_inactive_user(self, username, password, email, send_email=True):
         """
         Creates a new User and a new RegistrationProfile
         for that User, generates an activation key, and mails
         it.
-
+        
         Pass ``send_email=False`` to disable sending the email.
         
         """
@@ -55,13 +69,13 @@ class RegistrationManager(models.Manager):
         # Generate a salted SHA1 hash to use as a key.
         salt = sha.new(str(random.random())).hexdigest()[:5]
         activation_key = sha.new(salt+new_user.username).hexdigest()
-
-        # Create the profile.
+        
+        # And finally create the profile.
         new_profile = self.create(user=new_user,
                                   activation_key=activation_key)
-
+        
         if send_email:
-            # Send the activation email.
+            from django.core.mail import send_mail
             current_domain = Site.objects.get_current().domain
             subject = "Activate your new account at %s" % current_domain
             message_template = loader.get_template('registration/activation_email.txt')
@@ -71,13 +85,35 @@ class RegistrationManager(models.Manager):
             message = message_template.render(message_context)
             send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [new_user.email])
         return new_user
+    
+    def delete_expired_users(self):
+        """
+        Removes unused profiles and their associated accounts.
+
+        This is provided largely as a convenience for maintenance purposes;
+        if a RegistrationProfile's key expires without the account being
+        activated, then both the RegistrationProfile and the associated User
+        become clutter in the database, and (more importantly) it won't be
+        possible for anyone to ever come back and claim the username. For best
+        results, set this up to run regularly as a cron job.
+        
+        If you have a User whose account you want to keep in the database even
+        though it's inactive (say, to prevent a troublemaker from accessing or
+        re-creating his account), just delete that User's RegistrationProfile
+        and this method will leave it alone.
+        
+        """
+        for profile in self.all():
+            user = profile.user
+            if profile.activation_key_expired and not user.is_active:
+                user.delete() # Removing the User will remove the RegistrationProfile, too.
 
 
 class RegistrationProfile(models.Model):
     """
     Simple profile model for a User, storing a registration
     date and an activation key for the account.
-
+    
     While it is possible to use this model as the value of the
     ``AUTH_PROFILE_MODULE`` setting, it's not recommended that
     you do so. This model is intended solely to store some data
@@ -93,7 +129,7 @@ class RegistrationProfile(models.Model):
     key_generated = models.DateTimeField()
     
     objects = RegistrationManager()
-
+    
     class Admin:
         pass
     
