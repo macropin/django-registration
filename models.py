@@ -4,7 +4,7 @@ A registration profile model and associated manager.
 The RegistrationProfile model and especially its custom manager
 implement nearly all the logic needed to handle user registration
 and account activation, so before implementing something in a view
-or form, check here to see if they can handle it.
+or form, check here to see if they can take care of it for you.
 
 Also, be sure to see the note on RegistrationProfile about use of
 the ``AUTH_PROFILE_MODULE`` setting.
@@ -23,8 +23,9 @@ class RegistrationManager(models.Manager):
     """
     Custom manager for the RegistrationProfile model.
     
-    The two methods defined here should be all that's needed to
-    handle account creation and activation.
+    The methods defined here provide shortcuts for account creation
+    and activation (including generation and emailing of activation
+    keys), and for cleaning out expired inactive accounts.
     
     """
     def activate_user(self, activation_key):
