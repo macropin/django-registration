@@ -1,7 +1,12 @@
+"""
+Views which allow users to create and activate accounts.
+
+"""
+
+from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.conf import settings
 from models import RegistrationProfile
 from forms import RegistrationForm
 
