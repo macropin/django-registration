@@ -1,4 +1,4 @@
-import datetime, random, sha
+import datetime, random, re, sha
 from django.db import models
 from django.core.mail import send_mail
 from django.template import Context, loader
@@ -13,6 +13,31 @@ class RegistrationManager(models.Manager):
     making it easier to manage profiles.
     
     """
+    def activate_user(self, activation_key):
+        """
+        Given the activation key, makes a User's account active if
+        the activation key is valid and has not expired.
+        
+        Returns the User if successful, or False if the account was
+        not found or the key had expired.
+        
+        """
+        # Make sure the key we're trying conforms to the pattern of a
+        # SHA1 hash; if it doesn't, no point even trying to look it up
+        # in the DB.
+        if re.match('[a-f0-9]{40}', activation_key):
+            try:
+                user_profile = self.get(activation_key=activation_key)
+            except self.model.DoesNotExist:
+                return False
+            if not user_profile.activation_key_expired():
+                # Account exists and has a non-expired key. Activate it.
+                user = user_profile.user
+                user.is_active = True
+                user.save()
+                return user
+        return False
+
     def create_inactive_user(self, username, password, email, send_email=True):
         """
         Creates a new User and a new RegistrationProfile
@@ -46,27 +71,6 @@ class RegistrationManager(models.Manager):
             message = message_template.render(message_context)
             send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [new_user.email])
         return new_user
-
-    def activate_user(self, activation_key):
-        """
-        Given the activation key, makes a User's account active if
-        the activation key is valid and has not expired.
-        
-        Returns the User if successful, or False if the account was
-        not found or the key had expired.
-        
-        """
-        try:
-            user_profile = self.get(activation_key=activation_key)
-        except self.model.DoesNotExist:
-            return False
-        if not user_profile.activation_key_expired():
-            # Account exists and has a non-expired key. Activate it.
-            user = user_profile.user
-            user.is_active = True
-            user.save()
-            return user
-        return False
 
 
 class RegistrationProfile(models.Model):
