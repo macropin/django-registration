@@ -1,78 +1,124 @@
-This is a fairly simple user-registration application for Django,
+===================
+Django Registration
+===================
+
+This is a fairly simple user-registration application for Django_,
 designed to make allowing user signups as painless as possible. It
 requires a recent Subversion checkout of Django, since it uses
 newforms and a couple other post-0.95 additions. Aside from that, it
 has no external dependencies.
 
-Here's how it works:
 
-First, use a call to ``include()`` in your project's root URLConf file
-to include this application's URLs under '/accounts/'. For example,
-this line in your root URLConf should do the trick:
+The short and sweet instructions
+================================
+
+Here's the workflow for user signup:
+
+1. User signs up for account.
+2. User gets emailed an activation link.
+3. User clicks the activation link before it expires.
+4. User becomes a happy and productive contributor to your site.
+
+To make this work, start by putting this app into your
+``INSTALLED_APPS`` setting and running ``syncdb``. Then, add a new
+setting in your settings file: ``ACCOUNT_ACTIVATION_DAYS``. This
+should be a number, and will be used as the number of days before an
+activation key expires.
+
+Finally, drop this line into your root URLConf::
 
     (r'^accounts/', include('registration.urls')),
 
-User registration is handled by means of a model called
-``RegistrationProfile``; you can, if you like, use it as the value of
-your ``AUTH_PROFILE_MODULE`` setting, but you don't have to for it to
-work and I personally recommend developing a separate user profile
-module customized to your site if you want the functionality of
-``AUTH_PROFILE_MODULE``.
+And point people at the URL ``/accounts/register/``. Things should
+Just Work.
 
-Each ``RegistrationProfile`` is tied to an instance of ``auth.User``,
-and carries two piece of metadata: an activation key for their account
-and the date on which the key was generated.
 
-You'll need to add a new setting to your project's settings file,
-called ``ACCOUNT_ACTIVATION_DAYS``; this should be the number of days
-after which an unused activation key will expire. Each
-``RegistrationProfile`` has a method called ``activation_key_expired``
-which will check this setting, its own key-generation date, and return
-whether the key is still valid.
+How it works under the hood
+===========================
 
-There's a custom manager on ``RegistrationProfile`` which has a couple
-convenience methods:
+This app defines one model -- ``RegistrationProfile`` -- which is tied
+to the ``User`` model via a unique foreign key (so there can only ever
+be one ``RegistrationProfile`` per ``User``), and which stores an
+activation key and the date/time the key was generated.
 
-  * ``create_inactive_user`` does exactly what it sounds like. Given a
-    username, a password and an email address, it will save a new
-    ``User`` instance and set ``is_active=False`` on that
-    ``User``. Then it will generate a new ``RegistrationProfile`` with
-    an activation key, and email an activation link to the user to
-    activate their account.
+There's a custom manager on ``RegistrationProfile`` which has two
+important methods:
 
- * ``activate_user`` also does exactly what it sounds like; given an
-   activation key, it looks up the ``User`` and activates their
-   account so they can log in.
+1. ``create_inactive_user`` takes a username, email address and
+   password, and first creates a new ``User``, setting the
+   ``is_active`` field to ``False``. Then it generates an activation
+   key and creates a ``RegistrationProfile`` for that
+   ``User``. Finally, it sends an email to the new user with an
+   activation link to click on.
+2. ``activate_user`` takes an activation key, looks up the
+   ``RegistrationProfile`` it goes with, and sets ``is_active`` to
+   ``True`` on the corresponding ``User``.
 
-Included with this app (in the "templates" directory) is a sample set
-of templates; here's what they do:
+The views and form defined in this app basically exist solely to
+expose this functionality over the Web. The registration form, used in
+the initial sign-up view, does a little checking to make sure that the
+username isn't taken and that the user types a password twice without
+typos, but once that validation is taken care of everything gets
+handed off to ``RegistrationProfile.objects.create_inactive_user``.
 
-  * ``registration_form.html`` is for user signup, and shows the
-    registration form.
+Similarly, the activation view doesn't do a whole lot other than call
+``RegistrationProfile.objects.activate_user``.
 
-  * ``registration_complete.html`` is a simple page to display telling
-    the user they've signed up and will be getting an activation
-    email.
 
- * ``activation_email.txt`` is the template the app will use to
-   generate the text of the activation email; it has access to three
-   variables:
-   
-     ``current_domain`` -- the domain name of the site the new user
-     registered for.
-     
-     ``activation_key`` -- their activation key.
-     
-     ``expiration_days`` -- the number of days for which the key will
-     be valid.
+Clearing out inactive accounts
+==============================
 
-  * ``activate.html`` is the template for the account activation view.
+Since activation keys do eventually expire (after however many days
+you've specified in the ``ACCOUNT_ACTIVATION_DAYS`` setting), there's
+a possibility that you'll end up with people who signed up but never
+activated their accounts. And that's bad, because it clutters up your
+database and it keeps the username they signed up with from ever
+actually being used.
 
-  * ``login.html`` is a simple login template.
+So there's also a third method defined on ``RegistrationProfile``'s
+custom manager: ``delete_expired_users``. All it does is loop through
+the DB, looking for inactive accounts with expired activation keys,
+and deletes them. It's recommended that you run it every once in a
+while (ideally, just set up a cron job to do it periodically) so you
+can clear out any inactive accounts and free up those usernames.
 
-  * ``logout.html`` is a simple template to display after a user logs
-    out.
+The only time this isn't desirable is when you use the ``is_active``
+field as a way to keep troublesome users under control -- when you set
+``is_active`` to ``False``, they can't log in, which is pretty
+handy. But that means you _want_ to have an inactive account in your
+DB and you _don't_ want ``delete_expired_users`` to delete it -- if
+that happened, the troublemaker could just re-create the account and
+start all over again.
 
-So long as you have ``django.template.loaders.app_directories.load_template_source``
-in your ``TEMPlATE_LOADERS`` setting, Django should pick up these
-templates automatically without any need to move them.
+For this reason, ``delete_expired_users`` looks first at the
+``RegistrationProfile`` table, and only goes into the ``User`` table
+when it finds expired profiles. So to keep a ``User`` around and
+permanently inactive, just manually delete their
+``RegistrationProfile`` instance and ``delete_inactive_users`` will
+never touch their account.
+
+
+A note on templates
+===================
+
+I've included examples of all the templates this app expects, bundled
+into the ``templates`` directory; so long as you have the "app
+directories" template loader
+(``django.template.loaders.app_directories.load_template_source``) in
+your ``TEMPLATE_LOADERS`` setting (and it's in there by default), you
+should be able to just edit them in-place to suit your site's layout,
+and Django will pick them up automatically.
+
+
+Questions? Problems?
+====================
+
+If you've got a question that isn't covered here or in the comments
+and docstrings in the code, or if you run into a bug, swing on over to
+`this app's Google Code project page`_ and file a new "issue". I'll do
+my best to respond promptly.
+
+
+.. _Django: http://www.djangoproject.com/
+.. _this app's Google Code project page: http://code.google.com/p/django-registration/
+ 
