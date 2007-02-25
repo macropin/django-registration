@@ -2,21 +2,30 @@
 
 {% block title %}Sign up{% endblock %}
 
-{% block content %}
-<h2>Sign up</h2>
-<p>Fill out the form below, and your account will be created; you'll be sent an email
-with instructions on how to finish your registration.</p>
+{% block content_header %}Sign up{% endblock %}
+
+{% block main_content %}
+
+{% if form.errors %}
+<p class="error">Please correct the errors below:</p>
+{% endif %}
+
 <form method="post" action="">
 <dl>
-<dt><label for="id_username">Username:</label>{% if form.username.errors %} {{ form.username.errors|join:", " }}{% endif %}</dt>
+<dt><label for="id_username">Username:</label>{% if form.username.errors %} <span class="error">{{ form.username.errors|join:", " }}</span>{% endif %}</dt>
 <dd>{{ form.username }}</dd>
-<dt><label for="id_email">Email address:</label>{% if form.email.errors %} {{ form.email.errors|join:", " }}{% endif %}</dd>
+<dt><label for="id_email">Email address:</label>{% if form.email.errors %} <span class="error">{{ form.email.errors|join:", " }}</span>{% endif %}</dd>
 <dd>{{ form.email }}</dd>
-<dt><label for="id_password1">Password:</label>{% if form.password1.errors %} {{ form.password2.errors|join:", " }}{% endif %}</dt>
+<dt><label for="id_password1">Password:</label>{% if form.password1.errors %} <span class="error">{{ form.password2.errors|join:", " }}</span>{% endif %}</dt>
 <dd>{{ form.password1 }}</dd>
-<dt><label for="id_password2">Password (type again to catch any typos):</label>{% if form.password2.errors %} {{ form.password2.errors|join:", " }}{% endif %}</dt>
+<dt><label for="id_password2">Password (type again to catch any typos):</label>{% if form.password2.errors %} <span class="error">{{ form.password2.errors|join:", " }}</span>{% endif %}</dt>
 <dd>{{ form.password2 }}</dd>
+<dt><label for="id_tos">I have read and agree to the <a href="/about/tos/">Terms of Service</a>:</label>{% if form.tos.errors %}{{ form.tos.errors|join:", " }}{% endif %}&nbsp;{{ form.tos }}
 <dt><input type="submit" value="Register" /></dt>
 </dl>
 </form>
+{% endblock %}
+
+{% block sidebar %}
+<p>Fill out the form to the left (all fields are required), and your account will be created; you'll be sent an email with instructions on how to finish your registration.</p>
 {% endblock %}
