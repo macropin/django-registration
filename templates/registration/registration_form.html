@@ -20,7 +20,7 @@
 <dd>{{ form.password1 }}</dd>
 <dt><label for="id_password2">Password (type again to catch any typos):</label>{% if form.password2.errors %} <span class="error">{{ form.password2.errors|join:", " }}</span>{% endif %}</dt>
 <dd>{{ form.password2 }}</dd>
-<dt><label for="id_tos">I have read and agree to the <a href="/about/tos/">Terms of Service</a>:</label>{% if form.tos.errors %}{{ form.tos.errors|join:", " }}{% endif %}&nbsp;{{ form.tos }}
+<dt><label for="id_tos">I have read and agree to the <a href="/about/tos/">Terms of Service</a>:</label>{% if form.tos.errors %}&nbsp;<span class="error">{{ form.tos.errors|join:", " }}</span>{% endif %}&nbsp;&nbsp;{{ form.tos }}
 <dt><input type="submit" value="Register" /></dt>
 </dl>
 </form>
