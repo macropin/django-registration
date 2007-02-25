@@ -28,6 +28,8 @@ class RegistrationForm(forms.Form):
                                 label=u'Password')
     password2 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict),
                                 label=u'Password (again, to catch typos)')
+    tos = forms.BooleanField(widget=forms.CheckboxInput(attrs=attrs_dict),
+                             label=u'I have read and agree to the Terms of Service')
 
     def clean_username(self):
         """
@@ -50,3 +52,12 @@ class RegistrationForm(forms.Form):
            self.clean_data['password1'] == self.clean_data['password2']:
             return self.clean_data['password2']
         raise forms.ValidationError(u'You must type the same password each time')
+    
+    def clean_tos(self):
+        """
+        Validates that the user accepted the Terms of Service.
+        
+        """
+        if self.clean_data.get('tos', False):
+            return self.clean_data['tos']
+        raise forms.ValidationError(u'You must agree to the terms to register')
