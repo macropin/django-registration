@@ -9,6 +9,21 @@ newforms and a couple other post-0.95 additions. Aside from that, it
 has no external dependencies.
 
 
+Installation notes
+=================
+
+Google Code recommends doing the Subversion checkout like so::
+
+    svn checkout http://django-registration.googlecode.com/svn/trunk/ django-registration
+
+But the hyphen in the application name can cause issues installing
+into a DB, so it's really better to do this::
+
+    svn checkout http://django-registration.googlecode.com/svn/trunk/ registration
+
+If you've already downloaded, rename the directory before installing.
+
+
 The short and sweet instructions
 ================================
 
@@ -31,6 +46,18 @@ Finally, drop this line into your root URLConf::
 
 And point people at the URL ``/accounts/register/``. Things should
 Just Work.
+
+
+If emails never get sent
+========================
+
+Welcome to the world of spam filtering! Assuming your server settings
+are correct and Django is otherwise able to send email, the most
+likely problem is overzealous filtering on the receiving end. Many
+spam filtering solutions are depressingly overactive and love to eat
+account-registration emails.
+
+If you know how to solve this, you will make millions of dollars.
 
 
 How it works under the hood
@@ -86,7 +113,7 @@ The only time this isn't desirable is when you use the ``is_active``
 field as a way to keep troublesome users under control -- when you set
 ``is_active`` to ``False``, they can't log in, which is pretty
 handy. But that means you _want_ to have an inactive account in your
-DB and you _don't_ want ``delete_expired_users`` to delete it -- if
+DB and you *don't* want ``delete_expired_users`` to delete it -- if
 that happened, the troublemaker could just re-create the account and
 start all over again.
 
