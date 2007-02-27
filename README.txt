@@ -10,7 +10,7 @@ has no external dependencies.
 
 
 Installation notes
-=================
+==================
 
 Google Code recommends doing the Subversion checkout like so::
 
