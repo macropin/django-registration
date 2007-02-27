@@ -22,7 +22,8 @@ class RegistrationForm(forms.Form):
     username = forms.CharField(max_length=30,
                                widget=forms.TextInput(attrs=attrs_dict),
                                label=u'Username')
-    email = forms.EmailField(widget=forms.TextInput(attrs=attrs_dict),
+    email = forms.EmailField(max_length=200,
+                             widget=forms.TextInput(attrs=attrs_dict),
                              label=u'Email address')
     password1 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict),
                                 label=u'Password')
