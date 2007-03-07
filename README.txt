@@ -23,6 +23,13 @@ into a DB, so it's really better to do this::
 
 If you've already downloaded, rename the directory before installing.
 
+Then just add ``registration`` to the ``INSTALLED_APPS`` setting of
+your project, and you should be good to go.
+
+Note that one of the templates included with this app uses the
+``humanize`` library, so you'll want to have
+``django.contrib.humanize`` installed if you don't already.
+
 
 The short and sweet instructions
 ================================
@@ -136,6 +143,9 @@ your ``TEMPLATE_LOADERS`` setting (and it's in there by default), you
 should be able to just edit them in-place to suit your site's layout,
 and Django will pick them up automatically.
 
+The included template for activation emails requires the ``humanize``
+library, so if you use it as-is, be sure to add
+``django.contrib.humanize`` to your ``INSTALLED_APPS`` setting.
 
 Questions? Problems?
 ====================
