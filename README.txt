@@ -47,12 +47,16 @@ setting in your settings file: ``ACCOUNT_ACTIVATION_DAYS``. This
 should be a number, and will be used as the number of days before an
 activation key expires.
 
+Next, either edit the included templates (see below) to suit your
+site, or create your own templates which integrate with your site's
+look and feel.
+
 Finally, drop this line into your root URLConf::
 
     (r'^accounts/', include('registration.urls')),
 
 And point people at the URL ``/accounts/register/``. Things should
-Just Work.
+just work.
 
 
 If emails never get sent
