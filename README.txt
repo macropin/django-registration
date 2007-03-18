@@ -135,13 +135,26 @@ never touch their account.
 A note on templates
 ===================
 
-I've included examples of all the templates this app expects, bundled
-into the ``templates`` directory; so long as you have the "app
-directories" template loader
-(``django.template.loaders.app_directories.load_template_source``) in
-your ``TEMPLATE_LOADERS`` setting (and it's in there by default), you
-should be able to just edit them in-place to suit your site's layout,
-and Django will pick them up automatically.
+The download includes a set of example templates to give you an idea
+of how to use the app, but please note that they are **examples** and
+almost certainly will not work "out of the box" with your site; the
+example templates are copied directly from a site which uses this
+application, which means that they include assumptions about the
+existence of that site's base templates and page structure. If you try
+to use them as-is, you will most likely receive errors about
+"base.html" not existing, or run into a mismatch between the blocks
+defined in your site's base template and the blocks used in the
+example templates.
+
+**As a result, it is assumed that you will look at, and edit, the
+included templates before trying to use them on your own site**. If
+you like, you can copy them into your site's template directory and
+edit them there, or edit them in-place; Django's "app directories"
+template loader, which is active by default, will be able to find them
+if you do so.
+
+If you're unsure of how to work with Django templates, consult `the
+Django template documentation`_.
 
 The included template for activation emails requires the ``humanize``
 library, so if you use it as-is, be sure to add
@@ -157,5 +170,6 @@ my best to respond promptly.
 
 
 .. _Django: http://www.djangoproject.com/
+.. _the Django template documentation: http://www.djangoproject.com/documentation/templates/
 .. _this app's Google Code project page: http://code.google.com/p/django-registration/
  
