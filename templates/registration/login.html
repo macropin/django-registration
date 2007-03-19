@@ -10,7 +10,7 @@
 <p class="error">Please correct the errors below:</p>
 {% endif %}
 
-<form method="post" action="?next=/">
+<form method="post" action="{% if next %}?next={{ next }}{% endif %}">
 <dl>
 <dt><label for="id_username">Username:</label>{% if form.username.errors %} <span class="error">{{ form.username.errors|join:", " }}</span>{% endif %}</dt>
 <dd>{{ form.username }}</dd>
