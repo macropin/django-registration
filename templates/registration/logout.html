@@ -2,8 +2,12 @@
 
 {% block title %}Logged out{% endblock %}
 
-{% block content %}
-<h2>Logged out</h2>
+{% block content_header %}Logged out{% endblock %}
 
+{% block main_content %}
 <p>You've been logged out.</p>
+{% endblock %}
+
+{% block sidebar %}
+<p>Thanks for stopping by; when you come back, don't forget to <a href="/accounts/login/">log in</a> again.</p>
 {% endblock %}

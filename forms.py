@@ -37,11 +37,11 @@ class RegistrationForm(forms.Form):
         Validates that the username is not already in use.
         
         """
-        if self.clean_data.get('username', None):
+        if self.cleaned_data.get('username', None):
             try:
-                user = User.objects.get(username__exact=self.clean_data['username'])
+                user = User.objects.get(username__exact=self.cleaned_data['username'])
             except User.DoesNotExist:
-                return self.clean_data['username']
+                return self.cleaned_data['username']
             raise forms.ValidationError(u'This username is already taken. Please choose another.')
     
     def clean_password2(self):
@@ -49,9 +49,9 @@ class RegistrationForm(forms.Form):
         Validates that the two password inputs match.
         
         """
-        if self.clean_data.get('password1', None) and self.clean_data.get('password2', None) and \
-           self.clean_data['password1'] == self.clean_data['password2']:
-            return self.clean_data['password2']
+        if self.cleaned_data.get('password1', None) and self.cleaned_data.get('password2', None) and \
+           self.cleaned_data['password1'] == self.cleaned_data['password2']:
+            return self.cleaned_data['password2']
         raise forms.ValidationError(u'You must type the same password each time')
     
     def clean_tos(self):
@@ -59,6 +59,6 @@ class RegistrationForm(forms.Form):
         Validates that the user accepted the Terms of Service.
         
         """
-        if self.clean_data.get('tos', False):
-            return self.clean_data['tos']
+        if self.cleaned_data.get('tos', False):
+            return self.cleaned_data['tos']
         raise forms.ValidationError(u'You must agree to the terms to register')
