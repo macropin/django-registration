@@ -37,7 +37,7 @@ class RegistrationForm(forms.Form):
         Validates that the username is not already in use.
         
         """
-        if self.cleaned_data.get('username', None):
+        if 'username' in self.cleaned_data:
             try:
                 user = User.objects.get(username__exact=self.cleaned_data['username'])
             except User.DoesNotExist:
@@ -49,7 +49,7 @@ class RegistrationForm(forms.Form):
         Validates that the two password inputs match.
         
         """
-        if self.cleaned_data.get('password1', None) and self.cleaned_data.get('password2', None) and \
+        if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data and \
            self.cleaned_data['password1'] == self.cleaned_data['password2']:
             return self.cleaned_data['password2']
         raise forms.ValidationError(u'You must type the same password each time')

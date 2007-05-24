@@ -7,8 +7,8 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from models import RegistrationProfile
-from forms import RegistrationForm
+from registration.models import RegistrationProfile
+from registration.forms import RegistrationForm
 
 def activate(request, activation_key):
     """
@@ -66,3 +66,4 @@ def register(request, success_url='/accounts/register/complete/'):
     return render_to_response('registration/registration_form.html',
                               { 'form': form },
                               context_instance=RequestContext(request))
+
