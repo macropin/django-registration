@@ -9,17 +9,42 @@ root URLConf to include this URLConf for any URL begninning with
 
 from django.conf.urls.defaults import *
 from django.views.generic.simple import direct_to_template
-from django.contrib.auth.views import login, logout
-from views import activate, register
+from django.contrib.auth import views as auth_views
+from registration.views import activate, register
 
 urlpatterns = patterns('',
                        # Activation keys get matched by \w+ instead of the more specific
                        # [a-fA-F0-9]+ because a bad activation key should still get to the view;
                        # that way it can return a sensible "invalid key" message instead of a
                        # confusing 404.
-                       (r'^activate/(?P<activation_key>\w+)/$', activate),
-                       (r'^login/$', login, {'template_name': 'registration/login.html'}),
-                       (r'^logout/$', logout, {'template_name': 'registration/logout.html'}),
-                       (r'^register/$', register),
-                       (r'^register/complete/$', direct_to_template, {'template': 'registration/registration_complete.html'}),
+                       url(r'^activate/(?P<activation_key>\w+)/$',
+                           activate,
+                           name='registration_activate'),
+                       url(r'^login/$',
+                           auth_views.login,
+                           {'template_name': 'registration/login.html'},
+                           name='auth_login'),
+                       url(r'^logout/$',
+                           auth_views.logout,
+                           {'template_name': 'registration/logout.html'},
+                           name='auth_logout'),
+                       url(r'^password/change/$',
+                           auth_views.password_change,
+                           name='auth_password_change'),
+                       url(r'^password/change/done/$',
+                           auth_views.password_change_done,
+                           name='auth_password_change_done'),
+                       url(r'^password/reset/$',
+                           auth_views.password_reset,
+                           name='auth_password_reset'),
+                       url(r'^password/reset/done/$',
+                           auth_views.password_reset_done,
+                           name='auth_password_reset_done'),
+                       url(r'^register/$',
+                           register,
+                           name='registration_register'),
+                       url(r'^register/complete/$',
+                           direct_to_template,
+                           {'template': 'registration/registration_complete.html'},
+                           name='registration_complete'),
                        )

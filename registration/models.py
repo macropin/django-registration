@@ -73,7 +73,7 @@ class RegistrationManager(models.Manager):
         # And finally create the profile.
         new_profile = self.create(user=new_user,
                                   activation_key=activation_key)
-
+        
         # Experimental: create an instance of the model specified
         # in AUTH_PROFILE_MODULE, if any.
         #
