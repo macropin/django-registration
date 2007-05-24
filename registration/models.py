@@ -80,7 +80,9 @@ class RegistrationManager(models.Manager):
         # First draft implementation here relies on an additional
         # setting -- DEFAULT_AUTH_PROFILE_VALUES -- which must be
         # a dictionary matching field names and default values for
-        # all non-nullable fields on the custom profile model.
+        # all non-nullable fields on the custom profile model
+        # (except the foreign key to User, which will be filled in
+        # automatically with the User who was just created).
         #
         # Because both of those settings are needed, we only try
         # this when both are present.
