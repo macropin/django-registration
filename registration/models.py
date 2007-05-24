@@ -86,7 +86,7 @@ class RegistrationManager(models.Manager):
         # this when both are present.
         if hasattr(settings, 'AUTH_PROFILE_MODULE') and hasattr(settings, 'DEFAULT_AUTH_PROFILE_VALUES'):
             auth_profile_mod = models.get_model(*settings.AUTH_PROFILE_MODULE.split('.'))
-            new_auth_profile = auth_profile_mod._default_manager.create(**settings.DEFAULT_AUTH_PROFILE_VALUES)
+            new_auth_profile = auth_profile_mod._default_manager.create(user=new_user, **settings.DEFAULT_AUTH_PROFILE_VALUES)
         
         if send_email:
             from django.core.mail import send_mail
