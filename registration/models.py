@@ -114,8 +114,8 @@ class RegistrationManager(models.Manager):
 
 class RegistrationProfile(models.Model):
     """
-    Simple profile model for a User, storing a registration date and
-    an activation key for the account.
+    Simple profile model for a User, storing an activation key for the
+    account.
     
     While it is possible to use this model as the value of the
     ``AUTH_PROFILE_MODULE`` setting, it's not recommended that you do
@@ -128,17 +128,11 @@ class RegistrationProfile(models.Model):
     """
     user = models.ForeignKey(User, unique=True)
     activation_key = models.CharField(maxlength=40)
-    key_generated = models.DateTimeField()
     
     objects = RegistrationManager()
     
     class Admin:
         pass
-    
-    def save(self):
-        if not self.id:
-            self.key_generated = datetime.datetime.now()
-        super(RegistrationProfile, self).save()
     
     def __str__(self):
         return "User profile for %s" % self.user.username
@@ -150,4 +144,4 @@ class RegistrationProfile(models.Model):
         
         """
         expiration_date = datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
-        return self.key_generated + expiration_date <= datetime.datetime.now()
+        return self.user.date_joined + expiration_date <= datetime.datetime.now()
