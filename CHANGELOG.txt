@@ -1,0 +1,14 @@
+=============================
+django-registration changelog
+=============================
+
+
+Version 0.1, 23 May 2007:
+-------------------------
+
+Packaged from revision 56 in Subversion; download at
+http://django-registration.googlecode.com/files/registration-0.1.tar.gz
+
+* First packaged version using distutils.
+
+* Added docs/ directory and overview. 
