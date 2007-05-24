@@ -73,6 +73,20 @@ class RegistrationManager(models.Manager):
         # And finally create the profile.
         new_profile = self.create(user=new_user,
                                   activation_key=activation_key)
+
+        # Experimental: create an instance of the model specified
+        # in AUTH_PROFILE_MODULE, if any.
+        #
+        # First draft implementation here relies on an additional
+        # setting -- DEFAULT_AUTH_PROFILE_VALUES -- which must be
+        # a dictionary matching field names and default values for
+        # all non-nullable fields on the custom profile model.
+        #
+        # Because both of those settings are needed, we only try
+        # this when both are present.
+        if hasattr(settings, 'AUTH_PROFILE_MODULE') and hasattr(settings, 'DEFAULT_AUTH_PROFILE_VALUES'):
+            auth_profile_mod = models.get_model(*settings.AUTH_PROFILE_MODULE.split('.'))
+            new_auth_profile = auth_profile_mod._default_manager.create(**settings.DEFAULT_AUTH_PROFILE_VALUES)
         
         if send_email:
             from django.core.mail import send_mail
