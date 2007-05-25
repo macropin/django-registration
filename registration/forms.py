@@ -3,6 +3,7 @@ Form and validation code for user registration.
 
 """
 
+import re
 from django import newforms as forms
 from django.contrib.auth.models import User
 
@@ -10,6 +11,8 @@ from django.contrib.auth.models import User
 # on them with CSS or JavaScript if they have a class of "required"
 # in the HTML. Your mileage may vary.
 attrs_dict = { 'class': 'required' }
+
+username_re = re.compile(r'^\w+$')
 
 class RegistrationForm(forms.Form):
     """
@@ -31,13 +34,16 @@ class RegistrationForm(forms.Form):
                                 label=u'Password (again, to catch typos)')
     tos = forms.BooleanField(widget=forms.CheckboxInput(attrs=attrs_dict),
                              label=u'I have read and agree to the Terms of Service')
-
+    
     def clean_username(self):
         """
-        Validates that the username is not already in use.
+        Validates that the username is alphanumeric and is not already
+        in use.
         
         """
         if 'username' in self.cleaned_data:
+            if not username_re.search(self.cleaned_data['username']):
+                raise forms.ValidationError(u'Usernames can only contain letters, numbers and underscores')
             try:
                 user = User.objects.get(username__exact=self.cleaned_data['username'])
             except User.DoesNotExist:
