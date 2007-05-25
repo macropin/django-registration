@@ -148,7 +148,7 @@ class RegistrationProfile(models.Model):
     objects = RegistrationManager()
     
     class Admin:
-        pass
+        list_display = ('__str__', 'activation_key_expired')
     
     def __str__(self):
         return "Registration information for %s" % self.user.username
@@ -161,3 +161,4 @@ class RegistrationProfile(models.Model):
         """
         expiration_date = datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
         return self.user.date_joined + expiration_date <= datetime.datetime.now()
+    activation_key_expired.boolean = True
