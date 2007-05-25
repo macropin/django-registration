@@ -18,6 +18,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.conf import settings
 
+SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
 class RegistrationManager(models.Manager):
     """
@@ -40,7 +41,7 @@ class RegistrationManager(models.Manager):
         # Make sure the key we're trying conforms to the pattern of a
         # SHA1 hash; if it doesn't, no point even trying to look it up
         # in the DB.
-        if re.match('[a-f0-9]{40}', activation_key):
+        if SHA1_RE.search(activation_key):
             try:
                 user_profile = self.get(activation_key=activation_key)
             except self.model.DoesNotExist:
