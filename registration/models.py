@@ -151,7 +151,7 @@ class RegistrationProfile(models.Model):
         pass
     
     def __str__(self):
-        return "User profile for %s" % self.user.username
+        return "Registration information for %s" % self.user.username
     
     def activation_key_expired(self):
         """
