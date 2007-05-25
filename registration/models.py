@@ -149,7 +149,8 @@ class RegistrationProfile(models.Model):
     
     class Admin:
         list_display = ('__str__', 'activation_key_expired')
-    
+        search_fields = ('user__username', 'user__first_name')
+        
     def __str__(self):
         return "Registration information for %s" % self.user.username
     

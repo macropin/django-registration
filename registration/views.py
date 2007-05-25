@@ -7,8 +7,8 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from registration.models import RegistrationProfile
 from registration.forms import RegistrationForm
+from registration.models import RegistrationProfile
 
 def activate(request, activation_key):
     """
@@ -30,8 +30,8 @@ def activate(request, activation_key):
     activation_key = activation_key.lower() # Normalize before trying anything with it.
     account = RegistrationProfile.objects.activate_user(activation_key)
     return render_to_response('registration/activate.html',
-                              {'account': account,
-                               'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS },
+                              { 'account': account,
+                                'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS },
                               context_instance=RequestContext(request))
 
 def register(request, success_url='/accounts/register/complete/'):
