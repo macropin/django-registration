@@ -54,12 +54,22 @@ class RegistrationManager(models.Manager):
                 return user
         return False
     
-    def create_inactive_user(self, username, password, email, send_email=True):
+    def create_inactive_user(self, username, password, email, send_email=True, profile_callback=None):
         """
         Creates a new User and a new RegistrationProfile for that
         User, generates an activation key, and mails it.
         
         Pass ``send_email=False`` to disable sending the email.
+
+        To enable creation of a custom user profile along with the
+        User (e.g., the model specified in the ``AUTH_PROFILE_MODULE``
+        setting), define a function which knows how to create and save
+        an instance of that model with appropriate default values, and
+        pass it as the keyword argument ``profile_callback``. This
+        function should accept one argument:
+        
+            user
+                The User object to which the profile will be related.
         
         """
         # Create the user.
@@ -72,24 +82,12 @@ class RegistrationManager(models.Manager):
         activation_key = sha.new(salt+new_user.username).hexdigest()
         
         # And finally create the profile.
-        new_profile = self.create(user=new_user,
-                                  activation_key=activation_key)
+        registration_profile = self.create(user=new_user,
+                                           activation_key=activation_key)
         
-        # Experimental: create an instance of the model specified
-        # in AUTH_PROFILE_MODULE, if any.
-        #
-        # First draft implementation here relies on an additional
-        # setting -- DEFAULT_AUTH_PROFILE_VALUES -- which must be
-        # a dictionary matching field names and default values for
-        # all non-nullable fields on the custom profile model
-        # (except the foreign key to User, which will be filled in
-        # automatically with the User who was just created).
-        #
-        # Because both of those settings are needed, we only try
-        # this when both are present.
-        if hasattr(settings, 'AUTH_PROFILE_MODULE') and hasattr(settings, 'DEFAULT_AUTH_PROFILE_VALUES'):
-            auth_profile_mod = models.get_model(*settings.AUTH_PROFILE_MODULE.split('.'))
-            new_auth_profile = auth_profile_mod._default_manager.create(user=new_user, **settings.DEFAULT_AUTH_PROFILE_VALUES)
+        # Create site-specific profile, if specified.
+        if profile_callback is not None:
+            profile_callback(user=new_user)
         
         if send_email:
             from django.core.mail import send_mail

@@ -34,10 +34,10 @@ def activate(request, activation_key):
                                 'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS },
                               context_instance=RequestContext(request))
 
-def register(request, success_url='/accounts/register/complete/'):
+def register(request, success_url='/accounts/register/complete/', profile_callback=None):
     """
     Allows a new user to register an account.
-
+    
     On successful registration, an email will be sent to the new user
     with an activation link to click to make the account active. This
     view will then redirect to ``success_url``, which defaults to
@@ -45,6 +45,12 @@ def register(request, success_url='/accounts/register/complete/'):
     for that URL and routes it to the ``direct_to_template`` generic
     view to display a short message telling the user to check their
     email for the account activation link.
+    
+    To enable creation of a site-specific user profile object for the
+    new user, pass a function which will create the profile object as
+    the keyword argument ``profile_callback``. See
+    ``RegistrationManager.create_inactive_user`` for details on what
+    this function should do.
     
     Context::
         form
@@ -59,7 +65,8 @@ def register(request, success_url='/accounts/register/complete/'):
         if form.is_valid():
             new_user = RegistrationProfile.objects.create_inactive_user(username=form.cleaned_data['username'],
                                                                         password=form.cleaned_data['password1'],
-                                                                        email=form.cleaned_data['email'])
+                                                                        email=form.cleaned_data['email'],
+                                                                        profile_callback=profile_callback)
             return HttpResponseRedirect(success_url)
     else:
         form = RegistrationForm()
