@@ -3,16 +3,19 @@ Views which allow users to create and activate accounts.
 
 """
 
+
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+
 from registration.forms import RegistrationForm
 from registration.models import RegistrationProfile
 
+
 def activate(request, activation_key):
     """
-    Activates a user's account, if their key is valid and hasn't
+    Activates a ``User``'s account, if their key is valid and hasn't
     expired.
 
     Context::
@@ -33,6 +36,7 @@ def activate(request, activation_key):
                               { 'account': account,
                                 'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS },
                               context_instance=RequestContext(request))
+
 
 def register(request, success_url='/accounts/register/complete/', profile_callback=None):
     """

@@ -11,19 +11,36 @@ designed to make allowing user signups as painless as possible.
 Development
 ===========
 
-The `latest released version`_ of this application is 0.1, and is
+The `latest released version`_ of this application is 0.2, and is
 quite stable; it's already been deployed on a number of sites. You can
 also obtain the absolute freshest code from `a Subversion checkout`_,
 but be warned that the code in SVN may not always be
 backwards-compatible, and may well contain bugs that haven't yet been
 fixed.
 
-This document covers the 0.1 release of django-registration; new
+This document covers the 0.2 release of django-registration; new
 features introduced in Subversion will be added to the documentation
 at the time of the next packaged release.
 
-.. _latest released version: http://django-registration.googlecode.com/files/registration-0.1.tar.gz
+.. _latest released version: http://django-registration.googlecode.com/files/registration-0.2.tar.gz
 .. _a Subversion checkout: http://django-registration.googlecode.com/svn/trunk/registration/
+
+
+Changes from previous versions
+==============================
+
+Several new features were added between version 0.1 and version 0.2;
+for details, see the CHANGELOG.txt file distributed with the packaged
+0.2 release.
+
+One important change to note before upgrading an installation of
+version 0.1 is a change to the ``RegistrationProfile`` model; the
+field ``key_generated`` has been removed, since it was redundant with
+the field ``date_joined`` on Django's bundled ``User`` model. Since
+this field became a ``NOT NULL`` column in the database, you will need
+to either drop the ``NOT NULL`` constraint or, preferably, simply drop
+the column. Consult your database's documentation for the correct way
+to handle this.
 
 
 Dependencies
@@ -121,6 +138,18 @@ a few useful methods:
         template to customize the text of the email. This method
         returns the new ``User`` object, in case you want to do
         something with it afterwards.
+	
+	To enable creation of a site-specific user profile (e.g., the
+	model specified in the ``AUTH_PROFILE_MODULE`` setting), pass
+	the optional keyword argument ``profile_callback``; the value
+	of this argument should be a function which, given a ``User``,
+	will create and save an instance of the site-specific profile
+	with appropriate default values.
+
+    ``create_profile`` Given a ``User`` object, creates, saves and
+        returns a ``RegistrationProfile`` for that ``User``,
+        generating the activation key from a combinatino og the
+        ``User``'s username and a random salt.
 
     ``delete_inactive_users``
         Clears out accounts which were never activated; it does this
@@ -209,6 +238,11 @@ On successful registration, this view issues a redirect; the default
 URL of the redirect is ``/accounts/register/complete/``, but you can
 override this by passing the keyword argument ``success_url`` into the
 view.
+
+To enable creation of a site-specific user profile, pass the optional
+keyword argument ``profile_callback`` to this view; see the
+``create_inactive_user`` method of the manager on
+``RegistrationProfile`` (documented above) for details.
 
 URLs
 ====

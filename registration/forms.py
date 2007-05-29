@@ -3,16 +3,21 @@ Form and validation code for user registration.
 
 """
 
+
 import re
+
 from django import newforms as forms
 from django.contrib.auth.models import User
+
 
 # I put this on all required fields, because it's easier to pick up
 # on them with CSS or JavaScript if they have a class of "required"
 # in the HTML. Your mileage may vary.
 attrs_dict = { 'class': 'required' }
 
+
 username_re = re.compile(r'^\w+$')
+
 
 class RegistrationForm(forms.Form):
     """

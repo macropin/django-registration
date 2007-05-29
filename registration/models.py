@@ -1,28 +1,32 @@
 """
 A registration profile model and associated manager.
 
-The RegistrationProfile model and especially its custom manager
+The ``RegistrationProfile`` model and especially its custom manager
 implement nearly all the logic needed to handle user registration and
 account activation, so before implementing something in a view or
 form, check here to see if they can take care of it for you.
 
-Also, be sure to see the note on RegistrationProfile about use of the
+Also, be sure to see the note on ``RegistrationProfile`` about use of the
 ``AUTH_PROFILE_MODULE`` setting.
 
 """
 
+
 import datetime, random, re, sha
+
 from django.db import models
 from django.template import Context, loader
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.conf import settings
 
+
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
+
 
 class RegistrationManager(models.Manager):
     """
-    Custom manager for the RegistrationProfile model.
+    Custom manager for the ``RegistrationProfile`` model.
     
     The methods defined here provide shortcuts for account creation
     and activation (including generation and emailing of activation
@@ -31,10 +35,10 @@ class RegistrationManager(models.Manager):
     """
     def activate_user(self, activation_key):
         """
-        Given the activation key, makes a User's account active if the
+        Given the activation key, makes a ``User``'s account active if the
         activation key is valid and has not expired.
         
-        Returns the User if successful, or False if the account was
+        Returns the ``User`` if successful, or False if the account was
         not found or the key had expired.
         
         """
@@ -56,20 +60,18 @@ class RegistrationManager(models.Manager):
     
     def create_inactive_user(self, username, password, email, send_email=True, profile_callback=None):
         """
-        Creates a new User and a new RegistrationProfile for that
-        User, generates an activation key, and mails it.
+        Creates a new ``User`` and a new ``RegistrationProfile`` for that
+        ``User``, generates an activation key, and mails it.
         
         Pass ``send_email=False`` to disable sending the email.
 
         To enable creation of a custom user profile along with the
-        User (e.g., the model specified in the ``AUTH_PROFILE_MODULE``
-        setting), define a function which knows how to create and save
-        an instance of that model with appropriate default values, and
-        pass it as the keyword argument ``profile_callback``. This
-        function should accept one argument:
-        
-            user
-                The User object to which the profile will be related.
+        ``User`` (e.g., the model specified in the
+        ``AUTH_PROFILE_MODULE`` setting), define a function which
+        knows how to create and save an instance of that model with
+        appropriate default values, and pass it as the keyword
+        argument ``profile_callback``. This function should accept one
+        argument: the ``User`` to relate the profile to.
         
         """
         # Create the user.
@@ -77,17 +79,12 @@ class RegistrationManager(models.Manager):
         new_user.is_active = False
         new_user.save()
         
-        # Generate a salted SHA1 hash to use as a key.
-        salt = sha.new(str(random.random())).hexdigest()[:5]
-        activation_key = sha.new(salt+new_user.username).hexdigest()
-        
-        # And finally create the profile.
-        registration_profile = self.create(user=new_user,
-                                           activation_key=activation_key)
+        # And finally create the registration profile.
+        registration_profile = self.create_profile(new_user)
         
         # Create site-specific profile, if specified.
         if profile_callback is not None:
-            profile_callback(user=new_user)
+            profile_callback(new_user)
         
         if send_email:
             from django.core.mail import send_mail
@@ -101,22 +98,35 @@ class RegistrationManager(models.Manager):
             send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [new_user.email])
         return new_user
     
+    def create_profile(self, user):
+        """
+        Given a ``User``, creates, saves and returns a
+        ``RegistrationProfile`` for that ``User``, generating the
+        activation key from a combination of the ``User``'s username
+        and a random salt.
+        
+        """
+        salt = sha.new(str(random.random())).hexdigest()[:5]
+        activation_key = sha.new(salt+new_user.username).hexdigest()
+        return self.create(user=user,
+                           activation_key=activation_key)
+        
     def delete_expired_users(self):
         """
         Removes unused profiles and their associated accounts.
 
         This is provided largely as a convenience for maintenance
-        purposes; if a RegistrationProfile's key expires without the
-        account being activated, then both the RegistrationProfile and
-        the associated User become clutter in the database, and (more
+        purposes; if a ``RegistrationProfile``'s key expires without the
+        account being activated, then both the ``RegistrationProfile`` and
+        the associated ``User`` become clutter in the database, and (more
         importantly) it won't be possible for anyone to ever come back
         and claim the username. For best results, set this up to run
         regularly as a cron job.
         
-        If you have a User whose account you want to keep in the
+        If you have a ``User`` whose account you want to keep in the
         database even though it's inactive (say, to prevent a
         troublemaker from accessing or re-creating his account), just
-        delete that User's RegistrationProfile and this method will
+        delete that ``User``'s ``RegistrationProfile`` and this method will
         leave it alone.
         
         """
@@ -124,12 +134,12 @@ class RegistrationManager(models.Manager):
             if profile.activation_key_expired():
                 user = profile.user
                 if not user.is_active:
-                    user.delete() # Removing the User will remove the RegistrationProfile, too.
+                    user.delete() # Removing the ``User`` will remove the ``RegistrationProfile``, too.
 
 
 class RegistrationProfile(models.Model):
     """
-    Simple profile model for a User, storing an activation key for the
+    Simple profile model for a ``User``, storing an activation key for the
     account.
     
     While it is possible to use this model as the value of the
@@ -155,8 +165,9 @@ class RegistrationProfile(models.Model):
     
     def activation_key_expired(self):
         """
-        Determines whether this Profile's activation key has expired,
-        based on the value of the setting ``ACCOUNT_ACTIVATION_DAYS``.
+        Determines whether this ``RegistrationProfile``'s activation
+        key has expired, based on the value of the setting
+        ``ACCOUNT_ACTIVATION_DAYS``.
         
         """
         expiration_date = datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
