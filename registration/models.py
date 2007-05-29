@@ -92,7 +92,7 @@ class RegistrationManager(models.Manager):
             subject = "Activate your new account at %s" % current_domain
             message_template = loader.get_template('registration/activation_email.txt')
             message_context = Context({ 'site_url': 'http://%s/' % current_domain,
-                                        'activation_key': activation_key,
+                                        'activation_key': registration_profile.activation_key,
                                         'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS })
             message = message_template.render(message_context)
             send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [new_user.email])
