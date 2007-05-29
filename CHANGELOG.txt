@@ -3,6 +3,29 @@ django-registration changelog
 =============================
 
 
+Version 0.2, 29 May 2007:
+-------------------------
+
+Packaged from revision 71 in Subversion; download at
+http://django-registration.googlecode.com/files/registration-0.2.tar.gz
+
+* Added ability to specify a callback in
+  ``RegistrationManager.create_inactive_user`` or in the ``register``
+  view to enable creation of site-specific user profile.
+
+* Separated out the logic of creating the profile into a new method on
+  ``RegistrationManager``: ``create_profile``.
+
+* Added URLConf support for various useful views in
+  ``django.contrib.auth``.
+
+* BACKWARDS-INCOMPATIBLE CHANGE: removed the ``key_generated`` field
+  from ``RegistrationProfile``; activation key expiration is now
+  calculated based on the ``date_joined`` field in the ``User`` model.
+  Drop the ``key_generated`` column from your database when upgrading
+  from 0.1.
+
+
 Version 0.1, 23 May 2007:
 -------------------------
 
