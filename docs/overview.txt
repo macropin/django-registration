@@ -297,15 +297,6 @@ dollars.
 What this application does not do
 =================================
 
-This application does not take custom user profiles (as specified in
-the ``AUTH_PROFILE_MODULE`` setting) into account, and will neither
-look for them nor try to create instances of them for you. If you're
-using a custom profile model, you'll want to either write your own
-registration view which can create an instance of it on
-registration/activation, or else use Django's dispatcher to hook into
-the ``post_save`` signal of ``User`` or ``RegistrationProfile`` and
-automatically create an instance of your profile model.
-
 This application also does not integrate in any way with OpenID, nor
 should it; one of the key selling points of OpenID is that users
 **don't** have to walk through an explicit registration step on every
