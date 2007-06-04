@@ -138,14 +138,14 @@ a few useful methods:
         template to customize the text of the email. This method
         returns the new ``User`` object, in case you want to do
         something with it afterwards.
-	
-	To enable creation of a site-specific user profile (e.g., the
-	model specified in the ``AUTH_PROFILE_MODULE`` setting), pass
-	the optional keyword argument ``profile_callback``; the value
-	of this argument should be a function which, given a ``User``,
-	will create and save an instance of the site-specific profile
-	with appropriate default values.
-
+        
+        To enable creation of a site-specific user profile (e.g., the
+        model specified in the ``AUTH_PROFILE_MODULE`` setting), pass
+        the optional keyword argument ``profile_callback``; the value
+        of this argument should be a function which, given a ``User``,
+        will create and save an instance of the site-specific profile
+        with appropriate default values.
+        
     ``create_profile`` Given a ``User`` object, creates, saves and
         returns a ``RegistrationProfile`` for that ``User``,
         generating the activation key from a combinatino og the
