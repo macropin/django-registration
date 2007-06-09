@@ -14,11 +14,11 @@ Also, be sure to see the note on ``RegistrationProfile`` about use of the
 
 import datetime, random, re, sha
 
+from django.conf import settings
 from django.db import models
 from django.template import Context, loader
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
-from django.conf import settings
 
 
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
