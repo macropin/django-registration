@@ -109,8 +109,7 @@ Models
 
 This app includes one model: ``RegistrationProfile``, which is tied to
 the ``User`` model in ``django.contrib.auth`` via a unique foreign
-key. ``RegistrationProfile`` simply stores the user's activation key
-and the date/time when the key was generated.
+key. ``RegistrationProfile`` simply stores the user's activation key.
 
 ``RegistrationProfile`` has one custom method,
 ``activation_key_expired``, which returns ``True`` if the key has
