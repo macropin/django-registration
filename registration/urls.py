@@ -7,10 +7,13 @@ root URLConf to include this URLConf for any URL beginning with
 
 """
 
+
 from django.conf.urls.defaults import *
 from django.views.generic.simple import direct_to_template
 from django.contrib.auth import views as auth_views
+
 from registration.views import activate, register
+
 
 urlpatterns = patterns('',
                        # Activation keys get matched by \w+ instead of the more specific
