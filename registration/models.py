@@ -71,7 +71,8 @@ class RegistrationManager(models.Manager):
         knows how to create and save an instance of that model with
         appropriate default values, and pass it as the keyword
         argument ``profile_callback``. This function should accept one
-        argument: the ``User`` to relate the profile to.
+        keyword argument: ``user``, the ``User`` to relate the profile
+        to.
         
         """
         # Create the user.
@@ -84,7 +85,7 @@ class RegistrationManager(models.Manager):
         
         # Create site-specific profile, if specified.
         if profile_callback is not None:
-            profile_callback(new_user)
+            profile_callback(user=new_user)
         
         if send_email:
             from django.core.mail import send_mail
