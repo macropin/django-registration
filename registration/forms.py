@@ -1,5 +1,5 @@
 """
-Form and validation code for user registration.
+Forms and validation code for user registration.
 
 """
 
@@ -8,6 +8,8 @@ import re
 
 from django import newforms as forms
 from django.contrib.auth.models import User
+
+from registration.models import RegistrationProfile
 
 
 # I put this on all required fields, because it's easier to pick up
@@ -73,3 +75,59 @@ class RegistrationForm(forms.Form):
         if self.cleaned_data.get('tos', False):
             return self.cleaned_data['tos']
         raise forms.ValidationError(u'You must agree to the terms to register')
+
+    def save(self):
+        """
+        Creates the new ``User`` and ``RegistrationProfile``, and
+        returns the ``User``.
+
+        """
+        new_user = RegistrationProfile.objects.create_inactive_user(username=form.cleaned_data['username'],
+                                                                    password=form.cleaned_data['password1'],
+                                                                    email=form.cleaned_data['email'],
+                                                                    profile_callback=profile_callback)
+        return new_user
+
+
+class RegistrationFormUniqueEmail(RegistrationForm):
+    """
+    Subclass of ``RegistrationForm`` which enforces uniqueness of
+    email addresses.
+    
+    """
+    def clean_email(self):
+        """
+        Validates that the supplied email address is unique for the
+        site.
+        
+        """
+        if 'email' in self.cleaned_data:
+            try:
+                user = User.objects.get(email__exact=self.cleaned_data['email'])
+            except User.DoesNotExist:
+                return self.cleaned_data['email']
+            raise forms.ValidationError(u'This email address is already in use. Please supply a different email address.')
+
+
+class RegistrationFormNoFreeEmail(RegistrationForm):
+    """
+    Subclass of ``RegistrationForm`` which disallows registration with
+    email addresses from popular free webmail services; moderately
+    useful for preventing automated spam registrations.
+    
+    """
+    bad_domains = ['aim.com', 'aol.com', 'email.com', 'gmail.com',
+                   'googlemail.com', 'hotmail.com', 'hushmail.com',
+                   'live.com', 'msn.com', 'mail.ru']
+    
+    def clean_email(self):
+        """
+        Checks the supplied email address against a list of known free
+        webmail domains.
+        
+        """
+        if 'email' in self.cleaned_data:
+            email_domain = self.cleaned_data['email'].split('@')[1]
+            if email_domain in self.bad_domains:
+                raise forms.ValidationError(u'Registration using free email addresses is prohibited. Please supply a different email address.')
+            return self.cleaned_data['email']

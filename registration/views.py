@@ -38,7 +38,7 @@ def activate(request, activation_key):
                               context_instance=RequestContext(request))
 
 
-def register(request, success_url='/accounts/register/complete/', profile_callback=None):
+def register(request, success_url='/accounts/register/complete/', form_class=RegistrationForm, profile_callback=None):
     """
     Allows a new user to register an account.
     
@@ -49,6 +49,10 @@ def register(request, success_url='/accounts/register/complete/', profile_callba
     for that URL and routes it to the ``direct_to_template`` generic
     view to display a short message telling the user to check their
     email for the account activation link.
+
+    By default, uses ``registration.forms.RegistrationForm`` as the
+    form; to change this, pass a different form class as the
+    ``form_class`` keyword argument.
     
     To enable creation of a site-specific user profile object for the
     new user, pass a function which will create the profile object as
@@ -65,15 +69,12 @@ def register(request, success_url='/accounts/register/complete/', profile_callba
     
     """
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+        form = form_class(request.POST)
         if form.is_valid():
-            new_user = RegistrationProfile.objects.create_inactive_user(username=form.cleaned_data['username'],
-                                                                        password=form.cleaned_data['password1'],
-                                                                        email=form.cleaned_data['email'],
-                                                                        profile_callback=profile_callback)
+            new_user = form.save()
             return HttpResponseRedirect(success_url)
     else:
-        form = RegistrationForm()
+        form = form_class()
     return render_to_response('registration/registration_form.html',
                               { 'form': form },
                               context_instance=RequestContext(request))
