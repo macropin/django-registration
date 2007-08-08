@@ -81,6 +81,10 @@ class RegistrationForm(forms.Form):
         Creates the new ``User`` and ``RegistrationProfile``, and
         returns the ``User``.
 
+        Passes ``profile_callback`` through to the user-creation
+        function, to be used in creating a site-specific profile for
+        the new ``User``.
+
         """
         new_user = RegistrationProfile.objects.create_inactive_user(username=self.cleaned_data['username'],
                                                                     password=self.cleaned_data['password1'],
