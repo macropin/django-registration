@@ -51,14 +51,16 @@ def register(request, success_url='/accounts/register/complete/', form_class=Reg
     email for the account activation link.
 
     By default, uses ``registration.forms.RegistrationForm`` as the
-    form; to change this, pass a different form class as the
-    ``form_class`` keyword argument.
+    registration form; to change this, pass a different form class as
+    the ``form_class`` keyword argument. The form class you specify
+    must create and return the new ``User``, and must accept the
+    keyword argument ``profile_callback`` (see below).
     
     To enable creation of a site-specific user profile object for the
     new user, pass a function which will create the profile object as
     the keyword argument ``profile_callback``. See
-    ``RegistrationManager.create_inactive_user`` for details on what
-    this function should do.
+    ``RegistrationManager.create_inactive_user`` in the file
+    ``models.py`` for details on what this function should do.
     
     Context::
         form
