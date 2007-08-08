@@ -76,15 +76,15 @@ class RegistrationForm(forms.Form):
             return self.cleaned_data['tos']
         raise forms.ValidationError(u'You must agree to the terms to register')
 
-    def save(self):
+    def save(self, profile_callback):
         """
         Creates the new ``User`` and ``RegistrationProfile``, and
         returns the ``User``.
 
         """
-        new_user = RegistrationProfile.objects.create_inactive_user(username=form.cleaned_data['username'],
-                                                                    password=form.cleaned_data['password1'],
-                                                                    email=form.cleaned_data['email'],
+        new_user = RegistrationProfile.objects.create_inactive_user(username=self.cleaned_data['username'],
+                                                                    password=self.cleaned_data['password1'],
+                                                                    email=self.cleaned_data['email'],
                                                                     profile_callback=profile_callback)
         return new_user
 
@@ -114,6 +114,9 @@ class RegistrationFormNoFreeEmail(RegistrationForm):
     Subclass of ``RegistrationForm`` which disallows registration with
     email addresses from popular free webmail services; moderately
     useful for preventing automated spam registrations.
+
+    To change the list of banned domains, override the attribute
+    ``bad_domains``.
     
     """
     bad_domains = ['aim.com', 'aol.com', 'email.com', 'gmail.com',
