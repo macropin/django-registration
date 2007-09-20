@@ -6,7 +6,7 @@ django-registration changelog
 Version 0.3, 19 September 2007:
 -------------------------------
 
-Packaged from revision 93 in Subversion; download at
+Packaged from revision 95 in Subversion; download at
 http://django-registration.googlecode.com/files/registration-0.3.tar.gz
 
 * Changed ``register`` and ``activate`` views to accept
