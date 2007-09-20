@@ -17,17 +17,26 @@ def activate(request, activation_key):
     """
     Activates a ``User``'s account, if their key is valid and hasn't
     expired.
-
-    Context::
+    
+    By default, uses the template ``registration/activate.html``; to
+    change this, pass the name of a template as the keyword argument
+    ``template_name``.
+    
+    Context:
+    
         account
-            The ``User`` object corresponding to the account,
-            if the activation was successful.
-
+            The ``User`` object corresponding to the account, if the
+            activation was successful. ``False`` if the activation was
+            not successful.
+    
         expiration_days
-            The number of days for which activation keys stay valid.
-
-    Template::
-        registration/activate.html
+            The number of days for which activation keys stay valid
+            after registration.
+    
+    Template:
+    
+        registration/activate.html or ``template_name`` keyword
+        argument.
     
     """
     activation_key = activation_key.lower() # Normalize before trying anything with it.
@@ -38,36 +47,42 @@ def activate(request, activation_key):
                               context_instance=RequestContext(request))
 
 
-def register(request, success_url='/accounts/register/complete/', form_class=RegistrationForm, profile_callback=None):
+def register(request, success_url='/accounts/register/complete/',
+             form_class=RegistrationForm, profile_callback=None,
+             template_name='registration/registration_form.html'):
     """
     Allows a new user to register an account.
     
-    On successful registration, an email will be sent to the new user
-    with an activation link to click to make the account active. This
-    view will then redirect to ``success_url``, which defaults to
-    '/accounts/register/complete/'. This application has a URL pattern
-    for that URL and routes it to the ``direct_to_template`` generic
-    view to display a short message telling the user to check their
-    email for the account activation link.
-
-    By default, uses ``registration.forms.RegistrationForm`` as the
-    registration form; to change this, pass a different form class as
-    the ``form_class`` keyword argument. The form class you specify
-    must create and return the new ``User``, and must accept the
-    keyword argument ``profile_callback`` (see below).
+    Following successful registration, redirects to either
+    ``/accounts/register/complete/`` or, if supplied, the URL
+    specified in the keyword argument ``success_url``.
+    
+    By default, ``registration.forms.RegistrationForm`` will be used
+    as the registration form; to change this, pass a different form
+    class as the ``form_class`` keyword argument. The form class you
+    specify must have a method ``save`` which will create and return
+    the new ``User``, and that method must accept the keyword argument
+    ``profile_callback`` (see below).
     
     To enable creation of a site-specific user profile object for the
     new user, pass a function which will create the profile object as
     the keyword argument ``profile_callback``. See
     ``RegistrationManager.create_inactive_user`` in the file
-    ``models.py`` for details on what this function should do.
+    ``models.py`` for details on how to write this function.
     
-    Context::
+    By default, uses the template
+    ``registration/registration_form.html``; to change this, pass the
+    name of a template as the keyword argument ``template_name``.
+    
+    Context:
+    
         form
-            The registration form
+            The registration form.
     
-    Template::
-        registration/registration_form.html
+    Template:
+    
+        registration/registration_form.html or ``template_name``
+        keyword argument.
     
     """
     if request.method == 'POST':
@@ -77,7 +92,6 @@ def register(request, success_url='/accounts/register/complete/', form_class=Reg
             return HttpResponseRedirect(success_url)
     else:
         form = form_class()
-    return render_to_response('registration/registration_form.html',
+    return render_to_response(template_name,
                               { 'form': form },
                               context_instance=RequestContext(request))
-

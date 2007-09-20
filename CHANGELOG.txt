@@ -3,6 +3,33 @@ django-registration changelog
 =============================
 
 
+Version 0.3, 10 September 2007:
+-------------------------------
+
+Packaged from revision ? in Subversion; download at
+http://django-registration.googlecode.com/files/registration-0.3.tar.gz
+
+* Changed ``register`` and ``activate`` views to accept
+  ``template_name`` keyword argument for selecting a custom template.
+
+* Changed ``register`` view to accept ``form_class`` keyword
+  argument specifying the form to use.
+
+* BACKWARDS-INCOMPATIBLE CHANGE: Changed
+  ``RegistrationManager.create_inactive_user`` to use a template for
+  the subject of the activation email.
+
+* BACKWARDS-INCOMPATIBLE CHANGE: Removed the ``tos`` field from
+  ``RegistrationForm``; if you were relying on it, switch to using
+  ``RegistrationFormTermsOfService`` instead.
+
+* Added script ``bin/delete_expired_users.py`` with instructions on
+  how to use it as a cron job to clean up expired/inactive accounts.
+
+* Marked strings for translation and added ``locale`` directory so
+  that translations can be added.
+
+
 Version 0.2, 29 May 2007:
 -------------------------
 

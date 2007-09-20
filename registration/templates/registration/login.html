@@ -6,7 +6,7 @@
 
 {% block main_content %}
 
-{% if form.errors %}
+{% if errors %}
 <p class="error">Please correct the errors below:</p>
 {% endif %}
 
@@ -22,5 +22,5 @@
 {% endblock %}
 
 {% block sidebar %}
-<p>If you don't have an account, you can <a href="/accounts/register/">sign up</a> for one; it's free, and you'll get access to a bunch of nifty features.</p>
+<p>If you don't have an account, you can <a href="{% url registration_register %}">sign up</a> for one; it's free, and you'll get access to a bunch of nifty features.</p>
 {% endblock %}

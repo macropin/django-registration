@@ -4,9 +4,9 @@ Forms and validation code for user registration.
 """
 
 
-import re
-
 from django import newforms as forms
+from django.core.validators import alnum_re
+from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
 
 from registration.models import RegistrationProfile
@@ -14,33 +14,35 @@ from registration.models import RegistrationProfile
 
 # I put this on all required fields, because it's easier to pick up
 # on them with CSS or JavaScript if they have a class of "required"
-# in the HTML. Your mileage may vary.
+# in the HTML. Your mileage may vary. If/when Django ticket #3515
+# lands in trunk, this will no longer be necessary.
 attrs_dict = { 'class': 'required' }
-
-
-username_re = re.compile(r'^\w+$')
 
 
 class RegistrationForm(forms.Form):
     """
     Form for registering a new user account.
     
-    Validates that the password is entered twice and matches,
-    and that the username is not already taken.
+    Validates that the request username is not already in use, and
+    requires the password to be entered twice to catch typos.
+    
+    Subclasses should feel free to add any additional validation they
+    need, but should either preserve the base ``save()`` or implement
+    a ``save()`` which accepts the ``profile_callback`` keyword
+    argument and passes it through to
+    ``RegistrationProfile.objects.create_inactive_user()``.
     
     """
     username = forms.CharField(max_length=30,
                                widget=forms.TextInput(attrs=attrs_dict),
-                               label=u'Username')
+                               label=_(u'username'))
     email = forms.EmailField(widget=forms.TextInput(attrs=dict(attrs_dict,
                                                                maxlength=200)),
-                             label=u'Email address')
+                             label=_(u'email address'))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict),
-                                label=u'Password')
+                                label=_(u'password'))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict),
-                                label=u'Password (again, to catch typos)')
-    tos = forms.BooleanField(widget=forms.CheckboxInput(attrs=attrs_dict),
-                             label=u'I have read and agree to the Terms of Service')
+                                label=_(u'password (again)'))
     
     def clean_username(self):
         """
@@ -48,24 +50,50 @@ class RegistrationForm(forms.Form):
         in use.
         
         """
-        if 'username' in self.cleaned_data:
-            if not username_re.search(self.cleaned_data['username']):
-                raise forms.ValidationError(u'Usernames can only contain letters, numbers and underscores')
-            try:
-                user = User.objects.get(username__exact=self.cleaned_data['username'])
-            except User.DoesNotExist:
-                return self.cleaned_data['username']
-            raise forms.ValidationError(u'This username is already taken. Please choose another.')
+        if not alnum_re.search(self.cleaned_data['username']):
+            raise forms.ValidationError(_(u'Usernames can only contain letters, numbers and underscores'))
+        try:
+            user = User.objects.get(username__exact=self.cleaned_data['username'])
+        except User.DoesNotExist:
+            return self.cleaned_data['username']
+        raise forms.ValidationError(_(u'This username is already taken. Please choose another.'))
     
     def clean_password2(self):
         """
         Validates that the two password inputs match.
         
         """
-        if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data and \
-           self.cleaned_data['password1'] == self.cleaned_data['password2']:
+        if self.cleaned_data['password1'] == self.cleaned_data['password2']:
             return self.cleaned_data['password2']
-        raise forms.ValidationError(u'You must type the same password each time')
+        raise forms.ValidationError(_(u'You must type the same password each time'))
+    
+    def save(self, profile_callback=None):
+        """
+        Creates the new ``User`` and ``RegistrationProfile``, and
+        returns the ``User``.
+        
+        This is essentially a light wrapper around
+        ``RegistrationProfile.objects.create_inactive_user()``,
+        feeding it the form data and a profile callback (see the
+        documentation on ``create_inactive_user()`` for details) if
+        supplied.
+        
+        """
+        new_user = RegistrationProfile.objects.create_inactive_user(username=self.cleaned_data['username'],
+                                                                    password=self.cleaned_data['password1'],
+                                                                    email=self.cleaned_data['email'],
+                                                                    profile_callback=profile_callback)
+        return new_user
+
+
+class RegistrationFormTermsOfService(RegistrationForm):
+    """
+    Subclass of ``RegistrationForm`` which adds a required checkbox
+    for agreeing to a site's Terms of Service.
+    
+    """
+    tos = forms.BooleanField(widget=forms.CheckboxInput(attrs=attrs_dict),
+                             label=_(u'I have read and agree to the Terms of Service'))
     
     def clean_tos(self):
         """
@@ -74,23 +102,7 @@ class RegistrationForm(forms.Form):
         """
         if self.cleaned_data.get('tos', False):
             return self.cleaned_data['tos']
-        raise forms.ValidationError(u'You must agree to the terms to register')
-
-    def save(self, profile_callback):
-        """
-        Creates the new ``User`` and ``RegistrationProfile``, and
-        returns the ``User``.
-
-        Passes ``profile_callback`` through to the user-creation
-        function, to be used in creating a site-specific profile for
-        the new ``User``.
-
-        """
-        new_user = RegistrationProfile.objects.create_inactive_user(username=self.cleaned_data['username'],
-                                                                    password=self.cleaned_data['password1'],
-                                                                    email=self.cleaned_data['email'],
-                                                                    profile_callback=profile_callback)
-        return new_user
+        raise forms.ValidationError(_(u'You must agree to the terms to register'))
 
 
 class RegistrationFormUniqueEmail(RegistrationForm):
@@ -105,12 +117,11 @@ class RegistrationFormUniqueEmail(RegistrationForm):
         site.
         
         """
-        if 'email' in self.cleaned_data:
-            try:
-                user = User.objects.get(email__exact=self.cleaned_data['email'])
-            except User.DoesNotExist:
-                return self.cleaned_data['email']
-            raise forms.ValidationError(u'This email address is already in use. Please supply a different email address.')
+        try:
+            user = User.objects.get(email__exact=self.cleaned_data['email'])
+        except User.DoesNotExist:
+            return self.cleaned_data['email']
+        raise forms.ValidationError(_(u'This email address is already in use. Please supply a different email address.'))
 
 
 class RegistrationFormNoFreeEmail(RegistrationForm):
@@ -118,14 +129,14 @@ class RegistrationFormNoFreeEmail(RegistrationForm):
     Subclass of ``RegistrationForm`` which disallows registration with
     email addresses from popular free webmail services; moderately
     useful for preventing automated spam registrations.
-
-    To change the list of banned domains, override the attribute
-    ``bad_domains``.
+    
+    To change the list of banned domains, subclass this form and
+    override the attribute ``bad_domains``.
     
     """
     bad_domains = ['aim.com', 'aol.com', 'email.com', 'gmail.com',
                    'googlemail.com', 'hotmail.com', 'hushmail.com',
-                   'live.com', 'msn.com', 'mail.ru']
+                   'msn.com', 'mail.ru', 'mailinator.com', 'live.com']
     
     def clean_email(self):
         """
@@ -133,8 +144,7 @@ class RegistrationFormNoFreeEmail(RegistrationForm):
         webmail domains.
         
         """
-        if 'email' in self.cleaned_data:
-            email_domain = self.cleaned_data['email'].split('@')[1]
-            if email_domain in self.bad_domains:
-                raise forms.ValidationError(u'Registration using free email addresses is prohibited. Please supply a different email address.')
-            return self.cleaned_data['email']
+        email_domain = self.cleaned_data['email'].split('@')[1]
+        if email_domain in self.bad_domains:
+            raise forms.ValidationError(_(u'Registration using free email addresses is prohibited. Please supply a different email address.'))
+        return self.cleaned_data['email']

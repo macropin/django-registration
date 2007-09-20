@@ -4,4 +4,5 @@ include LICENSE.txt
 include MANIFEST.in
 include README.txt
 recursive-include docs *
+recursive-include registration/conf *
 recursive-include registration/templates *

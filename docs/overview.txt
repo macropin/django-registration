@@ -2,36 +2,243 @@
 Django registration
 ===================
 
+
 This is a fairly simple user-registration application for Django_,
 designed to make allowing user signups as painless as possible.
 
 .. _Django: http://www.djangoproject.com/
 
 
+Overview
+========
+
+This application enables a common user-registration workflow:
+
+1. User fills out a registration form, selecting a username and
+   password and entering an email address.
+
+2. An inactive account is created, and an activation link is sent to
+   the user's email address.
+
+3. User clicks the activation link, the account becomes active and the
+   user is able to log in and begin contributing to your site.
+
+Various methods of extending and customizing the registration process
+are also provided.
+
+
+Installation
+============
+
+In order to use django-registration, you will need to have a recent
+Subversion checkout of Django's development version; this application
+is keeping up with changes in Django's development version (and taking
+advantage of new features available there). Because of this,
+django-registration will not work with the Django 0.96 release.
+
+Also, if you haven't downloaded a copy of django-registration already,
+you'll need to do so. You can download a packaged version of the
+latest release here::
+
+    http://django-registration.googlecode.com/files/registration-0.3.tar.gz
+
+Open up the package (on most operating systems you can double-click,
+or you can use the command ``tar zxvf registration-0.3.tar.gz`` to
+manually unpack it), and, at a command line, navigate to the directory
+``registration-0.3``, then type:
+
+    python setup.py install
+
+This will install django-registration into a directory on your Python
+import path. For system-wide installation on Linux/Unix and Mac OS,
+you can use ``sudo``::
+
+    sudo python setup.py install
+
+Alternatively, you can do a Subversion checkout to get the latest
+development code (though this may also include bugs which have not yet
+been fixed)::
+
+    svn co http://django-registration.googlecode.com/svn/trunk/registration/
+
+For best results, do that in a directory that's on your Python import
+path.
+
+
+Basic use
+=========
+
+To use the registration system with all its default settings, you'll
+need to do the following:
+
+1. Add ``registration`` to the ``INSTALLED_APPS`` setting of your
+   Django project.
+
+2. Add the setting ``ACCOUNT_ACTIVATION_DAYS`` to your settings file;
+   this should be the number of days activation keys will remain valid
+   after an account is registered.
+
+3. Edit the example templates included with django-registration to
+   suit your own site, or create your own set of templates (see the
+   section on templates below for details).
+
+4. Add this line to your site's root URLConf::
+   
+       (r'^accounts/$', include('registration.urls')),
+
+5. Link people to ``/accounts/register/`` so they can start signing
+   up.
+
+
+Templates used by django-registration
+=====================================
+
+The views included in django-registration make use of five templates:
+
+* ``registration/registration_form.html`` displays the registration
+  form for users to sign up.
+
+* ``registration/registration_complete.html`` is displayed after the
+  activation email has been sent, to tell the new user to check
+  his/her email.
+
+* ``registration/activation_email_subject.txt`` is used for the
+  subject of the activation email.
+
+* ``registration/activation_email.txt`` is used for the body of the
+  activation email.
+
+* ``registration/activate.html`` is displayed when a user attempts to
+  activate his/her account.
+
+Examples of all of these templates are provided, but remember that
+**they are examples** and you will almost certainly have to edit them
+to suit your site's HTML and template block structure. For views
+defined in this application, see the included `views documentation`_
+for details on available context variables, and for details on the
+templates used by the activation email see the included `models
+documentation`_.
+
+Additionally, the URLConf provided with django-registration includes
+URL patterns for useful views in Django's built-in authentication
+application -- this means that a single ``include`` in your root
+URLConf can wire up registration and the auth application's login,
+logout, and password change/reset views. If you choose to use these
+views you will need to provide your own templates for them; consult
+`the Django authentication documentation`_ for details on the
+templates and contexts used by these views.
+
+.. _views documentation: views.txt
+.. _models documentation: models.txt
+.. _the Django authentication documentation: http://www.djangoproject.com/documentation/authentication/
+
+
+How it works
+============
+
+Using the recommended default configuration, the URL
+``/accounts/register/`` will map to the view
+``registration.views.register``, which displays a registration form
+(an instance of ``registration.forms.RegistrationForm``); this form
+asks for a username, email address and password, and verifies that the
+username is available and requires the password to be entered twice
+(to catch typos). It then does three things:
+
+1. Creates an instance of ``django.contrib.models.auth.User``, using
+   the supplied username, email address and password; the
+   ``is_active`` field on the new ``User`` will be set to ``False``,
+   meaning that the account is inactive and the user will not be able
+   to log in yet.
+
+2. Creates an instance of ``registration.models.RegistrationProfile``,
+   stores an activation key (a SHA1 hash generated from the new user's
+   username plus a randomly-generated "salt"), and relates that
+   ``RegistrationProfile`` to the ``User`` it just created.
+
+3. Sends an email to the user (at the address they supplied)
+   containing a link which can be clicked to activate the account.
+
+For details on customizing this process, including use of alternate
+registration form classes and automatic creation of a site-specific
+profile, see the sections on customization below.
+
+After the activation email has been sent,
+``registration.views.register`` issues a redirect to the URL
+``/accounts/register/complete/``. By default, this is mapped to the
+``direct_to_template`` generic view, and displays the template
+``registration/registration_complete.html``; this is intended to show
+a short message telling the user to check his/her email for the
+activation link.
+
+The activation link will map to the view
+``registration.views.activate``, which will attempt to activate the
+account by setting the ``is_active`` field on the ``User`` to
+``True``. If the activation key for the ``User`` has expired (this is
+controlled by the setting ``ACCOUNT_ACTIVATION_DAYS``, as described
+above), the account will not be activated (see the section on
+maintenance below for instructions on cleaning out expired accounts
+which have not been activated).
+
+
+Maintenance
+===========
+
+Inevitably, a site which uses a two-step process for user signup --
+registration followed by activation -- will accumulate a certain
+number of accounts which were registered but never activated. These
+accounts clutter up the database and tie up usernames which might
+otherwise be actively used, so it's desirable to clean them out
+periodically. For this purpose, a script,
+``registration/bin/deleted_expired_users.py``, is provided, which is
+suitable for use as a regular cron job. See that file for notes on how
+to add it to your crontab, and the included models documentation (see
+below) for discussion of how it works and some caveats.
+
+
+Where to go from here
+=====================
+
+Full documentation for all included components is bundled in the
+packaged release; see the following files for details:
+
+* `Forms documentation`_ for details on ``RegistrationForm``,
+  pre-packaged subclasses and available customizations.
+
+* `Models documentation`_ for details on ``RegistrationProfile`` and
+  its custom manager.
+
+* `Views documentation`_ for details on the ``register`` and
+  ``activate`` views, and methods for customizing them.
+
+.. _Forms documentation: forms.txt
+.. _Models documentation: models.txt
+.. _Views documentation: views.txt
+
+
 Development
 ===========
 
-The `latest released version`_ of this application is 0.2, and is
-quite stable; it's already been deployed on a number of sites. You can
-also obtain the absolute freshest code from `a Subversion checkout`_,
-but be warned that the code in SVN may not always be
-backwards-compatible, and may well contain bugs that haven't yet been
-fixed.
+The `latest released version`_ of this application is 0.3, and is
+quite stable; it's already been deployed on a number of sites,
+including djangoproject.com. You can also obtain the absolute freshest
+code from `a Subversion checkout`_, but be warned that the code in SVN
+may not always be backwards-compatible, and may well contain bugs that
+haven't yet been fixed.
 
-This document covers the 0.2 release of django-registration; new
+This document covers the 0.3 release of django-registration; new
 features introduced in Subversion will be added to the documentation
 at the time of the next packaged release.
 
-.. _latest released version: http://django-registration.googlecode.com/files/registration-0.2.tar.gz
+.. _latest released version: 
 .. _a Subversion checkout: http://django-registration.googlecode.com/svn/trunk/registration/
 
 
 Changes from previous versions
 ==============================
 
-Several new features were added between version 0.1 and version 0.2;
+Several new features were added between version 0.2 and version 0.3;
 for details, see the CHANGELOG.txt file distributed with the packaged
-0.2 release.
+0.3 release.
 
 One important change to note before upgrading an installation of
 version 0.1 is a change to the ``RegistrationProfile`` model; the
@@ -56,250 +263,13 @@ need to use this application with Django 0.96, replace all uses of
 Due to use of the ``newforms`` library, this application cannot work
 with Django 0.95.
 
-
-Basic use
-=========
-
-This application enables a fairly common workflow for user signups:
-
-1. User signs up for account.
-2. User gets emailed an activation link.
-3. User clicks the activation link before it expires.
-4. User becomes a happy and productive contributor to your site.
-
-To make this work, start by putting this app into your
-``INSTALLED_APPS`` setting and running ``manage.py syncdb``. Then, add
-a new setting in your settings file: ``ACCOUNT_ACTIVATION_DAYS``. This
-should be a number, and will be used as the number of days before an
-activation key expires.
-
-Next, either edit the included templates (see below) to suit your
-site, or create your own templates which integrate with your site's
-look and feel.
-
-Finally, drop this line into your root URLConf::
-
-    (r'^accounts/', include('registration.urls')),
-
-And point people at the URL ``/accounts/register/``. Things should
-just work.
-
-
-Templates
-=========
-
-The download includes a set of **example** templates, which are meant
-to give you an idea of how things work. However, they're taken
-directly from a site which uses this application, and so they make
-assumptions about that site's template structure that probably aren't
-true of your site. So **it is expected that you will edit these
-templates before using them**, or use them as guides to create your
-own set of templates. Either way, you'll want to make sure you have a
-set of templates that works with your site, and with its look and
-feel.
-
-The default template included for the activation email makes use of
-the ``humanize`` template tag library, so if you use that template
-"as-is" you'll need to have ``django.contrib.humanize`` in your
-``INSTALLED_APPS`` setting.
-
-
-Models
-======
-
-This app includes one model: ``RegistrationProfile``, which is tied to
-the ``User`` model in ``django.contrib.auth`` via a unique foreign
-key. ``RegistrationProfile`` simply stores the user's activation key.
-
-``RegistrationProfile`` has one custom method,
-``activation_key_expired``, which returns ``True`` if the key has
-expired and ``False`` otherwise.
-
-There's also a custom manager on ``RegistrationProfile`` which defines
-a few useful methods:
-
-    ``activate_user``
-        Takes an activation key, looks up the ``RegistrationProfile``
-        for that key, and sets the ``is_active`` field to ``True`` on
-        the ``User`` associated with it. If this is successful, it
-        returns the ``User``. If the key was expired, or if the key
-        didn't correspond to any ``RegistrationProfile``, this method
-        returns ``False``.
-
-    ``create_inactive_user``
-        Takes a username, email address and password, and first
-        creates a new ``User`` with those values, setting the
-        ``is_active`` field to ``False``. Then it generates an
-        activation key and stores a ``RegistrationProfile`` for the
-        ``User``. Finally, it sends an email to the user containing
-        the activation key. The email is generated by rendering the
-        template ``registration/activation_email.txt``, so edit that
-        template to customize the text of the email. This method
-        returns the new ``User`` object, in case you want to do
-        something with it afterwards.
-        
-        To enable creation of a site-specific user profile (e.g., the
-        model specified in the ``AUTH_PROFILE_MODULE`` setting), pass
-        the optional keyword argument ``profile_callback``; the value
-        of this argument should be a function which, given a ``User``,
-        will create and save an instance of the site-specific profile
-        with appropriate default values.
-        
-    ``create_profile`` Given a ``User`` object, creates, saves and
-        returns a ``RegistrationProfile`` for that ``User``,
-        generating the activation key from a combinatino og the
-        ``User``'s username and a random salt.
-
-    ``delete_inactive_users``
-        Clears out accounts which were never activated; it does this
-        by finding accounts which still have ``is_active`` set to
-        ``False`` but have a ``RegistrationProfile`` with an expired
-        key, and deleting them. This is intended to keep your database
-        uncluttered and free up inactive usernames for registration,
-        but if for some reason you need to deactivate an account while
-        keeping the ``User`` in the database (say, to disable a
-        troublesome user's login), you can manually delete that
-        account's ``RegistrationProfile`` and this method will leave
-        it alone.
-
-Most of the time you won't need to manually write code which calls
-these methods, though; the included views (see below) will take care
-of them for you.
-
-
-Forms
-=====
-
-One form is included, because it's really all that's needed to handle
-user signups.
-
-``registration.forms.RegistrationForm``
----------------------------------------
-
-This form collects a username, email address and password from a
-prospective user, and does a little bit of validation:
-
-* It checks that the username is not already in use.
-
-* It requires the user to enter the password twice (to avoid typos),
-  and checks that both versions match.
-
-This is really the minimal level of validation that most people seem
-to want; more advanced schemes like requiring that usernames or
-passwords be at least a certain number of characters long, or also
-validating the uniqueness of the email address, are best handled by
-customizing the form to your own needs.
-
-
-Views
-=====
-
-Two views are included, and between them they handle all the actual
-work of registering and activating users.
-
-
-``registration.views.activate``
--------------------------------
-
-This view accepts an activation key, and calls
-``RegistrationProfile.objects.activate_user`` (see above) to activate
-the account associated with that key.
-
-The template used is ``registration/activate.html``, and it receives
-two context variables:
-
-    ``account``
-        The ``User`` who was activated, if activation was successful,
-        or ``False`` if the key was expired or didn't match any
-        existing account.
-
-    ``expiration_days``
-        The number of days activation keys last before they expire;
-        this is useful for displaying a "perhaps the account expired"
-        message on an unsuccessful activation.
-
-
-``registration.views.register``
--------------------------------
-
-This view signs up a new user account, by displaying and validating a
-``RegistrationForm``, and calling
-``RegistrationProfile.objects.create_inactive_user`` (see above) once
-it gets valid data.
-
-The template used is ``registration/registration_form.html``, and it
-receives a context variable named ``form``, which is the
-``RegistrationForm`` instance. It also uses ``RequestContext``, so any
-context processors you've enabled on your site will be applied as
-well.
-
-On successful registration, this view issues a redirect; the default
-URL of the redirect is ``/accounts/register/complete/``, but you can
-override this by passing the keyword argument ``success_url`` into the
-view.
-
-To enable creation of a site-specific user profile, pass the optional
-keyword argument ``profile_callback`` to this view; see the
-``create_inactive_user`` method of the manager on
-``RegistrationProfile`` (documented above) for details.
-
-URLs
-====
-
-The default URLConf included with this application maps the following
-URL fragments to the following views:
-
-    ``activate/<activation key>/``
-        Maps to ``registration.views.activate``. Note that this URL
-        will match any string as ``activation_key``; the pattern will
-        be checked to see if it matches the format of a SHA1 hash
-        before any database lookup happens, but allowing anything to
-        match here means you can show a useful "this key is invalid"
-        message instead of a confusing 404 when the format isn't
-        correct.
-    
-    ``register/``
-        Maps to ``registration.views.register``.
-
-    ``register/complete/``
-        Maps to ``django.views.generic.simple.direct_to_template``,
-        using the template
-        ``registration/registration_complete.html``.
-
-    ``login/``
-        Maps to ``django.contrib.auth.views.login``.
-
-    ``logout/``
-        Maps to ``django.contrib.auth.views.logout``.
-
-A good place to include this URLConf if you use it directly is at
-``accounts/``.
-
-
-Troubleshooting
-===============
-
-There are two problems you're likely to run into: one is not editing
-the default template set (see above for why you need to do that), and
-will lead either to errors about a base template not existing, or to a
-mismatch between names of blocks in your site's base template and
-names of blocks in the default template set.
-
-The other problem you're likely to see is users complaining that they
-didn't get their activation emails. This is most likely due to
-overzealous spam filtering by their ISP or email provider;
-unfortunately, many spam filters eat account registration emails for
-breakfast. If you can solve that problem, you will make millions of
-dollars.
-
-
 What this application does not do
 =================================
 
-This application also does not integrate in any way with OpenID, nor
-should it; one of the key selling points of OpenID is that users
-**don't** have to walk through an explicit registration step on every
-site they want to use :)
+This application does not integrate in any way with OpenID, nor should
+it; one of the key selling points of OpenID is that users **don't**
+have to walk through an explicit registration step for every site or
+service they want to use :)
 
 
 If you spot a bug
