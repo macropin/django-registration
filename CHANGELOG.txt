@@ -3,10 +3,10 @@ django-registration changelog
 =============================
 
 
-Version 0.3, 10 September 2007:
+Version 0.3, 19 September 2007:
 -------------------------------
 
-Packaged from revision 89 in Subversion; download at
+Packaged from revision 90 in Subversion; download at
 http://django-registration.googlecode.com/files/registration-0.3.tar.gz
 
 * Changed ``register`` and ``activate`` views to accept
@@ -28,6 +28,9 @@ http://django-registration.googlecode.com/files/registration-0.3.tar.gz
 
 * Marked strings for translation and added ``locale`` directory so
   that translations can be added.
+
+* Updated to deal with merge of Django's Unicode branch into trunk;
+  now using Unicode-aware functions everywhere.
 
 
 Version 0.2, 29 May 2007:
