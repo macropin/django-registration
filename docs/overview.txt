@@ -84,7 +84,7 @@ need to do the following:
 
 4. Add this line to your site's root URLConf::
    
-       (r'^accounts/$', include('registration.urls')),
+       (r'^accounts/', include('registration.urls')),
 
 5. Link people to ``/accounts/register/`` so they can start signing
    up.
