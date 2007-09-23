@@ -3,10 +3,31 @@ django-registration changelog
 =============================
 
 
-Version 0.3, 22 September 2007:
+Version 0.3p2, 23 September 2007:
+---------------------------------
+
+* Packaged from revision 100 in Subversion.
+
+* Fixed ``activate`` view to actually take the ``template_name``
+  argument.
+
+
+Version 0.3p1, 22 September 2007:
+---------------------------------
+
+* Packaged from revision 99 in Subversion.
+
+* Fixed a typo in docs/overview.txt.
+
+* Fixed a typo in bin/delete_expired_users.py.
+
+* Added French translation.
+
+
+Version 0.3, 19 September 2007:
 -------------------------------
 
-Packaged from revision 99 in Subversion; download at
+Packaged from revision 89 in Subversion; download at
 http://django-registration.googlecode.com/files/registration-0.3.tar.gz
 
 * Changed ``register`` and ``activate`` views to accept

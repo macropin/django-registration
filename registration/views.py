@@ -13,7 +13,7 @@ from registration.forms import RegistrationForm
 from registration.models import RegistrationProfile
 
 
-def activate(request, activation_key):
+def activate(request, activation_key, template_name='registration/activate.html'):
     """
     Activates a ``User``'s account, if their key is valid and hasn't
     expired.
@@ -41,7 +41,7 @@ def activate(request, activation_key):
     """
     activation_key = activation_key.lower() # Normalize before trying anything with it.
     account = RegistrationProfile.objects.activate_user(activation_key)
-    return render_to_response('registration/activate.html',
+    return render_to_response(template_name,
                               { 'account': account,
                                 'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS },
                               context_instance=RequestContext(request))
