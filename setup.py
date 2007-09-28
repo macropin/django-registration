@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(name='registration',
-      version='0.3p2',
+      version='0.3p3',
       description='User-registration application for Django',
       author='James Bennett',
       author_email='james@b-list.org',
