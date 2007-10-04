@@ -3,6 +3,16 @@ django-registration changelog
 =============================
 
 
+Version 0.3p4, 4 October 2007:
+------------------------------
+
+* Packaged from revision 101 in Subversion.
+
+* BACKWARDS-INCOMPATIBLE CHANGE: In response to larger numbers of
+  complaints from people trying to use the example templates as-is,
+  the example templates have been removed.
+
+
 Version 0.3p2, 23 September 2007:
 ---------------------------------
 

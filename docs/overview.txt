@@ -78,9 +78,8 @@ need to do the following:
    this should be the number of days activation keys will remain valid
    after an account is registered.
 
-3. Edit the example templates included with django-registration to
-   suit your own site, or create your own set of templates (see the
-   section on templates below for details).
+3. Create the necessary templates (see the section on templates below
+   for details).
 
 4. Add this line to your site's root URLConf::
    
@@ -111,13 +110,11 @@ The views included in django-registration make use of five templates:
 * ``registration/activate.html`` is displayed when a user attempts to
   activate his/her account.
 
-Examples of all of these templates are provided, but remember that
-**they are examples** and you will almost certainly have to edit them
-to suit your site's HTML and template block structure. For views
-defined in this application, see the included `views documentation`_
-for details on available context variables, and for details on the
-templates used by the activation email see the included `models
-documentation`_.
+Examples of all of these templates are not provided; you will need to
+create them yourself. For views defined in this application, see the
+included `views documentation`_ for details on available context
+variables, and for details on the templates used by the activation
+email see the included `models documentation`_.
 
 Additionally, the URLConf provided with django-registration includes
 URL patterns for useful views in Django's built-in authentication
