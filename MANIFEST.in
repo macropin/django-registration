@@ -3,6 +3,7 @@ include INSTALL.txt
 include LICENSE.txt
 include MANIFEST.in
 include README.txt
+include AUTHORS.txt
 recursive-include docs *
 recursive-include registration/bin *
 recursive-include registration/locale *
