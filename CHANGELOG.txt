@@ -3,6 +3,22 @@ django-registration changelog
 =============================
 
 
+Version 0.3p5, 6 October 2007:
+----------------------------
+
+* Packaged from revision 109 in Subversion.
+
+* Added German translation.
+
+* Fixed a mismatch between the default ``RegistrationForm``'s maximum
+  length on email addresses and the actual maximum length on Django's
+  ``User`` model.
+
+* Fixed a situation where bad input for the ``password1`` field on
+  ``RegistrationForm`` could cause validation of ``password2`` to fail
+  with an exception.
+
+
 Version 0.3p4, 4 October 2007:
 ------------------------------
 

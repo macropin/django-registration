@@ -24,7 +24,7 @@ for dirpath, dirnames, filenames in os.walk('registration'):
 
 
 setup(name='registration',
-      version='0.3p4',
+      version='0.3p5',
       description='User-registration application for Django',
       author='James Bennett',
       author_email='james@b-list.org',

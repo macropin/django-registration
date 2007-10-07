@@ -6,4 +6,3 @@ include README.txt
 recursive-include docs *
 recursive-include registration/bin *
 recursive-include registration/locale *
-recursive-include registration/templates *
