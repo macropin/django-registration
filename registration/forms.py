@@ -23,7 +23,7 @@ class RegistrationForm(forms.Form):
     """
     Form for registering a new user account.
     
-    Validates that the request username is not already in use, and
+    Validates that the requested username is not already in use, and
     requires the password to be entered twice to catch typos.
     
     Subclasses should feel free to add any additional validation they
