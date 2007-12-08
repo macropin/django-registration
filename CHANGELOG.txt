@@ -3,6 +3,23 @@ django-registration changelog
 =============================
 
 
+Version 0.4, 8 December 2007:
+===============================
+
+* Packaged from revision 122 in Subversion.
+
+* Added Greek translation.
+
+* Added Russian translation.
+
+* Changed ``maxlength`` to ``max_length`` now that Django issues a
+  deprecation warning for it.
+
+* BACKWARDS-INCOMPATIBLE CHANGE: Changed the password validation to be
+  on ``clean()`` instead of ``clean_password2()``. This means that
+  errors from this must be accessed via ``non_field_errors()``.
+
+
 Version 0.3p5, 6 October 2007:
 ----------------------------
 

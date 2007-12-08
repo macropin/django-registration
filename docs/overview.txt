@@ -40,12 +40,12 @@ Also, if you haven't downloaded a copy of django-registration already,
 you'll need to do so. You can download a packaged version of the
 latest release here::
 
-    http://django-registration.googlecode.com/files/registration-0.3.tar.gz
+    http://django-registration.googlecode.com/files/registration-0.4.tar.gz
 
 Open up the package (on most operating systems you can double-click,
-or you can use the command ``tar zxvf registration-0.3.tar.gz`` to
+or you can use the command ``tar zxvf registration-0.4.tar.gz`` to
 manually unpack it), and, at a command line, navigate to the directory
-``registration-0.3``, then type:
+``registration-0.4``, then type:
 
     python setup.py install
 
@@ -215,14 +215,14 @@ packaged release; see the following files for details:
 Development
 ===========
 
-The `latest released version`_ of this application is 0.3, and is
+The `latest released version`_ of this application is 0.4, and is
 quite stable; it's already been deployed on a number of sites,
 including djangoproject.com. You can also obtain the absolute freshest
 code from `a Subversion checkout`_, but be warned that the code in SVN
 may not always be backwards-compatible, and may well contain bugs that
 haven't yet been fixed.
 
-This document covers the 0.3 release of django-registration; new
+This document covers the 0.4 release of django-registration; new
 features introduced in Subversion will be added to the documentation
 at the time of the next packaged release.
 
@@ -246,6 +246,11 @@ to either drop the ``NOT NULL`` constraint or, preferably, simply drop
 the column. Consult your database's documentation for the correct way
 to handle this.
 
+Between version 0.3 and version 0.4, validation of the password fields
+was moved from ``clean_password2()`` to ``clean_password()``; this
+means that errors from mismatched passwords will now show up in
+``non_field_errors()`` instead of ``errors["password2"]``.
+
 
 Dependencies
 ============
@@ -253,12 +258,7 @@ Dependencies
 The only dependency for this application is a recent **SVN checkout**
 of Django; this application is tracking Django's development trunk,
 and has evolved to accomodate some changes which happened after the
-Django 0.96 release, so a stock copy of 0.96 will not work. If you
-need to use this application with Django 0.96, replace all uses of
-``cleaned_data`` with ``clean_data``.
-
-Due to use of the ``newforms`` library, this application cannot work
-with Django 0.95.
+Django 0.96 release, so a stock copy of 0.96 will not work.
 
 What this application does not do
 =================================
