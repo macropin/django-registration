@@ -8,3 +8,4 @@ Others who have contributed to the application:
 * Samuel Adam (French translation)
 * Jannis Leidel (German translation)
 * Rapahel Hertzog (helpful suggestions on packaging and distribution)
+* Panos Laganakos (Greek translation)
