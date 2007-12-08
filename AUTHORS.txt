@@ -9,3 +9,4 @@ Others who have contributed to the application:
 * Jannis Leidel (German translation)
 * Rapahel Hertzog (helpful suggestions on packaging and distribution)
 * Panos Laganakos (Greek translation)
+* Ilya Filippov (Russian translation)
