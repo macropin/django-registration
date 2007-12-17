@@ -3,8 +3,16 @@ django-registration changelog
 =============================
 
 
+Version 0.4p1, 16 December 2007:
+--------------------------------
+
+* Packaged from revision 127 in Subversion.
+
+* Added Polish translation.
+
+
 Version 0.4, 8 December 2007:
-===============================
+-----------------------------
 
 * Packaged from revision 122 in Subversion.
 
@@ -21,7 +29,7 @@ Version 0.4, 8 December 2007:
 
 
 Version 0.3p5, 6 October 2007:
-----------------------------
+------------------------------
 
 * Packaged from revision 112 in Subversion.
 

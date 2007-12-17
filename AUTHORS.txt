@@ -10,3 +10,4 @@ Others who have contributed to the application:
 * Rapahel Hertzog (helpful suggestions on packaging and distribution)
 * Panos Laganakos (Greek translation)
 * Ilya Filippov (Russian translation)
+* Jarek Zgoda (Polish translation)
