@@ -38,7 +38,7 @@ class RegistrationManager(models.Manager):
         If the key is not valid or has expired, returns ``False``.
         
         If the key is valid but the ``User`` is already active,
-        returns the ``User``.
+        returns ``False``.
         
         """
         # Make sure the key we're trying conforms to the pattern of a
