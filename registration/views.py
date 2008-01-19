@@ -22,21 +22,20 @@ def activate(request, activation_key, template_name='registration/activate.html'
     change this, pass the name of a template as the keyword argument
     ``template_name``.
     
-    Context:
+    **Context:**
     
-        account
-            The ``User`` object corresponding to the account, if the
-            activation was successful. ``False`` if the activation was
-            not successful.
+    account
+        The ``User`` object corresponding to the account, if the
+        activation was successful. ``False`` if the activation was not
+        successful.
     
-        expiration_days
-            The number of days for which activation keys stay valid
-            after registration.
+    expiration_days
+        The number of days for which activation keys stay valid after
+        registration.
     
-    Template:
+    **Template:**
     
-        registration/activate.html or ``template_name`` keyword
-        argument.
+    registration/activate.html or ``template_name`` keyword argument.
     
     """
     activation_key = activation_key.lower() # Normalize before trying anything with it.
@@ -74,15 +73,15 @@ def register(request, success_url='/accounts/register/complete/',
     ``registration/registration_form.html``; to change this, pass the
     name of a template as the keyword argument ``template_name``.
     
-    Context:
+    **Context:**
     
-        form
-            The registration form.
+    form
+        The registration form.
     
-    Template:
+    **Template:**
     
-        registration/registration_form.html or ``template_name``
-        keyword argument.
+    registration/registration_form.html or ``template_name`` keyword
+    argument.
     
     """
     if request.method == 'POST':
