@@ -40,12 +40,12 @@ Also, if you haven't downloaded a copy of django-registration already,
 you'll need to do so. You can download a packaged version of the
 latest release here::
 
-    http://django-registration.googlecode.com/files/registration-0.4p1.tar.gz
+    http://django-registration.googlecode.com/files/registration-0.4p2.tar.gz
 
 Open up the package (on most operating systems you can double-click,
-or you can use the command ``tar zxvf registration-0.4p1.tar.gz`` to
+or you can use the command ``tar zxvf registration-0.4p2.tar.gz`` to
 manually unpack it), and, at a command line, navigate to the directory
-``registration-0.4p1``, then type:
+``registration-0.4p2``, then type:
 
     python setup.py install
 

@@ -3,6 +3,18 @@ django-registration changelog
 =============================
 
 
+Version 0.4p2, 10 Feburary 2008:
+--------------------------------
+
+* Added Brazilian Portuguese translation.
+
+* Added Japanese translation.
+
+* Added Hebrew translation.
+
+* Minor documentation fixes.
+
+
 Version 0.4p1, 16 December 2007:
 --------------------------------
 
