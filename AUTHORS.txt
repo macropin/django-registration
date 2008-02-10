@@ -11,3 +11,6 @@ Others who have contributed to the application:
 * Panos Laganakos (Greek translation)
 * Ilya Filippov (Russian translation)
 * Jarek Zgoda (Polish translation)
+* Meir Kriheli (Hebrew translation)
+* Italo Maia (Brazilian Portuguese translation)
+* Shinya Okano (Japanese translation)
