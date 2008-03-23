@@ -14,3 +14,7 @@ Others who have contributed to the application:
 * Meir Kriheli (Hebrew translation)
 * Italo Maia (Brazilian Portuguese translation)
 * Shinya Okano (Japanese translation)
+* A. Al-Ibrahim (Arabic translation)
+* Ernesto Rico Schmidt (Spanish translation)
+* Vladislav Mitov (Bulgarian translation)
+* Leonardo Manuel Rocha (Argentinean Spanish translation)
