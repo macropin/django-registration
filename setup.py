@@ -23,9 +23,9 @@ for dirpath, dirnames, filenames in os.walk('registration'):
             data_files.append(os.path.join(prefix, f))
 
 
-setup(name='registration',
+setup(name='django-registration',
       version='0.5',
-      description='User-registration application for Django',
+      description='An extensible user-registration application for Django',
       author='James Bennett',
       author_email='james@b-list.org',
       url='http://code.google.com/p/django-registration/',
