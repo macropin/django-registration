@@ -20,3 +20,4 @@ Others who have contributed to the application:
 * Leonardo Manuel Rocha (Argentinean Spanish translation)
 * Emil Stenström (Swedish translation)
 * Liang Feng (Chinese translations)
+* Nebojsa Djordjevic (Serbian translation)
