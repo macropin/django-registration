@@ -53,7 +53,7 @@ class RegistrationForm(forms.Form):
         if not alnum_re.search(self.cleaned_data['username']):
             raise forms.ValidationError(_(u'Usernames can only contain letters, numbers and underscores'))
         try:
-            user = User.objects.get(username__exact=self.cleaned_data['username'])
+            user = User.objects.get(username__iexact=self.cleaned_data['username'])
         except User.DoesNotExist:
             return self.cleaned_data['username']
         raise forms.ValidationError(_(u'This username is already taken. Please choose another.'))
@@ -122,7 +122,7 @@ class RegistrationFormUniqueEmail(RegistrationForm):
         
         """
         try:
-            user = User.objects.get(email__exact=self.cleaned_data['email'])
+            user = User.objects.get(email__iexact=self.cleaned_data['email'])
         except User.DoesNotExist:
             return self.cleaned_data['email']
         raise forms.ValidationError(_(u'This email address is already in use. Please supply a different email address.'))
