@@ -85,7 +85,7 @@ def register(request, success_url='/accounts/register/complete/',
     
     """
     if request.method == 'POST':
-        form = form_class(request.POST)
+        form = form_class(data=request.POST, files=request.FILES)
         if form.is_valid():
             new_user = form.save(profile_callback=profile_callback)
             return HttpResponseRedirect(success_url)
