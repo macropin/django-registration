@@ -6,7 +6,7 @@ Forms and validation code for user registration.
 
 from django import newforms as forms
 from django.core.validators import alnum_re
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 
 from registration.models import RegistrationProfile
