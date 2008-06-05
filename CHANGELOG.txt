@@ -6,6 +6,8 @@ django-registration changelog
 Version 0.5, 4 June 2008:
 -------------------------
 
+* Packaged from revision 155 in Subversion.
+
 * Added Serbian translation.
 
 * Added Italian translation.
