@@ -21,3 +21,4 @@ Others who have contributed to the application:
 * Emil Stenström (Swedish translation)
 * Liang Feng (Chinese translations)
 * Nebojsa Djordjevic (Serbian translation)
+* Nicola Larosa (Italian translation)
