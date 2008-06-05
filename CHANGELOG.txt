@@ -3,6 +3,28 @@ django-registration changelog
 =============================
 
 
+Version 0.5, 4 June 2008:
+-------------------------
+
+* Added Serbian translation.
+
+* Added Italian translation.
+
+* Username/email uniqueness checks are now case-insensitive. This is
+  potentially backwards-incompatible if you relied on them being
+  case-sensitive, but I don't know of any reason why you'd be doing
+  that.
+
+* Included forms now use lazy translations.
+
+* The ``register`` view can now handle files submitted for use in form
+  processing.
+
+* Reactivation of a manually-deactivated account is now prevented by
+  changing the activation key, on successful activation, to a dummy
+  string which will fail on subsequent activation attempts.
+
+
 Version 0.4p2, 10 Feburary 2008:
 --------------------------------
 
