@@ -50,9 +50,18 @@ the ``create_inactive_user`` on ``RegistrationManager``.
     
     Returns ``True`` if the key has expired, ``False`` otherwise.
     
-    Key expiration is determined by the setting
-    ``ACCOUNT_ACTIVATION_DAYS``, which should be the number of days a
-    key should remain valid after an account is registered.
+    Key expiration is determined by a two-step process:
+    
+    1. If the user has already activated, the key will have been reset
+       to the string ``ALREADY_ACTIVATED``. Re-activating is not
+       permitted, and so this method returns ``True`` in this case.
+    
+    2. Otherwise, the date the user signed up is incremented by the
+       number of days specified in the setting
+       ``ACCOUNT_ACTIVATION_DAYS`` (which should be the number of days
+       after signup during which a user is allowed to activate their
+       account); if the result is less than or equal to the current
+       date, the key has expired and this method returns ``True``.
 
 
 The ``RegistrationManager``
@@ -77,6 +86,10 @@ Methods:
     
     If the key is valid but the ``User`` is already active, returns
     ``False``.
+    
+    To prevent reactivation of an account which has been deactivated
+    by site administrators, the activation key is reset to the string
+    ``ALREADY_ACTIVATED`` after successful activation.
 
 ``create_inactive_user(username, password, email, send_email=True, profile_callback=None)``
     Creates a new, inactive ``User``, generates a
