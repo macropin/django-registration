@@ -40,6 +40,11 @@ class RegistrationManager(models.Manager):
         If the key is valid but the ``User`` is already active,
         returns ``False``.
         
+        To prevent reactivation of an account which has been
+        deactivated by site administrators, the activation key is
+        reset to the string ``ALREADY_ACTIVATED`` after successful
+        activation.
+        
         """
         # Make sure the key we're trying conforms to the pattern of a
         # SHA1 hash; if it doesn't, no point trying to look it up in
@@ -53,6 +58,8 @@ class RegistrationManager(models.Manager):
                 user = profile.user
                 user.is_active = True
                 user.save()
+                profile.activation_key = "ALREADY_ACTIVATED"
+                profile.save()
                 return user
         return False
     
@@ -208,11 +215,23 @@ class RegistrationProfile(models.Model):
         
         Returns ``True`` if the key has expired, ``False`` otherwise.
         
-        Key expiration is determined by the setting
-        ``ACCOUNT_ACTIVATION_DAYS``, which should be the number of
-        days a key should remain valid after an account is registered.
+        Key expiration is determined by a two-step process:
+        
+        1. If the user has already activated, the key will have been
+           reset to the string ``ALREADY_ACTIVATED``. Re-activating is
+           not permitted, and so this method returns ``True`` in this
+           case.
+
+        2. Otherwise, the date the user signed up is incremented by
+           the number of days specified in the setting
+           ``ACCOUNT_ACTIVATION_DAYS`` (which should be the number of
+           days after signup during which a user is allowed to
+           activate their account); if the result is less than or
+           equal to the current date, the key has expired and this
+           method returns ``True``.
         
         """
         expiration_date = datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
-        return self.user.date_joined + expiration_date <= datetime.datetime.now()
+        return self.activation_key == "ALREADY_ACTIVATED" or \
+               (self.user.date_joined + expiration_date <= datetime.datetime.now())
     activation_key_expired.boolean = True
