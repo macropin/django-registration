@@ -15,7 +15,7 @@ from registration.models import RegistrationProfile
 
 def activate(request, activation_key, template_name='registration/activate.html'):
     """
-    Activates a ``User``'s account, if their key is valid and hasn't
+    Activate a ``User``'s account, if their key is valid and hasn't
     expired.
     
     By default, uses the template ``registration/activate.html``; to
@@ -50,7 +50,7 @@ def register(request, success_url='/accounts/register/complete/',
              form_class=RegistrationForm, profile_callback=None,
              template_name='registration/registration_form.html'):
     """
-    Allows a new user to register an account.
+    Allow a new user to register an account.
     
     Following successful registration, redirects to either
     ``/accounts/register/complete/`` or, if supplied, the URL
