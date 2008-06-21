@@ -46,7 +46,7 @@ class RegistrationForm(forms.Form):
     
     def clean_username(self):
         """
-        Validates that the username is alphanumeric and is not already
+        Validate that the username is alphanumeric and is not already
         in use.
         
         """
@@ -60,7 +60,7 @@ class RegistrationForm(forms.Form):
 
     def clean(self):
         """
-        Verifies that the values entered into the two password fields
+        Verifiy that the values entered into the two password fields
         match. Note that an error here will end up in
         ``non_field_errors()`` because it doesn't apply to a single
         field.
@@ -73,7 +73,7 @@ class RegistrationForm(forms.Form):
     
     def save(self, profile_callback=None):
         """
-        Creates the new ``User`` and ``RegistrationProfile``, and
+        Create the new ``User`` and ``RegistrationProfile``, and
         returns the ``User``.
         
         This is essentially a light wrapper around
@@ -101,7 +101,7 @@ class RegistrationFormTermsOfService(RegistrationForm):
     
     def clean_tos(self):
         """
-        Validates that the user accepted the Terms of Service.
+        Validate that the user accepted the Terms of Service.
         
         """
         if self.cleaned_data.get('tos', False):
@@ -117,7 +117,7 @@ class RegistrationFormUniqueEmail(RegistrationForm):
     """
     def clean_email(self):
         """
-        Validates that the supplied email address is unique for the
+        Validate that the supplied email address is unique for the
         site.
         
         """
@@ -144,7 +144,7 @@ class RegistrationFormNoFreeEmail(RegistrationForm):
     
     def clean_email(self):
         """
-        Checks the supplied email address against a list of known free
+        Check the supplied email address against a list of known free
         webmail domains.
         
         """
