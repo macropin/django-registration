@@ -5,7 +5,10 @@ and an associated custom manager (``RegistrationManager``).
 """
 
 
-import datetime, random, re, sha
+import datetime
+import random
+import re
+import sha
 
 from django.conf import settings
 from django.db import models
