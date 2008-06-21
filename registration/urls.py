@@ -1,7 +1,7 @@
 """
 URLConf for Django user registration.
 
-Recommended usage a call to ``include()`` in your project's root
+Recommended usage is a call to ``include()`` in your project's root
 URLConf to include this URLConf for any URL beginning with
 ``/accounts/``.
 
