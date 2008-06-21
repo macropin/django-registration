@@ -29,16 +29,16 @@ class RegistrationManager(models.Manager):
     """
     def activate_user(self, activation_key):
         """
-        Validates an activation key and activates the corresponding
+        Validate an activation key and activate the corresponding
         ``User`` if valid.
         
-        If the key is valid and has not expired, returns the ``User``
+        If the key is valid and has not expired, return the ``User``
         after activating.
         
-        If the key is not valid or has expired, returns ``False``.
+        If the key is not valid or has expired, return ``False``.
         
         If the key is valid but the ``User`` is already active,
-        returns ``False``.
+        return ``False``.
         
         To prevent reactivation of an account which has been
         deactivated by site administrators, the activation key is
@@ -66,9 +66,9 @@ class RegistrationManager(models.Manager):
     def create_inactive_user(self, username, password, email,
                              send_email=True, profile_callback=None):
         """
-        Creates a new, inactive ``User``, generates a
-        ``RegistrationProfile`` and emails its activation key to the
-        ``User``. Returns the new ``User``.
+        Create a new, inactive ``User``, generates a
+        ``RegistrationProfile`` and email its activation key to the
+        ``User``, returning the new ``User``.
         
         To disable the email, call with ``send_email=False``.
         
@@ -112,8 +112,8 @@ class RegistrationManager(models.Manager):
     
     def create_profile(self, user):
         """
-        Creates a ``RegistrationProfile`` for a given
-        ``User``. Returns the ``RegistrationProfile``.
+        Create a ``RegistrationProfile`` for a given
+        ``User``, and return the ``RegistrationProfile``.
         
         The activation key for the ``RegistrationProfile`` will be a
         SHA1 hash, generated from a combination of the ``User``'s
@@ -127,7 +127,7 @@ class RegistrationManager(models.Manager):
         
     def delete_expired_users(self):
         """
-        Removes expired instances of ``RegistrationProfile`` and their
+        Remove expired instances of ``RegistrationProfile`` and their
         associated ``User``s.
         
         Accounts to be deleted are identified by searching for
@@ -210,10 +210,9 @@ class RegistrationProfile(models.Model):
     
     def activation_key_expired(self):
         """
-        Determines whether this ``RegistrationProfile``'s activation
-        key has expired.
-        
-        Returns ``True`` if the key has expired, ``False`` otherwise.
+        Determine whether this ``RegistrationProfile``'s activation
+        key has expired, returning a boolean -- ``True`` if the key
+        has expired.
         
         Key expiration is determined by a two-step process:
         
