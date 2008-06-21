@@ -1,10 +1,3 @@
-"""
-A model (``RegistrationProfile``) for storing user-registration data,
-and an associated custom manager (``RegistrationManager``).
-
-"""
-
-
 import datetime
 import random
 import re
