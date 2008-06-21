@@ -12,7 +12,8 @@ from django.conf.urls.defaults import *
 from django.views.generic.simple import direct_to_template
 from django.contrib.auth import views as auth_views
 
-from registration.views import activate, register
+from registration.views import activate
+from registration.views import register
 
 
 urlpatterns = patterns('',
