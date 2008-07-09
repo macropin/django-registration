@@ -13,7 +13,9 @@ from registration.forms import RegistrationForm
 from registration.models import RegistrationProfile
 
 
-def activate(request, activation_key, template_name='registration/activate.html'):
+def activate(request, activation_key,
+             template_name='registration/activate.html',
+             extra_context=None):
     """
     Activate a ``User``'s account, if their key is valid and hasn't
     expired.
@@ -33,6 +35,11 @@ def activate(request, activation_key, template_name='registration/activate.html'
         The number of days for which activation keys stay valid after
         registration.
     
+    Any values passed in the keyword argument ``extra_context`` (which
+    must be a dictionary) will be added to the context as well; any
+    values in ``extra_context`` which are callable will be called
+    prior to being added to the context.
+
     **Template:**
     
     registration/activate.html or ``template_name`` keyword argument.
@@ -40,15 +47,21 @@ def activate(request, activation_key, template_name='registration/activate.html'
     """
     activation_key = activation_key.lower() # Normalize before trying anything with it.
     account = RegistrationProfile.objects.activate_user(activation_key)
+    if extra_context is None:
+        extra_context = {}
+    context = RequestContext(request)
+    for key, value in extra_context.items():
+        context[key] = callable(value) and value() or value
     return render_to_response(template_name,
                               { 'account': account,
                                 'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS },
-                              context_instance=RequestContext(request))
+                              context_instance=context)
 
 
 def register(request, success_url='/accounts/register/complete/',
              form_class=RegistrationForm, profile_callback=None,
-             template_name='registration/registration_form.html'):
+             template_name='registration/registration_form.html',
+             extra_context=None):
     """
     Allow a new user to register an account.
     
@@ -78,6 +91,11 @@ def register(request, success_url='/accounts/register/complete/',
     form
         The registration form.
     
+    Any values passed in the keyword argument ``extra_context`` (which
+    must be a dictionary) will be added to the context as well; any
+    values in ``extra_context`` which are callable will be called
+    prior to being added to the context.
+
     **Template:**
     
     registration/registration_form.html or ``template_name`` keyword
@@ -91,6 +109,12 @@ def register(request, success_url='/accounts/register/complete/',
             return HttpResponseRedirect(success_url)
     else:
         form = form_class()
+    
+    if extra_context is None:
+        extra_context = {}
+    context = RequestContext(request)
+    for key, value in extra_context.items():
+        context[key] = callable(value) and value() or value
     return render_to_response(template_name,
                               { 'form': form },
-                              context_instance=RequestContext(request))
+                              context_instance=context)
