@@ -197,10 +197,6 @@ class RegistrationProfile(models.Model):
         verbose_name = _('registration profile')
         verbose_name_plural = _('registration profiles')
     
-    class Admin:
-        list_display = ('__unicode__', 'activation_key_expired')
-        search_fields = ('user__username', 'user__first_name')
-        
     def __unicode__(self):
         return u"Registration information for %s" % self.user
     

@@ -2,6 +2,31 @@
 django-registration changelog
 =============================
 
+Version 0.6, 29 July 2008:
+--------------------------
+
+* Packaged from revision 166 in Subversion.
+
+* Fixed a multiple-objects exception in
+  ``RegistrationFormUniqueEmail`` when multiple users already have the
+  same email address.
+
+* Changed the ``success_url`` of the ``register()`` view to use
+  reverse URL resolution.
+
+* Added an ``extra_context`` argument to the ``register`` and
+  ``activate`` views, mimicking its functionality in Django's generic
+  views.
+
+* BACKWARDS-INCOMPATIBLE CHANGE: Switched the admin declaration to be
+  compliant with the newforms-admin refactor; the admin declaration
+  now lives in ``registration/admin.py``.
+
+* BACKWARDS-INCOMPATIBLE CHANGE: Switched form imports from using
+  ``django.newforms`` to using ``django.forms``; the old style now
+  raises a deprecation warning on Django trunk and on Django 1.0
+  alpha.
+
 
 Version 0.5, 4 June 2008:
 -------------------------

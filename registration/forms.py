@@ -4,7 +4,7 @@ Forms and validation code for user registration.
 """
 
 
-from django import newforms as forms
+from django import forms
 from django.core.validators import alnum_re
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
@@ -121,11 +121,9 @@ class RegistrationFormUniqueEmail(RegistrationForm):
         site.
         
         """
-        try:
-            user = User.objects.get(email__iexact=self.cleaned_data['email'])
-        except User.DoesNotExist:
-            return self.cleaned_data['email']
-        raise forms.ValidationError(_(u'This email address is already in use. Please supply a different email address.'))
+        if User.objects.filter(email__iexact=self.cleaned_data['email']):
+            raise forms.ValidationError(_(u'This email address is already in use. Please supply a different email address.'))
+        return self.cleaned_data['email']
 
 
 class RegistrationFormNoFreeEmail(RegistrationForm):
