@@ -30,11 +30,10 @@ are also provided.
 Installation
 ============
 
-In order to use django-registration, you will need to have a recent
-Subversion checkout of Django's development version; this application
-is keeping up with changes in Django's development version (and taking
-advantage of new features available there). Because of this,
-django-registration will not work with the Django 0.96 release.
+In order to use django-registration, you will need to have a
+functioning installation of Django 1.0 or newer; due to changes needed
+to stabilize Django's APIs prior to the 1.0 release,
+django-registration will not work with older releases of Django.
 
 Also, if you haven't downloaded a copy of django-registration already,
 you'll need to do so. You can download a packaged version of the
@@ -254,14 +253,14 @@ means that errors from mismatched passwords will now show up in
 Dependencies
 ============
 
-The only dependency for this application is a recent **SVN checkout**
-of Django; this application is tracking Django's development trunk,
-and has evolved to accomodate some changes which happened after the
-Django 0.96 release, so a stock copy of 0.96 will not work.
+The only dependencies for this application are a functioning install
+of Django 1.0 or newer and, of course, a Django project in which you'd
+like to use it.
 
 Your Django project should have ``django.contrib.admin``,
 ``django.contrib.auth`` and ``django.contrib.sites`` in its
 ``INSTALLED_APPS`` setting.
+
 
 What this application does not do
 =================================
@@ -279,5 +278,5 @@ Head over to this application's `project page on Google Code`_ and
 check `the issues list`_ to see if it's already been reported. If not,
 open a new issue and I'll do my best to respond quickly.
 
-.. project page on Google Code: http://code.google.com/p/django-registration/
+.. _project page on Google Code: http://code.google.com/p/django-registration/
 .. _the issues list: http://code.google.com/p/django-registration/issues/list

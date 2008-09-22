@@ -22,3 +22,4 @@ Others who have contributed to the application:
 * Liang Feng (Chinese translations)
 * Nebojsa Djordjevic (Serbian translation)
 * Nicola Larosa (Italian translation)
+* Joost Cassee (Dutch translation)

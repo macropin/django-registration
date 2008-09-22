@@ -134,10 +134,9 @@ class RegistrationManager(models.Manager):
         key will be deleted.
         
         It is recommended that this method be executed regularly as
-        part of your routine site maintenance; the file
-        ``bin/delete_expired_users.py`` in this application provides a
-        standalone script, suitable for use as a cron job, which will
-        call this method.
+        part of your routine site maintenance; this application
+        provides a custom management command which will call this
+        method, accessible as ``manage.py cleanupregistration``.
         
         Regularly clearing out accounts which have never been
         activated serves two useful purposes:
