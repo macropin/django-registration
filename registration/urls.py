@@ -5,7 +5,7 @@ If the default behavior of the registration views is acceptable to
 you, simply use a line like this in your root URLConf to set up the
 default URLs for registration::
 
-    (r'^accounts/', include('registration.urls'),
+    (r'^accounts/', include('registration.urls')),
 
 If you'd like to customize the behavior (e.g., by passing extra
 arguments to the various views) or split up the URLs, feel free to set
