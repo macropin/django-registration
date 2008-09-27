@@ -1,9 +1,15 @@
 """
 URLConf for Django user registration and authentication.
 
-Recommended usage is a call to ``include()`` in your project's root
-URLConf to include this URLConf for any URL beginning with
-``/accounts/``.
+If the default behavior of the registration views is acceptable to
+you, simply use a line like this in your root URLConf to set up the
+default URLs for registration::
+
+    (r'^accounts/', include('registration.urls'),
+
+If you'd like to customize the behavior (e.g., by passing extra
+arguments to the various views) or split up the URLs, feel free to set
+up your own URL patterns for these views instead.
 
 """
 
