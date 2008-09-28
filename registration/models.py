@@ -54,7 +54,7 @@ class RegistrationManager(models.Manager):
                 user = profile.user
                 user.is_active = True
                 user.save()
-                profile.activation_key = "ALREADY_ACTIVATED"
+                profile.activation_key = self.model.ACTIVATED
                 profile.save()
                 return user
         return False
@@ -187,6 +187,8 @@ class RegistrationProfile(models.Model):
     ``RegistrationManager``.
     
     """
+    ACTIVATED = u"ALREADY_ACTIVATED"
+    
     user = models.ForeignKey(User, unique=True, verbose_name=_('user'))
     activation_key = models.CharField(_('activation key'), max_length=40)
     
@@ -222,6 +224,6 @@ class RegistrationProfile(models.Model):
         
         """
         expiration_date = datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
-        return self.activation_key == "ALREADY_ACTIVATED" or \
+        return self.activation_key == self.ACTIVATED or \
                (self.user.date_joined + expiration_date <= datetime.datetime.now())
     activation_key_expired.boolean = True
