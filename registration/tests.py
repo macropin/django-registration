@@ -277,7 +277,7 @@ class RegistrationViewTests(RegistrationTestCase):
         self.failUnless(response.context['form'].errors)
 
         response = self.client.post(reverse('registration_register'),
-                                    data={ 'username': 'foo', # Will fail on username uniqueness.
+                                    data={ 'username': 'foo',
                                            'email': 'foo@example.com',
                                            'password1': 'foo',
                                            'password2': 'foo' })
