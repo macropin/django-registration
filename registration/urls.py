@@ -7,9 +7,15 @@ default URLs for registration::
 
     (r'^accounts/', include('registration.urls')),
 
-If you'd like to customize the behavior (e.g., by passing extra
+This will also automatically set up the views in
+``django.contrib.auth`` at sensible default locations.
+
+But if you'd like to customize the behavior (e.g., by passing extra
 arguments to the various views) or split up the URLs, feel free to set
-up your own URL patterns for these views instead.
+up your own URL patterns for these views instead. If you do, it's a
+good idea to use the names ``registration_activate``,
+``registration_complete`` and ``registration_register`` for the
+various steps of the user-signup process.
 
 """
 
