@@ -95,16 +95,8 @@ class RegistrationFormTermsOfService(RegistrationForm):
     
     """
     tos = forms.BooleanField(widget=forms.CheckboxInput(attrs=attrs_dict),
-                             label=_(u'I have read and agree to the Terms of Service'))
-    
-    def clean_tos(self):
-        """
-        Validate that the user accepted the Terms of Service.
-        
-        """
-        if self.cleaned_data.get('tos', False):
-            return self.cleaned_data['tos']
-        raise forms.ValidationError(_(u'You must agree to the terms to register'))
+                             label=_(u'I have read and agree to the Terms of Service'),
+                             error_messages={ 'required': u"You must agree to the terms to register" })
 
 
 class RegistrationFormUniqueEmail(RegistrationForm):
