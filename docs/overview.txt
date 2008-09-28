@@ -84,7 +84,10 @@ need to do the following:
        (r'^accounts/', include('registration.urls')),
 
 5. Link people to ``/accounts/register/`` so they can start signing
-   up.
+   up. Using the default URLConf will also automatically set up the
+   authentication-oriented views in ``django.contrib.auth`` for you,
+   so if you use it you can point people to, e.g.,
+   ``/accounts/login/`` to log in.
 
 
 Templates used by django-registration
