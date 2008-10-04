@@ -112,8 +112,13 @@ class RegistrationModelTests(RegistrationTestCase):
         ``False`` otherwise.
         
         """
+        # Unexpired user returns False.
         self.failIf(RegistrationProfile.objects.get(user=self.sample_user).activation_key_expired())
+
+        # Expired use returns True.
         self.failUnless(RegistrationProfile.objects.get(user=self.expired_user).activation_key_expired())
+
+        # Activated user returns True.
         RegistrationProfile.objects.activate_user(RegistrationProfile.objects.get(user=self.sample_user).activation_key)
         self.failUnless(RegistrationProfile.objects.get(user=self.sample_user).activation_key_expired())
 
