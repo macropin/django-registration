@@ -92,7 +92,7 @@ class RegistrationModelTests(RegistrationTestCase):
         # The activated user must now be active.
         self.failUnless(User.objects.get(pk=self.sample_user.pk).is_active)
         
-        # The activation key must now be the string "ALREADY_ACTIVATED".
+        # The activation key must now be reset to the "already activated" constant.
         self.failUnlessEqual(RegistrationProfile.objects.get(user=self.sample_user).activation_key,
                              RegistrationProfile.ACTIVATED)
         
