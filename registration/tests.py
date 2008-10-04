@@ -155,7 +155,7 @@ class RegistrationFormTests(RegistrationTestCase):
         
         """
         invalid_data_dicts = [
-            # Invalid non-alphanumeric username.
+            # Non-alphanumeric username.
             {
             'data':
             { 'username': 'foo/bar',
