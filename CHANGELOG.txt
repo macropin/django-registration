@@ -2,6 +2,33 @@
 django-registration changelog
 =============================
 
+
+Version 0.7, 6 November 2008:
+-----------------------------
+
+* Project hosting moved from Google Code to Bitbucket, and from a
+  Subversion repository to Mercurial.
+
+* Added test suite.
+
+* Full Django 1.0 compatibility.
+
+* Registration and activation views now accept an ``extra_context``
+  argument, identical to the way that argument works in Django's
+  generic views.
+
+* Added a custom management command for cleaning up expired
+  registrations; you can now run ``manage.py cleanupregistration`` to
+  handle this.
+
+* BACKWARDS-INCOMPATIBLE CHANGE: The "username" field in
+  ``RegistrationForm`` is now a ``RegexField``.
+
+* BACKWARDS-INCOMPATIBLE CHANGE: Removed the standalone script for
+  deleting expired user registrations; use the new management command
+  instead.
+
+
 Version 0.6, 29 July 2008:
 --------------------------
 

@@ -67,6 +67,27 @@ class RegistrationManager(models.Manager):
         ``User``, returning the new ``User``.
         
         To disable the email, call with ``send_email=False``.
+
+        The activation email will make use of two templates:
+
+        ``registration/activation_email_subject.txt``
+            This template will be used for the subject line of the
+            email. It receives one context variable, ``site``, which
+            is the currently-active
+            ``django.contrib.sites.models.Site`` instance. Because it
+            is used as the subject line of an email, this template's
+            output **must** be only a single line of text; output
+            longer than one line will be forcibly joined into only a
+            single line.
+
+        ``registration/activation_email.txt``
+            This template will be used for the body of the email. It
+            will receive three context variables: ``activation_key``
+            will be the user's activation key (for use in constructing
+            a URL to activate the account), ``expiration_days`` will
+            be the number of days for which the key will be valid and
+            ``site`` will be the currently-active
+            ``django.contrib.sites.models.Site`` instance.
         
         To enable creation of a custom user profile along with the
         ``User`` (e.g., the model specified in the

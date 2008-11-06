@@ -35,32 +35,78 @@ functioning installation of Django 1.0 or newer; due to changes needed
 to stabilize Django's APIs prior to the 1.0 release,
 django-registration will not work with older releases of Django.
 
-Also, if you haven't downloaded a copy of django-registration already,
-you'll need to do so. You can download a packaged version of the
-latest release here::
+There are three basic ways to install django-registration:
+automatically installing a package using Python's package-management
+tools, manually installing a package, and installing from a Mercurial
 
-    http://django-registration.googlecode.com/files/django-registration-0.6.tar.gz
 
-Open up the package (on most operating systems you can double-click,
-or you can use the command ``tar zxvf registration-0.6.tar.gz`` to
-manually unpack it), and, at a command line, navigate to the directory
-``registration-0.6``, then type:
+Using a package-management tool
+-------------------------------
+
+The easiest way by far to install django-registration and most other
+interesting Python software is by using an automated
+package-management tool, so if you're not already familiar with the
+available tools for Python, now's as good a time as any to get
+started.
+
+The most popular option currently is `easy_install`_; refer to its
+documentation to see how to get it set up. Once you've got it, you'll
+be able to simply type::
+
+    easy_install django-registration
+
+And it will handle the rest.
+
+Another option that's currently gaining steam (and which I personally
+prefer for Python package management) is `pip`_. Once again, you'll
+want to refer to its documentation to get up and running, but once you
+have you'll be able to type::
+
+    pip install django-registration
+
+And you'll be done.
+
+
+Manually installing the 0.7 package
+-----------------------------------
+
+If you'd prefer to do things the old-fashioned way, you can manually
+download the `django-registration 0.7 package`_ from the Python
+Package Index. This will get you a file named
+"django-registration-0.7.tar.gz" which you can unpack (double-click on
+the file on most operating systems) to create a directory named
+"django-registration-0.7". Inside will be a script named "setup.py";
+running::
 
     python setup.py install
 
-This will install django-registration into a directory on your Python
-import path. For system-wide installation on Linux/Unix and Mac OS,
-you can use ``sudo``::
+will install django-registration (though keep in mind that this
+defaults to a system-wide installation, and so may require
+administrative privileges on your computer).
 
-    sudo python setup.py install
 
-Alternatively, you do a Subversion checkout to get the latest
-development code (though this may also include bugs which have not yet
-been fixed)::
+Installing from a Mercurial checkout
+------------------------------------
 
-    svn co http://django-registration.googlecode.com/svn/trunk/registration/
+If you have `Mercurial`_ installed on your computer, you can also
+obtain a complete copy of django-registration by typing::
 
-For best results, do this in a directory that's on your Python path.
+    hg clone http://bitbucket.org/ubernostrum/django-registration/
+
+Inside the resulting "django-registration" directory will be a
+directory named "registration", which is the actual Python module for
+this application; you can symlink it from somewhere on your Python
+path. If you prefer, you can use the setup.py script in the
+"django-registration" directory to perform a normal installation, but
+using a symlink offers easy upgrades: simply running ``hg pull -u``
+inside the django-registration directory will fetch updates from the
+main repository and apply them to your local copy.
+
+
+.. _easy_install: http://peak.telecommunity.com/DevCenter/EasyInstall
+.. _pip: http://pypi.python.org/pypi/pip/
+.. _django-registration 0.7 package: http://pypi.python.org/pypi/django-registration/0.7
+.. _Mercurial: http://www.selenic.com/mercurial/wiki/
 
 
 Basic use
@@ -251,6 +297,12 @@ Between version 0.3 and version 0.4, validation of the password fields
 was moved from ``clean_password2()`` to ``clean_password()``; this
 means that errors from mismatched passwords will now show up in
 ``non_field_errors()`` instead of ``errors["password2"]``.
+
+Between version 0.6 and version 0.7, the script
+``registration/bin/delete_expired_users.py`` was removed, and replaced
+with a custom management command; you can now simply run ``manage.py
+cleanupregistration`` from any project which has django-registration
+installed.
 
 
 Dependencies
