@@ -262,19 +262,19 @@ packaged release; see the following files for details:
 Development
 ===========
 
-The `latest released version`_ of this application is 0.6, and is
+The `latest released version`_ of this application is 0.7, and is
 quite stable; it's already been deployed on a number of sites,
 including djangoproject.com. You can also obtain the absolute freshest
 code from `the development repository_`, but be warned that the
 development code may not always be backwards-compatible, and may well
 contain bugs that haven't yet been fixed.
 
-This document covers the 0.6 release of django-registration; new
+This document covers the 0.7 release of django-registration; new
 features introduced in the development trunk will be added to the
 documentation at the time of the next packaged release.
 
-.. _latest released version: http://django-registration.googlecode.com/files/django-registration-0.6.tar.gz
-.. _the development repository: http://django-registration.googlecode.com/svn/trunk/registration/
+.. _latest released version: http://pypi.python.org/pypi/django-registration/0.7
+.. _the development repository: http://www.bitbucket.org/ubernostrum/django-registration/src/
 
 
 Changes from previous versions
