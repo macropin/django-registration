@@ -329,9 +329,9 @@ service they want to use :)
 If you spot a bug
 =================
 
-Head over to this application's `project page on Google Code`_ and
+Head over to this application's `project page on Bitbucket`_ and
 check `the issues list`_ to see if it's already been reported. If not,
 open a new issue and I'll do my best to respond quickly.
 
-.. _project page on Google Code: http://code.google.com/p/django-registration/
-.. _the issues list: http://code.google.com/p/django-registration/issues/list
+.. _project page on Bitbucket: http://www.bitbucket.org/ubernostrum/django-registration/overview/
+.. _the issues list: http://www.bitbucket.org/ubernostrum/django-registration/issues/
