@@ -38,6 +38,7 @@ django-registration will not work with older releases of Django.
 There are three basic ways to install django-registration:
 automatically installing a package using Python's package-management
 tools, manually installing a package, and installing from a Mercurial
+checkout.
 
 
 Using a package-management tool
