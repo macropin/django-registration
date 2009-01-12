@@ -31,6 +31,7 @@ from django.test import TestCase
 
 from registration import forms
 from registration.models import RegistrationProfile
+from registration import signals
 
 
 class RegistrationTestCase(TestCase):
@@ -258,6 +259,31 @@ class RegistrationFormTests(RegistrationTestCase):
         base_data['email'] = 'foo@example.com'
         form = forms.RegistrationFormNoFreeEmail(data=base_data)
         self.failUnless(form.is_valid())
+
+    def test_signals(self):
+        """
+        Test that the ``user_registered`` and ``user_activated``
+        signals are sent, and that they send the ``User`` as an
+        argument.
+        
+        """
+        def receiver(sender, **kwargs):
+            self.assert_('user' in kwargs)
+            self.assertEqual(kwargs['user'].username, u'signal_test')
+            received_signals.append(kwargs.get('signal'))
+
+        received_signals = []
+        expected_signals = [signals.user_registered, signals.user_activated]
+        for signal in expected_signals:
+            signal.connect(receiver)
+
+        RegistrationProfile.objects.create_inactive_user(username='signal_test',
+                                                         password='foo',
+                                                         email='nobody@example.com',
+                                                         send_email=False)
+        RegistrationProfile.objects.activate_user(RegistrationProfile.objects.get(user__username='signal_test').activation_key)
+
+        self.assertEqual(received_signals, expected_signals)
 
 
 class RegistrationViewTests(RegistrationTestCase):

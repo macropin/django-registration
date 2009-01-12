@@ -76,58 +76,64 @@ for cleaning out expired inactive accounts.
 Methods:
 
 ``activate_user(activation_key)``
-    Validates an activation key and activates the corresponding
+    Validate an activation key and activate the corresponding
     ``User`` if valid.
     
-    If the key is valid and has not expired, returns the ``User``
+    If the key is valid and has not expired, return the ``User``
     after activating.
     
-    If the key is not valid or has expired, returns ``False``.
+    If the key is not valid or has expired, return ``False``.
     
-    If the key is valid but the ``User`` is already active, returns
-    ``False``.
+    If the key is valid but the ``User`` is already active,
+    return ``False``.
     
-    To prevent reactivation of an account which has been deactivated
-    by site administrators, the activation key is reset to the string
-    ``ALREADY_ACTIVATED`` after successful activation.
+    To prevent reactivation of an account which has been
+    deactivated by site administrators, the activation key is
+    reset to the string constant ``RegistrationProfile.ACTIVATED``
+    after successful activation.
 
-``create_inactive_user(username, password, email, send_email=True, profile_callback=None)``
-    Creates a new, inactive ``User``, generates a
-    ``RegistrationProfile`` and emails its activation key to the
-    ``User``. Returns the new ``User``.
+    To execute customized logic when a ``User`` is activated,
+    connect a function to the signal
+    ``registration.signals.user_activated``; this signal will be
+    sent (with the ``User`` as the value of the keyword argument
+    ``user``) after a successful activation.
+
+``create_inactive_user(username, password, email, send_email=True)``
+    Create a new, inactive ``User``, generate a
+    ``RegistrationProfile`` and email its activation key to the
+    ``User``, returning the new ``User``.
     
     To disable the email, call with ``send_email=False``.
-    
+
     The activation email will make use of two templates:
 
     ``registration/activation_email_subject.txt``
         This template will be used for the subject line of the
-        email. It receives one context variable, ``site``, which is
-        the currently-active ``django.contrib.sites.models.Site``
-        instance. Because it is used as the subject line of an email,
-        this template's output **must** be only a single line of text;
-        output longer than one line will be forcibly joined into only
-        a single line.
+        email. It receives one context variable, ``site``, which
+        is the currently-active
+        ``django.contrib.sites.models.Site`` instance. Because it
+        is used as the subject line of an email, this template's
+        output **must** be only a single line of text; output
+        longer than one line will be forcibly joined into only a
+        single line.
 
     ``registration/activation_email.txt``
-        This template will be used for the body of the email. It will
-        receive three context variables: ``activation_key`` will be
-        the user's activation key (for use in constructing a URL to
-        activate the account), ``expiration_days`` will be the number
-        of days for which the key will be valid and ``site`` will be
-        the currently-active ``django.contrib.sites.models.Site``
-        instance.
-        
-    To enable creation of a custom user profile along with the
-    ``User`` (e.g., the model specified in the ``AUTH_PROFILE_MODULE``
-    setting), define a function which knows how to create and save an
-    instance of that model with appropriate default values, and pass
-    it as the keyword argument ``profile_callback``. This function
-    should accept one keyword argument:
-    
-    ``user``
-        The ``User`` to relate the profile to.
+        This template will be used for the body of the email. It
+        will receive three context variables: ``activation_key``
+        will be the user's activation key (for use in constructing
+        a URL to activate the account), ``expiration_days`` will
+        be the number of days for which the key will be valid and
+        ``site`` will be the currently-active
+        ``django.contrib.sites.models.Site`` instance.
 
+    To execute customized logic once the new ``User`` has been
+    created, connect a function to the signal
+    ``registration.signals.user_registered``; this signal will be
+    sent (with the new ``User`` as the value of the keyword
+    argument ``user``) after the ``User`` and
+    ``RegistrationProfile`` have been created, and after the email (if
+    any) has been sent.
+        
 ``create_profile(user)``
     Creates a ``RegistrationProfile`` for a given ``User``. Returns
     the ``RegistrationProfile``.

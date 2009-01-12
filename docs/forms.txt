@@ -22,9 +22,7 @@ requires the password to be entered twice to catch typos.
 
 Subclasses should feel free to add any additional validation they
 need, but should either preserve the base ``save()`` or implement a
-``save()`` which accepts the ``profile_callback`` keyword argument and
-passes it through to
-``RegistrationProfile.objects.create_inactive_user()``.
+``save()`` method which returns a ``User``.
     
 Fields:
 
@@ -47,12 +45,8 @@ Non-validation methods:
 
 ``save()``
     Creates the new ``User`` and ``RegistrationProfile``, and returns
-    the ``User``.
-    
-    This is essentially a light wrapper around
-    ``RegistrationProfile.objects.create_inactive_user()``, feeding it
-    the form data and a profile callback (see the documentation on
-    ``create_inactive_user()`` for details) if supplied.
+    the ``User`` (by calling
+    ``RegistrationProfile.objects.create_inactive_user()``).
 
 
 Subclasses of ``RegistrationForm``

@@ -39,10 +39,18 @@ class RegistrationManager(models.Manager):
         
         To prevent reactivation of an account which has been
         deactivated by site administrators, the activation key is
-        reset to the string ``ALREADY_ACTIVATED`` after successful
-        activation.
+        reset to the string constant ``RegistrationProfile.ACTIVATED``
+        after successful activation.
+
+        To execute customized logic when a ``User`` is activated,
+        connect a function to the signal
+        ``registration.signals.user_activated``; this signal will be
+        sent (with the ``User`` as the value of the keyword argument
+        ``user``) after a successful activation.
         
         """
+        from registration.signals import user_activated
+        
         # Make sure the key we're trying conforms to the pattern of a
         # SHA1 hash; if it doesn't, no point trying to look it up in
         # the database.
@@ -57,13 +65,14 @@ class RegistrationManager(models.Manager):
                 user.save()
                 profile.activation_key = self.model.ACTIVATED
                 profile.save()
+                user_activated.send(sender=self.model, user=user)
                 return user
         return False
     
     def create_inactive_user(self, username, password, email,
-                             send_email=True, profile_callback=None):
+                             send_email=True):
         """
-        Create a new, inactive ``User``, generates a
+        Create a new, inactive ``User``, generate a
         ``RegistrationProfile`` and email its activation key to the
         ``User``, returning the new ``User``.
         
@@ -89,27 +98,23 @@ class RegistrationManager(models.Manager):
             be the number of days for which the key will be valid and
             ``site`` will be the currently-active
             ``django.contrib.sites.models.Site`` instance.
-        
-        To enable creation of a custom user profile along with the
-        ``User`` (e.g., the model specified in the
-        ``AUTH_PROFILE_MODULE`` setting), define a function which
-        knows how to create and save an instance of that model with
-        appropriate default values, and pass it as the keyword
-        argument ``profile_callback``. This function should accept one
-        keyword argument:
 
-        ``user``
-            The ``User`` to relate the profile to.
+        To execute customized logic once the new ``User`` has been
+        created, connect a function to the signal
+        ``registration.signals.user_registered``; this signal will be
+        sent (with the new ``User`` as the value of the keyword
+        argument ``user``) after the ``User`` and
+        ``RegistrationProfile`` have been created, and the email (if
+        any) has been sent..
         
         """
+        from registration.signals import user_registered
+
         new_user = User.objects.create_user(username, email, password)
         new_user.is_active = False
         new_user.save()
         
         registration_profile = self.create_profile(new_user)
-        
-        if profile_callback is not None:
-            profile_callback(user=new_user)
         
         if send_email:
             from django.core.mail import send_mail
@@ -126,6 +131,7 @@ class RegistrationManager(models.Manager):
                                          'site': current_site })
             
             send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [new_user.email])
+        user_registered.send(sender=self.model, user=new_user)
         return new_user
     create_inactive_user = transaction.commit_on_success(create_inactive_user)
     
@@ -204,10 +210,7 @@ class RegistrationProfile(models.Model):
     While it is possible to use this model as the value of the
     ``AUTH_PROFILE_MODULE`` setting, it's not recommended that you do
     so. This model's sole purpose is to store data temporarily during
-    account registration and activation, and a mechanism for
-    automatically creating an instance of a site-specific profile
-    model is provided via the ``create_inactive_user`` on
-    ``RegistrationManager``.
+    account registration and activation.
     
     """
     ACTIVATED = u"ALREADY_ACTIVATED"

@@ -27,9 +27,7 @@ class RegistrationForm(forms.Form):
     
     Subclasses should feel free to add any additional validation they
     need, but should either preserve the base ``save()`` or implement
-    a ``save()`` which accepts the ``profile_callback`` keyword
-    argument and passes it through to
-    ``RegistrationProfile.objects.create_inactive_user()``.
+    a ``save()`` method which returns a ``User``.
     
     """
     username = forms.RegexField(regex=r'^\w+$',
@@ -69,22 +67,16 @@ class RegistrationForm(forms.Form):
                 raise forms.ValidationError(_(u'You must type the same password each time'))
         return self.cleaned_data
     
-    def save(self, profile_callback=None):
+    def save(self):
         """
         Create the new ``User`` and ``RegistrationProfile``, and
-        returns the ``User``.
-        
-        This is essentially a light wrapper around
-        ``RegistrationProfile.objects.create_inactive_user()``,
-        feeding it the form data and a profile callback (see the
-        documentation on ``create_inactive_user()`` for details) if
-        supplied.
+        returns the ``User`` (by calling
+        ``RegistrationProfile.objects.create_inactive_user()``).
         
         """
         new_user = RegistrationProfile.objects.create_inactive_user(username=self.cleaned_data['username'],
                                                                     password=self.cleaned_data['password1'],
-                                                                    email=self.cleaned_data['email'],
-                                                                    profile_callback=profile_callback)
+                                                                    email=self.cleaned_data['email'])
         return new_user
 
 
