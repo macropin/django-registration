@@ -4,12 +4,12 @@ Forms
 
 
 To ease and automate the process of validating user information during
-registration, several form classes (built using Django's `newforms
+registration, several form classes (built using Django's `forms
 library`_) are provided: a base ``RegistrationForm`` and subclasses
 which provide specific customized functionality. All of the forms
 described below are found in ``registration.forms``.
 
-.. _newforms library: http://www.djangoproject.com/documentation/newforms/
+.. _forms library: http://docs.djangoproject.com/en/dev/topics/forms/
 
 
 ``RegistrationForm``
