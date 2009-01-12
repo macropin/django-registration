@@ -4,9 +4,9 @@ Forms and validation code for user registration.
 """
 
 
+from django.contrib.auth.models import User
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User
 
 from registration.models import RegistrationProfile
 
