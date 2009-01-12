@@ -79,6 +79,17 @@ class RegistrationModelTests(RegistrationTestCase):
         """
         self.assertEqual(len(mail.outbox), 2)
 
+    def test_activation_email_disable(self):
+        """
+        Test that activation email can be disabled.
+        
+        """
+        RegistrationProfile.objects.create_inactive_user(username='noemail',
+                                                         password='foo',
+                                                         email='nobody@example.com',
+                                                         send_email=False)
+        self.assertEqual(len(mail.outbox), 2)
+
     def test_activation(self):
         """
         Test that user activation actually activates the user and
