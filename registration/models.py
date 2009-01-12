@@ -236,9 +236,9 @@ class RegistrationProfile(models.Model):
         Key expiration is determined by a two-step process:
         
         1. If the user has already activated, the key will have been
-           reset to the string ``ALREADY_ACTIVATED``. Re-activating is
-           not permitted, and so this method returns ``True`` in this
-           case.
+           reset to the string constant ``ACTIVATED``. Re-activating
+           is not permitted, and so this method returns ``True`` in
+           this case.
 
         2. Otherwise, the date the user signed up is incremented by
            the number of days specified in the setting

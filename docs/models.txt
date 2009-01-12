@@ -53,7 +53,7 @@ the ``create_inactive_user`` on ``RegistrationManager``.
     Key expiration is determined by a two-step process:
     
     1. If the user has already activated, the key will have been reset
-       to the string ``ALREADY_ACTIVATED``. Re-activating is not
+       to the string constant ``ACTIVATED``. Re-activating is not
        permitted, and so this method returns ``True`` in this case.
     
     2. Otherwise, the date the user signed up is incremented by the
