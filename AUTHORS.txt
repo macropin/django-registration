@@ -23,3 +23,4 @@ Others who have contributed to the application:
 * Nebojsa Djordjevic (Serbian translation)
 * Nicola Larosa (Italian translation)
 * Joost Cassee (Dutch translation)
+* Björn Kristinsson (Icelandic translation)
