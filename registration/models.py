@@ -1,7 +1,6 @@
 import datetime
 import random
 import re
-import sha
 
 from django.conf import settings
 from django.contrib.auth.models import User
