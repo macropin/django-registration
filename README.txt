@@ -1,13 +1,9 @@
-========================
-Django user registration
-========================
+This is an experimental fork of django-registration, implementing a
+pluggable registration-backend system. You shouldn't be using this,
+because it's likely to be any of A) non-functional, B) horrifically
+backwards-incompatible, C) incomplete or D) all of the above.
 
-This is a fairly simple user-registration application for Django_,
-designed to make allowing user signups as painless as possible. It
-requires a functional installation of Django 1.0 or newer, but has no
-other dependencies.
+For details on the planned implementation, see the notes on backends
+for django-registration:
 
-For installation instructions, see the file "INSTALL.txt" in this
-directory; for instructions on how to use this application, and on
-what it provides, see the file "overview.txt" in the "docs/"
-directory.
+http://bitbucket.org/ubernostrum/django-registration/wiki/Backends
