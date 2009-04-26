@@ -83,14 +83,14 @@ class ModelBasedActivationBackend(object):
         based on the value of the setting ``REGISTRATION_OPEN``. This
         is determined as follows:
 
-        * If ``REGISTRATION_ALLOWED`` is not specified in settings, or
-          is set to ``True``, registration is permitted.
+        * If ``REGISTRATION_OPEN`` is not specified in settings, or is
+          set to ``True``, registration is permitted.
 
-        * If ``REGISTRATION_ALLOWED`` is both specified and set to
+        * If ``REGISTRATION_OPEN`` is both specified and set to
           ``False``, registration is not permitted.
         
         """
-        pass
+        return getattr(settings, 'REGISTRATION_OPEN', True)
 
     def get_form_class(request):
         """
