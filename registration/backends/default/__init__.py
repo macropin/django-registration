@@ -71,9 +71,8 @@ class ModelBasedActivationBackend(object):
 
     def activate(request, activation_key):
         """
-        Given an HTTP request with an activation key in its URL, look
-        up and activate the user account corresponding to that key (if
-        possible).
+        Given an an activation key, look up and activate the user
+        account corresponding to that key (if possible).
         
         """
         return RegistrationProfile.objects.activate_user(activation_key)
