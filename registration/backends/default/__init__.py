@@ -69,14 +69,14 @@ class ModelBasedActivationBackend(object):
             site = RequestSite(request)
         return RegistrationProfile.objects.create_inactive_user(username, email, password, site)
 
-    def activate(request):
+    def activate(request, activation_key):
         """
         Given an HTTP request with an activation key in its URL, look
         up and activate the user account corresponding to that key (if
         possible).
         
         """
-        pass
+        return RegistrationProfile.objects.activate_user(activation_key)
 
     def registration_allowed(request):
         """
