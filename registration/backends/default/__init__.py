@@ -1,4 +1,9 @@
 from django.conf import settings
+from django.contrib.sites.models import RequestSite
+from django.contrib.sites.models import Site
+
+from registration.models import RegistrationProfile
+from registration import signals
 
 
 class ModelBasedActivationBackend(object):
@@ -52,39 +57,19 @@ class ModelBasedActivationBackend(object):
 
         An email will be sent to the supplied email address; this
         email should contain an activation link. The email will be
-        rendered using two templates:
+        rendered using two templates. See the documentation for
+        ``RegistrationProfile.objects.send_activation_email()`` for
+        information about these templates and the contexts provided to
+        them.
 
-        ``registration/activation_email_subject.txt``
-            The subject line of the email. This will be flattened to a
-            single line regardless of how many lines of output are
-            produced by the template (multi-line email subjects are
-            not permitted).
-
-        ``registration/activation_email.txt``
-            This template will be used for the body of the email.
-
-        These templates will each receive the following context
-        variables:
-
-        ``activation_key``
-            The activation key for the new account.
-
-        ``expiration_days``
-            The number of days remaining during which the account may
-            be activated.
-
-        ``site``
-            An object representing the site on which the user
-            registered; depending on whether ``django.contrib.sites``
-            is installed, this may be an instance of either
-            ``django.contrib.sites.models.Site`` (if the sites
-            application is installed) or
-            ``django.contrib.sites.models.RequestSite`` (if
-            not). Consult the documentation for the Django sites
-            framework for details regarding these objects' interfaces.
-        
         """
-        pass
+        if Site._meta.installed:
+            site = Site.objects.get_current()
+        else:
+            site = RequestSite(request)
+        new_user = RegistrationProfile.objects.create_inactive_user(username, email, password, site)
+        user_registered.send(user=new_user)
+        return new_user
 
     def activate(request):
         """

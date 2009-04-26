@@ -4,7 +4,7 @@ import re
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.contrib.sites.models import Site
+from django.core.mail import send_mail
 from django.db import models
 from django.db import transaction
 from django.template.loader import render_to_string
@@ -42,15 +42,7 @@ class RegistrationManager(models.Manager):
         reset to the string constant ``RegistrationProfile.ACTIVATED``
         after successful activation.
 
-        To execute customized logic when a ``User`` is activated,
-        connect a function to the signal
-        ``registration.signals.user_activated``; this signal will be
-        sent (with the ``User`` as the value of the keyword argument
-        ``user``) after a successful activation.
-        
         """
-        from registration.signals import user_activated
-        
         # Make sure the key we're trying conforms to the pattern of a
         # SHA1 hash; if it doesn't, no point trying to look it up in
         # the database.
@@ -65,75 +57,76 @@ class RegistrationManager(models.Manager):
                 user.save()
                 profile.activation_key = self.model.ACTIVATED
                 profile.save()
-                user_activated.send(sender=self.model, user=user)
                 return user
         return False
     
-    def create_inactive_user(self, username, password, email,
-                             send_email=True):
+    def create_inactive_user(self, username, password, email, site):
         """
         Create a new, inactive ``User``, generate a
         ``RegistrationProfile`` and email its activation key to the
         ``User``, returning the new ``User``.
         
-        To disable the email, call with ``send_email=False``.
+        """
+        new_user = User.objects.create_user(username, email, password)
+        new_user.is_active = False
+        new_user.save()
 
+        registration_profile = self.create_profile(new_user)
+        self.send_activation_email(registration_profile, site)
+
+        return new_user
+    create_inactive_user = transaction.commit_on_success(create_inactive_user)
+
+    def send_activation_email(profile, site):
+        """
+        Send an activation email to the user associated with the given
+        ``RegistrationProfile``.
+        
         The activation email will make use of two templates:
 
         ``registration/activation_email_subject.txt``
             This template will be used for the subject line of the
-            email. It receives one context variable, ``site``, which
-            is the currently-active
-            ``django.contrib.sites.models.Site`` instance. Because it
-            is used as the subject line of an email, this template's
-            output **must** be only a single line of text; output
-            longer than one line will be forcibly joined into only a
-            single line.
+            email. Because it is used as the subject line of an email,
+            this template's output **must** be only a single line of
+            text; output longer than one line will be forcibly joined
+            into only a single line.
 
         ``registration/activation_email.txt``
-            This template will be used for the body of the email. It
-            will receive three context variables: ``activation_key``
-            will be the user's activation key (for use in constructing
-            a URL to activate the account), ``expiration_days`` will
-            be the number of days for which the key will be valid and
-            ``site`` will be the currently-active
-            ``django.contrib.sites.models.Site`` instance.
+            This template will be used for the body of the email.
 
-        To execute customized logic once the new ``User`` has been
-        created, connect a function to the signal
-        ``registration.signals.user_registered``; this signal will be
-        sent (with the new ``User`` as the value of the keyword
-        argument ``user``) after the ``User`` and
-        ``RegistrationProfile`` have been created, and the email (if
-        any) has been sent..
-        
+        These templates will each receive the following context
+        variables:
+
+        ``activation_key``
+            The activation key for the new account.
+
+        ``expiration_days``
+            The number of days remaining during which the account may
+            be activated.
+
+        ``site``
+            An object representing the site on which the user
+            registered; depending on whether ``django.contrib.sites``
+            is installed, this may be an instance of either
+            ``django.contrib.sites.models.Site`` (if the sites
+            application is installed) or
+            ``django.contrib.sites.models.RequestSite`` (if
+            not). Consult the documentation for the Django sites
+            framework for details regarding these objects' interfaces.
+
         """
-        from registration.signals import user_registered
-
-        new_user = User.objects.create_user(username, email, password)
-        new_user.is_active = False
-        new_user.save()
+        ctx_dict = { 'activation_key': profile.activation_key,
+                     'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
+                     'site': site }
+        subject = render_to_string('registration/activation_email_subject.txt',
+                                   ctx_dict)
+        # Email subject *must not* contain newlines
+        subject = ''.join(subject.splitlines())
         
-        registration_profile = self.create_profile(new_user)
+        message = render_to_string('registration/activation_email.txt',
+                                   ctx_dict)
         
-        if send_email:
-            from django.core.mail import send_mail
-            current_site = Site.objects.get_current()
-            
-            subject = render_to_string('registration/activation_email_subject.txt',
-                                       { 'site': current_site })
-            # Email subject *must not* contain newlines
-            subject = ''.join(subject.splitlines())
-            
-            message = render_to_string('registration/activation_email.txt',
-                                       { 'activation_key': registration_profile.activation_key,
-                                         'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
-                                         'site': current_site })
-            
-            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [new_user.email])
-        user_registered.send(sender=self.model, user=new_user)
-        return new_user
-    create_inactive_user = transaction.commit_on_success(create_inactive_user)
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [profile.user.email])
     
     def create_profile(self, user):
         """
