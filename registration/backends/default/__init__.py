@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 
+from registration.forms import RegistrationForm
 from registration.models import RegistrationProfile
 
 
@@ -97,4 +98,4 @@ class ModelBasedActivationBackend(object):
         Return the default form class used for user registration.
         
         """
-        pass
+        return RegistrationForm
