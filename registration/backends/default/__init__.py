@@ -3,7 +3,6 @@ from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 
 from registration.models import RegistrationProfile
-from registration import signals
 
 
 class ModelBasedActivationBackend(object):
@@ -67,9 +66,7 @@ class ModelBasedActivationBackend(object):
             site = Site.objects.get_current()
         else:
             site = RequestSite(request)
-        new_user = RegistrationProfile.objects.create_inactive_user(username, email, password, site)
-        user_registered.send(user=new_user)
-        return new_user
+        return RegistrationProfile.objects.create_inactive_user(username, email, password, site)
 
     def activate(request):
         """
