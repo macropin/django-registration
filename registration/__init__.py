@@ -1,5 +1,8 @@
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
+
+# TODO: When Python 2.7 is released this becomes a try/except falling
+# back to Django's implementation.
 from django.utils.importlib import import_module
 
 def get_backend():
