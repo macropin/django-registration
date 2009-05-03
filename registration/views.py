@@ -5,32 +5,27 @@ Views which allow users to create and activate accounts.
 
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from registration.forms import RegistrationForm
-from registration.models import RegistrationProfile
+from registration import get_backend
 
 
-def activate(request, activation_key,
+def activate(request,
              template_name='registration/activate.html',
-             extra_context=None):
+             extra_context=None,
+             **kwargs):
     """
-    Activate a ``User``'s account from an activation key, if their key
-    is valid and hasn't expired.
-    
-    By default, use the template ``registration/activate.html``; to
-    change this, pass the name of a template as the keyword argument
-    ``template_name``.
-    
-    **Required arguments**
-    
-    ``activation_key``
-       The activation key to validate and use for activating the
-       ``User``.
-    
+    Activate a user's account.
+
+    The actual activation of the account will be delegated to the
+    backend specified by the ``REGISTRATION_BACKEND`` setting; the
+    backend's ``activate()`` method will be called, passing any
+    keyword arguments captured from the URL, and will be assumed to
+    return a ``User`` if activation was successful, or a value which
+    evaluates to ``False`` in boolean context if not.
+
     **Optional arguments**
        
     ``extra_context``
@@ -39,7 +34,8 @@ def activate(request, activation_key,
         the end result which appears in the context.
     
     ``template_name``
-        A custom template to use.
+        A custom template to use. If not specified, this will default
+        to ``registration/activate.html``.
     
     **Context:**
     
@@ -47,10 +43,6 @@ def activate(request, activation_key,
         The ``User`` object corresponding to the account, if the
         activation was successful. ``False`` if the activation was not
         successful.
-    
-    ``expiration_days``
-        The number of days for which activation keys stay valid after
-        registration.
     
     Any extra variables supplied in the ``extra_context`` argument
     (see above).
@@ -60,62 +52,83 @@ def activate(request, activation_key,
     registration/activate.html or ``template_name`` keyword argument.
     
     """
-    activation_key = activation_key.lower() # Normalize before trying anything with it.
-    account = RegistrationProfile.objects.activate_user(activation_key)
+    backend = get_backend()
+    account = backend.activate(request, **kwargs)
     if extra_context is None:
         extra_context = {}
     context = RequestContext(request)
     for key, value in extra_context.items():
         context[key] = callable(value) and value() or value
     return render_to_response(template_name,
-                              { 'account': account,
-                                'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS },
+                              { 'account': account, },
                               context_instance=context)
 
 
-def register(request, success_url=None,
-             form_class=RegistrationForm,
+def register(request, success_url=None, form_class=None,
+             disallowed_url='registration_disallowed',
              template_name='registration/registration_form.html',
              extra_context=None):
     """
     Allow a new user to register an account.
-    
-    Following successful registration, issue a redirect; by default,
-    this will be whatever URL corresponds to the named URL pattern
-    ``registration_complete``, which will be
-    ``/accounts/register/complete/`` if using the included URLConf. To
-    change this, point that named pattern at another URL, or pass your
-    preferred URL as the keyword argument ``success_url``.
-    
-    By default, ``registration.forms.RegistrationForm`` will be used
-    as the registration form; to change this, pass a different form
-    class as the ``form_class`` keyword argument. The form class you
-    specify must have a method ``save`` which will create and return
-    the new ``User``.
-    
-    By default, use the template
-    ``registration/registration_form.html``; to change this, pass the
-    name of a template as the keyword argument ``template_name``.
+
+    The actual registration of the account will be delegated to the
+    backend specified by the ``REGISTRATION_BACKEND`` setting; it will
+    be used as follows:
+
+    1. The backend's ``registration_allowed()`` method will be called,
+       passing the ``HttpRequest``, to determine whether registration
+       of an account is to be allowed; if not, a redirect is issued to
+       the view corresponding to the named URL pattern
+       ``registration_disallowed``. To override this, see the list of
+       optional arguments for this view (below).
+
+    2. The form to use for account registration will be obtained by
+       calling the backend's ``get_form_class()`` method, passing the
+       ``HttpRequest``. To override this, see the list of optional
+       arguments for this view (below).
+
+    3. If valid, the form's ``cleaned_data`` will be passed (as
+       keyword arguments, and along with the ``HttpRequest``) to the
+       backend's ``register()`` method, which should return the new
+       ``User`` object.
+
+    4. Upon successful registration, the backend's
+       ``post_registration_redirect()`` method will be called, passing
+       the ``HttpRequest`` and the new ``User``, to determine the URL
+       to redirect the user to. To override this, see the list of
+       optional arguments for this view (below).
     
     **Required arguments**
     
     None.
     
     **Optional arguments**
+
+    ``disallowed_url``
+        URL to redirect to if registration is not permitted for the
+        current ``HttpRequest``. Must be a value which can legally be
+        passed to ``django.shortcuts.redirect``. If not supplied, this
+        will be whatever URL corresponds to the named URL pattern
+        ``registration_disallowed``.
     
     ``form_class``
-        The form class to use for registration.
+        The form class to use for registration. If not supplied, this
+        will be retrieved from the registration backend.
     
     ``extra_context``
         A dictionary of variables to add to the template context. Any
         callable object in this dictionary will be called to produce
         the end result which appears in the context.
-    
+
     ``success_url``
-        The URL to redirect to on successful registration.
+        URL to redirect to after successful registration. Must be a
+        value which can legally be passed to
+        ``django.shortcuts.redirect``. If not supplied, this will be
+        retrieved from the registration backend.
     
     ``template_name``
-        A custom template to use.
+        A custom template to use. If not supplied, this will default
+        to ``registration/registration_form.html``.
     
     **Context:**
     
@@ -131,15 +144,16 @@ def register(request, success_url=None,
     argument.
     
     """
+    backend = get_backend()
+    if not backend.registration_disallowed(request):
+        return redirect(disallowed_url)
+    if form_class is None:
+        form_class = backend.get_form_class(request)
     if request.method == 'POST':
         form = form_class(data=request.POST, files=request.FILES)
         if form.is_valid():
-            new_user = form.save()
-            # success_url needs to be dynamically generated here; setting a
-            # a default value using reverse() will cause circular-import
-            # problems with the default URLConf for this application, which
-            # imports this file.
-            return HttpResponseRedirect(success_url or reverse('registration_complete'))
+            new_user = backend.register(request, **form.cleaned_data)
+            return redirect(success_url or backend.post_registration_redirect(request, new_user))
     else:
         form = form_class()
     

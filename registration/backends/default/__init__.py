@@ -98,3 +98,11 @@ class ModelBasedActivationBackend(object):
         
         """
         return RegistrationForm
+
+    def post_registration_redirect(request, user):
+        """
+        Return the name of the URL to redirect to after successful
+        user registration.
+        
+        """
+        return 'registration_complete'
