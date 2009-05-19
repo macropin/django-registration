@@ -6,7 +6,7 @@ from registration.forms import RegistrationForm
 from registration.models import RegistrationProfile
 
 
-class ModelBasedActivationBackend(object):
+class DefaultBackend(object):
     """
     A registration backend which follows a simple workflow:
 
