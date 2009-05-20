@@ -26,8 +26,9 @@ class RegistrationForm(forms.Form):
     requires the password to be entered twice to catch typos.
     
     Subclasses should feel free to add any additional validation they
-    need, but should either preserve the base ``save()`` or implement
-    a ``save()`` method which returns a ``User``.
+    need, but should avoid defining a ``save()`` method -- the actual
+    saving of collected user data is delegated to the active
+    registration backend.
     
     """
     username = forms.RegexField(regex=r'^\w+$',
@@ -66,18 +67,6 @@ class RegistrationForm(forms.Form):
             if self.cleaned_data['password1'] != self.cleaned_data['password2']:
                 raise forms.ValidationError(_(u'You must type the same password each time'))
         return self.cleaned_data
-    
-    def save(self):
-        """
-        Create the new ``User`` and ``RegistrationProfile``, and
-        returns the ``User`` (by calling
-        ``RegistrationProfile.objects.create_inactive_user()``).
-        
-        """
-        new_user = RegistrationProfile.objects.create_inactive_user(username=self.cleaned_data['username'],
-                                                                    password=self.cleaned_data['password1'],
-                                                                    email=self.cleaned_data['email'])
-        return new_user
 
 
 class RegistrationFormTermsOfService(RegistrationForm):
