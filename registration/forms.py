@@ -77,7 +77,7 @@ class RegistrationFormTermsOfService(RegistrationForm):
     """
     tos = forms.BooleanField(widget=forms.CheckboxInput(attrs=attrs_dict),
                              label=_(u'I have read and agree to the Terms of Service'),
-                             error_messages={ 'required': u"You must agree to the terms to register" })
+                             error_messages={ 'required': _(u"You must agree to the terms to register") })
 
 
 class RegistrationFormUniqueEmail(RegistrationForm):
