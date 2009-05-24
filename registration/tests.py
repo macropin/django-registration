@@ -154,11 +154,21 @@ class DefaultRegistrationBackendTests(TestCase):
     """
     def setUp(self):
         """
-        Create an instance of the default backend for use in testing.
+        Create an instance of the default backend for use in testing,
+        and set ``ACCOUNT_ACTIVATION_DAYS``.
         
         """
         from registration.backends.default import DefaultBackend
         self.backend = DefaultBackend()
+        self.old_activation = getattr(settings, 'ACCOUNT_ACTIVATION_DAYS', None)
+        settings.ACCOUNT_ACTIVATION_DAYS = 7
+
+    def tearDown(self):
+        """
+        Restore the original value of ``ACCOUNT_ACTIVATION_DAYS``.
+        
+        """
+        settings.ACCOUNT_ACTIVATION_DAYS = self.old_activation
 
     def test_registration(self):
         """
@@ -296,6 +306,8 @@ class RegistrationViewTests(TestCase):
         """
         self.old_backend = getattr(settings, 'REGISTRATION_BACKEND', None)
         settings.REGISTRATION_BACKEND = 'registration.backends.default.DefaultBackend'
+        self.old_activation = getattr(settings, 'ACCOUNT_ACTIVATION_DAYS', None)
+        settings.ACCOUNT_ACTIVATION_DAYS = 7
 
     def tearDown(self):
         """
@@ -303,6 +315,7 @@ class RegistrationViewTests(TestCase):
         
         """
         settings.REGISTRATION_BACKEND = self.old_backend
+        settings.ACCOUNT_ACTIVATION_DAYS = self.old_activation
 
     def test_registration_view(self):
         """
@@ -336,3 +349,22 @@ class RegistrationViewTests(TestCase):
         response = self.client.get(reverse('registration_activate',
                                            kwargs={ 'activation_key': profile.activation_key }))
         self.assertEqual(response.status_code, 200)
+
+        self.failUnless(User.objects.get(username='alice').is_active)
+
+        # Register another one and reset its date_joined to be outside
+        # the activation window.
+        self.client.post(reverse('registration_register'),
+                         data={ 'username': 'bob',
+                                'email': 'bob@example.com',
+                                'password1': 'secret',
+                                'password2': 'secret' })
+        expired_user = User.objects.get(username='bob')
+        expired_user.date_joined = expired_user.date_joined - datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
+        expired_user.save()
+
+        expired_profile = RegistrationProfile.objects.get(user=expired_user)
+        response = self.client.get(reverse('registration_activate',
+                                           kwargs={ 'activation_key': expired_profile.activation_key }))
+        self.assertEqual(response.status_code, 200)
+        self.failIf(User.objects.get(username='bob').is_active)
