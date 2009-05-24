@@ -15,7 +15,7 @@ from registration import forms
 from registration.models import RegistrationProfile
 
 
-class RegistrationFormsTestCase(TestCase):
+class RegistrationFormTests(TestCase):
     """
     Test the default registration forms.
     
@@ -140,7 +140,7 @@ class RegistrationFormsTestCase(TestCase):
         self.failUnless(form.is_valid())
     
 
-class DefaultRegistrationBackendTestCase(TestCase):
+class DefaultRegistrationBackendTests(TestCase):
     """
     Test the default registration backend.
 
@@ -233,7 +233,7 @@ class DefaultRegistrationBackendTestCase(TestCase):
                          'registration_complete')
 
 
-class BackendRetrievalTestCase(TestCase):
+class BackendRetrievalTests(TestCase):
     """
     Test that utilities for retrieving the active backend work
     properly.
@@ -275,3 +275,4 @@ class BackendRetrievalTestCase(TestCase):
         self.assertRaises(ImproperlyConfigured, get_backend)
 
         settings.REGISTRATION_BACKEND = old_backend
+    
