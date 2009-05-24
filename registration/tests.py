@@ -318,3 +318,21 @@ class RegistrationViewTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response['Location'], 'http://testserver%s' % reverse('registration_complete'))
         self.assertEqual(len(mail.outbox), 1)
+
+    def test_activation_view(self):
+        """
+        Call the ``activate`` view and ensure that it properly
+        activates users within the valid activation window, but not
+        otherwise.
+        
+        """
+        # First, register an account.
+        self.client.post(reverse('registration_register'),
+                         data={ 'username': 'alice',
+                                'email': 'alice@example.com',
+                                'password1': 'swordfish',
+                                'password2': 'swordfish' })
+        profile = RegistrationProfile.objects.get(user__username='alice')
+        response = self.client.get(reverse('registration_activate',
+                                           kwargs={ 'activation_key': profile.activation_key }))
+        self.assertEqual(response.status_code, 200)
