@@ -19,7 +19,8 @@ class DefaultBackendTestCase(TestCase):
     Running these tests successfull will require two templates to be
     created for the sending of activation emails; details on these
     templates and their contexts may be found in the documentation for
-    the default backend.
+    the default backend. The setting ``ACCOUNT_ACTIVATION_DAYS`` must
+    also be specified, and must be an integer.
     
     """
     def setUp(self):
