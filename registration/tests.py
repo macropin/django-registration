@@ -12,6 +12,11 @@ from registration.models import RegistrationProfile
 class DefaultBackendTestCase(TestCase):
     """
     Test the default registration backend.
+
+    Running these tests successfull will require two templates to be
+    created for the sending of activation emails; details on these
+    templates and their contexts may be found in the documentation for
+    the default backend.
     
     """
     def setUp(self):
