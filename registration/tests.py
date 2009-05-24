@@ -168,7 +168,7 @@ class DefaultRegistrationBackendTests(TestCase):
         email.
         
         """
-        new_user = self.backend.register({}, 'bob', 'bob@example.com', 'secret')
+        new_user = self.backend.register({}, username='bob', email='bob@example.com', password1='secret')
         self.assertEqual(new_user.username, 'bob')
         self.failUnless(new_user.check_password('secret'))
         self.assertEqual(new_user.email, 'bob@example.com')
@@ -186,7 +186,7 @@ class DefaultRegistrationBackendTests(TestCase):
         """
         # First, test with a user activating inside the activation
         # window.
-        valid_user = self.backend.register({}, 'alice', 'alice@example.com', 'swordfish')
+        valid_user = self.backend.register({}, username='alice', email='alice@example.com', password1='swordfish')
         valid_profile = RegistrationProfile.objects.get(user=valid_user)
         activated = self.backend.activate({}, valid_profile.activation_key)
         self.assertEqual(activated.username, valid_user.username)
@@ -199,7 +199,7 @@ class DefaultRegistrationBackendTests(TestCase):
 
         # Now test again, but with a user activating outside the
         # activation window.
-        expired_user = self.backend.register({}, 'bob', 'bob@example.com', 'secret')
+        expired_user = self.backend.register({}, username='bob', email='bob@example.com', password1='secret')
         expired_user.date_joined = expired_user.date_joined - datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
         expired_user.save()
         expired_profile = RegistrationProfile.objects.get(user=expired_user)
@@ -315,5 +315,6 @@ class RegistrationViewTests(TestCase):
                                            'email': 'alice@example.com',
                                            'password1': 'swordfish',
                                            'password2': 'swordfish' })
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response['Location'], 'http://testserver%s' % reverse('registration_complete'))
         self.assertEqual(len(mail.outbox), 1)

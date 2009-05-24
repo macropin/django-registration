@@ -45,7 +45,7 @@ class DefaultBackend(object):
     fields and supported operations.
     
     """
-    def register(self, request, username, email, password):
+    def register(self, request, **kwargs):
         """
         Given a username, email address and password, register a new
         user account, which will initially be inactive.
@@ -63,6 +63,7 @@ class DefaultBackend(object):
         them.
 
         """
+        username, email, password = kwargs['username'], kwargs['email'], kwargs['password1']
         if Site._meta.installed:
             site = Site.objects.get_current()
         else:
