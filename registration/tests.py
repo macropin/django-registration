@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from django.core import mail
 from django.test import TestCase
 
-from registration.forms import RegistrationForm
+from registration import forms
 from registration.models import RegistrationProfile
 
 
@@ -95,7 +95,7 @@ class DefaultBackendTestCase(TestCase):
         ``registration.forms.RegistrationForm``.
         
         """
-        self.failUnless(self.backend.get_form_class({}) is RegistrationForm)
+        self.failUnless(self.backend.get_form_class({}) is forms.RegistrationForm)
 
     def test_post_registration_redirect(self):
         """
