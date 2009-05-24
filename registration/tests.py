@@ -6,6 +6,7 @@ Unit tests for django-registration.
 import datetime
 
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.core import mail
 from django.test import TestCase
 
@@ -95,3 +96,12 @@ class DefaultBackendTestCase(TestCase):
         
         """
         self.failUnless(self.backend.get_form_class({}) is RegistrationForm)
+
+    def test_post_registration_redirect(self):
+        """
+        Test that the default post-registration redirect is the named
+        pattern ``registration_complete``.
+        
+        """
+        self.assertEqual(self.backend.post_registration_redirect({}, User()),
+                         'registration_complete')
