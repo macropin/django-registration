@@ -45,7 +45,7 @@ class DefaultBackend(object):
     fields and supported operations.
     
     """
-    def register(self, request, username, password, email):
+    def register(self, request, username, email, password):
         """
         Given a username, email address and password, register a new
         user account, which will initially be inactive.
@@ -67,7 +67,7 @@ class DefaultBackend(object):
             site = Site.objects.get_current()
         else:
             site = RequestSite(request)
-        return RegistrationProfile.objects.create_inactive_user(username, password, email, site)
+        return RegistrationProfile.objects.create_inactive_user(username, email, password, site)
 
     def activate(self, request, activation_key):
         """

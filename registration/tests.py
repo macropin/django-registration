@@ -39,7 +39,7 @@ class DefaultBackendTestCase(TestCase):
         email.
         
         """
-        new_user = self.backend.register({}, 'bob', 'secret', 'bob@example.com')
+        new_user = self.backend.register({}, 'bob', 'bob@example.com', 'secret')
         self.assertEqual(new_user.username, 'bob')
         self.failUnless(new_user.check_password('secret'))
         self.assertEqual(new_user.email, 'bob@example.com')
@@ -57,7 +57,7 @@ class DefaultBackendTestCase(TestCase):
         """
         # First, test with a user activating inside the activation
         # window.
-        valid_user = self.backend.register({}, 'alice', 'swordfish', 'alice@example.com')
+        valid_user = self.backend.register({}, 'alice', 'alice@example.com', 'swordfish')
         valid_profile = RegistrationProfile.objects.get(user=valid_user)
         activated = self.backend.activate({}, valid_profile.activation_key)
         self.assertEqual(activated.username, valid_user.username)
@@ -70,7 +70,7 @@ class DefaultBackendTestCase(TestCase):
 
         # Now test again, but with a user activating outside the
         # activation window.
-        expired_user = self.backend.register({}, 'bob', 'secret', 'bob@example.com')
+        expired_user = self.backend.register({}, 'bob', 'bob@example.com', 'secret')
         expired_user.date_joined = expired_user.date_joined - datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
         expired_user.save()
         expired_profile = RegistrationProfile.objects.get(user=expired_user)
