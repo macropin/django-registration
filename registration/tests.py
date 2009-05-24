@@ -340,6 +340,8 @@ class RegistrationViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(mail.outbox), 1)
 
+        # If registration is closed, trying to register should
+        # redirect to the "registration closed" message.
         old_allowed = getattr(settings, 'REGISTRATION_OPEN', True)
         settings.REGISTRATION_OPEN = False
 
