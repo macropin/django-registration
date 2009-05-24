@@ -45,7 +45,7 @@ class DefaultBackend(object):
     fields and supported operations.
     
     """
-    def register(request, username, email, password):
+    def register(self, request, username, password, email):
         """
         Given a username, email address and password, register a new
         user account, which will initially be inactive.
@@ -67,9 +67,9 @@ class DefaultBackend(object):
             site = Site.objects.get_current()
         else:
             site = RequestSite(request)
-        return RegistrationProfile.objects.create_inactive_user(username, email, password, site)
+        return RegistrationProfile.objects.create_inactive_user(username, password, email, site)
 
-    def activate(request, activation_key):
+    def activate(self, request, activation_key):
         """
         Given an an activation key, look up and activate the user
         account corresponding to that key (if possible).
@@ -77,7 +77,7 @@ class DefaultBackend(object):
         """
         return RegistrationProfile.objects.activate_user(activation_key)
 
-    def registration_allowed(request):
+    def registration_allowed(self, request):
         """
         Indicate whether account registration is currently permitted,
         based on the value of the setting ``REGISTRATION_OPEN``. This
@@ -92,14 +92,14 @@ class DefaultBackend(object):
         """
         return getattr(settings, 'REGISTRATION_OPEN', True)
 
-    def get_form_class(request):
+    def get_form_class(self, request):
         """
         Return the default form class used for user registration.
         
         """
         return RegistrationForm
 
-    def post_registration_redirect(request, user):
+    def post_registration_redirect(self, request, user):
         """
         Return the name of the URL to redirect to after successful
         user registration.

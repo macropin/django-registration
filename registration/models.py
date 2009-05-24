@@ -77,7 +77,7 @@ class RegistrationManager(models.Manager):
         return new_user
     create_inactive_user = transaction.commit_on_success(create_inactive_user)
 
-    def send_activation_email(profile, site):
+    def send_activation_email(self, profile, site):
         """
         Send an activation email to the user associated with the given
         ``RegistrationProfile``.
