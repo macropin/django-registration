@@ -24,9 +24,10 @@ class DefaultBackendTestCase(TestCase):
 
     def test_registration(self):
         """
-        Create a new user, verifying that username, email and password
-        are set correctly and that the new user is inactive and
-        received an activation email.
+        Test the registration process: registration creates a new
+        inactive account and a new profile with activation key,
+        populates the correct account data and sends an activation
+        email.
         
         """
         new_user = self.backend.register({}, 'bob', 'secret', 'bob@example.com')
@@ -34,6 +35,7 @@ class DefaultBackendTestCase(TestCase):
         self.failUnless(new_user.check_password('secret'))
         self.assertEqual(new_user.email, 'bob@example.com')
         self.failIf(new_user.is_active)
+        self.assertEqual(RegistrationProfile.objects.count(), 1)
         self.assertEqual(len(mail.outbox), 1)
 
     def test_activation(self):
