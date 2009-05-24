@@ -139,7 +139,7 @@ class RegistrationFormsTestCase(TestCase):
         self.failUnless(form.is_valid())
     
 
-class DefaultBackendTestCase(TestCase):
+class DefaultRegistrationBackendTestCase(TestCase):
     """
     Test the default registration backend.
 
