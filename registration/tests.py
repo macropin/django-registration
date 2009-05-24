@@ -76,3 +76,13 @@ class DefaultBackendTestCase(TestCase):
         expired_profile = RegistrationProfile.objects.get(user=expired_user)
         self.failIf(self.backend.activate({}, expired_profile.activation_key))
         self.failUnless(expired_profile.activation_key_expired())
+
+    def test_allow(self):
+        """
+        Test that the setting ``REGISTRATION_OPEN`` appropriately
+        controls whether registration is permitted.
+        
+        """
+        self.failUnless(self.backend.registration_allowed({}))
+        settings.REGISTRATION_OPEN = False
+        self.failIf(self.backend.registration_allowed({}))
