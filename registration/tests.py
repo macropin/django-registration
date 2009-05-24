@@ -331,6 +331,25 @@ class RegistrationViewTests(TestCase):
         self.assertEqual(response['Location'], 'http://testserver%s' % reverse('registration_complete'))
         self.assertEqual(len(mail.outbox), 1)
 
+        # Invalid data can't register.
+        response = self.client.post(reverse('registration_register'),
+                                    data={ 'username': 'bob',
+                                           'email': 'bobe@example.com',
+                                           'password1': 'foo',
+                                           'password2': 'bar' })
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(mail.outbox), 1)
+
+        old_allowed = getattr(settings, 'REGISTRATION_OPEN', True)
+        settings.REGISTRATION_OPEN = False
+
+        response = self.client.get(reverse('registration_register'))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response['Location'], 'http://testserver%s' % reverse('registration_disallowed'))
+
+        settings.REGISTRATION_OPEN = old_allowed
+
+
     def test_activation_view(self):
         """
         Call the ``activate`` view and ensure that it properly
