@@ -8,6 +8,7 @@ import datetime
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core import mail
+from django.core.exceptions import ImproperlyConfigured
 from django.test import TestCase
 
 from registration import forms
@@ -253,5 +254,24 @@ class BackendRetrievalTestCase(TestCase):
         
         settings.REGISTRATION_BACKEND = 'registration.backends.default.DefaultBackend'
         self.failUnless(isinstance(get_backend(), DefaultBackend))
+
+        settings.REGISTRATION_BACKEND = old_backend
+
+    def test_backend_error(self):
+        """
+        Test that an invalid or nonexistent value for the
+        ``REGISTRATION_BACKEND`` setting raises the correct exception.
+        
+        """
+        from registration import get_backend
+
+        old_backend = getattr(settings, 'REGISTRATION_BACKEND', None)
+
+        settings.REGISTRATION_BACKEND = None
+        self.assertRaises(ImproperlyConfigured, get_backend)
+
+        # Test nonexistent module
+        settings.REGISTRATION_BACKEND = 'registration.backends.doesnotexist.NonExistentBackend'
+        self.assertRaises(ImproperlyConfigured, get_backend)
 
         settings.REGISTRATION_BACKEND = old_backend
