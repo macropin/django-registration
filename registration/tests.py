@@ -51,12 +51,15 @@ class DefaultBackendTestCase(TestCase):
         the permitted window forbids later activation.
         
         """
+        # First, test with a user activating inside the activation
+        # window.
         valid_user = self.backend.register({}, 'alice', 'swordfish', 'alice@example.com')
         valid_profile = RegistrationProfile.objects.get(user=valid_user)
         activated = self.backend.activate({}, valid_profile.activation_key)
         self.assertEqual(activated.username, valid_user.username)
         self.failUnless(activated.is_active)
 
-        # Fetch the profile again to verify its activation key has been reset.
+        # Fetch the profile again to verify its activation key has
+        # been reset.
         valid_profile = RegistrationProfile.objects.get(user=valid_user)
         self.assertEqual(valid_profile.activation_key, RegistrationProfile.ACTIVATED)
