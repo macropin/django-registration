@@ -9,6 +9,7 @@ from django.conf import settings
 from django.core import mail
 from django.test import TestCase
 
+from registration.forms import RegistrationForm
 from registration.models import RegistrationProfile
 
 
@@ -86,3 +87,11 @@ class DefaultBackendTestCase(TestCase):
         self.failUnless(self.backend.registration_allowed({}))
         settings.REGISTRATION_OPEN = False
         self.failIf(self.backend.registration_allowed({}))
+
+    def test_form_class(self):
+        """
+        Test that the default form class returned is
+        ``registration.forms.RegistrationForm``.
+        
+        """
+        self.failUnless(self.backend.get_form_class({}) is RegistrationForm)
