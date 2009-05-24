@@ -230,3 +230,28 @@ class DefaultRegistrationBackendTestCase(TestCase):
         """
         self.assertEqual(self.backend.post_registration_redirect({}, User()),
                          'registration_complete')
+
+
+class BackendRetrievalTestCase(TestCase):
+    """
+    Test that utilities for retrieving the active backend work
+    properly.
+    
+    """
+    def test_get_backend(self):
+        """
+        Set ``REGISTRATION_BACKEND`` temporarily, then verify that
+        ``get_backend()`` returns the correct value.
+        
+        """
+        from registration import get_backend
+        from registration.backends.default import DefaultBackend
+
+        # Stash away the original value of the setting so we can
+        # restore it again later.
+        old_backend = getattr(settings, 'REGISTRATION_BACKEND', None)
+        
+        settings.REGISTRATION_BACKEND = 'registration.backends.default.DefaultBackend'
+        self.failUnless(isinstance(get_backend(), DefaultBackend))
+
+        settings.REGISTRATION_BACKEND = old_backend
