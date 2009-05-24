@@ -3,6 +3,9 @@ Unit tests for django-registration.
 
 """
 
+import datetime
+
+from django.conf import settings
 from django.core import mail
 from django.test import TestCase
 
@@ -63,3 +66,12 @@ class DefaultBackendTestCase(TestCase):
         # been reset.
         valid_profile = RegistrationProfile.objects.get(user=valid_user)
         self.assertEqual(valid_profile.activation_key, RegistrationProfile.ACTIVATED)
+
+        # Now test again, but with a user activating outside the
+        # activation window.
+        expired_user = self.backend.register({}, 'bob', 'secret', 'bob@example.com')
+        expired_user.date_joined = expired_user.date_joined - datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
+        expired_user.save()
+        expired_profile = RegistrationProfile.objects.get(user=expired_user)
+        self.failIf(self.backend.activate({}, expired_profile.activation_key))
+        self.failUnless(expired_profile.activation_key_expired())
