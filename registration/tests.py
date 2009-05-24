@@ -9,6 +9,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core import mail
 from django.core.exceptions import ImproperlyConfigured
+from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from registration import forms
@@ -211,9 +212,12 @@ class DefaultRegistrationBackendTests(TestCase):
         controls whether registration is permitted.
         
         """
+        old_allowed = getattr(settings, 'REGISTRATION_OPEN', True)
+        settings.REGISTRATION_OPEN = True
         self.failUnless(self.backend.registration_allowed({}))
         settings.REGISTRATION_OPEN = False
         self.failIf(self.backend.registration_allowed({}))
+        settings.REGISTRATION_OPEN = old_allowed
 
     def test_form_class(self):
         """
@@ -275,4 +279,41 @@ class BackendRetrievalTests(TestCase):
         self.assertRaises(ImproperlyConfigured, get_backend)
 
         settings.REGISTRATION_BACKEND = old_backend
+
+
+class RegistrationViewTests(TestCase):
+    """
+    Test the registration views.
     
+    """
+    urls = 'registration.backends.default.urls'
+    
+    def setUp(self):
+        """
+        Set ``REGISTRATION_BACKEND`` to the default backend, and store
+        the original value to be restored later.
+        
+        """
+        self.old_backend = getattr(settings, 'REGISTRATION_BACKEND', None)
+        settings.REGISTRATION_BACKEND = 'registration.backends.default.DefaultBackend'
+
+    def tearDown(self):
+        """
+        Retore the original value of ``REGISTRATION_BACKEND``.
+        
+        """
+        settings.REGISTRATION_BACKEND = self.old_backend
+
+    def test_registration_view(self):
+        """
+        Call the ``register`` view and ensure that it properly
+        validates data and creates a new user.
+        
+        """
+        response = self.client.post(reverse('registration_register'),
+                                    data={ 'username': 'alice',
+                                           'email': 'alice@example.com',
+                                           'password1': 'swordfish',
+                                           'password2': 'swordfish' })
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(mail.outbox), 1)

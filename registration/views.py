@@ -145,7 +145,7 @@ def register(request, success_url=None, form_class=None,
     
     """
     backend = get_backend()
-    if not backend.registration_disallowed(request):
+    if not backend.registration_allowed(request):
         return redirect(disallowed_url)
     if form_class is None:
         form_class = backend.get_form_class(request)
