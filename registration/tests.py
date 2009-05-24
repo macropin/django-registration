@@ -56,3 +56,7 @@ class DefaultBackendTestCase(TestCase):
         activated = self.backend.activate({}, valid_profile.activation_key)
         self.assertEqual(activated.username, valid_user.username)
         self.failUnless(activated.is_active)
+
+        # Fetch the profile again to verify its activation key has been reset.
+        valid_profile = RegistrationProfile.objects.get(user=valid_user)
+        self.assertEqual(valid_profile.activation_key, RegistrationProfile.ACTIVATED)
