@@ -121,9 +121,7 @@ class RegistrationFormTests(TestCase):
         base_data = {'username': 'foo',
                      'password1': 'foo',
                      'password2': 'foo'}
-        for domain in ('aim.com', 'aol.com', 'email.com', 'gmail.com',
-                       'googlemail.com', 'hotmail.com', 'hushmail.com',
-                       'msn.com', 'mail.ru', 'mailinator.com', 'live.com'):
+        for domain in forms.RegistrationFormNoFreeEmail.bad_domains:
             invalid_data = base_data.copy()
             invalid_data['email'] = u"foo@%s" % domain
             form = forms.RegistrationFormNoFreeEmail(data=invalid_data)
