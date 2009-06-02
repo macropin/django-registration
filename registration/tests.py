@@ -207,7 +207,8 @@ class DefaultRegistrationBackendTests(TestCase):
         # Fetch the profile again to verify its activation key has
         # been reset.
         valid_profile = RegistrationProfile.objects.get(user=valid_user)
-        self.assertEqual(valid_profile.activation_key, RegistrationProfile.ACTIVATED)
+        self.assertEqual(valid_profile.activation_key,
+                         RegistrationProfile.ACTIVATED)
 
     def test_invalid_activation(self):
         """
@@ -345,7 +346,8 @@ class RegistrationViewTests(TestCase):
         """
         response = self.client.get(reverse('registration_register'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'registration/registration_form.html')
+        self.assertTemplateUsed(response,
+                                'registration/registration_form.html')
         self.failUnless(isinstance(response.context['form'],
                                    forms.RegistrationForm))
 
@@ -377,7 +379,8 @@ class RegistrationViewTests(TestCase):
                                           'password2': 'bar'})
         self.assertEqual(response.status_code, 200)
         self.failIf(response.context['form'].is_valid())
-        self.assertFormError(response, 'form', field=None, errors=u'You must type the same password each time')
+        self.assertFormError(response, 'form',field=None,
+                             errors=u'You must type the same password each time')
         self.assertEqual(len(mail.outbox), 0)
 
     def test_registration_view_closed(self):
@@ -423,8 +426,10 @@ class RegistrationViewTests(TestCase):
         response = self.client.get(reverse('registration_activate',
                                            kwargs={'activation_key': profile.activation_key}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'registration/activate.html')
-        self.failUnless(isinstance(response.context['account'], User))
+        self.assertTemplateUsed(response,
+                                'registration/activate.html')
+        self.failUnless(isinstance(response.context['account'],
+                                   User))
         self.assertEqual(response.context['account'].username,
                          u'alice')
         self.failUnless(User.objects.get(username='alice').is_active)
