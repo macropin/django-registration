@@ -343,12 +343,11 @@ class RegistrationViewTests(TestCase):
         template and populates the registration form into the context.
 
         """
-        from registration.forms import RegistrationForm
-
         response = self.client.get(reverse('registration_register'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'registration/registration_form.html')
-        self.failUnless(isinstance(response.context['form'], RegistrationForm))
+        self.failUnless(isinstance(response.context['form'],
+                                   forms.RegistrationForm))
 
     def test_registration_view_success(self):
         """
