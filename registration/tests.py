@@ -338,6 +338,8 @@ class RegistrationViewTests(TestCase):
                                            'password1': 'foo',
                                            'password2': 'bar' })
         self.assertEqual(response.status_code, 200)
+        self.failIf(response.context['form'].is_valid())
+        self.assertFormError(response, 'form', field=None, errors=u'You must type the same password each time')
         self.assertEqual(len(mail.outbox), 1)
 
         # If registration is closed, trying to register should
