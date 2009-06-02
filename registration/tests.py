@@ -144,7 +144,7 @@ class RegistrationFormTests(TestCase):
         base_data['email'] = 'foo@example.com'
         form = forms.RegistrationFormNoFreeEmail(data=base_data)
         self.failUnless(form.is_valid())
-    
+
 
 class DefaultRegistrationBackendTests(TestCase):
     """
