@@ -322,6 +322,10 @@ class RegistrationViewTests(TestCase):
         validates data and creates a new user.
         
         """
+        response = self.client.get(reverse('registration_register'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/registration_form.html')
+
         response = self.client.post(reverse('registration_register'),
                                     data={ 'username': 'alice',
                                            'email': 'alice@example.com',
