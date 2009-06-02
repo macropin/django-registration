@@ -377,6 +377,8 @@ class RegistrationViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'registration/activate.html')
         self.failUnless(isinstance(response.context['account'], User))
+        self.assertEqual(response.context['account'].username,
+                         u'alice')
 
         self.failUnless(User.objects.get(username='alice').is_active)
 
