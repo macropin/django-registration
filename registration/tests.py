@@ -331,8 +331,8 @@ class RegistrationViewTests(TestCase):
                                            'email': 'alice@example.com',
                                            'password1': 'swordfish',
                                            'password2': 'swordfish' })
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['Location'], 'http://testserver%s' % reverse('registration_complete'))
+        self.assertRedirects(response,
+                             'http://testserver%s' % reverse('registration_complete'))
         self.assertEqual(len(mail.outbox), 1)
 
         # Invalid data can't register.
