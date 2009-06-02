@@ -394,4 +394,5 @@ class RegistrationViewTests(TestCase):
         response = self.client.get(reverse('registration_activate',
                                            kwargs={ 'activation_key': expired_profile.activation_key }))
         self.assertEqual(response.status_code, 200)
+        self.failIf(response.context['account'])
         self.failIf(User.objects.get(username='bob').is_active)
