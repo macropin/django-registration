@@ -3,7 +3,7 @@ Unit tests for django-registration.
 
 These tests assume that you have a project set up, with
 ``registration`` in ``INSTALLED_APPS`` and with the default templates
-required by both the registratin/activation views and the default
+required by both the registration/activation views and the default
 backend.
 
 """
