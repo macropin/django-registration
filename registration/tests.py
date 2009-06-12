@@ -379,7 +379,7 @@ class RegistrationViewTests(TestCase):
                                           'password2': 'bar'})
         self.assertEqual(response.status_code, 200)
         self.failIf(response.context['form'].is_valid())
-        self.assertFormError(response, 'form',field=None,
+        self.assertFormError(response, 'form', field=None,
                              errors=u'You must type the same password each time')
         self.assertEqual(len(mail.outbox), 0)
 
