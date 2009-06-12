@@ -80,7 +80,8 @@ class RegistrationFormTests(TestCase):
                                                           'password1': 'foo',
                                                           'password2': 'foo'})
         self.failIf(form.is_valid())
-        self.assertEqual(form.errors['tos'], [u"You must agree to the terms to register"])
+        self.assertEqual(form.errors['tos'],
+                         [u"You must agree to the terms to register"])
 
         form = forms.RegistrationFormTermsOfService(data={'username': 'foo',
                                                           'email': 'foo@example.com',
@@ -104,7 +105,8 @@ class RegistrationFormTests(TestCase):
                                                        'password1': 'foo',
                                                        'password2': 'foo'})
         self.failIf(form.is_valid())
-        self.assertEqual(form.errors['email'], [u"This email address is already in use. Please supply a different email address."])
+        self.assertEqual(form.errors['email'],
+                         [u"This email address is already in use. Please supply a different email address."])
 
         form = forms.RegistrationFormUniqueEmail(data={'username': 'foo',
                                                        'email': 'foo@example.com',
@@ -126,7 +128,8 @@ class RegistrationFormTests(TestCase):
             invalid_data['email'] = u"foo@%s" % domain
             form = forms.RegistrationFormNoFreeEmail(data=invalid_data)
             self.failIf(form.is_valid())
-            self.assertEqual(form.errors['email'], [u"Registration using free email addresses is prohibited. Please supply a different email address."])
+            self.assertEqual(form.errors['email'],
+                             [u"Registration using free email addresses is prohibited. Please supply a different email address."])
 
         base_data['email'] = 'foo@example.com'
         form = forms.RegistrationFormNoFreeEmail(data=base_data)
