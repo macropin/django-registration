@@ -353,7 +353,7 @@ class RegistrationViewTests(TestCase):
 
     def test_registration_view_success(self):
         """
-        A ``POST`` to the ``register`` view with valid date properly
+        A ``POST`` to the ``register`` view with valid data properly
         creates a new user and issues a redirect.
 
         """
