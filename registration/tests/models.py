@@ -75,6 +75,17 @@ class RegistrationModelTests(TestCase):
                                                                     **self.user_info)
         self.assertEqual(len(mail.outbox), 1)
 
+    def test_user_creation_no_email(self):
+        """
+        Passing ``send_email=False`` when creating a new user will not
+        send an activation email.
+        
+        """
+        new_user = RegistrationProfile.objects.create_inactive_user(site=Site.objects.get_current(),
+                                                                    send_email=False,
+                                                                    **self.user_info)
+        self.assertEqual(len(mail.outbox), 0)
+
     def test_unexpired_account(self):
         """
         ``RegistrationProfile.activation_key_expired()`` is ``False``
