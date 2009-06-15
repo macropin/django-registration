@@ -61,6 +61,15 @@ class BackendRetrievalTests(TestCase):
         settings.REGISTRATION_BACKEND = 'registration.backends.doesnotexist.NonExistentBackend'
         self.assertRaises(ImproperlyConfigured, get_backend)
 
+    def test_backend_attribute_error(self):
+        """
+        Test that a backend module which exists but does not have a
+        class of the specified name raises the correct exception.
+        
+        """
+        settings.REGISTRATION_BACKEND = 'registration.backends.default.NonexistentBackend'
+        self.assertRaises(ImproperlyConfigured, get_backend)
+
 
 class DefaultRegistrationBackendTests(TestCase):
     """
