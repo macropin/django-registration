@@ -7,6 +7,7 @@ from django.contrib.sites.models import Site
 from django.core import mail
 from django.core import management
 from django.test import TestCase
+from django.utils.hashcompat import sha_constructor
 
 from registration.models import RegistrationProfile
 
@@ -40,6 +41,8 @@ class RegistrationModelTests(TestCase):
         self.assertEqual(RegistrationProfile.objects.count(), 1)
         self.assertEqual(profile.user.id, new_user.id)
         self.failUnless(re.match('^[a-f0-9]{40}$', profile.activation_key))
+        self.assertEqual(unicode(profile),
+                         "Registration information for alice")
 
     def test_activation_email(self):
         """
@@ -128,7 +131,7 @@ class RegistrationModelTests(TestCase):
         profile = RegistrationProfile.objects.get(user=new_user)
         self.assertEqual(profile.activation_key, RegistrationProfile.ACTIVATED)
 
-    def test_invalid_activation(self):
+    def test_expired_activation(self):
         """
         Attempting to activate outside the permitted window does not
         activate the account.
@@ -150,6 +153,38 @@ class RegistrationModelTests(TestCase):
 
         profile = RegistrationProfile.objects.get(user=new_user)
         self.assertNotEqual(profile.activation_key, RegistrationProfile.ACTIVATED)
+
+    def test_activation_invalid_key(self):
+        """
+        Attempting to activate with a key which is not a SHA1 hash
+        fails.
+        
+        """
+        self.failIf(RegistrationProfile.objects.activate_user('foo'))
+
+    def test_activation_already_activated(self):
+        """
+        Attempting to re-activate an already-activated account fails.
+        
+        """
+        new_user = RegistrationProfile.objects.create_inactive_user(site=Site.objects.get_current(),
+                                                                    **self.user_info)
+        profile = RegistrationProfile.objects.get(user=new_user)
+        RegistrationProfile.objects.activate_user(profile.activation_key)
+
+        profile = RegistrationProfile.objects.get(user=new_user)
+        self.failIf(RegistrationProfile.objects.activate_user(profile.activation_key))
+
+    def test_activation_nonexistent_key(self):
+        """
+        Attempting to activate with a non-existent key (i.e., one not
+        associated with any account) fails.
+        
+        """
+        # Due to the way activation keys are constructed during
+        # registration, this will never be a valid key.
+        invalid_key = sha_constructor('foo').hexdigest()
+        self.failIf(RegistrationProfile.objects.activate_user(invalid_key))
 
     def test_expired_user_deletion(self):
         """
