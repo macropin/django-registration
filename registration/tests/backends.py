@@ -6,8 +6,10 @@ from django.core import mail
 from django.core.exceptions import ImproperlyConfigured
 from django.test import TestCase
 
+from registration import get_backend
 from registration import forms
 from registration import signals
+from registration.backends.default import DefaultBackend
 from registration.models import RegistrationProfile
 
 
@@ -17,21 +19,29 @@ class BackendRetrievalTests(TestCase):
     properly.
 
     """
+    def setUp(self):
+        """
+        Stash away the original value of
+        ``settings.REGISTRATION_BACKEND`` so it can be restored later.
+        
+        """
+        self.old_backend = getattr(settings, 'REGISTRATION_BACKEND', None)
+
+    def tearDown(self):
+        """
+        Restore the value of ``settings.REGISTRATION_BACKEND``.
+        
+        """
+        settings.REGISTRATION_BACKEND = self.old_backend
+    
     def test_get_backend(self):
         """
         Set ``REGISTRATION_BACKEND`` temporarily, then verify that
         ``get_backend()`` returns the correct value.
 
         """
-        from registration import get_backend
-        from registration.backends.default import DefaultBackend
-
-        old_backend = getattr(settings, 'REGISTRATION_BACKEND', None)
-
         settings.REGISTRATION_BACKEND = 'registration.backends.default.DefaultBackend'
         self.failUnless(isinstance(get_backend(), DefaultBackend))
-
-        settings.REGISTRATION_BACKEND = old_backend
 
     def test_backend_error_none(self):
         """
@@ -39,14 +49,8 @@ class BackendRetrievalTests(TestCase):
         setting raises the correct exception.
 
         """
-        from registration import get_backend
-
-        old_backend = getattr(settings, 'REGISTRATION_BACKEND', None)
-
         settings.REGISTRATION_BACKEND = None
         self.assertRaises(ImproperlyConfigured, get_backend)
-
-        settings.REGISTRATION_BACKEND = old_backend
 
     def test_backend_error_invalid(self):
         """
@@ -54,14 +58,8 @@ class BackendRetrievalTests(TestCase):
         correct exception.
 
         """
-        from registration import get_backend
-
-        old_backend = getattr(settings, 'REGISTRATION_BACKEND', None)
-
         settings.REGISTRATION_BACKEND = 'registration.backends.doesnotexist.NonExistentBackend'
         self.assertRaises(ImproperlyConfigured, get_backend)
-
-        settings.REGISTRATION_BACKEND = old_backend
 
 
 class DefaultRegistrationBackendTests(TestCase):
