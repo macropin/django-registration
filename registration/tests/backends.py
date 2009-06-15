@@ -7,6 +7,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.test import TestCase
 
 from registration import forms
+from registration import signals
 from registration.models import RegistrationProfile
 
 
@@ -187,3 +188,73 @@ class DefaultRegistrationBackendTests(TestCase):
         """
         self.assertEqual(self.backend.post_registration_redirect({}, User()),
                          'registration_complete')
+
+    def test_registration_signal(self):
+        """
+        Test that registering a user sends the ``user_registered``
+        signal.
+        
+        """
+        def receiver(sender, **kwargs):
+            self.failUnless('user' in kwargs)
+            self.assertEqual(kwargs['user'].username, 'bob')
+            received_signals.append(kwargs.get('signal'))
+
+        received_signals = []
+        signals.user_registered.connect(receiver, sender=self.backend.__class__)
+
+        self.backend.register({},
+                              username='bob',
+                              email='bob@example.com',
+                              password1='secret')
+
+        self.assertEqual(len(received_signals), 1)
+        self.assertEqual(received_signals, [signals.user_registered])
+
+    def test_activation_signal_success(self):
+        """
+        Test that successfully activating a user sends the
+        ``user_activated`` signal.
+        
+        """
+        def receiver(sender, **kwargs):
+            self.failUnless('user' in kwargs)
+            self.assertEqual(kwargs['user'].username, 'bob')
+            received_signals.append(kwargs.get('signal'))
+
+        received_signals = []
+        signals.user_activated.connect(receiver, sender=self.backend.__class__)
+
+        new_user = self.backend.register({},
+                                         username='bob',
+                                         email='bob@example.com',
+                                         password1='secret')
+        profile = RegistrationProfile.objects.get(user=new_user)
+        self.backend.activate({}, profile.activation_key)
+
+        self.assertEqual(len(received_signals), 1)
+        self.assertEqual(received_signals, [signals.user_activated])
+
+    def test_activation_signal_failure(self):
+        """
+        Test that an unsuccessful activation attempt does not send the
+        ``user_activated`` signal.
+        
+        """
+        def receiver(sender, **kwargs):
+            received_signals.append(kwargs.get('signal'))
+
+        received_signals = []
+        signals.user_activated.connect(receiver, sender=self.backend.__class__)
+
+        new_user = self.backend.register({},
+                                         username='bob',
+                                         email='bob@example.com',
+                                         password1='secret')
+        new_user.date_joined -= datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS + 1)
+        new_user.save()
+        profile = RegistrationProfile.objects.get(user=new_user)
+        self.backend.activate({}, profile.activation_key)
+
+        self.assertEqual(len(received_signals), 0)
+
