@@ -124,4 +124,4 @@ class DefaultBackend(object):
         user registration.
         
         """
-        return 'registration_complete'
+        return ('registration_complete', (), {})

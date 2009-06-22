@@ -268,7 +268,7 @@ class DefaultRegistrationBackendTests(TestCase):
 
         """
         self.assertEqual(self.backend.post_registration_redirect(_mock_request(), User()),
-                         'registration_complete')
+                         ('registration_complete', (), {}))
 
     def test_registration_signal(self):
         """
