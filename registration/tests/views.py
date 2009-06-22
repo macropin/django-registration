@@ -116,6 +116,15 @@ class RegistrationViewTests(TestCase):
         self.assertTemplateUsed(response,
                                 'registration/test_template_name.html')
 
+    def test_registration_extra_context(self):
+        """
+        Passing ``extra_context`` to the ``register`` view will
+        correctly populate the context.
+        
+        """
+        response = self.client.get(reverse('registration_test_register_extra_context'))
+        self.assertEqual(response.context['foo'], 'bar')
+
     def test_valid_activation(self):
         """
         Test that the ``activate`` view properly handles a valid
