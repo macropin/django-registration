@@ -28,7 +28,7 @@ urlpatterns = patterns('',
                        # extra_context_argument.
                        url(r'^activate-extra-context/(?P<activation_key>\w+)/$',
                            activate,
-                           {'extra_context': {'foo': 'bar'}},
+                           {'extra_context': {'foo': 'bar', 'callable': lambda: 'called'}},
                            name='registration_test_activate_extra_context'),
                        (r'', include('registration.backends.default.urls')),
                        # Test the 'register' view with custom template
@@ -41,7 +41,7 @@ urlpatterns = patterns('',
                        # argument.
                        url(r'^register-extra-context/$',
                            register,
-                           {'extra_context': {'foo': 'bar'}},
+                           {'extra_context': {'foo': 'bar', 'callable': lambda: 'called'}},
                            name='registration_test_register_extra_context'),
                        # Test the 'register' view with custom URL for
                        # closed registration.

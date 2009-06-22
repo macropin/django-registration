@@ -124,6 +124,8 @@ class RegistrationViewTests(TestCase):
         """
         response = self.client.get(reverse('registration_test_register_extra_context'))
         self.assertEqual(response.context['foo'], 'bar')
+        # Callables in extra_context are called to obtain the value.
+        self.assertEqual(response.context['callable'], 'called')
 
     def test_registration_disallowed_url(self):
         """
@@ -211,3 +213,5 @@ class RegistrationViewTests(TestCase):
         response = self.client.get(reverse('registration_test_activate_extra_context',
                                            kwargs={'activation_key': 'foo'}))
         self.assertEqual(response.context['foo'], 'bar')
+        # Callables in extra_context are called to obtain the value.
+        self.assertEqual(response.context['callable'], 'called')
