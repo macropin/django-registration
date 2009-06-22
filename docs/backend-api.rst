@@ -43,7 +43,7 @@ following (not an exhaustive list):
 Specifying the backend to use
 -----------------------------
 
-To determine which backend to use, django-registration consult the
+To determine which backend to use, django-registration consults the
 setting ``REGISTRATION_BACKEND``, which should be the full dotted
 Python import path (as a string) of the class to be used as the
 registration backend. For example, the default backend provided is in
@@ -58,6 +58,10 @@ it does not contain a class of the appropriate name,
 django-registration will raise
 ``django.core.exceptions.ImproperlyConfigured`` whenever
 user-registration functionality is accessed.
+
+Once the backend class has been imported, an instance will be created
+(by calling its constructor with no arguments) and that instance will
+be used for all backend-specific functionality.
 
 
 Backend API
