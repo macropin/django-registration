@@ -30,7 +30,7 @@ class RegistrationViewTests(TestCase):
 
     def tearDown(self):
         """
-        Retore the original value of ``REGISTRATION_BACKEND``.
+        Restore the original value of ``REGISTRATION_BACKEND``.
 
         """
         settings.REGISTRATION_BACKEND = self.old_backend
@@ -108,9 +108,9 @@ class RegistrationViewTests(TestCase):
 
     def test_registration_template_name(self):
         """
-        Passing a custom ``template_name`` to the ``register`` view
-        will result in that template being used.
-        
+        Passing ``template_name`` to the ``register`` view will result
+        in that template being used.
+
         """
         response = self.client.get(reverse('registration_test_register_template_name'))
         self.assertTemplateUsed(response,
@@ -120,7 +120,7 @@ class RegistrationViewTests(TestCase):
         """
         Passing ``extra_context`` to the ``register`` view will
         correctly populate the context.
-        
+
         """
         response = self.client.get(reverse('registration_test_register_extra_context'))
         self.assertEqual(response.context['foo'], 'bar')
@@ -129,7 +129,7 @@ class RegistrationViewTests(TestCase):
         """
         Passing ``disallowed_url`` to the ``register`` view will
         result in a redirect to that URL when registration is closed.
-        
+
         """
         old_allowed = getattr(settings, 'REGISTRATION_OPEN', True)
         settings.REGISTRATION_OPEN = False
