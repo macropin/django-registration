@@ -15,7 +15,7 @@ class RegistrationViewTests(TestCase):
     Test the registration views.
 
     """
-    urls = 'registration.backends.default.urls'
+    urls = 'registration.test_urls'
 
     def setUp(self):
         """
@@ -105,6 +105,16 @@ class RegistrationViewTests(TestCase):
         self.assertEqual(RegistrationProfile.objects.count(), 0)
 
         settings.REGISTRATION_OPEN = old_allowed
+
+    def test_registration_template_name(self):
+        """
+        Passing a custom ``template_name`` to the ``register`` view
+        will result in that template being used.
+        
+        """
+        response = self.client.get(reverse('registration_test_register_template_name'))
+        self.assertTemplateUsed(response,
+                                'registration/test_template_name.html')
 
     def test_valid_activation(self):
         """
