@@ -125,6 +125,22 @@ class RegistrationViewTests(TestCase):
         response = self.client.get(reverse('registration_test_register_extra_context'))
         self.assertEqual(response.context['foo'], 'bar')
 
+    def test_registration_disallowed_url(self):
+        """
+        Passing ``disallowed_url`` to the ``register`` view will
+        result in a redirect to that URL when registration is closed.
+        
+        """
+        old_allowed = getattr(settings, 'REGISTRATION_OPEN', True)
+        settings.REGISTRATION_OPEN = False
+
+        closed_redirect = 'http://testserver%s' % reverse('registration_test_custom_disallowed')
+
+        response = self.client.get(reverse('registration_test_register_disallowed_url'))
+        self.assertRedirects(response, closed_redirect)
+
+        settings.REGISTRATION_OPEN = old_allowed
+
     def test_valid_activation(self):
         """
         Test that the ``activate`` view properly handles a valid
