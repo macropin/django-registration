@@ -77,7 +77,9 @@ class DefaultBackend(object):
             site = RequestSite(request)
         new_user = RegistrationProfile.objects.create_inactive_user(username, email,
                                                                     password, site)
-        signals.user_registered.send(sender=self.__class__, user=new_user)
+        signals.user_registered.send(sender=self.__class__,
+                                     user=new_user,
+                                     request=request)
         return new_user
 
     def activate(self, request, activation_key):
@@ -93,7 +95,9 @@ class DefaultBackend(object):
         """
         activated = RegistrationProfile.objects.activate_user(activation_key)
         if activated:
-            signals.user_activated.send(sender=self.__class__, user=activated)
+            signals.user_activated.send(sender=self.__class__,
+                                        user=activated,
+                                        request=request)
         return activated
 
     def registration_allowed(self, request):

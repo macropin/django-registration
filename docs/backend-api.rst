@@ -107,6 +107,9 @@ that account. It should then send the signal
 ``user``
     The ``User`` instance representing the new account.
 
+``request``
+    The ``HttpRequest`` in which the user registered.
+
 Finally, this method should return the ``User`` instance.
 
 
@@ -143,6 +146,9 @@ the activated account. It should then send the signal
 
 ``user``
     The ``User`` instance representing the new account.
+
+``request``
+    The ``HttpRequest in which the user activated.
 
 This method should then return the ``User`` instance.
 

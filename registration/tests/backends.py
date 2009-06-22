@@ -279,6 +279,8 @@ class DefaultRegistrationBackendTests(TestCase):
         def receiver(sender, **kwargs):
             self.failUnless('user' in kwargs)
             self.assertEqual(kwargs['user'].username, 'bob')
+            self.failUnless('request' in kwargs)
+            self.failUnless(isinstance(kwargs['request'], WSGIRequest))
             received_signals.append(kwargs.get('signal'))
 
         received_signals = []
@@ -301,6 +303,8 @@ class DefaultRegistrationBackendTests(TestCase):
         def receiver(sender, **kwargs):
             self.failUnless('user' in kwargs)
             self.assertEqual(kwargs['user'].username, 'bob')
+            self.failUnless('request' in kwargs)
+            self.failUnless(isinstance(kwargs['request'], WSGIRequest))
             received_signals.append(kwargs.get('signal'))
 
         received_signals = []
