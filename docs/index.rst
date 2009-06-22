@@ -24,9 +24,13 @@ more detailed information, including how to customize the registration
 process (including support for alternate registration systems), read
 through the documentation listed below.
 
+If you are upgrading from a previous release, please read the
+:ref:`upgrade guide <upgrade>` for information on what's changed.
+
 Contents:
 
 .. toctree::
    :maxdepth: 1
    
    quickstart
+   upgrade
