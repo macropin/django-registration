@@ -201,3 +201,13 @@ class RegistrationViewTests(TestCase):
         response = self.client.get(reverse('registration_test_activate_template_name',
                                    kwargs={'activation_key': 'foo'}))
         self.assertTemplateUsed(response, 'registration/test_template_name.html')
+
+    def test_activation_extra_context(self):
+        """
+        Passing ``extra_context`` to the ``activate`` view will
+        correctly populate the context.
+
+        """
+        response = self.client.get(reverse('registration_test_activate_extra_context',
+                                           kwargs={'activation_key': 'foo'}))
+        self.assertEqual(response.context['foo'], 'bar')
