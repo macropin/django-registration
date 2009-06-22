@@ -191,3 +191,13 @@ class RegistrationViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.failIf(response.context['account'])
         self.failIf(User.objects.get(username='bob').is_active)
+
+    def test_activation_template_name(self):
+        """
+        Passing ``template_name`` to the ``activate`` view will result
+        in that template being used.
+
+        """
+        response = self.client.get(reverse('registration_test_activate_template_name',
+                                   kwargs={'activation_key': 'foo'}))
+        self.assertTemplateUsed(response, 'registration/test_template_name.html')

@@ -20,13 +20,13 @@ from registration.views import register
 urlpatterns = patterns('',
                        # Test the 'activate' view with custom template
                        # name.
-                       url(r'^activate-with-template-name/$',
+                       url(r'^activate-with-template-name/(?P<activation_key>\w+)/$',
                            activate,
                            {'template_name': 'registration/test_template_name.html'},
                            name='registration_test_activate_template_name'),
                        # Test the 'activate' view with
                        # extra_context_argument.
-                       url(r'^activate-extra-context/$',
+                       url(r'^activate-extra-context/(?P<activation_key>\w+)/$',
                            activate,
                            {'extra_context': {'foo': 'bar'}},
                            name='registration_test_activate_extra_context'),
