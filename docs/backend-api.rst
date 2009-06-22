@@ -148,7 +148,7 @@ the activated account. It should then send the signal
     The ``User`` instance representing the new account.
 
 ``request``
-    The ``HttpRequest in which the user activated.
+    The ``HttpRequest`` in which the user activated.
 
 This method should then return the ``User`` instance.
 
