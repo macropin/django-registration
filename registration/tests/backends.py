@@ -322,8 +322,7 @@ class DefaultRegistrationBackendTests(TestCase):
         ``user_activated`` signal.
         
         """
-        def receiver(sender, **kwargs):
-            received_signals.append(kwargs.get('signal'))
+        receiver = lambda sender, **kwargs: received_signals.append(kwargs.get('signal'))
 
         received_signals = []
         signals.user_activated.connect(receiver, sender=self.backend.__class__)
