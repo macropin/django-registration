@@ -55,4 +55,16 @@ urlpatterns = patterns('',
                            direct_to_template,
                            {'template': 'registration/registration_closed.html'},
                            name='registration_test_custom_disallowed'),
+                       # Test the 'register' view with custom redirect
+                       # on successful registration.
+                       url(r'^register-with-success_url/$',
+                           register,
+                           {'success_url': 'registration_test_custom_success_url'},
+                           name='registration_test_register_success_url'
+                           ),
+                       # Pattern for custom redirect set above.
+                       url(r'^custom-success/$',
+                           direct_to_template,
+                           {'template': 'registration/test_template_name.html'},
+                           name='registration_test_custom_success_url'),
                        )

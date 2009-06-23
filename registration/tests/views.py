@@ -143,6 +143,20 @@ class RegistrationViewTests(TestCase):
 
         settings.REGISTRATION_OPEN = old_allowed
 
+    def test_registration_success_url(self):
+        """
+        Passing ``success_url`` to the ``register`` view will result
+        in a redirect to that URL when registration is successful.
+        
+        """
+        success_redirect = 'http://testserver%s' % reverse('registration_test_custom_success_url')
+        response = self.client.post(reverse('registration_test_register_success_url'),
+                                    data={'username': 'alice',
+                                          'email': 'alice@example.com',
+                                          'password1': 'swordfish',
+                                          'password2': 'swordfish'})
+        self.assertRedirects(response, success_redirect)
+
     def test_valid_activation(self):
         """
         Test that the ``activate`` view properly handles a valid

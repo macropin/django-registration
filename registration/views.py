@@ -157,7 +157,7 @@ def register(request, success_url=None, form_class=None,
                 to, args, kwargs = backend.post_registration_redirect(request, new_user)
                 return redirect(to, *args, **kwargs)
             else:
-                redirect(success_url)
+                return redirect(success_url)
     else:
         form = form_class()
     
