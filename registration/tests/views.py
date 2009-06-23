@@ -15,7 +15,7 @@ class RegistrationViewTests(TestCase):
     Test the registration views.
 
     """
-    urls = 'registration.test_urls'
+    urls = 'registration.tests.urls'
 
     def setUp(self):
         """
