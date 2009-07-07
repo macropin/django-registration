@@ -132,7 +132,7 @@ class RegistrationManager(models.Manager):
         message = render_to_string('registration/activation_email.txt',
                                    ctx_dict)
         
-        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [profile.user.email])
+        profile.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
     
     def create_profile(self, user):
         """

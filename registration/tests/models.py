@@ -55,6 +55,7 @@ class RegistrationModelTests(TestCase):
         RegistrationProfile.objects.send_activation_email(profile,
                                                           Site.objects.get_current())
         self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].to, [self.user_info['email']])
 
     def test_user_creation(self):
         """
