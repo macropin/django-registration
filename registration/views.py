@@ -14,7 +14,7 @@ from registration import get_backend
 
 def activate(request,
              template_name='registration/activate.html',
-             extra_context=None, backend=get_backend(),
+             extra_context=None, backend=None,
              **kwargs):
     """
     Activate a user's account.
@@ -58,6 +58,7 @@ def activate(request,
     registration/activate.html or ``template_name`` keyword argument.
     
     """
+    backend = get_backend(backend)
     account = backend.activate(request, **kwargs)
     if extra_context is None:
         extra_context = {}
@@ -72,7 +73,7 @@ def activate(request,
 def register(request, success_url=None, form_class=None,
              disallowed_url='registration_disallowed',
              template_name='registration/registration_form.html',
-             extra_context=None, backend=get_backend()):
+             extra_context=None, backend=None):
     """
     Allow a new user to register an account.
 
@@ -155,6 +156,7 @@ def register(request, success_url=None, form_class=None,
     argument.
     
     """
+    backend = get_backend(backend)
     if not backend.registration_allowed(request):
         return redirect(disallowed_url)
     if form_class is None:
