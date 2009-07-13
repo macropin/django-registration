@@ -90,6 +90,18 @@ class BackendRetrievalTests(TestCase):
         settings.REGISTRATION_BACKEND = 'registration.backends.default.DefaultBackend'
         self.failUnless(isinstance(get_backend(), DefaultBackend))
 
+    def test_get_backend_with_path(self):
+        """
+        Specifying the backend using a dotted path should load
+        correctly.
+        
+        """
+        # First, clear the setting so it can't accidentally be picked
+        # up from that.
+        settings.REGISTRATION_BACKEND = None
+        self.failUnless(isinstance(get_backend('registration.backends.default.DefaultBackend'),
+                                   DefaultBackend))
+
     def test_backend_error_none(self):
         """
         Test that an invalid value for the ``REGISTRATION_BACKEND``
