@@ -13,7 +13,7 @@ def get_backend(path=None):
     should be the full dotted Python import path to the backend
     class. If ``path`` is not specified, the backend will be imported
     based on the value of the setting ``REGISTRATION_BACKEND``, which
-    should simialrly be a full dotted Python import path.
+    should similarly be a full dotted Python import path.
 
     If the backend cannot be located (e.g., because no such module
     exists, or because the module does not contain a class of the
