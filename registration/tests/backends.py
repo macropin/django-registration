@@ -9,9 +9,9 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.test import Client
 from django.test import TestCase
 
-from registration import get_backend
 from registration import forms
 from registration import signals
+from registration.backends import get_backend
 from registration.backends.default import DefaultBackend
 from registration.models import RegistrationProfile
 
