@@ -66,50 +66,14 @@ class BackendRetrievalTests(TestCase):
     properly.
 
     """
-    def setUp(self):
-        """
-        Stash away the original value of
-        ``settings.REGISTRATION_BACKEND`` so it can be restored later.
-        
-        """
-        self.old_backend = getattr(settings, 'REGISTRATION_BACKEND', None)
-
-    def tearDown(self):
-        """
-        Restore the value of ``settings.REGISTRATION_BACKEND``.
-        
-        """
-        settings.REGISTRATION_BACKEND = self.old_backend
-    
     def test_get_backend(self):
         """
-        Set ``REGISTRATION_BACKEND`` temporarily, then verify that
-        ``get_backend()`` returns the correct value.
+        Verify that ``get_backend()`` returns the correct value when
+        passed a valid backend.
 
         """
-        settings.REGISTRATION_BACKEND = 'registration.backends.default.DefaultBackend'
-        self.failUnless(isinstance(get_backend(), DefaultBackend))
-
-    def test_get_backend_with_path(self):
-        """
-        Specifying the backend using a dotted path should load
-        correctly.
-        
-        """
-        # First, clear the setting so it can't accidentally be picked
-        # up from that.
-        settings.REGISTRATION_BACKEND = None
         self.failUnless(isinstance(get_backend('registration.backends.default.DefaultBackend'),
                                    DefaultBackend))
-
-    def test_backend_error_none(self):
-        """
-        Test that an invalid value for the ``REGISTRATION_BACKEND``
-        setting raises the correct exception.
-
-        """
-        settings.REGISTRATION_BACKEND = None
-        self.assertRaises(ImproperlyConfigured, get_backend)
 
     def test_backend_error_invalid(self):
         """
@@ -117,8 +81,8 @@ class BackendRetrievalTests(TestCase):
         correct exception.
 
         """
-        settings.REGISTRATION_BACKEND = 'registration.backends.doesnotexist.NonExistentBackend'
-        self.assertRaises(ImproperlyConfigured, get_backend)
+        self.assertRaises(ImproperlyConfigured, get_backend,
+                          'registration.backends.doesnotexist.NonExistentBackend')
 
     def test_backend_attribute_error(self):
         """
@@ -126,8 +90,8 @@ class BackendRetrievalTests(TestCase):
         class of the specified name raises the correct exception.
         
         """
-        settings.REGISTRATION_BACKEND = 'registration.backends.default.NonexistentBackend'
-        self.assertRaises(ImproperlyConfigured, get_backend)
+        self.assertRaises(ImproperlyConfigured, get_backend,
+                          'registration.backends.default.NonexistentBackend')
 
 
 class DefaultRegistrationBackendTests(TestCase):

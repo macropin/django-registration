@@ -5,15 +5,10 @@ from django.core.exceptions import ImproperlyConfigured
 # back to Django's implementation.
 from django.utils.importlib import import_module
 
-def get_backend(path=None):
+def get_backend(path):
     """
-    Return an instance of a registration backend.
-
-    If specified, the backend will be imported from ``path``, which
-    should be the full dotted Python import path to the backend
-    class. If ``path`` is not specified, the backend will be imported
-    based on the value of the setting ``REGISTRATION_BACKEND``, which
-    should similarly be a full dotted Python import path.
+    Return an instance of a registration backend, given the dotted
+    Python import path (as a string) to the backend class.
 
     If the backend cannot be located (e.g., because no such module
     exists, or because the module does not contain a class of the
@@ -21,10 +16,6 @@ def get_backend(path=None):
     is raised.
     
     """
-    if path is None:
-        if not hasattr(settings, 'REGISTRATION_BACKEND') or not settings.REGISTRATION_BACKEND:
-            raise ImproperlyConfigured('Error loading registration backend: no backend specified (have you provided a value for the REGISTRATION_BACKEND setting?)')
-        path = settings.REGISTRATION_BACKEND
     i = path.rfind('.')
     module, attr = path[:i], path[i+1:]
     try:

@@ -22,32 +22,37 @@ urlpatterns = patterns('',
                        # name.
                        url(r'^activate-with-template-name/(?P<activation_key>\w+)/$',
                            activate,
-                           {'template_name': 'registration/test_template_name.html'},
+                           {'template_name': 'registration/test_template_name.html',
+                            'backend': 'registration.backends.default.DefaultBackend'},
                            name='registration_test_activate_template_name'),
                        # Test the 'activate' view with
                        # extra_context_argument.
                        url(r'^activate-extra-context/(?P<activation_key>\w+)/$',
                            activate,
-                           {'extra_context': {'foo': 'bar', 'callable': lambda: 'called'}},
+                           {'extra_context': {'foo': 'bar', 'callable': lambda: 'called'},
+                            'backend': 'registration.backends.default.DefaultBackend'},
                            name='registration_test_activate_extra_context'),
                        (r'', include('registration.backends.default.urls')),
                        # Test the 'register' view with custom template
                        # name.
                        url(r'^register-with-template-name/$',
                            register,
-                           {'template_name': 'registration/test_template_name.html'},
+                           {'template_name': 'registration/test_template_name.html',
+                            'backend': 'registration.backends.default.DefaultBackend'},
                            name='registration_test_register_template_name'),
                        # Test the'register' view with extra_context
                        # argument.
                        url(r'^register-extra-context/$',
                            register,
-                           {'extra_context': {'foo': 'bar', 'callable': lambda: 'called'}},
+                           {'extra_context': {'foo': 'bar', 'callable': lambda: 'called'},
+                            'backend': 'registration.backends.default.DefaultBackend'},
                            name='registration_test_register_extra_context'),
                        # Test the 'register' view with custom URL for
                        # closed registration.
                        url(r'^register-with-disallowed-url/$',
                            register,
-                           {'disallowed_url': 'registration_test_custom_disallowed'},
+                           {'disallowed_url': 'registration_test_custom_disallowed',
+                            'backend': 'registration.backends.default.DefaultBackend'},
                            name='registration_test_register_disallowed_url'),
                        # Set up a pattern which will correspond to the
                        # custom 'disallowed_url' above.
@@ -59,7 +64,8 @@ urlpatterns = patterns('',
                        # on successful registration.
                        url(r'^register-with-success_url/$',
                            register,
-                           {'success_url': 'registration_test_custom_success_url'},
+                           {'success_url': 'registration_test_custom_success_url',
+                            'backend': 'registration.backends.default.DefaultBackend'},
                            name='registration_test_register_success_url'
                            ),
                        # Pattern for custom redirect set above.

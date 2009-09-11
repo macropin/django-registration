@@ -12,17 +12,15 @@ from django.template import RequestContext
 from registration.backends import get_backend
 
 
-def activate(request,
+def activate(request, backend,
              template_name='registration/activate.html',
-             extra_context=None, backend=None,
-             **kwargs):
+             extra_context=None, **kwargs):
     """
     Activate a user's account.
 
     The actual activation of the account will be delegated to the
-    backend specified by the ``REGISTRATION_BACKEND`` setting
-    (although this can be overridden; see argument list below); the
-    backend's ``activate()`` method will be called, passing any
+    backend specified by the ``backend`` keyword argument (see below);
+    the backend's ``activate()`` method will be called, passing any
     keyword arguments captured from the URL, and will be assumed to
     return a ``User`` if activation was successful, or a value which
     evaluates to ``False`` in boolean context if not.
@@ -30,9 +28,7 @@ def activate(request,
     **Optional arguments**
 
     ``backend``
-        An instance of a registration backend. If specified, will be
-        used in place of the backend specified by the
-        ``REGISTRATION_BACKEND`` setting.
+        The dotted Python import path to the backend class to use.
 
     ``extra_context``
         A dictionary of variables to add to the template context. Any
@@ -70,17 +66,16 @@ def activate(request,
                               context_instance=context)
 
 
-def register(request, success_url=None, form_class=None,
+def register(request, backend, success_url=None, form_class=None,
              disallowed_url='registration_disallowed',
              template_name='registration/registration_form.html',
-             extra_context=None, backend=None):
+             extra_context=None):
     """
     Allow a new user to register an account.
 
     The actual registration of the account will be delegated to the
-    backend specified by the ``REGISTRATION_BACKEND`` setting
-    (although this can be overridden; see argument list below); it
-    will be used as follows:
+    backend specified by the ``backend`` keywoard argument (see
+    below); it will be used as follows:
 
     1. The backend's ``registration_allowed()`` method will be called,
        passing the ``HttpRequest``, to determine whether registration
@@ -112,9 +107,7 @@ def register(request, success_url=None, form_class=None,
     **Optional arguments**
 
     ``backend``
-        An instance of a registration backend. If specified, will be
-        used in place of the backend specified by the
-        ``REGISTRATION_BACKEND`` setting.
+        The dotted Python import path to the backend class to use.
 
     ``disallowed_url``
         URL to redirect to if registration is not permitted for the
