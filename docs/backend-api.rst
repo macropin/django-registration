@@ -22,7 +22,7 @@ This allows for a great deal of flexibility in the actual workflow of
 registration; backends can, for example, implement any of the
 following (not an exhaustive list):
 
-* One-step (register, and done) or two-step (register and activate)
+* One-step (register, and done) or multi-step (register and activate)
   signup.
 
 * Invitation-based registration.
@@ -43,25 +43,22 @@ following (not an exhaustive list):
 Specifying the backend to use
 -----------------------------
 
-To determine which backend to use, django-registration consults the
-setting ``REGISTRATION_BACKEND``, which should be the full dotted
-Python import path (as a string) of the class to be used as the
-registration backend. For example, the default backend provided is in
-``registration.backends.default``, implemented as a class named
-``DefaultBackend``; thus, it would be enabled in a Django settings
-file like so::
+To determine which backend to use, the views in django-registration
+accept a keyword argument ``backend``; in all cases, this should be a
+string containing the full dotted Python import path to the backend
+class to be used.
 
-    REGISTRATION_BACKEND = "registration.backends.default.DefaultBackend"
+So, for example, to use the default backend, you'd pass
+the string ``'registration.backends.default.DefaultBackend'`` as the
+value of the ``backend`` argument (and the default URLConf included
+with that backend does so).
 
-If no backend is specified, if the specified module is not found or if
-it does not contain a class of the appropriate name,
-django-registration will raise
-``django.core.exceptions.ImproperlyConfigured`` whenever
-user-registration functionality is accessed.
+The specified backend class will then be imported and instantiated (by
+calling its constructor with no arguments), and the resulting instance
+will be used for all backend-specific functionality.
 
-Once the backend class has been imported, an instance will be created
-(by calling its constructor with no arguments) and that instance will
-be used for all backend-specific functionality.
+If the specified backend class cannot be imported, django-registration
+will raise ``django.core.exceptions.ImproperlyConfigured``.
 
 
 Backend API
@@ -99,7 +96,7 @@ Arguments to this method are:
 After creating the new user account, this method should create or
 obtain an instance of ``django.contrib.auth.models.User`` representing
 that account. It should then send the signal
-``registration.signals.user_registered``, with two arguments:
+``registration.signals.user_registered``, with three arguments:
 
 ``sender``
     The backend class (e.g., ``self.__class__``).
@@ -139,7 +136,7 @@ should return ``False``.
 If the account is successfully activated, this method should create or
 obtain an instance of ``django.contrib.auth.models.User`` representing
 the activated account. It should then send the signal
-``registration.signals.user_activated``, with two arguments:
+``registration.signals.user_activated``, with three arguments:
 
 ``sender``
     The backend class.
@@ -191,6 +188,7 @@ Arguments to this method are:
 ``request``
     The Django ``HttpRequest`` object in which a new user is
     attempting to register.
+
 
 post_registration_redirect(self, request, user)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
