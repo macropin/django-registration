@@ -139,18 +139,13 @@ Required settings
 ~~~~~~~~~~~~~~~~~
 
 Begin by adding ``registration`` to the ``INSTALLED_APPS`` setting of
-your project, and specifying two additional settings:
+your project, and specifying one additional setting:
 
 ``ACCOUNT_ACTIVATION_DAYS``
     This is the number of days users will have to activate their
     accounts after registering. If a user does not activate within
     that period, the account will remain permanently inactive and may
     be deleted by maintenance scripts provided in django-registration.
-
-``REGISTRATION_BACKEND``
-    This tells django-registration which backend to use for user
-    registration. Set this to
-    ``"registration.backends.default.DefaultBackend"``.
 
 For example, you might have something like the following in your
 Django settings file::
@@ -162,8 +157,6 @@ Django settings file::
     )
     
     ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
-    
-    REGISTRATION_BACKEND = "registration.backends.default.DefaultBackend"
 
 Once you've done this, run ``manage.py syncdb`` to install the model
 used by the default setup.

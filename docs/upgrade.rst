@@ -17,23 +17,18 @@ Backwards-incompatible changes
 ------------------------------
 
 To upgrade from a previous version of django-registration, you will
-need to make two changes, both to project configuration.
-
-First, add the setting ``REGISTRATION_BACKEND``, and set it to
-``"registration.backends.default.DefaultBackend"``. This is required
-to support the primary new feature in 0.8 (pluggable backends
-implementing different registration schemes), and will enable a
-backend which provides behavior identical to previous releases of
-django-registration.
-
-Then, if you were using the default ``URLConf`` provided in previous
-versions, you will instead need to use the ``URLConf`` provided by the
-default backend in 0.8, which is located at
-``registration.backends.default.urls``. So, for example, if you
-previously had this in your ``URLConf``::
+need to make one change, to your project's configuration: if you were
+using the default ``URLConf`` provided in previous versions, you will
+instead need to use the ``URLConf`` provided by the default backend in
+0.8, which is located at ``registration.backends.default.urls``. So,
+for example, if you previously had this in your ``URLConf``::
 
     (r'^accounts/', include('registration.urls')),
 
 you will need to change it to::
 
     (r'^accounts/', include('registration.backends.default.urls')),
+
+If you had set up custom URL patterns, you will need to consult the
+documentation for the registration views to see how to adapt your
+custom URL patterns for use with django-registration 0.8.
