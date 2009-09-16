@@ -4,10 +4,9 @@ Quick start guide
 =================
 
 Before installing django-registration, you'll need to have a copy of
-`Django <http://www.djangoproject.com>`_ already installed; for the
-0.8 release, Django 1.1 beta 1 or newer is required; once Django 1.1
-is released, it will be the recommended minimum version of Django for
-use with django-registration.
+`Django <http://www.djangoproject.com>`_ already installed. For the
+0.8 release, Django 1.1 or newer is required; once Django 1.1 is
+released.
 
 For further information, consult the `Django download page
 <http://www.djangoproject.com/download/>`_, which offers convenient
@@ -102,9 +101,10 @@ obtain the latest code and documentation, type::
     hg clone http://bitbucket.org/ubernostrum/django-registration/
 
 This will create a copy of the django-registration Mercurial
-repository on your computer; you can then the ``django-registration``
-directory inside the checkout your Python import path, or use the
-``setup.py`` script to perform a global installation from that code.
+repository on your computer; you can then add the
+``django-registration`` directory inside the checkout your Python
+import path, or use the ``setup.py`` script to perform a global
+installation from that code.
 
 
 Basic configuration and use
@@ -152,6 +152,7 @@ Django settings file::
 
     INSTALLED_APPS = (
         'django.contrib.auth',
+        'django.contrib.sites',
         'registration',
         # ...other installed applications...
     )
