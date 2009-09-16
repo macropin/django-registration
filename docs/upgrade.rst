@@ -16,19 +16,24 @@ and of the new features available in the 0.8 release.
 Backwards-incompatible changes
 ------------------------------
 
-To upgrade from a previous version of django-registration, you will
-need to make one change, to your project's configuration: if you were
-using the default ``URLConf`` provided in previous versions, you will
-instead need to use the ``URLConf`` provided by the default backend in
-0.8, which is located at ``registration.backends.default.urls``. So,
-for example, if you previously had this in your ``URLConf``::
+If you're upgrading from an older release of django-registration, and
+if you were using the default setup (i.e., the included default
+URLConf and no custom URL patterns or custom arguments to views), you
+will not need to make any immediate changes. However, the old default
+URLConf has been deprecated and will be removed in version 1.0 of
+django-registration, so it is recommended that you begin migrating
+now. To do so, change any use of ``registration.urls`` to
+``registration.backends.default.urls``. For example, if you had the
+following in your root URLConf::
 
     (r'^accounts/', include('registration.urls')),
 
-you will need to change it to::
+you should change it to::
 
     (r'^accounts/', include('registration.backends.default.urls')),
 
-If you had set up custom URL patterns, you will need to consult the
-documentation for the registration views to see how to adapt your
-custom URL patterns for use with django-registration 0.8.
+The older include will continue to work until django-registration 1.0;
+in 0.8 it raises a ``PendingDeprecationWarning`` (which is ignored by
+default in Python), in 0.9 it will raise ``DeprecationWarning`` (which
+will begin printing warning messages on import) and in 1.0 it will be
+removed entirely.
