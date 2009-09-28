@@ -49,8 +49,8 @@ must supply that argument.
 
 The ``profile_callback`` argument of the ``register`` view has been
 removed; the functionality it provided can now be implemented easily
-via a custom backend, or by connecting listeners to the signals sent
-during the registration process.
+via a custom backend, or by connecting listeners to :ref:`the signals
+sent during the registration process <signals>`.
 
 Changes to registration forms
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -59,5 +59,25 @@ Previously, the form used to collect data during registration was
 expected to implement a ``save()`` method which would create the new
 user account. This is no longer the case; creating the account is
 handled by the backend, and so any custom logic should be moved into a
-custom backend, or by connecting listeners to the signals sent during
-the registration process.
+custom backend, or by connecting listeners to :ref:`the signals sent
+during the registration process <signals>`.
+
+Changes to the ``RegistrationProfile`` model
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``RegistrationProfile.objects.create_inactive_user()`` now
+has an additional required argument: ``site``. This allows
+django-registration to easily be used regardless of whether
+``django.contrib.sites`` is installed, since a ``RequestSite`` object
+can be passed in place of a regular ``Site`` object.
+
+The :data:`~registration.signals.user_registered` signal is no longer
+sent by ``RegistrationProfile.objects.create_inactive_user()``, and
+the :data:`~registration.signals.user_activated` signal is no longer
+sent by ``RegistrationProfile.objects.activate_user()``; these signals
+are now sent by the backend after these methods have been called.
+
+The sending of activation emails has been factored out of
+``RegistrationProfile.objects.create_inactive_user()``, and now exists
+as the method ``send_activation_email()`` on instances of
+``RegistrationProfile``.

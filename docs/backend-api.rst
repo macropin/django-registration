@@ -94,7 +94,7 @@ Arguments to this method are:
 After creating the new user account, this method should create or
 obtain an instance of ``django.contrib.auth.models.User`` representing
 that account. It should then send the signal
-``registration.signals.user_registered``, with three arguments:
+:data:`registration.signals.user_registered`, with three arguments:
 
 ``sender``
     The backend class (e.g., ``self.__class__``).
@@ -134,7 +134,7 @@ should return ``False``.
 If the account is successfully activated, this method should create or
 obtain an instance of ``django.contrib.auth.models.User`` representing
 the activated account. It should then send the signal
-``registration.signals.user_activated``, with three arguments:
+:data:`registration.signals.user_activated`, with three arguments:
 
 ``sender``
     The backend class.

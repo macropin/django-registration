@@ -34,5 +34,6 @@ Contents:
    
    quickstart
    backend-api
+   signals
    views
    upgrade
