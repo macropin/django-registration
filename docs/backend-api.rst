@@ -43,19 +43,17 @@ following (not an exhaustive list):
 Specifying the backend to use
 -----------------------------
 
-To determine which backend to use, the views in django-registration
-accept a keyword argument ``backend``; in all cases, this should be a
-string containing the full dotted Python import path to the backend
-class to be used.
-
-So, for example, to use the default backend, you'd pass
-the string ``'registration.backends.default.DefaultBackend'`` as the
-value of the ``backend`` argument (and the default URLConf included
-with that backend does so).
-
-The specified backend class will then be imported and instantiated (by
-calling its constructor with no arguments), and the resulting instance
-will be used for all backend-specific functionality.
+To determine which backend to use, the :ref:`views in
+django-registration <views>` accept a keyword argument ``backend``; in
+all cases, this should be a string containing the full dotted Python
+import path to the backend class to be used. So, for example, to use
+the default backend, you'd pass the string
+``'registration.backends.default.DefaultBackend'`` as the value of the
+``backend`` argument (and the default URLConf included with that
+backend does so). The specified backend class will then be imported
+and instantiated (by calling its constructor with no arguments), and
+the resulting instance will be used for all backend-specific
+functionality.
 
 If the specified backend class cannot be imported, django-registration
 will raise ``django.core.exceptions.ImproperlyConfigured``.

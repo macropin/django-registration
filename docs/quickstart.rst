@@ -5,8 +5,7 @@ Quick start guide
 
 Before installing django-registration, you'll need to have a copy of
 `Django <http://www.djangoproject.com>`_ already installed. For the
-0.8 release, Django 1.1 or newer is required; once Django 1.1 is
-released.
+|version| release, Django 1.1 or newer is required.
 
 For further information, consult the `Django download page
 <http://www.djangoproject.com/download/>`_, which offers convenient
@@ -50,8 +49,8 @@ Using ``easy_install``, type::
     easy_install -Z django-registration
 
 Note that the ``-Z`` flag is required, to tell ``easy_install`` not to
-create a zipped package; zipped packages prevent Django from locating
-custom management commands.
+create a zipped package; zipped packages prevent certain features of
+Django from working properly.
 
 Using ``pip``, type::
 
@@ -96,15 +95,15 @@ If you'd like to try out the latest in-development code, you can
 obtain it from the django-registration repository, which is hosted at
 `Bitbucket <http://bitbucket.org/>`_ and uses `Mercurial
 <http://www.selenic.com/mercurial/wiki/>`_ for version control. To
-obtain the latest code and documentation, type::
+obtain the latest code and documentation, you'll need to have
+Mercurial installed, at which point you can type::
 
     hg clone http://bitbucket.org/ubernostrum/django-registration/
 
 This will create a copy of the django-registration Mercurial
 repository on your computer; you can then add the
 ``django-registration`` directory inside the checkout your Python
-import path, or use the ``setup.py`` script to perform a global
-installation from that code.
+import path, or use the ``setup.py`` script to install as a package.
 
 
 Basic configuration and use
@@ -172,7 +171,7 @@ useful views in ``django.contrib.auth`` (e.g., login, logout, password
 change/reset). This ``URLConf`` can be found at
 ``registration.backends.default.urls``, and so can simply be included
 in your project's root URL configuration. For example, to place the
-URLs under the prefix ``accounts/``, you could add the following to
+URLs under the prefix ``/accounts/``, you could add the following to
 your project's root ``URLConf``::
 
     (r'^accounts/', include('registration.backends.default.urls')),
@@ -221,8 +220,8 @@ Used during account activation. By default, has the following context:
     account which was just activated. If activation was unsuccessful,
     the boolean value ``False``; this may be because the activation
     period has expired, or the activation view was accessed with an
-    invalid or nonexistent activation key. In this case, an
-    appropriate error message should be displayed to the user.
+    invalid or nonexistent activation key. In such cases, an
+    appropriate error message should be displayed.
 
 **registration/activation_email_subject.txt**
 

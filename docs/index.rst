@@ -34,4 +34,5 @@ Contents:
    
    quickstart
    backend-api
+   views
    upgrade
