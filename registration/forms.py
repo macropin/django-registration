@@ -110,7 +110,8 @@ class RegistrationFormNoFreeEmail(RegistrationForm):
     """
     bad_domains = ['aim.com', 'aol.com', 'email.com', 'gmail.com',
                    'googlemail.com', 'hotmail.com', 'hushmail.com',
-                   'msn.com', 'mail.ru', 'mailinator.com', 'live.com']
+                   'msn.com', 'mail.ru', 'mailinator.com', 'live.com',
+                   'yahoo.com']
     
     def clean_email(self):
         """
