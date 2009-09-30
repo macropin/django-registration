@@ -123,9 +123,9 @@ Arguments to this method are:
 ``**kwargs``
     A dictionary of any additional arguments (e.g., information
     captured from the URL, such as an activation key) received by the
-    activation view. The combination of the ``HttpRequest`` and this
-    additional information must be sufficient to identify the account
-    which will be activated.
+    :func:`~registration.views.activate` view. The combination of the
+    ``HttpRequest`` and this additional information must be sufficient
+    to identify the account which will be activated.
 
 If the account cannot be successfully activated (for example, in the
 default backend if the activation period has expired), this method
@@ -168,9 +168,10 @@ Arguments to this method are:
     The Django ``HttpRequest`` object in which a new user is
     attempting to register.
 
-If this method returns ``False``, the registration view will not
-display a form for account creation; instead, it will issue a redirect
-to a URL explaining that registration is not permitted.
+If this method returns ``False``, the
+:func:`~registration.views.register` view will not display a form for
+account creation; instead, it will issue a redirect to a URL
+explaining that registration is not permitted.
 
 
 get_form_class(self, request)

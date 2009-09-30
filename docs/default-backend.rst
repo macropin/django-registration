@@ -1,0 +1,203 @@
+.. _default-backend:
+.. module:: registration.backends.default
+
+The default backend
+===================
+
+A default :ref:`registration backend <backend-api>` is bundled with
+django-registration in the module ``registration.backend.default``,
+and implements a simple two-step workflow in which a new user first
+registers, then confirms and activates the new account by following a
+link sent to the email address supplied during registration.
+
+This backend makes use of the following settings:
+
+``ACCOUNT_ACTIVATION_DAYS``
+    This is the number of days users will have to activate their
+    accounts after registering. Failing to activate during that period
+    will leave the account inactive (and possibly subject to
+    deletion). This setting is required, and must be an integer.
+
+``REGISTRATION_OPEN``
+    A boolean (either ``True`` or ``False``) indicating whether
+    registration of new accounts is currently permitted. This setting
+    is optional, and a default of ``True`` will be assumed if it is
+    not supplied.
+
+By default, this backend uses
+:class:`registration.forms.RegistrationForm` as its form class for
+user registration; this can be overridden by passing the keyword
+argument ``form_class`` to the :func:`~registration.views.register`
+view.
+
+Upon successful registration -- not activation -- the default redirect
+is to the URL pattern named ``registration_complete``; this can be
+overridden by passing the keyword argument ``success_url`` to the
+:func:`~registration.views.register` view.
+
+During registration, a new user account is created, with the
+``is_active`` field set to ``False``. An email is then sent to the
+email address of the account, containing a link the user must click to
+activate the account; at that point the ``is_active`` field is set to
+``True``, and the user may log in normally.
+
+Activation is handled by generating a storing an activation key in the
+database, using the following model:
+
+
+.. currentmodule:: registration.models
+
+.. class:: RegistrationProfile
+
+   A simple representation of the information needed to activate a new
+   user account. This is **not** a user profile; it simply provides a
+   place to temporarily store the activation key and determine whether
+   a given account has been activated.
+
+   Has the following fields:
+
+   .. attribute:: user
+
+      A ``ForeignKey`` to ``django.contrib.auth.models.User``,
+      representing the user account for which activation information
+      is being stored.
+
+   .. attribute:: activation_key
+
+      A 40-character ``CharField``, storing the activation key for the
+      account. Initially, the activation key is a SHA1 hash generated
+      from combining the username of the account with a
+      randomly-generated salt; after activation, this is reset to
+      :attr:`ACTIVATED`.
+
+   Additionally, one class attribute exists:
+
+   .. attribute:: ACTIVATED
+
+      A constant string used as the value of :attr:`activation_key`
+      for accounts which have been activated.
+
+   And the following methods:
+
+   .. method:: activation_key_expired()
+
+      Determines whether this account's activation key has expired,
+      and returns a boolean (``True`` if expired, ``False``
+      otherwise). Uses the following algorithm:
+
+      1. If :attr:`activation_key` is :attr:`ACTIVATED`, the account
+         has already been activated and so the key is considered to
+         have expired.
+
+      2. Otherwise, the date of registration (obtained from the
+         ``date_joined`` field of :attr:`user`) is compared to the
+         current date; if the span between them is greater than the
+         value of the setting ``ACCOUNT_ACTIVATION_DAYS``, the key is
+         considered to have expired.
+
+   .. method:: send_activation_email(site)
+
+      Sends an activation email to the address of the account.
+
+      The activation email will make use of two templates:
+      ``registration/activation_email_subject.txt`` and
+      ``registration/activation_email.txt``, which are used for the
+      subject of the email and the body of the email,
+      respectively. Each will receive the following context:
+
+      ``activation_key``
+          The value of :attr:`activation_key`.
+
+      ``expiration_days``
+          The number of days the user has to activate, taken from the
+          setting ``ACCOUNT_ACTIVATION_DAYS``.
+
+      ``site``
+          An object representing the site on which the account was
+          registered; depending on whether ``django.contrib.sites`` is
+          installed, this may be an instance of either
+          ``django.contrib.sites.models.Site`` (if the sites
+          application is installed) or
+          ``django.contrib.sites.models.RequestSite`` (if
+          not). Consult `the documentation for the Django sites
+          framework
+          <http://docs.djangoproject.com/en/dev/ref/contrib/sites/>`_
+          for details regarding these objects' interfaces.
+
+      Because email subjects must be a single line of text, the
+      rendered output of ``registration/activation_email_subject.txt``
+      will be forcibly condensed to a single line.
+
+      :param site: An object representing the site on which account
+         was registered; an instance of either
+         ``django.contrib.sites.models.Site`` or
+         ``django.contrib.sites.models.RequestSite``.
+
+
+Additionally, :class:`RegistrationProfile` has a custom manager
+(accessed as ``RegistrationProfile.objects``):
+
+
+.. class:: RegistrationManager
+
+   This manager provides several convenience methods for creating and
+   working with instances of :class:`RegistrationProfile`:
+
+   .. method:: activate_user(activation_key)
+
+      Validates ``activation_key`` and, if valid, activates the
+      associated account by setting its ``is_active`` field to
+      ``True``. To prevent re-activation of accounts, the
+      :attr:`~RegistrationProfile.activation_key` of the
+      :class:`RegistrationProfile` for the account will be set to
+      :attr:`RegistrationProfile.ACTIVATED` after successful
+      activation.
+
+      Returns the ``User`` instance representing the account if
+      activation is successful, ``False`` otherwise.
+
+   .. method:: delete_expired_users
+
+      Removes expired instances of :class:`RegistrationProfile`, and
+      their associated user accounts, from the database. This is
+      useful as a periodic maintenance task to clean out account which
+      registered by never activated.
+
+      Accounts to be deleted are identified by searching for instances
+      of :class:`RegistrationProfile` with expired activation keys and
+      with associated user accounts which are inactive (have their
+      ``is_active`` field set to ``False``). To disable a user account
+      without having it deleted, simply delete its associated
+      :class:`RegistrationProfile`; any ``User`` which does not have
+      an associated :class:`RegistrationProfile` will not be deleted.
+
+      A custom management command is provided which will execute this
+      method, suitable for use in cron jobs or other scheduled
+      maintenance tasks: ``manage.py cleanupregistration``.
+
+   .. method:: create_inactive_user(username, email, password, site, send_email=True)
+
+      Creates a new, inactive user account and an associated instance
+      of :class:`RegistrationProfile`, sends the activation email and
+      returns the new ``User`` object representing the account.
+
+      :param username: The username to use for the new account.
+      :param email: The email address to use for the new account.
+      :param password: The password to use for the new account.
+      :param site: An object representing the site on which the
+         account is being registered; an instance of either
+         ``django.contrib.sites.models.Site`` or
+         ``django.contrib.sites.models.RequestSite``.
+      :param send_email: If ``True``, the activation email will be
+         sent to the account (by calling
+         :meth:`RegistrationProfile.send_activation_email`). If
+         ``False``, no email will be sent (but the account will still
+         be inactive)
+
+   .. method:: create_profile(user)
+
+      Creates and returns a :class:`RegistrationProfile` instance for
+      the account represented by ``user``.
+
+      :param user: The user account; an instance of
+         ``django.contrib.auth.models.User``.

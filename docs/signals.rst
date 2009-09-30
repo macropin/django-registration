@@ -1,5 +1,5 @@
 .. _signals:
-.. module: registration.signals
+.. module:: registration.signals
 
 
 Custom signals used by django-registration
@@ -24,7 +24,7 @@ the process of writing and connecting functions which will listen for
 signals.
 
 
-.. data:: registration.signals.user_activated
+.. data:: user_activated
 
    Sent when a user account is activated (not applicable to all
    backends). Provides the following arguments:
@@ -40,7 +40,7 @@ signals.
        The ``HttpRequest`` in which the account was activated.
 
 
-.. data:: registration.signals.user_registered
+.. data:: user_registered
 
    Sent when a new user account is registered. Provides the following
    arguments:

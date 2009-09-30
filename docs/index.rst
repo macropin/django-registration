@@ -33,7 +33,9 @@ Contents:
    :maxdepth: 1
    
    quickstart
-   backend-api
-   signals
-   views
    upgrade
+   backend-api
+   default-backend
+   forms
+   views
+   signals

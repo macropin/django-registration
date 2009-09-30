@@ -41,11 +41,11 @@ import) and in 1.0 it will be removed entirely.
 Changes to registration views
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The views used to handle user registration have changed significantly
-as of django-registration |version|. Both views now require the
-keyword argument ``backend``, which specifies the :ref:`registration
-backend <backend-api>` to use, and so any URL pattern for these views
-must supply that argument.
+:ref:`The views used to handle user registration <views>` have changed
+significantly as of django-registration |version|. Both views now
+require the keyword argument ``backend``, which specifies the
+:ref:`registration backend <backend-api>` to use, and so any URL
+pattern for these views must supply that argument.
 
 The ``profile_callback`` argument of the ``register`` view has been
 removed; the functionality it provided can now be implemented easily

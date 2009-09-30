@@ -166,9 +166,9 @@ Setting up URLs
 ~~~~~~~~~~~~~~~
 
 The default backend includes a Django ``URLConf`` which sets up URL
-patterns for the views in django-registration, as well as several
-useful views in ``django.contrib.auth`` (e.g., login, logout, password
-change/reset). This ``URLConf`` can be found at
+patterns for :ref:`the views in django-registration <views>`, as well
+as several useful views in ``django.contrib.auth`` (e.g., login,
+logout, password change/reset). This ``URLConf`` can be found at
 ``registration.backends.default.urls``, and so can simply be included
 in your project's root URL configuration. For example, to place the
 URLs under the prefix ``/accounts/``, you could add the following to
@@ -219,9 +219,10 @@ Used during account activation. By default, has the following context:
     If activation was successful, the ``User`` object representing the
     account which was just activated. If activation was unsuccessful,
     the boolean value ``False``; this may be because the activation
-    period has expired, or the activation view was accessed with an
-    invalid or nonexistent activation key. In such cases, an
-    appropriate error message should be displayed.
+    period has expired, or the :func:`~registration.views.activate`
+    view was accessed with an invalid or nonexistent activation
+    key. In such cases, an appropriate error message should be
+    displayed.
 
 **registration/activation_email_subject.txt**
 
