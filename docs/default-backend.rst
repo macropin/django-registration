@@ -5,7 +5,7 @@ The default backend
 ===================
 
 A default :ref:`registration backend <backend-api>` is bundled with
-django-registration in the module ``registration.backend.default``,
+django-registration in the module ``registration.backends.default``,
 and implements a simple two-step workflow in which a new user first
 registers, then confirms and activates the new account by following a
 link sent to the email address supplied during registration.
