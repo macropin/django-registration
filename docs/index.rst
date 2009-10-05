@@ -39,3 +39,4 @@ Contents:
    forms
    views
    signals
+   faq
