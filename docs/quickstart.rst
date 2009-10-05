@@ -17,7 +17,7 @@ Installing django-registration
 
 There are several ways to install django-registration:
 
-* Automatically, via a Python package installer.
+* Automatically, via a package manager.
 
 * Manually, by downloading a copy of the release package and
   installing it yourself.
@@ -100,8 +100,16 @@ Mercurial installed, at which point you can type::
 
     hg clone http://bitbucket.org/ubernostrum/django-registration/
 
-This will create a copy of the django-registration Mercurial
-repository on your computer; you can then add the
+You can also obtain a copy of a particular release of
+django-registration by specifying the ``-r`` argument to ``hg clone``;
+each release is given a tag of the form ``vX.Y``, where "X.Y" is the
+release number. So, for example, to check out a copy of the 0.8
+release, type::
+
+    hg clone -r v0.8 http://bitbucket.org/ubernostrum/django-registration/
+
+In either case, this will create a copy of the django-registration
+Mercurial repository on your computer; you can then add the
 ``django-registration`` directory inside the checkout your Python
 import path, or use the ``setup.py`` script to install as a package.
 
@@ -165,10 +173,11 @@ used by the default setup.
 Setting up URLs
 ~~~~~~~~~~~~~~~
 
-The default backend includes a Django ``URLConf`` which sets up URL
-patterns for :ref:`the views in django-registration <views>`, as well
-as several useful views in ``django.contrib.auth`` (e.g., login,
-logout, password change/reset). This ``URLConf`` can be found at
+The :ref:`default backend <default-backend>` includes a Django
+``URLConf`` which sets up URL patterns for :ref:`the views in
+django-registration <views>`, as well as several useful views in
+``django.contrib.auth`` (e.g., login, logout, password
+change/reset). This ``URLConf`` can be found at
 ``registration.backends.default.urls``, and so can simply be included
 in your project's root URL configuration. For example, to place the
 URLs under the prefix ``/accounts/``, you could add the following to

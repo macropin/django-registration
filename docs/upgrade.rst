@@ -62,22 +62,28 @@ handled by the backend, and so any custom logic should be moved into a
 custom backend, or by connecting listeners to :ref:`the signals sent
 during the registration process <signals>`.
 
-Changes to the ``RegistrationProfile`` model
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Changes to the :class:`~registration.models.RegistrationProfile` model
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``RegistrationProfile.objects.create_inactive_user()`` now
-has an additional required argument: ``site``. This allows
+The
+:meth:`~registration.models.RegistrationManager.create_inactive_user`
+method of :class:`~registration.models.RegistrationManager` now has an
+additional required argument: ``site``. This allows
 django-registration to easily be used regardless of whether
 ``django.contrib.sites`` is installed, since a ``RequestSite`` object
 can be passed in place of a regular ``Site`` object.
 
 The :data:`~registration.signals.user_registered` signal is no longer
-sent by ``RegistrationProfile.objects.create_inactive_user()``, and
-the :data:`~registration.signals.user_activated` signal is no longer
-sent by ``RegistrationProfile.objects.activate_user()``; these signals
-are now sent by the backend after these methods have been called.
+sent by
+:meth:`~registration.models.RegistrationManager.create_inactive_user`,
+and the :data:`~registration.signals.user_activated` signal is no
+longer sent by
+:meth:`~registration.models.RegistrationManager.activate_user`; these
+signals are now sent by the backend after these methods have been
+called.
 
 The sending of activation emails has been factored out of
-``RegistrationProfile.objects.create_inactive_user()``, and now exists
-as the method ``send_activation_email()`` on instances of
-``RegistrationProfile``.
+:meth:`~registration.models.RegistrationManager.create_inactive_user`,
+and now exists as the method
+:meth:`~registration.models.RegistrationProfile.send_activation_email`
+on instances of :class:`~registration.models.RegistrationProfile`.

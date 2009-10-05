@@ -10,6 +10,10 @@ and implements a simple two-step workflow in which a new user first
 registers, then confirms and activates the new account by following a
 link sent to the email address supplied during registration.
 
+
+Default behavior and configuration
+----------------------------------
+
 This backend makes use of the following settings:
 
 ``ACCOUNT_ACTIVATION_DAYS``
@@ -34,6 +38,10 @@ Upon successful registration -- not activation -- the default redirect
 is to the URL pattern named ``registration_complete``; this can be
 overridden by passing the keyword argument ``success_url`` to the
 :func:`~registration.views.register` view.
+
+
+How account data is stored for activation
+-----------------------------------------
 
 During registration, a new user account is created, with the
 ``is_active`` field set to ``False``. An email is then sent to the
@@ -156,12 +164,16 @@ Additionally, :class:`RegistrationProfile` has a custom manager
       Returns the ``User`` instance representing the account if
       activation is successful, ``False`` otherwise.
 
+      :param activation_key: The activation key to use for the
+         activation (a SHA1 hash as a forty-character hexadecimal
+         digest).
+
    .. method:: delete_expired_users
 
       Removes expired instances of :class:`RegistrationProfile`, and
       their associated user accounts, from the database. This is
-      useful as a periodic maintenance task to clean out account which
-      registered by never activated.
+      useful as a periodic maintenance task to clean out accounts
+      which registered but never activated.
 
       Accounts to be deleted are identified by searching for instances
       of :class:`RegistrationProfile` with expired activation keys and
