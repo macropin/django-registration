@@ -9,7 +9,7 @@ implemented by the :ref:`registration backend <backend-api>` in use,
 django-registration provides two views. Both are designed to allow
 easy configurability without writing or rewriting view code.
 
-.. function:: activate(request, backend, template_name='registration/activate.html', extra_context=None, **kwargs)
+.. function:: activate(request, backend, template_name='registration/activate.html', success_url=None, extra_context=None, **kwargs)
 
    Activate a user's account, for workflows which require a separate
    activation step.
@@ -22,25 +22,32 @@ easy configurability without writing or rewriting view code.
    successful, or a value which evaluates to ``False`` in boolean
    context if not.
 
+   Upon successful activation, the backend's
+   ``post_activation_redirect()`` method will be called, passing the
+   ``HttpRequest`` and the activated ``User`` to determine the URL to
+   redirect the user to. To override this, pass the argument
+   ``success_url`` (see below).
+
+   On unsuccessful activation, will render the template
+   ``registration/activate.html`` to display an error message; to
+   override thise, pass the argument ``template_name`` (see below).
+
    **Context**
 
-   ``account``
-      A ``User`` object representing the activated account, if the
-      activation was successful. ``False`` if the activation was not
-      successful.
-
-   This view uses ``RequestContext``, so variables populated by
-   context processors will also be present in the context.
+   The context will be populated from the keyword arguments captured
+   in the URL. This view uses ``RequestContext``, so variables
+   populated by context processors will also be present in the
+   context.
 
    :param backend: A string containing the dotted Python path to the
       backend class to use.
-   :param template_name: Optional. A custom template name to use. If
-      not specified, this will default to
-      ``registration/activate.html``.
    :param extra_context: Optional. A dictionary of variables to add to
       the template context. Any callable object in this dictionary
       will be called to produce the final result which appears in the
       context.
+   :param template_name: Optional. A custom template name to use. If
+      not specified, this will default to
+      ``registration/activate.html``.
    :param **kwargs: Any keyword arguments captured from the URL, such
       as an activation key, which will be passed to the backend's
       ``activate()`` method.
@@ -85,26 +92,26 @@ easy configurability without writing or rewriting view code.
 
    :param backend: A string containing the dotted Python path to the
       backend class to use.
-   :param success_url: The URL to redirect to after successful
-      registration. This should be a string suitable for passing as
-      the ``to`` argument to `Django's "redirect" shortcut
-      <http://docs.djangoproject.com/en/dev/topics/http/shortcuts/#redirect>`_. If
-      not specified, the backend's ``post_registration_redirect()``
-      method will be called to obtain the URL.
-   :param form_classs: The form class to use for registration; this
-      should be some subclass of ``django.forms.Form``. If not
-      specified, the backend's ``get_form_class()`` method will be
-      called to obtain the form class.
    :param disallowed_url: The URL to redirect to if registration is
       not permitted (e.g., if registration is closed). This should be
       a string suitable for passing as the ``to`` argument to
       `Django's "redirect" shortcut
       <http://docs.djangoproject.com/en/dev/topics/http/shortcuts/#redirect>`_. If
       not specified, this will default to ``registration_disallowed``.
-   :param template_name: Optional. A custom template name to use. If
-      not specified, this will default to
-      ``registration/registration_form.html``.
    :param extra_context: Optional. A dictionary of variables to add to
       the template context. Any callable object in this dictionary
       will be called to produce the final result which appears in the
       context.
+   :param form_classs: The form class to use for registration; this
+      should be some subclass of ``django.forms.Form``. If not
+      specified, the backend's ``get_form_class()`` method will be
+      called to obtain the form class.
+   :param success_url: The URL to redirect to after successful
+      registration. This should be a string suitable for passing as
+      the ``to`` argument to `Django's "redirect" shortcut
+      <http://docs.djangoproject.com/en/dev/topics/http/shortcuts/#redirect>`_. If
+      not specified, the backend's ``post_registration_redirect()``
+      method will be called to obtain the URL.
+   :param template_name: Optional. A custom template name to use. If
+      not specified, this will default to
+      ``registration/registration_form.html``.

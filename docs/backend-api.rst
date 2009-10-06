@@ -69,8 +69,8 @@ situations (e.g., workflows significantly different from the default)
 a full implementation is needed.
 
 
-register(self, request, \*\*kwargs)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+register(request, \*\*kwargs)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This method implements the logic of actually creating the new user
 account. Often, but not necessarily always, this will involve creating
@@ -108,8 +108,8 @@ that account. It should then send the signal
 Finally, this method should return the ``User`` instance.
 
 
-activate(self, request, \*\*kwargs)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+activate(request, \*\*kwargs)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For workflows which require a separate activation step, this method
 should implement the necessary logic for account activation.
@@ -151,8 +151,8 @@ For workflows which do not require a separate activation step, this
 method can and should raise ``NotImplementedError``.
 
 
-registration_allowed(self, request)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+registration_allowed(request)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This method returns a boolean value indicating whether the given
 ``HttpRequest`` is permitted to register a new account (``True`` if
@@ -174,8 +174,8 @@ account creation; instead, it will issue a redirect to a URL
 explaining that registration is not permitted.
 
 
-get_form_class(self, request)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+get_form_class(request)
+~~~~~~~~~~~~~~~~~~~~~~~
 
 This method should return a form class -- a subclass of
 ``django.forms.Form`` -- suitable for use in registering users with
@@ -189,8 +189,8 @@ Arguments to this method are:
     attempting to register.
 
 
-post_registration_redirect(self, request, user)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+post_registration_redirect(request, user)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This method should return a location to which the user will be
 redirected after successful registration. This should be a tuple of
@@ -205,3 +205,25 @@ Arguments to this method are:
 
 ``user``
     The ``User`` instance representing the new user account.
+
+
+post_activation_redirect(request, user)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For workflows which require a separate activation step, this method
+should return a location to which the user will be redirected after
+successful activation.  This should be a tuple of ``(to, args,
+kwargs)``, suitable for use as the arguments to `Django's "redirect"
+shortcut
+<http://docs.djangoproject.com/en/dev/topics/http/shortcuts/#redirect>`_.
+
+Arguments to this method are:
+
+``request``
+    The Django ``HttpRequest`` object in which the user activated.
+
+``user``
+    The ``User`` instance representing the activated user account.
+
+For workflows which do not require a separate activation step, this
+method can and should raise ``NotImplementedError``.

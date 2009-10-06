@@ -164,6 +164,8 @@ class RegistrationViewTests(TestCase):
         activation window).
 
         """
+        success_redirect = 'http://testserver%s' % reverse('registration_activation_complete')
+        
         # First, register an account.
         self.client.post(reverse('registration_register'),
                          data={'username': 'alice',
@@ -171,16 +173,9 @@ class RegistrationViewTests(TestCase):
                                'password1': 'swordfish',
                                'password2': 'swordfish'})
         profile = RegistrationProfile.objects.get(user__username='alice')
-
         response = self.client.get(reverse('registration_activate',
                                            kwargs={'activation_key': profile.activation_key}))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response,
-                                'registration/activate.html')
-        self.failUnless(isinstance(response.context['account'],
-                                   User))
-        self.assertEqual(response.context['account'].username,
-                         u'alice')
+        self.assertRedirects(response, success_redirect)
         self.failUnless(User.objects.get(username='alice').is_active)
 
     def test_invalid_activation(self):
@@ -205,9 +200,28 @@ class RegistrationViewTests(TestCase):
         response = self.client.get(reverse('registration_activate',
                                            kwargs={'activation_key': expired_profile.activation_key}))
         self.assertEqual(response.status_code, 200)
-        self.failIf(response.context['account'])
+        self.assertEqual(response.context['activation_key'],
+                         expired_profile.activation_key)
         self.failIf(User.objects.get(username='bob').is_active)
 
+    def test_activation_success_url(self):
+        """
+        Passing ``success_url`` to the ``activate`` view and
+        successfully activating will result in that URL being used for
+        the redirect.
+        
+        """
+        success_redirect = 'http://testserver%s' % reverse('registration_test_custom_success_url')
+        self.client.post(reverse('registration_register'),
+                         data={'username': 'alice',
+                               'email': 'alice@example.com',
+                               'password1': 'swordfish',
+                               'password2': 'swordfish'})
+        profile = RegistrationProfile.objects.get(user__username='alice')
+        response = self.client.get(reverse('registration_test_activate_success_url',
+                                           kwargs={'activation_key': profile.activation_key}))
+        self.assertRedirects(response, success_redirect)
+        
     def test_activation_template_name(self):
         """
         Passing ``template_name`` to the ``activate`` view will result

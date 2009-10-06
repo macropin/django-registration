@@ -129,3 +129,11 @@ class DefaultBackend(object):
         
         """
         return ('registration_complete', (), {})
+
+    def post_activation_redirect(self, request, user):
+        """
+        Return the name of the URL to redirect to after successful
+        account activation.
+        
+        """
+        return ('registration_activation_complete', (), {})

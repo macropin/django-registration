@@ -32,7 +32,12 @@ urlpatterns = patterns('',
                            {'extra_context': {'foo': 'bar', 'callable': lambda: 'called'},
                             'backend': 'registration.backends.default.DefaultBackend'},
                            name='registration_test_activate_extra_context'),
-                       (r'', include('registration.backends.default.urls')),
+                       # Test the 'activate' view with success_url argument.
+                       url(r'^activate-with-success-url/(?P<activation_key>\w+)/$',
+                           activate,
+                           {'success_url': 'registration_test_custom_success_url',
+                            'backend': 'registration.backends.default.DefaultBackend'},
+                           name='registration_test_activate_success_url'),
                        # Test the 'register' view with custom template
                        # name.
                        url(r'^register-with-template-name/$',
@@ -73,4 +78,5 @@ urlpatterns = patterns('',
                            direct_to_template,
                            {'template': 'registration/test_template_name.html'},
                            name='registration_test_custom_success_url'),
+                       (r'', include('registration.backends.default.urls')),
                        )
