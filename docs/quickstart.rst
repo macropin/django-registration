@@ -222,16 +222,16 @@ been sent.
 
 **registration/activate.html**
 
-Used during account activation. By default, has the following context:
+Used if account activation fails. With the default setup, has the following context:
 
-``account``
-    If activation was successful, the ``User`` object representing the
-    account which was just activated. If activation was unsuccessful,
-    the boolean value ``False``; this may be because the activation
-    period has expired, or the :func:`~registration.views.activate`
-    view was accessed with an invalid or nonexistent activation
-    key. In such cases, an appropriate error message should be
-    displayed.
+``activation_key``
+    The activation key used during the activation attempt.
+
+**registration/activation_complete.html**
+
+Used after successful account activation. This template has no context
+variables of its own, and should simply inform the user that their
+account is now active.
 
 **registration/activation_email_subject.txt**
 

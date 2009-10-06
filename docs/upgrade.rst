@@ -38,6 +38,7 @@ ignored by default in Python), in 0.9 it will raise
 ``DeprecationWarning`` (which will begin printing warning messages on
 import) and in 1.0 it will be removed entirely.
 
+
 Changes to registration views
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -47,10 +48,20 @@ require the keyword argument ``backend``, which specifies the
 :ref:`registration backend <backend-api>` to use, and so any URL
 pattern for these views must supply that argument.
 
-The ``profile_callback`` argument of the ``register`` view has been
-removed; the functionality it provided can now be implemented easily
-via a custom backend, or by connecting listeners to :ref:`the signals
-sent during the registration process <signals>`.
+The ``profile_callback`` argument of the
+:func:`~registration.views.register` view has been removed; the
+functionality it provided can now be implemented easily via a custom
+backend, or by connecting listeners to :ref:`the signals sent during
+the registration process <signals>`.
+
+The :func:`~registration.views.activate` view now issues a redirect
+upon successful activation; in :ref:`the default backend
+<default-backend>` this is to the URL pattern named
+``registration_activation_complete``. On unsuccessful activation, the
+``activate()`` view still displays a template, but its context has
+changed: the context will simply consist of any keyword arguments
+captured in the URL and passed to the view.
+
 
 Changes to registration forms
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,6 +72,7 @@ user account. This is no longer the case; creating the account is
 handled by the backend, and so any custom logic should be moved into a
 custom backend, or by connecting listeners to :ref:`the signals sent
 during the registration process <signals>`.
+
 
 Changes to the :class:`~registration.models.RegistrationProfile` model
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

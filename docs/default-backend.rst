@@ -39,6 +39,11 @@ is to the URL pattern named ``registration_complete``; this can be
 overridden by passing the keyword argument ``success_url`` to the
 :func:`~registration.views.register` view.
 
+Upon successful activation, the default redirect is to the URL pattern
+named ``registration_activation_complete``; this can be overridden by
+passing the keyword argument ``success_url`` to the
+:func:`~registration.views.activate` view.
+
 
 How account data is stored for activation
 -----------------------------------------
