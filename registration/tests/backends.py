@@ -1,6 +1,7 @@
 import datetime
 
 from django.conf import settings
+from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core import mail
@@ -11,6 +12,7 @@ from django.test import TestCase
 
 from registration import forms
 from registration import signals
+from registration.admin import RegistrationAdmin
 from registration.backends import get_backend
 from registration.backends.default import DefaultBackend
 from registration.models import RegistrationProfile
@@ -318,3 +320,23 @@ class DefaultRegistrationBackendTests(TestCase):
 
         self.assertEqual(len(received_signals), 0)
 
+    def test_email_send_action(self):
+        """
+        Test re-sending of activation emails via admin action.
+        
+        """
+        admin_class = RegistrationAdmin(RegistrationProfile, admin.site)
+        
+        alice = self.backend.register(_mock_request(),
+                                      username='alice',
+                                      email='alice@example.com',
+                                      password1='swordfish')
+        
+        admin_class.resend_activation_email(_mock_request(),
+                                            RegistrationProfile.objects.all())
+        self.assertEqual(len(mail.outbox), 2) # One on registering, one more on the resend.
+        
+        RegistrationProfile.objects.filter(user=alice).update(activation_key=RegistrationProfile.ACTIVATED)
+        admin_class.resend_activation_email(_mock_request(),
+                                            RegistrationProfile.objects.all())
+        self.assertEqual(len(mail.outbox), 2) # No additional email because the account has activated.
