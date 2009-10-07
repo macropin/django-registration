@@ -340,3 +340,19 @@ class DefaultRegistrationBackendTests(TestCase):
         admin_class.resend_activation_email(_mock_request(),
                                             RegistrationProfile.objects.all())
         self.assertEqual(len(mail.outbox), 2) # No additional email because the account has activated.
+
+    def test_activation_action(self):
+        """
+        Test manual activation of users view admin action.
+        
+        """
+        admin_class = RegistrationAdmin(RegistrationProfile, admin.site)
+
+        alice = self.backend.register(_mock_request(),
+                                      username='alice',
+                                      email='alice@example.com',
+                                      password1='swordfish')
+
+        admin_class.activate_users(_mock_request(),
+                                   RegistrationProfile.objects.all())
+        self.failUnless(User.objects.get(username='alice').is_active)
