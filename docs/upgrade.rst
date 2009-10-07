@@ -18,11 +18,12 @@ Backwards-incompatible changes
 
 If you're upgrading from an older release of django-registration, and
 if you were using the default setup (i.e., the included default
-URLconf and no custom URL patterns or custom arguments to views), you
-will not need to make any immediate changes. However, the old default
-URLconf has been deprecated and will be removed in version 1.0 of
-django-registration, so it is recommended that you begin migrating
-now. To do so, change any use of ``registration.urls`` to
+URLconf and no custom URL patterns or custom arguments to views), most
+things will continue to work as normal (although you will need to
+create one new template; see the section on views below). However, the
+old default URLconf has been deprecated and will be removed in version
+1.0 of django-registration, so it is recommended that you begin
+migrating now. To do so, change any use of ``registration.urls`` to
 ``registration.backends.default.urls``. For example, if you had the
 following in your root URLconf::
 
@@ -47,7 +48,8 @@ significantly as of django-registration |version|. Both views now
 require the keyword argument ``backend``, which specifies the
 :ref:`registration backend <backend-api>` to use, and so any URL
 pattern for these views must supply that argument. The URLconf
-provided with the default backend properly passes this argument.
+provided with :ref:`the default backend <default-backend>` properly
+passes this argument.
 
 The ``profile_callback`` argument of the
 :func:`~registration.views.register` view has been removed; the
@@ -56,20 +58,18 @@ backend, or by connecting listeners to :ref:`the signals sent during
 the registration process <signals>`.
 
 The :func:`~registration.views.activate` view now issues a redirect
-upon successful activation; in :ref:`the default backend
-<default-backend>` this is to the URL pattern named
-``registration_activation_complete``; in the default setup, this will
-redirect to a view which renders the template
+upon successful activation; in the default backend this is to the URL
+pattern named ``registration_activation_complete``; in the default
+setup, this will redirect to a view which renders the template
 ``registration/activation_complete.html``, and so this template should
 be present when using the default backend and default
 configuration. Other backends can specify the location to redirect to
 through their ``post_activation_redirect()`` method, and this can be
 overridden on a case-by-case basis by passing the (new) keyword
-argument ``success_url`` to the :func:`~registration.views.activate`
-view. On unsuccessful activation, the ``activate()`` view still
-displays the same template, but its context has changed: the context
-will simply consist of any keyword arguments captured in the URL and
-passed to the view.
+argument ``success_url`` to the ``activate()`` view. On unsuccessful
+activation, the ``activate()`` view still displays the same template,
+but its context has changed: the context will simply consist of any
+keyword arguments captured in the URL and passed to the view.
 
 
 Changes to registration forms
@@ -95,16 +95,17 @@ django-registration to easily be used regardless of whether
 can be passed in place of a regular ``Site`` object.
 
 The :data:`~registration.signals.user_registered` signal is no longer
-sent by
-:meth:`~registration.models.RegistrationManager.create_inactive_user`,
-and the :data:`~registration.signals.user_activated` signal is no
-longer sent by
-:meth:`~registration.models.RegistrationManager.activate_user`; these
-signals are now sent by the backend after these methods have been
-called.
+sent by ``create_inactive_user()``, and the
+:data:`~registration.signals.user_activated` signal is no longer sent
+by :meth:`~registration.models.RegistrationManager.activate_user`;
+these signals are now sent by the backend after these methods have
+been called. Note that :ref:`these signals <signals>` were added after
+the django-registration 0.7 release but before the refactoring which
+introduced :ref:`the backend API <backend-api>`, so only installations
+which were tracking the in-development codebase will have made use of
+them.
 
 The sending of activation emails has been factored out of
-:meth:`~registration.models.RegistrationManager.create_inactive_user`,
-and now exists as the method
+``create_inactive_user()``, and now exists as the method
 :meth:`~registration.models.RegistrationProfile.send_activation_email`
-on instances of :class:`~registration.models.RegistrationProfile`.
+on instances of ``RegistrationProfile``.
