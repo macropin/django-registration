@@ -74,17 +74,20 @@ def activate(request, backend,
     """
     backend = get_backend(backend)
     account = backend.activate(request, **kwargs)
+
     if account:
         if success_url is None:
             to, args, kwargs = backend.post_activation_redirect(request, account)
             return redirect(to, *args, **kwargs)
         else:
             return redirect(success_url)
+
     if extra_context is None:
         extra_context = {}
     context = RequestContext(request)
     for key, value in extra_context.items():
         context[key] = callable(value) and value() or value
+
     return render_to_response(template_name,
                               kwargs,
                               context_instance=context)
@@ -98,8 +101,8 @@ def register(request, backend, success_url=None, form_class=None,
     Allow a new user to register an account.
 
     The actual registration of the account will be delegated to the
-    backend specified by the ``backend`` keywoard argument (see
-    below); it will be used as follows:
+    backend specified by the ``backend`` keyword argument (see below);
+    it will be used as follows:
 
     1. The backend's ``registration_allowed()`` method will be called,
        passing the ``HttpRequest``, to determine whether registration
@@ -178,6 +181,7 @@ def register(request, backend, success_url=None, form_class=None,
         return redirect(disallowed_url)
     if form_class is None:
         form_class = backend.get_form_class(request)
+
     if request.method == 'POST':
         form = form_class(data=request.POST, files=request.FILES)
         if form.is_valid():
@@ -195,6 +199,7 @@ def register(request, backend, success_url=None, form_class=None,
     context = RequestContext(request)
     for key, value in extra_context.items():
         context[key] = callable(value) and value() or value
+
     return render_to_response(template_name,
                               { 'form': form },
                               context_instance=context)
