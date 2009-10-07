@@ -3,7 +3,7 @@ URLs used in the unit tests for django-registration.
 
 You should not attempt to use these URLs in any sort of real or
 development environment; instead, use
-``registration/backends/default/urls.py``. This URLConf includes those
+``registration/backends/default/urls.py``. This URLconf includes those
 URLs, and also adds several additional URLs which serve no purpose
 other than to test that optional keyword arguments are properly
 handled.

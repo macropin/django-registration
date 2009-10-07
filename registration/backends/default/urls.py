@@ -1,9 +1,9 @@
 """
-URLConf for registration and activation, using django-registration's
+URLconf for registration and activation, using django-registration's
 default backend.
 
 If the default behavior of these views is acceptable to you, simply
-use a line like this in your root URLConf to set up the default URLs
+use a line like this in your root URLconf to set up the default URLs
 for registration::
 
     (r'^accounts/', include('registration.backends.default.urls')),

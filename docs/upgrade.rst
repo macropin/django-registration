@@ -18,13 +18,13 @@ Backwards-incompatible changes
 
 If you're upgrading from an older release of django-registration, and
 if you were using the default setup (i.e., the included default
-URLConf and no custom URL patterns or custom arguments to views), you
+URLconf and no custom URL patterns or custom arguments to views), you
 will not need to make any immediate changes. However, the old default
-URLConf has been deprecated and will be removed in version 1.0 of
+URLconf has been deprecated and will be removed in version 1.0 of
 django-registration, so it is recommended that you begin migrating
 now. To do so, change any use of ``registration.urls`` to
 ``registration.backends.default.urls``. For example, if you had the
-following in your root URLConf::
+following in your root URLconf::
 
     (r'^accounts/', include('registration.urls')),
 
@@ -46,7 +46,8 @@ Changes to registration views
 significantly as of django-registration |version|. Both views now
 require the keyword argument ``backend``, which specifies the
 :ref:`registration backend <backend-api>` to use, and so any URL
-pattern for these views must supply that argument.
+pattern for these views must supply that argument. The URLconf
+provided with the default backend properly passes this argument.
 
 The ``profile_callback`` argument of the
 :func:`~registration.views.register` view has been removed; the
@@ -57,10 +58,18 @@ the registration process <signals>`.
 The :func:`~registration.views.activate` view now issues a redirect
 upon successful activation; in :ref:`the default backend
 <default-backend>` this is to the URL pattern named
-``registration_activation_complete``. On unsuccessful activation, the
-``activate()`` view still displays a template, but its context has
-changed: the context will simply consist of any keyword arguments
-captured in the URL and passed to the view.
+``registration_activation_complete``; in the default setup, this will
+redirect to a view which renders the template
+``registration/activation_complete.html``, and so this template should
+be present when using the default backend and default
+configuration. Other backends can specify the location to redirect to
+through their ``post_activation_redirect()`` method, and this can be
+overridden on a case-by-case basis by passing the (new) keyword
+argument ``success_url`` to the :func:`~registration.views.activate`
+view. On unsuccessful activation, the ``activate()`` view still
+displays the same template, but its context has changed: the context
+will simply consist of any keyword arguments captured in the URL and
+passed to the view.
 
 
 Changes to registration forms

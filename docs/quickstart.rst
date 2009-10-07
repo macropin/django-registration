@@ -174,14 +174,14 @@ Setting up URLs
 ~~~~~~~~~~~~~~~
 
 The :ref:`default backend <default-backend>` includes a Django
-``URLConf`` which sets up URL patterns for :ref:`the views in
+``URLconf`` which sets up URL patterns for :ref:`the views in
 django-registration <views>`, as well as several useful views in
 ``django.contrib.auth`` (e.g., login, logout, password
-change/reset). This ``URLConf`` can be found at
+change/reset). This ``URLconf`` can be found at
 ``registration.backends.default.urls``, and so can simply be included
 in your project's root URL configuration. For example, to place the
 URLs under the prefix ``/accounts/``, you could add the following to
-your project's root ``URLConf``::
+your project's root ``URLconf``::
 
     (r'^accounts/', include('registration.backends.default.urls')),
 
@@ -287,7 +287,7 @@ django-registration defaults to plain-text email, and so these
 templates should simply output plain text rather than HTML.
 
 To make use of the views from ``django.contrib.auth`` (which are set
-up for you by the default URLConf mentioned above), you will also need
+up for you by the default URLconf mentioned above), you will also need
 to create the templates required by those views. Consult `the
 documentation for Django's authentication system
 <http://docs.djangoproject.com/en/dev/topics/auth/#django.contrib.auth.views.login>`_

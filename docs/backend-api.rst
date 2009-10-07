@@ -49,7 +49,7 @@ all cases, this should be a string containing the full dotted Python
 import path to the backend class to be used. So, for example, to use
 the default backend, you'd pass the string
 ``'registration.backends.default.DefaultBackend'`` as the value of the
-``backend`` argument (and the default URLConf included with that
+``backend`` argument (and the default URLconf included with that
 backend does so). The specified backend class will then be imported
 and instantiated (by calling its constructor with no arguments), and
 the resulting instance will be used for all backend-specific
