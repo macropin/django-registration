@@ -33,6 +33,7 @@ Contents:
    :maxdepth: 1
    
    quickstart
+   release-notes
    upgrade
    backend-api
    default-backend
