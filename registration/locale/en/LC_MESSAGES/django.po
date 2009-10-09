@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-19 19:30-0500\n"
+"POT-Creation-Date: 2009-10-09 05:58-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,8 +16,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: forms.py:38
+#: admin.py:23
+msgid "Activate users"
+msgstr ""
+
+#: admin.py:43
+msgid "Re-send activation emails"
+msgstr ""
+
+#: forms.py:37
 msgid "username"
+msgstr ""
+
+#: forms.py:38
+msgid "This value must contain only letters, numbers and underscores."
 msgstr ""
 
 #: forms.py:41
@@ -32,50 +44,46 @@ msgstr ""
 msgid "password (again)"
 msgstr ""
 
-#: forms.py:54
-msgid "Usernames can only contain letters, numbers and underscores"
-msgstr ""
-
-#: forms.py:59
+#: forms.py:57
 msgid "This username is already taken. Please choose another."
 msgstr ""
 
-#: forms.py:68
+#: forms.py:69
 msgid "You must type the same password each time"
 msgstr ""
 
-#: forms.py:96
+#: forms.py:80
 msgid "I have read and agree to the Terms of Service"
 msgstr ""
 
-#: forms.py:105
+#: forms.py:81
 msgid "You must agree to the terms to register"
 msgstr ""
 
-#: forms.py:124
+#: forms.py:97
 msgid ""
 "This email address is already in use. Please supply a different email "
 "address."
 msgstr ""
 
-#: forms.py:149
+#: forms.py:124
 msgid ""
 "Registration using free email addresses is prohibited. Please supply a "
 "different email address."
 msgstr ""
 
-#: models.py:188
+#: models.py:166
 msgid "user"
 msgstr ""
 
-#: models.py:189
+#: models.py:167
 msgid "activation key"
 msgstr ""
 
-#: models.py:194
+#: models.py:172
 msgid "registration profile"
 msgstr ""
 
-#: models.py:195
+#: models.py:173
 msgid "registration profiles"
 msgstr ""
