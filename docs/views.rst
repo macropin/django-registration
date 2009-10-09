@@ -9,7 +9,7 @@ implemented by the :ref:`registration backend <backend-api>` in use,
 django-registration provides two views. Both are designed to allow
 easy configurability without writing or rewriting view code.
 
-.. function:: activate(request, backend, template_name='registration/activate.html', success_url=None, extra_context=None, **kwargs)
+.. function:: activate(request, backend[, template_name[, success_url[, extra_context[, **kwargs]]]])
 
    Activate a user's account, for workflows which require a separate
    activation step.
@@ -53,7 +53,7 @@ easy configurability without writing or rewriting view code.
       ``activate()`` method.
 
 
-.. function:: register(request, backend, success_url=None, form_class=None, disallowed_url='registration_disallowed', template_name='registration/registration_form.html', extra_context=None)
+.. function:: register(request, backend[, success_url[, form_class[, disallowed_url[, template_name[, extra_context]]]]])
 
    Allow a new user to register an account.
 

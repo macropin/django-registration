@@ -192,7 +192,7 @@ Additionally, :class:`RegistrationProfile` has a custom manager
       method, suitable for use in cron jobs or other scheduled
       maintenance tasks: ``manage.py cleanupregistration``.
 
-   .. method:: create_inactive_user(username, email, password, site, send_email=True)
+   .. method:: create_inactive_user(username, email, password, site[, send_email])
 
       Creates a new, inactive user account and an associated instance
       of :class:`RegistrationProfile`, sends the activation email and
