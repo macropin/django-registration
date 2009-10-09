@@ -108,6 +108,8 @@ database, using the following model:
          value of the setting ``ACCOUNT_ACTIVATION_DAYS``, the key is
          considered to have expired.
 
+      :rtype: bool
+
    .. method:: send_activation_email(site)
 
       Sends an activation email to the address of the account.
@@ -142,9 +144,10 @@ database, using the following model:
       will be forcibly condensed to a single line.
 
       :param site: An object representing the site on which account
-         was registered; an instance of either
-         ``django.contrib.sites.models.Site`` or
-         ``django.contrib.sites.models.RequestSite``.
+         was registered.
+      :type site: ``django.contrib.sites.models.Site`` or
+        ``django.contrib.sites.models.RequestSite``
+      :rtype: ``None``
 
 
 Additionally, :class:`RegistrationProfile` has a custom manager
@@ -170,8 +173,9 @@ Additionally, :class:`RegistrationProfile` has a custom manager
       activation is successful, ``False`` otherwise.
 
       :param activation_key: The activation key to use for the
-         activation (a SHA1 hash as a forty-character hexadecimal
-         digest).
+         activation.
+      :type activation_key: string, a 40-character SHA1 hexdigest
+      :rtype: ``User`` or bool
 
    .. method:: delete_expired_users
 
@@ -192,6 +196,8 @@ Additionally, :class:`RegistrationProfile` has a custom manager
       method, suitable for use in cron jobs or other scheduled
       maintenance tasks: ``manage.py cleanupregistration``.
 
+      :rtype: ``None``
+
    .. method:: create_inactive_user(username, email, password, site[, send_email])
 
       Creates a new, inactive user account and an associated instance
@@ -199,17 +205,22 @@ Additionally, :class:`RegistrationProfile` has a custom manager
       returns the new ``User`` object representing the account.
 
       :param username: The username to use for the new account.
+      :type username: string
       :param email: The email address to use for the new account.
+      :type email: string
       :param password: The password to use for the new account.
+      :type password: string
       :param site: An object representing the site on which the
-         account is being registered; an instance of either
-         ``django.contrib.sites.models.Site`` or
-         ``django.contrib.sites.models.RequestSite``.
+         account is being registered.
+      :type site: ``django.contrib.sites.models.Site`` or
+         ``django.contrib.sites.models.RequestSite``
       :param send_email: If ``True``, the activation email will be
          sent to the account (by calling
          :meth:`RegistrationProfile.send_activation_email`). If
          ``False``, no email will be sent (but the account will still
          be inactive)
+      :type send_email: bool
+      :rtype: ``User``
 
    .. method:: create_profile(user)
 
@@ -218,3 +229,5 @@ Additionally, :class:`RegistrationProfile` has a custom manager
 
       :param user: The user account; an instance of
          ``django.contrib.auth.models.User``.
+      :type user: ``User``
+      :rtype: ``RegistrationProfile``
