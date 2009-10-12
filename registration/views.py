@@ -4,7 +4,6 @@ Views which allow users to create and activate accounts.
 """
 
 
-from django.conf import settings
 from django.shortcuts import redirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext

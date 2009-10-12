@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
 # TODO: When Python 2.7 is released this becomes a try/except falling
