@@ -21,6 +21,38 @@ General
     this file, you can view it online at
     <http://bitbucket.org/ubernostrum/django-registration/src/tip/LICENSE>.
 
+**Why are the forms and models for the default backend not in the default backend?**
+    The model and manager used by :ref:`the default backend
+    <default-backend>` are in ``registration.models``, and the default
+    form class (and various subclasses) are in ``registration.forms``;
+    logically, they might be expected to exist in
+    ``registration.backends.default``, but there are several reasons
+    why that's not such a good idea:
+
+    1. Older versions of django-registration made use of the model and
+       form classes, and moving them would create an unnecessary
+       backwards incompatibility: ``import`` statements would need to
+       be changed, and some database updates would be needed to
+       reflect the new location of the
+       :class:`~registration.models.RegistrationProfile` model.
+
+    2. Due to the design of Django's ORM, the ``RegistrationProfile``
+       model would end up with an ``app_label`` of ``default``, which
+       isn't particularly descriptive and may conflict with other
+       applications. By keeping it in ``registration.models``, it
+       retains an ``app_label`` of ``registration``, which more
+       accurately reflects what it does and is less likely to cause
+       problems.
+
+    3. Although the ``RegistrationProfile`` model and the various
+       :ref:`form classes <forms>` are used by the default backend,
+       they can and are meant to be reused as needed by other
+       backends. Any backend which uses an activation step should feel
+       free to reuse the ``RegistrationProfile`` model, for example,
+       and the registration form classes are in no way tied to a
+       specific backend (and cover a number of common use cases which
+       will crop up regardless of the specific backend logic in use).
+
 
 Installation and setup
 ----------------------

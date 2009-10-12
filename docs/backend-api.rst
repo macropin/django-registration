@@ -5,9 +5,10 @@ User registration backends
 
 At its core, django-registration is built around the idea of pluggable
 backends which can implement different workflows for user
-registration. Although the default backend uses a common two-phase
-system (registration followed by activation), backends are generally
-free to implement any workflow desired by their authors.
+registration. Although :ref:`the default backend <default-backend>`
+uses a common two-phase system (registration followed by activation),
+backends are generally free to implement any workflow desired by their
+authors.
 
 This is deliberately meant to be complementary to Django's own
 `pluggable authentication backends
@@ -140,7 +141,7 @@ the activated account. It should then send the signal
     The backend class.
 
 ``user``
-    The ``User`` instance representing the new account.
+    The ``User`` instance representing the activated account.
 
 ``request``
     The ``HttpRequest`` in which the user activated.

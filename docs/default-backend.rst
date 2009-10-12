@@ -5,10 +5,11 @@ The default backend
 ===================
 
 A default :ref:`registration backend <backend-api>` is bundled with
-django-registration in the module ``registration.backends.default``,
-and implements a simple two-step workflow in which a new user first
-registers, then confirms and activates the new account by following a
-link sent to the email address supplied during registration.
+django-registration, as the class
+``registration.backends.default.DefaultBackend``, and implements a
+simple two-step workflow in which a new user first registers, then
+confirms and activates the new account by following a link sent to the
+email address supplied during registration.
 
 
 Default behavior and configuration
@@ -48,14 +49,16 @@ passing the keyword argument ``success_url`` to the
 How account data is stored for activation
 -----------------------------------------
 
-During registration, a new user account is created, with the
-``is_active`` field set to ``False``. An email is then sent to the
-email address of the account, containing a link the user must click to
-activate the account; at that point the ``is_active`` field is set to
-``True``, and the user may log in normally.
+During registration, a new instance of
+``django.contrib.auth.models.User`` is created to represent the new
+account, with the ``is_active`` field set to ``False``. An email is
+then sent to the email address of the account, containing a link the
+user must click to activate the account; at that point the
+``is_active`` field is set to ``True``, and the user may log in
+normally.
 
-Activation is handled by generating a storing an activation key in the
-database, using the following model:
+Activation is handled by generating and storing an activation key in
+the database, using the following model:
 
 
 .. currentmodule:: registration.models
@@ -78,10 +81,8 @@ database, using the following model:
    .. attribute:: activation_key
 
       A 40-character ``CharField``, storing the activation key for the
-      account. Initially, the activation key is a SHA1 hash generated
-      from combining the username of the account with a
-      randomly-generated salt; after activation, this is reset to
-      :attr:`ACTIVATED`.
+      account. Initially, the activation key is the hexdigest of a
+      SHA1 hash; after activation, this is reset to :attr:`ACTIVATED`.
 
    Additionally, one class attribute exists:
 
@@ -226,6 +227,11 @@ Additionally, :class:`RegistrationProfile` has a custom manager
 
       Creates and returns a :class:`RegistrationProfile` instance for
       the account represented by ``user``.
+
+      The ``RegistrationProfile`` created by this method will have its
+      :attr:`~RegistrationProfile.activation_key` set to a SHA1 hash
+      generated from a combination of the account's username and a
+      random salt.
 
       :param user: The user account; an instance of
          ``django.contrib.auth.models.User``.
