@@ -105,6 +105,38 @@ Configuration
     which uses the names you want.
 
 
+Troubleshooting
+---------------
+
+**I've got functions listening for the registration/activation signals, but they're not getting called!**
+
+    The most common cause of this is placing django-registration in a
+    sub-directory that's on your Python import path, rather than
+    installing it directly onto the import path as normal. Importing
+    from django-registration in that case can cause various issues,
+    including incorrectly connecting signal handlers. For example, if
+    you were to place django-registration inside a directory named
+    ``django_apps``, and refer to it in that manner, you would end up
+    with a situation where your code does this::
+
+        from django_apps.registration.signals import user_registered
+
+    But django-registration will be doing::
+
+        from registration.signals import user_registered
+
+    From Python's point of view, these import statements refer to two
+    different objects in two different modules, and so signal handlers
+    connected to the signal from the first import will not be called
+    when the signal is sent using the second import.
+
+    To avoid this problem, follow the standard practice of installing
+    django-registration directly on your import path and always
+    referring to it by its own module name: ``registration`` (and in
+    general, it is always a good idea to follow normal Python
+    practices for installing and using Django applications).
+
+
 Tips and tricks
 ---------------
 
