@@ -59,7 +59,7 @@ class DefaultBackend(object):
         An email will be sent to the supplied email address; this
         email should contain an activation link. The email will be
         rendered using two templates. See the documentation for
-        ``RegistrationProfile.objects.send_activation_email()`` for
+        ``RegistrationProfile.send_activation_email()`` for
         information about these templates and the contexts provided to
         them.
 
