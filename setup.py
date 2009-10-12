@@ -40,5 +40,6 @@ setup(name='django-registration',
                    'License :: OSI Approved :: BSD License',
                    'Operating System :: OS Independent',
                    'Programming Language :: Python',
+                   'Topic :: Software Development :: Libraries :: Python Modules',
                    'Topic :: Utilities'],
       )
