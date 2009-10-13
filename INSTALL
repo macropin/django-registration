@@ -19,6 +19,6 @@ somewhere on your Python path; this is useful if you're working from a
 Mercurial checkout.
 
 Note that this application requires Python 2.3 or later, and a
-functional installation of Django 1.0 or newer. You can obtain Python
+functional installation of Django 1.` or newer. You can obtain Python
 from http://www.python.org/ and Django from
 http://www.djangoproject.com/.
