@@ -1,6 +1,9 @@
 from distutils.core import setup
 import os
 
+from registration import get_version
+
+
 # Compile the list of packages available, because distutils doesn't have
 # an easy way to do this.
 packages, data_files = [], []
@@ -24,7 +27,7 @@ for dirpath, dirnames, filenames in os.walk('registration'):
 
 
 setup(name='django-registration',
-      version='0.8',
+      version=get_version(),
       description='An extensible user-registration application for Django',
       author='James Bennett',
       author_email='james@b-list.org',
