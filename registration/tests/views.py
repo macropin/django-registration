@@ -78,7 +78,7 @@ class RegistrationViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.failIf(response.context['form'].is_valid())
         self.assertFormError(response, 'form', field=None,
-                             errors=u'You must type the same password each time')
+                             errors=u"The two password fields didn't match.")
         self.assertEqual(len(mail.outbox), 0)
 
     def test_registration_view_closed(self):

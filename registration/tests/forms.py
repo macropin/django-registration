@@ -31,13 +31,13 @@ class RegistrationFormTests(TestCase):
                       'email': 'alice@example.com',
                       'password1': 'secret',
                       'password2': 'secret'},
-            'error': ('username', [u"This username is already taken. Please choose another."])},
+            'error': ('username', [u"A user with that username already exists."])},
             # Mismatched passwords.
             {'data': {'username': 'foo',
                       'email': 'foo@example.com',
                       'password1': 'foo',
                       'password2': 'bar'},
-            'error': ('__all__', [u"You must type the same password each time"])},
+            'error': ('__all__', [u"The two password fields didn't match."])},
             ]
 
         for invalid_dict in invalid_data_dicts:
