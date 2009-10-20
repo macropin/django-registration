@@ -15,15 +15,12 @@ class RegistrationViewTests(TestCase):
     Test the registration views.
 
     """
-    # URL patterns here use the default backend since we know it's
-    # available, and set up patterns exercising all the keyword
-    # arguments to the views.
     urls = 'registration.tests.urls'
 
     def setUp(self):
         """
-        Set ``ACCOUNT_ACTIVATION_DAYS`` if it's not already set,
-        because we'll use it to test the activation logic.
+        These tests use the default backend, since we know it's
+        available; that needs to have ``ACCOUNT_ACTIVATION_DAYS`` set.
 
         """
         self.old_activation = getattr(settings, 'ACCOUNT_ACTIVATION_DAYS', None)
