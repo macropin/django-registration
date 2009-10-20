@@ -15,26 +15,29 @@ class RegistrationViewTests(TestCase):
     Test the registration views.
 
     """
+    # URL patterns here use the default backend since we know it's
+    # available, and set up patterns exercising all the keyword
+    # arguments to the views.
     urls = 'registration.tests.urls'
 
     def setUp(self):
         """
-        Set ``REGISTRATION_BACKEND`` to the default backend, and store
-        the original value to be restored later.
+        Set ``ACCOUNT_ACTIVATION_DAYS`` if it's not already set,
+        because we'll use it to test the activation logic.
 
         """
-        self.old_backend = getattr(settings, 'REGISTRATION_BACKEND', None)
-        settings.REGISTRATION_BACKEND = 'registration.backends.default.DefaultBackend'
         self.old_activation = getattr(settings, 'ACCOUNT_ACTIVATION_DAYS', None)
-        settings.ACCOUNT_ACTIVATION_DAYS = 7
+        if self.old_activation is None:
+            settings.ACCOUNT_ACTIVATION_DAYS = 7
 
     def tearDown(self):
         """
-        Restore the original value of ``REGISTRATION_BACKEND``.
+        Yank ``ACCOUNT_ACTIVATION_DAYS`` back out if it wasn't
+        originally set.
 
         """
-        settings.REGISTRATION_BACKEND = self.old_backend
-        settings.ACCOUNT_ACTIVATION_DAYS = self.old_activation
+        if self.old_activation is None:
+            settings.ACCOUNT_ACTIVATION_DAYS = self.old_activation
 
     def test_registration_view_initial(self):
         """

@@ -109,20 +109,23 @@ class DefaultRegistrationBackendTests(TestCase):
     def setUp(self):
         """
         Create an instance of the default backend for use in testing,
-        and set ``ACCOUNT_ACTIVATION_DAYS``.
+        and set ``ACCOUNT_ACTIVATION_DAYS`` if it's not set already.
 
         """
         from registration.backends.default import DefaultBackend
         self.backend = DefaultBackend()
         self.old_activation = getattr(settings, 'ACCOUNT_ACTIVATION_DAYS', None)
-        settings.ACCOUNT_ACTIVATION_DAYS = 7
+        if self.old_activation is None:
+            settings.ACCOUNT_ACTIVATION_DAYS = 7
 
     def tearDown(self):
         """
-        Restore the original value of ``ACCOUNT_ACTIVATION_DAYS``.
+        Yank out ``ACCOUNT_ACTIVATION_DAYS`` back out if it wasn't
+        originally set.
 
         """
-        settings.ACCOUNT_ACTIVATION_DAYS = self.old_activation
+        if self.old_activation is None:
+            settings.ACCOUNT_ACTIVATION_DAYS = self.old_activation
 
     def test_registration(self):
         """
