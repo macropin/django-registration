@@ -62,6 +62,7 @@ class RegistrationViewTests(TestCase):
                                           'password2': 'swordfish'})
         self.assertRedirects(response,
                              'http://testserver%s' % reverse('registration_complete'))
+        self.assertEqual(RegistrationProfile.objects.count(), 1)
         self.assertEqual(len(mail.outbox), 1)
 
     def test_registration_view_failure(self):
