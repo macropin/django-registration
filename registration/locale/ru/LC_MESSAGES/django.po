@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-19 19:30-0500\n"
+"POT-Creation-Date: 2009-10-21 20:12+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,66 +15,78 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: forms.py:38
-msgid "username"
-msgstr "имя пользователя"
+#: admin.py:23
+msgid "Activate users"
+msgstr "Активировать учетные записи"
+
+#: admin.py:43
+msgid "Re-send activation emails"
+msgstr "Выслать ключи активации заново"
+
+#: forms.py:35
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: forms.py:36
+msgid "This value must contain only letters, numbers and underscores."
+msgstr "Это поле может содержать только буквы, цифры и подчеркивания"
+
+#: forms.py:39
+msgid "Email address"
+msgstr "Адрес электронной почты"
 
 #: forms.py:41
-msgid "email address"
-msgstr "адрес электронной почты"
+msgid "Password"
+msgstr "Пароль"
 
 #: forms.py:43
-msgid "password"
-msgstr "пароль"
+msgid "Password (again)"
+msgstr "Пароль (снова)"
 
-#: forms.py:45
-msgid "password (again)"
-msgstr "пароль (верификация)"
+#: forms.py:55
+msgid "A user with that username already exists."
+msgstr "Пользователь с таким именем уже существует."
 
-#: forms.py:54
-msgid "Usernames can only contain letters, numbers and underscores"
-msgstr "Имя пользователя может содержать только буквы, цифры и подчеркивания"
+#: forms.py:67
+msgid "The two password fields didn't match."
+msgstr "Введенные пароли не совпадают."
 
-#: forms.py:59
-msgid "This username is already taken. Please choose another."
-msgstr "Такое имя пользователя уже есть. Пожалуйста, выберите другое."
-
-#: forms.py:68
-msgid "You must type the same password each time"
-msgstr "Вы должны вводить один и тот же пароль каждый раз"
-
-#: forms.py:96
+#: forms.py:78
 msgid "I have read and agree to the Terms of Service"
-msgstr "Я прочитал и согласен с Правилами Использования"
+msgstr "Я прочитал Правила Использования и согласен с ними"
 
-#: forms.py:105
+#: forms.py:79
 msgid "You must agree to the terms to register"
-msgstr "Вы должны согласиться с Правилами для регистрации"
+msgstr "Для регистрации Вы должны согласиться с Правилами"
 
-#: forms.py:124
+#: forms.py:95
 msgid ""
 "This email address is already in use. Please supply a different email "
 "address."
-msgstr "Этот адрес электронной почты уже используется. Пожалуйста, введите другой адрес."
+msgstr ""
+"Этот адрес электронной почты уже используется. Пожалуйста, введите другой "
+"адрес."
 
-#: forms.py:149
+#: forms.py:122
 msgid ""
 "Registration using free email addresses is prohibited. Please supply a "
 "different email address."
-msgstr "Регистрация с использованием свободных почтовых серверов запрещена. Пожалуйста, введите другой адрес электронной почты."
+msgstr ""
+"Регистрация с использованием свободных почтовых серверов запрещена. "
+"Пожалуйста, введите другой адрес электронной почты."
 
-#: models.py:188
+#: models.py:165
 msgid "user"
 msgstr "пользователь"
 
-#: models.py:189
+#: models.py:166
 msgid "activation key"
 msgstr "ключ активации"
 
-#: models.py:194
+#: models.py:171
 msgid "registration profile"
-msgstr "профиль регистрации"
+msgstr "карточка регистрации"
 
-#: models.py:195
+#: models.py:172
 msgid "registration profiles"
-msgstr "профили регистрации"
+msgstr "карточки регистрации"
