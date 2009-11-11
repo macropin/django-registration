@@ -93,7 +93,10 @@ class RegistrationManager(models.Manager):
         
         """
         salt = sha_constructor(str(random.random())).hexdigest()[:5]
-        activation_key = sha_constructor(salt+user.username).hexdigest()
+        username = user.username
+        if isinstance(username, unicode):
+            username = username.encode('utf-8')
+        activation_key = sha_constructor(salt+username).hexdigest()
         return self.create(user=user,
                            activation_key=activation_key)
         
