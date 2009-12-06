@@ -1,8 +1,12 @@
 from django.core.exceptions import ImproperlyConfigured
 
-# TODO: When Python 2.7 is released this becomes a try/except falling
-# back to Django's implementation.
-from django.utils.importlib import import_module
+
+# Python 2.7 has an importlib with import_module; for older Pythons,
+# Django's bundled copy provides it.
+try:
+    from importlib import import_module
+except ImportError:
+    from django.utils.importlib import import_module
 
 def get_backend(path):
     """
