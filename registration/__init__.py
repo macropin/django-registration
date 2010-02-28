@@ -8,5 +8,7 @@ def get_version():
         version = '%s pre-alpha' % version
     else:
         if VERSION[3] != 'final':
-            version = '%s %s %s' % (version, VERSION[3], VERSION[4])
+            version = "%s %s" % (version, VERSION[3])
+            if VERSION[4] != 0:
+                version = '%s %s' % (version, VERSION[4])
     return version
