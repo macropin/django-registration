@@ -458,3 +458,19 @@ class SimpleRegistrationBackendTests(TestCase):
         self.assertEqual(len(received_signals), 1)
         self.assertEqual(received_signals, [signals.user_registered])
 
+    def test_activation(self):
+        """
+        Test that activating against this backend is an error.
+        
+        """
+        self.assertRaises(NotImplementedError, self.backend.activate,
+                          request=_mock_request())
+
+    def test_post_activation_redirect(self):
+        """
+        Test that asking for a post-activation redirect from this
+        backend is an error.
+        
+        """
+        self.assertRaises(NotImplementedError, self.backend.post_activation_redirect,
+                          request=_mock_request(), user=User())
