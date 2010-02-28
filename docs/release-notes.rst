@@ -46,6 +46,10 @@ in django-registration |version|.
 Other new features
 ------------------
 
+An alternate :ref:`one-step registration system <simple-backend>` is
+provided, for use by sites which do not require a two-step
+registration/activation system.
+
 During the registration and (optional) activation process,
 :ref:`custom signals <signals>` are now sent, allowing easy injection
 of custom processing into the registration workflow without needing to

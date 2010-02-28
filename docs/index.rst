@@ -21,8 +21,8 @@ To get up and running quickly, consult the :ref:`quick-start guide
 <quickstart>`, which describes all the necessary steps to install
 django-registration and configure it for the default workflow. For
 more detailed information, including how to customize the registration
-process (including support for alternate registration systems), read
-through the documentation listed below.
+process (and support for alternate registration systems), read through
+the documentation listed below.
 
 If you are upgrading from a previous release, please read the
 :ref:`upgrade guide <upgrade>` for information on what's changed.
@@ -37,7 +37,19 @@ Contents:
    upgrade
    backend-api
    default-backend
+   simple-backend
    forms
    views
    signals
    faq
+
+.. seealso::
+
+   * `Django's authentication documentation
+     <http://docs.djangoproject.com/en/dev/topics/auth/>`_; Django's
+     authentication system is used by django-registration's default
+     configuration.
+
+   * `django-profiles
+     <http://bitbucket.org/ubernostrum/django-profiles/>`_, an
+     application which provides simple user-profile management.
