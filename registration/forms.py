@@ -13,7 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 # on them with CSS or JavaScript if they have a class of "required"
 # in the HTML. Your mileage may vary. If/when Django ticket #3515
 # lands in trunk, this will no longer be necessary.
-attrs_dict = { 'class': 'required' }
+attrs_dict = {'class': 'required'}
 
 
 class RegistrationForm(forms.Form):
@@ -33,7 +33,7 @@ class RegistrationForm(forms.Form):
                                 max_length=30,
                                 widget=forms.TextInput(attrs=attrs_dict),
                                 label=_("Username"),
-                                error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") })
+                                error_messages={'invalid': _("This value must contain only letters, numbers and underscores.")})
     email = forms.EmailField(widget=forms.TextInput(attrs=dict(attrs_dict,
                                                                maxlength=75)),
                              label=_("Email address"))
@@ -76,7 +76,7 @@ class RegistrationFormTermsOfService(RegistrationForm):
     """
     tos = forms.BooleanField(widget=forms.CheckboxInput(attrs=attrs_dict),
                              label=_(u'I have read and agree to the Terms of Service'),
-                             error_messages={ 'required': _("You must agree to the terms to register") })
+                             error_messages={'required': _("You must agree to the terms to register")})
 
 
 class RegistrationFormUniqueEmail(RegistrationForm):

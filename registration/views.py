@@ -200,5 +200,5 @@ def register(request, backend, success_url=None, form_class=None,
         context[key] = callable(value) and value() or value
 
     return render_to_response(template_name,
-                              { 'form': form },
+                              {'form': form},
                               context_instance=context)
