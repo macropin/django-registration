@@ -8,10 +8,10 @@ from registration.tests.models import *
 from registration.tests.views import *
 
 
-class RegistrationInfrastructureTests(TestCase):
+class RegistrationVersionInfoTests(TestCase):
     """
-    Test django-registration's internal infrastructure, including
-    version information and backend retrieval.
+    Test django-registration's internal version-reporting
+    infrastructure.
     
     """
     def setUp(self):
