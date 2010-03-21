@@ -7,7 +7,11 @@ To install it, run the following command inside this directory:
 If you have the Python ``easy_install`` utility available, you can
 also type the following to download and install in one step::
 
-   easy_install django-registration
+   easy_install -Z django-registration
+
+(the ``-Z`` flag is required to force ``easy_install`` to do a normal
+source install rather than a zipped egg; django-registration cannot be
+used from a zipped egg install)
 
 Or if you're using ``pip``::
 
