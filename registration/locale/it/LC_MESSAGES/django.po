@@ -1,82 +1,89 @@
-# translation of django.po to Italiano
+# translation of django.po to Italian
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Nicola Larosa <nico@tekNico.net>, 2008.
+# Flavio Curella <flavio.curella@gmail.com>, 2011
 msgid ""
 msgstr ""
-"Project-Id-Version: django\n"
+"Project-Id-Version: django-registration 0.8 alpha-1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-19 19:30-0500\n"
-"PO-Revision-Date: 2008-05-27 15:05+0200\n"
-"Last-Translator: Nicola Larosa <nico@tekNico.net>\n"
-"Language-Team: Italiano\n"
+"POT-Creation-Date: 2010-07-01 14:33+0200\n"
+"PO-Revision-Date: 2011-08-04 12:41-0600\n"
+"Last-Translator: Flavio Curella <flavio.curella@gmail.com>\n"
+"Language-Team: Italiano <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: Italian\n"
+"X-Poedit-Country: ITALY\n"
 
-#: forms.py:38
-msgid "username"
-msgstr "nome utente"
+#: .\admin.py:23
+msgid "Activate users"
+msgstr "Attiva utenti"
 
-#: forms.py:41
-msgid "email address"
+#: .\admin.py:43
+msgid "Re-send activation emails"
+msgstr "Re-invia email di attivazione"
+
+#: .\forms.py:35
+msgid "Username"
+msgstr "Nome utente"
+
+#: .\forms.py:36
+msgid "This value must contain only letters, numbers and underscores."
+msgstr "Questo valore può contenere solo lettere, numeri e sottolineature."
+
+#: .\forms.py:39
+msgid "Email address"
 msgstr "indirizzo email"
 
-#: forms.py:43
-msgid "password"
-msgstr "password"
+#: .\forms.py:41
+msgid "Password"
+msgstr "Password"
 
-#: forms.py:45
-msgid "password (again)"
-msgstr "password (di nuovo)"
+#: .\forms.py:43
+msgid "Password (again)"
+msgstr "Password (di nuovo)"
 
-#: forms.py:54
-msgid "Usernames can only contain letters, numbers and underscores"
-msgstr "I nomi utente possono contenere solo lettere, numeri e sottolineature"
+#: .\forms.py:55
+msgid "A user with that username already exists."
+msgstr "Questo nome utente è già usato."
 
-#: forms.py:59
-msgid "This username is already taken. Please choose another."
-msgstr "Questo nome utente è già usato. Scegline un altro."
+#: .\forms.py:67
+msgid "The two password fields didn't match."
+msgstr "Le password inserite non coincidono."
 
-#: forms.py:68
-msgid "You must type the same password each time"
-msgstr "Bisogna inserire la stessa password ogni volta"
-
-#: forms.py:96
+#: .\forms.py:78
 msgid "I have read and agree to the Terms of Service"
 msgstr "Dichiaro di aver letto e di approvare le Condizioni di Servizio"
 
-#: forms.py:105
+#: .\forms.py:79
 msgid "You must agree to the terms to register"
 msgstr "Per registrarsi bisogna approvare le condizioni"
 
-#: forms.py:124
-msgid "This email address is already in use. Please supply a different email "
-"address."
+#: .\forms.py:95
+msgid "This email address is already in use. Please supply a different email address."
 msgstr "Questo indirizzo email è già in uso. Inserisci un altro indirizzo email."
 
-#: forms.py:149
-msgid "Registration using free email addresses is prohibited. Please supply a "
-"different email address."
-msgstr "La registrazione con indirizzi email gratis non è permessa. "
-"Inserisci un altro indirizzo email."
+#: .\forms.py:122
+msgid "Registration using free email addresses is prohibited. Please supply a different email address."
+msgstr "La registrazione con indirizzi email gratis non è permessa. Inserisci un altro indirizzo email."
 
-#: models.py:188
+#: .\models.py:165
 msgid "user"
 msgstr "utente"
 
-#: models.py:189
+#: .\models.py:166
 msgid "activation key"
 msgstr "chiave di attivazione"
 
-#: models.py:194
+#: .\models.py:171
 msgid "registration profile"
 msgstr "profilo di registrazione"
 
-#: models.py:195
+#: .\models.py:172
 msgid "registration profiles"
 msgstr "profili di registrazione"
 
