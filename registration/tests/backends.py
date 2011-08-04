@@ -170,7 +170,6 @@ class DefaultRegistrationBackendTests(TestCase):
         
         """
         Site._meta.installed = False
-
         new_user = self.backend.register(_mock_request(),
                                          username='bob',
                                          email='bob@example.com',
@@ -352,6 +351,31 @@ class DefaultRegistrationBackendTests(TestCase):
         admin_class.resend_activation_email(_mock_request(),
                                             RegistrationProfile.objects.all())
         self.assertEqual(len(mail.outbox), 2) # No additional email because the account has activated.
+
+    def test_email_send_action_no_sites(self):
+        """
+        Test re-sending of activation emails via admin action when
+        ``django.contrib.sites`` is not installed; the fallback will
+        be a ``RequestSite`` instance.
+        
+        """
+        Site._meta.installed = False
+        admin_class = RegistrationAdmin(RegistrationProfile, admin.site)
+        
+        alice = self.backend.register(_mock_request(),
+                                      username='alice',
+                                      email='alice@example.com',
+                                      password1='swordfish')
+        
+        admin_class.resend_activation_email(_mock_request(),
+                                            RegistrationProfile.objects.all())
+        self.assertEqual(len(mail.outbox), 2) # One on registering, one more on the resend.
+        
+        RegistrationProfile.objects.filter(user=alice).update(activation_key=RegistrationProfile.ACTIVATED)
+        admin_class.resend_activation_email(_mock_request(),
+                                            RegistrationProfile.objects.all())
+        self.assertEqual(len(mail.outbox), 2) # No additional email because the account has activated.
+        Site._meta.installed = True
 
     def test_activation_action(self):
         """
