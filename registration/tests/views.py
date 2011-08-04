@@ -25,7 +25,7 @@ class RegistrationViewTests(TestCase):
         """
         self.old_activation = getattr(settings, 'ACCOUNT_ACTIVATION_DAYS', None)
         if self.old_activation is None:
-            settings.ACCOUNT_ACTIVATION_DAYS = 7
+            settings.ACCOUNT_ACTIVATION_DAYS = 7 # pragma: no cover
 
     def tearDown(self):
         """
@@ -34,7 +34,7 @@ class RegistrationViewTests(TestCase):
 
         """
         if self.old_activation is None:
-            settings.ACCOUNT_ACTIVATION_DAYS = self.old_activation
+            settings.ACCOUNT_ACTIVATION_DAYS = self.old_activation # pragma: no cover
 
     def test_registration_view_initial(self):
         """
