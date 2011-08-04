@@ -1,0 +1,91 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# jonklo <jon at funkbit dot no>, 2010.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: django-registration 0.8\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-12-15 21:37+0100\n"
+"PO-Revision-Date: 2010-12-15 21:37+0100\n"
+"Last-Translator: jonklo <jon at funkbit dot no>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.py:23
+msgid "Activate users"
+msgstr "Aktiver brukere"
+
+#: admin.py:43
+msgid "Re-send activation emails"
+msgstr "Send ny aktiveringsmail"
+
+#: forms.py:35
+msgid "Username"
+msgstr "Brukernavn"
+
+#: forms.py:36
+msgid "This value must contain only letters, numbers and underscores."
+msgstr "Dette feltet kan bare inneholde bokstaver, nummer og understreker."
+
+#: forms.py:39
+msgid "Email address"
+msgstr "E-postadresse"
+
+#: forms.py:41
+msgid "Password"
+msgstr "Passord"
+
+#: forms.py:43
+msgid "Password (again)"
+msgstr "Passord (gjenta)"
+
+#: forms.py:55
+msgid "A user with that username already exists."
+msgstr "Det eksisterer allerede en bruker med dette brukernavnet."
+
+#: forms.py:67
+msgid "The two password fields didn't match."
+msgstr "De to passordfeltene er ikke like."
+
+#: forms.py:78
+msgid "I have read and agree to the Terms of Service"
+msgstr "Jeg har lest og godtar betingelsene"
+
+#: forms.py:79
+msgid "You must agree to the terms to register"
+msgstr "Du må godta betingelsene for å registrere deg"
+
+#: forms.py:95
+msgid ""
+"This email address is already in use. Please supply a different email "
+"address."
+msgstr "Denne e-postadressen er allerede i bruk. Vennligst oppgi en annen "
+"e-postadresse."
+
+#: forms.py:122
+msgid ""
+"Registration using free email addresses is prohibited. Please supply a "
+"different email address."
+msgstr "Registrering med gratis e-postadresse er ikke tillatt. Vennligst "
+"oppgi en annen e-postadresse."
+
+#: models.py:168
+msgid "user"
+msgstr "bruker"
+
+#: models.py:169
+msgid "activation key"
+msgstr "aktiveringsnøkkel"
+
+#: models.py:174
+msgid "registration profile"
+msgstr "registrasjonsprofil"
+
+#: models.py:175
+msgid "registration profiles"
+msgstr "registrasjonsprofiler"
