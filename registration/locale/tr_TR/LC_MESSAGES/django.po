@@ -1,0 +1,92 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-11-11 12:48+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: RECEP KIRMIZI <rkirmizi@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.py:23
+msgid "Activate users"
+msgstr "Kullanıcıları aktive et"
+
+#: admin.py:43
+msgid "Re-send activation emails"
+msgstr "Aktivasyon e-postalarını yeniden gönder"
+
+#: forms.py:35
+msgid "Username"
+msgstr "Kullanıcı adı"
+
+#: forms.py:36
+msgid "This value must contain only letters, numbers and underscores."
+msgstr "Bu alan sadece harfler, numaralar ve alt çizgiler barındırabilir."
+
+#: forms.py:39
+msgid "Email address"
+msgstr "Eposta adresi"
+
+#: forms.py:41
+msgid "Password"
+msgstr "Parola"
+
+#: forms.py:43
+msgid "Password (again)"
+msgstr "Parola (tekrar)"
+
+#: forms.py:55
+msgid "A user with that username already exists."
+msgstr "Bu kullanıcı adına sahip bir kullanıcı bulunmakta."
+
+#: forms.py:67
+msgid "The two password fields didn't match."
+msgstr "İki parola birbiri ile uyuşmadı."
+
+#: forms.py:78
+msgid "I have read and agree to the Terms of Service"
+msgstr "Anlaşma kurallarını okudum ve kabul ediyorum."
+
+#: forms.py:79
+msgid "You must agree to the terms to register"
+msgstr "Kayıt olmak için kuralları kabul etmelisiniz."
+
+#: forms.py:95
+msgid ""
+"This email address is already in use. Please supply a different email "
+"address."
+msgstr "Bu eposta adresi kullanımda. Lütfen farklı bir eposta adresi veriniz."
+
+#: forms.py:122
+msgid ""
+"Registration using free email addresses is prohibited. Please supply a "
+"different email address."
+msgstr ""
+"Ücretsiz eposta adresleri ile kayıt kabul edilmemektedir. Lütfen farklı bir "
+"eposta adresi veriniz."
+
+#: models.py:168
+msgid "user"
+msgstr "kullanıcı"
+
+#: models.py:169
+msgid "activation key"
+msgstr "aktivasyon anahtarı"
+
+#: models.py:174
+msgid "registration profile"
+msgstr "kayıt profili"
+
+#: models.py:175
+msgid "registration profiles"
+msgstr "kayıt profilleri"
