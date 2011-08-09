@@ -1,0 +1,97 @@
+# Catalan translation for django-registration.
+# Copyright (C) 2007-2010, James Bennet
+# This file is distributed under the same license as the django-registration package.
+# Carles Barrobés <carles@barrobes.com>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: django-registration 0.8\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-07-17 11:04+0200\n"
+"PO-Revision-Date: 2010-09-24 23:21+0100\n"
+"Last-Translator: Carles Barrobés i Meix <carles@barrobes.com>\n"
+"Language-Team: Català\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Catalan\n"
+
+#: admin.py:23
+msgid "Activate users"
+msgstr "Activar usuaris"
+
+#: admin.py:43
+msgid "Re-send activation emails"
+msgstr "Re-enviar e-mails d'activació"
+
+#: forms.py:35
+msgid "Username"
+msgstr "Nom d'usuari"
+
+#: forms.py:36
+msgid "This value must contain only letters, numbers and underscores."
+msgstr "Aquest valor ha de contenir només lletres, números i guions baixos"
+
+#: forms.py:39
+msgid "E-mail"
+msgstr "E-mail"
+
+#: forms.py:41
+msgid "Password"
+msgstr "Contrasenya"
+
+#: forms.py:43
+msgid "Password (again)"
+msgstr "Contrasenya (de nou)"
+
+#: forms.py:55
+msgid "A user with that username already exists."
+msgstr "Ja existeix un usuari amb aquest nom"
+
+#: forms.py:67
+msgid "The two password fields didn't match."
+msgstr "Els dos camps de contrasenya no coincideixen"
+
+#: forms.py:78
+msgid "I have read and agree to the Terms of Service"
+msgstr "He llegit i estic d'acord amb les condicions d'ús"
+
+#: forms.py:79
+msgid "You must agree to the terms to register"
+msgstr "Heu d'estar d'acord amb les condicions d'ús per registrar-vos"
+
+#: forms.py:95
+msgid ""
+"This email address is already in use. Please supply a different email "
+"address."
+msgstr ""
+"Aquesta adreça d'e-mail ja està sent utilitzada. Sisplau, entreu-ne una "
+"altra."
+
+#: forms.py:122
+msgid ""
+"Registration using free email addresses is prohibited. Please supply a "
+"different email address."
+msgstr ""
+"Està prohibit registrar-se utilitzant adreces d'e-mail gratuïtes. Sisplau "
+"entreu-ne una altra."
+
+#: models.py:168
+msgid "user"
+msgstr "usuari"
+
+#: models.py:169
+msgid "activation key"
+msgstr "clau d'activació"
+
+#: models.py:174
+msgid "registration profile"
+msgstr "perfil de registre"
+
+#: models.py:175
+msgid "registration profiles"
+msgstr "perfils de registre"
+
+#~ msgid "Email address"
+#~ msgstr "Adreça d'e-mail"
