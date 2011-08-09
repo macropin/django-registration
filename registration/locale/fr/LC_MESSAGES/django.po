@@ -1,81 +1,91 @@
-# SOME DESCRIPTIVE TITLE.
+# django-registration French translation.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the django-registration package.
 # Samuel Adam <samuel.adam@gmail.com>, 2007.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: django-registration 0.3 \n"
+"Project-Id-Version: django-registration 0.8 alpha-1 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-19 19:30-0500\n"
-"PO-Revision-Date: 2007-09-20 10:30+0100\n"
-"Last-Translator: Samuel Adam <samuel.adam@gmail.com>\n"
+"POT-Creation-Date: 2010-07-01 14:33+0200\n"
+"PO-Revision-Date: 2010-07-01 14:30+0200\n"
+"Last-Translator: Patrick Samson <maxcom@laposte.net>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: forms.py:38
-msgid "username"
-msgstr "pseudo"
+#: .\admin.py:23
+msgid "Activate users"
+msgstr "Active les utilisateurs"
 
-#: forms.py:41
-msgid "email address"
-msgstr "adresse email"
+#: .\admin.py:43
+msgid "Re-send activation emails"
+msgstr "Envoie à nouveau les courriels d'activation"
 
-#: forms.py:43
-msgid "password"
-msgstr "mot de passe"
+#: .\forms.py:35
+msgid "Username"
+msgstr "Nom d'utilisateur"
 
-#: forms.py:45
-msgid "password (again)"
-msgstr "mot de passe (vérification)"
+#: .\forms.py:36
+msgid "This value must contain only letters, numbers and underscores."
+msgstr "Cette valeur ne doit contenir que des lettres, chiffres et tirets bas."
 
-#: forms.py:54
-msgid "Usernames can only contain letters, numbers and underscores"
-msgstr "Le pseudo ne peut contenir que des lettres, chiffres et le caractère souligné."
+#: .\forms.py:39
+msgid "Email address"
+msgstr "Adresse courriel"
 
-#: forms.py:59
-msgid "This username is already taken. Please choose another."
-msgstr "Ce pseudo est déjà utilisé. Veuillez en choisir un autre."
+#: .\forms.py:41
+msgid "Password"
+msgstr "Mot de passe"
 
-#: forms.py:68
-msgid "You must type the same password each time"
-msgstr "Veuillez indiquer le même mot de passe dans les deux champs"
+#: .\forms.py:43
+msgid "Password (again)"
+msgstr "Mot de passe (vérification)"
 
-#: forms.py:96
+#: .\forms.py:55
+msgid "A user with that username already exists."
+msgstr "Un utilisateur avec ce nom existe déjà."
+
+#: .\forms.py:67
+msgid "The two password fields didn't match."
+msgstr "Les deux mots de passe ne correspondent pas."
+
+#: .\forms.py:78
 msgid "I have read and agree to the Terms of Service"
 msgstr "J'ai lu et accepté les Conditions Générales d'Utilisation"
 
-#: forms.py:105
+#: .\forms.py:79
 msgid "You must agree to the terms to register"
 msgstr "Vous devez accepter les conditions d'utilisation pour vous inscrire"
 
-#: forms.py:124
+#: .\forms.py:95
 msgid ""
 "This email address is already in use. Please supply a different email "
 "address."
-msgstr "Cette adresse email est déjà utilisée. Veuillez en indiquer une autre."
+msgstr "Cette adresse courriel est déjà utilisée. Veuillez en indiquer une autre."
 
-#: forms.py:149
+#: .\forms.py:122
 msgid ""
 "Registration using free email addresses is prohibited. Please supply a "
 "different email address."
-msgstr "L'inscription avec une adresse email d'un compte gratuit est interdite. Veuillez en indiquer une autre."
+msgstr ""
+"L'inscription avec adresse courriel de compte gratuit est interdite. "
+"Veuillez en indiquer une autre."
 
-#: models.py:188
+#: .\models.py:165
 msgid "user"
 msgstr "utilisateur"
 
-#: models.py:189
+#: .\models.py:166
 msgid "activation key"
 msgstr "clé d'activation"
 
-#: models.py:194
+#: .\models.py:171
 msgid "registration profile"
 msgstr "profil d'inscription"
 
-#: models.py:195
+#: .\models.py:172
 msgid "registration profiles"
 msgstr "profils d'inscription"
