@@ -25,7 +25,7 @@ class RegistrationFormTests(TestCase):
                       'email': 'foo@example.com',
                       'password1': 'foo',
                       'password2': 'foo'},
-            'error': ('username', [u"This value must contain only letters, numbers and underscores."])},
+            'error': ('username', [u"This value may contain only letters, numbers and @/./+/-/_ characters."])},
             # Already-existing username.
             {'data': {'username': 'alice',
                       'email': 'alice@example.com',
