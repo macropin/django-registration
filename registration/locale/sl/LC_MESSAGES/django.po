@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.8.1beta\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-10-12 14:09-0500\n"
-"PO-Revision-Date: 2011-11-05 21:16+0100\n"
+"PO-Revision-Date: 2011-11-05 21:20+0100\n"
 "Last-Translator: Marko Mrdjenovic <m@mmm.si>\n"
 "Language-Team: Slovenian <domen@dev.si>\n"
 "MIME-Version: 1.0\n"
@@ -55,7 +55,7 @@ msgstr "Polji z gesli se ne ujemata."
 
 #: forms.py:78
 msgid "I have read and agree to the Terms of Service"
-msgstr "Strinjam se s pogoji uporable"
+msgstr "Strinjam se s pogoji uporabe"
 
 #: forms.py:79
 msgid "You must agree to the terms to register"
