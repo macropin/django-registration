@@ -1,0 +1,94 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <michal.pilar@implayo.cz>, 2011.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-10-12 14:09-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Implayo s.r.o. <michal.pilar@implayo.cz>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.py:23
+msgid "Activate users"
+msgstr "Aktivovat uživatele"
+
+#: admin.py:43
+msgid "Re-send activation emails"
+msgstr "Znovu odeslat aktivační e-maily"
+
+#: forms.py:35
+msgid "username"
+msgstr "uživatelské jméno"
+
+#: forms.py:36
+msgid "This value must contain only letters, numbers and underscores."
+msgstr "Tato hodnota může obsahovat pouze písmena, čísla a podtržítka."
+
+#: forms.py:39
+msgid "Email address"
+msgstr "E-mailová adresa"
+
+#: forms.py:41
+msgid "Password"
+msgstr "Heslo"
+
+#: forms.py:43
+msgid "Password (again)"
+msgstr "Heslo (znovu)"
+
+#: forms.py:55
+msgid "A user with that username already exists."
+msgstr "Uživatel s tímto jménem již existuje."
+
+#: forms.py:67
+msgid "The two password fields didn't match."
+msgstr "Zadaná 2 hesla se neshodují."
+
+#: forms.py:78
+msgid "I have read and agree to the Terms of Service"
+msgstr "Přečetl jsem si a souhlasím s podmínkami služby"
+
+#: forms.py:79
+msgid "You must agree to the terms to register"
+msgstr "Musíte odsouhlasit podmínky služby pro pokračování v registraci."
+
+#: forms.py:95
+msgid ""
+"This email address is already in use. Please supply a different email "
+"address."
+msgstr ""
+"Tato e-mailová adresa se již používá. Prosím zadejte jinou e-mailovou "
+"adresu."
+
+#: forms.py:122
+msgid ""
+"Registration using free email addresses is prohibited. Please supply a "
+"different email address."
+msgstr ""
+"Používání volných e-mailových adres je zakázáno. Prosím zadejte "
+"jinou e-mailovou adresu."
+
+#: models.py:165
+msgid "user"
+msgstr "uživatel"
+
+#: models.py:166
+msgid "activation key"
+msgstr "aktivační klíč"
+
+#: models.py:171
+msgid "registration profile"
+msgstr "registrační profil"
+
+#: models.py:172
+msgid "registration profiles"
+msgstr "registrační profily"
