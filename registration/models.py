@@ -141,11 +141,14 @@ class RegistrationManager(models.Manager):
         
         """
         for profile in self.all():
-            if profile.activation_key_expired():
-                user = profile.user
-                if not user.is_active:
-                    user.delete()
-
+            try:
+                if profile.activation_key_expired():
+                    user = profile.user
+                    if not user.is_active:
+                        user.delete()
+                        profile.delete()
+            except User.DoesNotExist:
+                profile.delete()
 
 class RegistrationProfile(models.Model):
     """
