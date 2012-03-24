@@ -48,11 +48,11 @@ class RegistrationForm(forms.Form):
         in use.
         
         """
-        try:
-            user = User.objects.get(username__iexact=self.cleaned_data['username'])
-        except User.DoesNotExist:
+        existing = User.objects.filter(username__iexact=self.cleaned_data['username'])
+        if existing.exists():
+            raise forms.ValidationError(_("A user with that username already exists."))
+        else:
             return self.cleaned_data['username']
-        raise forms.ValidationError(_("A user with that username already exists."))
 
     def clean(self):
         """
