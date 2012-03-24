@@ -2,6 +2,13 @@
 django-registration changelog
 =============================
 
+Version 0.8, 24 March 2012:
+---------------------------
+
+* Backend-based rewrite. See docs/upgrade.rst for details.
+
+* Compatibility through Django 1.4.
+
 
 Version 0.7, 6 November 2008:
 -----------------------------
