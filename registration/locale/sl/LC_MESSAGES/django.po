@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: 0.8.1beta\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-10-12 14:09-0500\n"
-"PO-Revision-Date: 2009-10-23 15:49+0100\n"
-"Last-Translator: Domen Kožar <domen@dev.si>\n"
+"PO-Revision-Date: 2011-11-05 21:20+0100\n"
+"Last-Translator: Marko Mrdjenovic <m@mmm.si>\n"
 "Language-Team: Slovenian <domen@dev.si>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -23,7 +23,7 @@ msgstr "Aktiviraj uporabnike"
 
 #: admin.py:43
 msgid "Re-send activation emails"
-msgstr "Ponovno pošlju aktivacijske emaile"
+msgstr "Ponovno pošlji aktivacijsko e-pošto"
 
 #: forms.py:35
 msgid "username"
@@ -35,7 +35,7 @@ msgstr "Vrednost lahko vsebuje samo črke, cifre in podčrtaje."
 
 #: forms.py:39
 msgid "Email address"
-msgstr "Elektronska pošta"
+msgstr "E-naslov"
 
 #: forms.py:41
 msgid "Password"
@@ -47,7 +47,7 @@ msgstr "Geslo (ponovno)"
 
 #: forms.py:55
 msgid "A user with that username already exists."
-msgstr "Uporabnik z tem uporabniškim imenom že obstaja."
+msgstr "Uporabnik s tem uporabniškim imenom že obstaja."
 
 #: forms.py:67
 msgid "The two password fields didn't match."
@@ -55,19 +55,19 @@ msgstr "Polji z gesli se ne ujemata."
 
 #: forms.py:78
 msgid "I have read and agree to the Terms of Service"
-msgstr "Strinjam se z pogoji uporable"
+msgstr "Strinjam se s pogoji uporabe"
 
 #: forms.py:79
 msgid "You must agree to the terms to register"
-msgstr "Za registracijo se morate strinjati z pogoji uporabe"
+msgstr "Za registracijo se morate strinjati s pogoji uporabe"
 
 #: forms.py:95
 msgid "This email address is already in use. Please supply a different email address."
-msgstr "Email je že v uporabi, prosimo vnesite drugega."
+msgstr "E-naslov je že v uporabi, prosimo vnesite drugega."
 
 #: forms.py:122
 msgid "Registration using free email addresses is prohibited. Please supply a different email address."
-msgstr "Registracija ni mogoča z brezplačnimi email naslovi. Prosimo vnesite drug email naslov."
+msgstr "Registracija ni mogoča z brezplačnimi e-naslovi. Prosimo vnesite drug e-naslov."
 
 #: models.py:165
 msgid "user"
