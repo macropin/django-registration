@@ -16,10 +16,8 @@ changes, and of the new features available in the |version| release.
 Django version requirement
 --------------------------
 
-As of |version|, django-registration requires Django 1.1 or newer;
-older Django releases will not work, as django-registration |version|
-takes advantage of several Django features which are only present as
-of 1.1.
+As of |version|, django-registration requires Django 1.3 or newer;
+older Django releases may work, but are officially unsupported.
 
 
 Backwards-incompatible changes
