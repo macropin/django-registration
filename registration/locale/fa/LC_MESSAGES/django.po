@@ -1,0 +1,80 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Mohsen Mansouryar <mohsen.brian@gmail.com>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: django-registration 0.8\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-09-19 19:30-0500\n"
+"PO-Revision-Date: 2011-11-18 01:11+0330\n"
+"Last-Translator: Mohsen Mansouryar <mohsen.brian@gmail.com>\n"
+"Language-Team: erixe <mohsen.brian@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Persian\n"
+"X-Poedit-Country: IRAN, ISLAMIC REPUBLIC OF\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: forms.py:38
+msgid "username"
+msgstr "نام کاربری"
+
+#: forms.py:41
+msgid "email address"
+msgstr "پست الکترونیکی"
+
+#: forms.py:43
+msgid "password"
+msgstr "گذرواژه"
+
+#: forms.py:45
+msgid "password (again)"
+msgstr "گذرواژه(تکرار)"
+
+#: forms.py:54
+msgid "Usernames can only contain letters, numbers and underscores"
+msgstr "نام های کاربری تنها می توانند شامل حرف، رقم و یا _ باشند."
+
+#: forms.py:59
+msgid "This username is already taken. Please choose another."
+msgstr "این نام کاربری گرفته شده است. لطفا نام دیگری انتخاب کنید."
+
+#: forms.py:68
+msgid "You must type the same password each time"
+msgstr "دو گذرواژه باید مطابق باشند!"
+
+#: forms.py:96
+msgid "I have read and agree to the Terms of Service"
+msgstr "من شرایط استفاده از این سرویس را مطالعه کرده و می پذیرم."
+
+#: forms.py:105
+msgid "You must agree to the terms to register"
+msgstr "شما باید شرایط عضویت را بپذیرید!"
+
+#: forms.py:124
+msgid "This email address is already in use. Please supply a different email address."
+msgstr "این آدرس استفاده شده است. لطفا آدرس دیگری ارائه دهید."
+
+#: forms.py:149
+msgid "Registration using free email addresses is prohibited. Please supply a different email address."
+msgstr "ثبت نام با استفاده از پست های الکترونیکی رایگان امکان پذیر نمی باشد."
+
+#: models.py:188
+msgid "user"
+msgstr "کاربر"
+
+#: models.py:189
+msgid "activation key"
+msgstr "کد فعالسازی"
+
+#: models.py:194
+msgid "registration profile"
+msgstr "مشخصات ثبت نام"
+
+#: models.py:195
+msgid "registration profiles"
+msgstr "پروفایل های ثبت نام"
+
