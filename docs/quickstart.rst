@@ -5,7 +5,7 @@ Quick start guide
 
 Before installing django-registration, you'll need to have a copy of
 `Django <http://www.djangoproject.com>`_ already installed. For the
-|version| release, Django 1.1 or newer is required.
+|version| release, Django 1.4 or newer is required.
 
 For further information, consult the `Django download page
 <http://www.djangoproject.com/download/>`_, which offers convenient
@@ -39,18 +39,7 @@ Automatic installation via a package manager
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Several automatic package-installation tools are available for Python;
-the most popular are `easy_install
-<http://peak.telecommunity.com/DevCenter/EasyInstall>`_ and `pip
-<http://pip.openplans.org/>`_. Either can be used to install
-django-registration.
-
-Using ``easy_install``, type::
-
-    easy_install -Z django-registration
-
-Note that the ``-Z`` flag is required, to tell ``easy_install`` not to
-create a zipped package; zipped packages prevent certain features of
-Django from working properly.
+the recommended one is `pip <http://pip.openplans.org/>`_.
 
 Using ``pip``, type::
 
@@ -77,9 +66,9 @@ listing on the Python Package Index
 
 Once you've downloaded the package, unpack it (on most operating
 systems, simply double-click; alternately, type ``tar zxvf
-django-registration-0.8.tar.gz`` at a command line on Linux, Mac OS X
+django-registration-0.9.tar.gz`` at a command line on Linux, Mac OS X
 or other Unix-like systems). This will create the directory
-``django-registration-0.8``, which contains the ``setup.py``
+``django-registration-0.9``, which contains the ``setup.py``
 installation script. From a command line in that directory, type::
 
     python setup.py install
@@ -103,10 +92,10 @@ Mercurial installed, at which point you can type::
 You can also obtain a copy of a particular release of
 django-registration by specifying the ``-r`` argument to ``hg clone``;
 each release is given a tag of the form ``vX.Y``, where "X.Y" is the
-release number. So, for example, to check out a copy of the 0.8
+release number. So, for example, to check out a copy of the |version|
 release, type::
 
-    hg clone -r v0.8 http://bitbucket.org/ubernostrum/django-registration/
+    hg clone -r v|version| http://bitbucket.org/ubernostrum/django-registration/
 
 In either case, this will create a copy of the django-registration
 Mercurial repository on your computer; you can then add the
@@ -188,6 +177,10 @@ your project's root ``URLconf``::
 Users would then be able to register by visiting the URL
 ``/accounts/register/``, login (once activated) at
 ``/accounts/login/``, etc.
+
+Another ``URLConf`` is also provided -- at ``registration.auth_urls``
+-- which just handles the Django auth views, should you want to put
+those at a different location.
 
 
 Required templates
@@ -290,5 +283,5 @@ To make use of the views from ``django.contrib.auth`` (which are set
 up for you by the default URLconf mentioned above), you will also need
 to create the templates required by those views. Consult `the
 documentation for Django's authentication system
-<http://docs.djangoproject.com/en/dev/topics/auth/#django.contrib.auth.views.login>`_
-for details regarding these templates.
+<http://docs.djangoproject.com/en/dev/topics/auth/>`_ for details
+regarding these templates.

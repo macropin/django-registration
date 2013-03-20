@@ -5,8 +5,8 @@ The "simple" (one-step) backend
 ===============================
 
 As an alternative to :ref:`the default backend <default-backend>`, and
-an example of writing :ref:`registration backends <backend-api>`,
-django-registration bundles a one-step registration system in
+an example of writing alternate workflows, django-registration bundles
+a one-step registration system in
 ``registration.backend.simple``. This backend's workflow is
 deliberately as simple as possible:
 
@@ -38,24 +38,14 @@ supported:
 Upon successful registration, the default redirect is to the URL
 specified by the ``get_absolute_url()`` method of the newly-created
 ``User`` object; by default, this will be ``/users/<username>/``,
-although it can be overridden in either of two ways:
-
-1. Specify a custom URL pattern for the
-   :func:`~registration.views.register` view, passing the keyword
-   argument ``success_url``.
-
-2. Override the default ``get_absolute_url()`` of the ``User`` model
-   in your Django configuration, as covered in `Django's settings
-   documentation
-   <http://docs.djangoproject.com/en/dev/ref/settings/#absolute-url-overrides>`_.
+although it can be overridden by implementing
+:meth:`~registration.views.RegistrationView.get_success_url()` on a
+subclass of ``registration.backends.simple.views.RegistrationView``.
 
 The default form class used for account registration will be
 :class:`registration.forms.RegistrationForm`, although this can be
-overridden by supplying a custom URL pattern for the ``register()``
-view and passing the keyword argument ``form_class``.
-
-Note that because this backend does not use an activation step,
-attempting to use the :func:`~registration.views.activate` view with
-this backend or calling the backend's ``activate()`` or
-``post_activation_redirect()`` methods will raise
-``NotImplementedError``.
+overridden by supplying a custom URL pattern for the registration view
+and passing the keyword argument ``form_class``, or by subclassing
+``registration.backends.simple.views.RegistrationView`` and either
+overriding ``form_class`` or implementing
+:meth:`~registration.views.RegistrationView.get_form_class()`.
