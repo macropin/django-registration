@@ -4,9 +4,8 @@
 The default backend
 ===================
 
-A default :ref:`registration backend <backend-api>` is bundled with
-django-registration, as the class
-``registration.backends.default.DefaultBackend``, and implements a
+A default registration backend` is bundled with django-registration,
+as the module ``registration.backends.default``, and implements a
 simple two-step workflow in which a new user first registers, then
 confirms and activates the new account by following a link sent to the
 email address supplied during registration.
@@ -14,6 +13,10 @@ email address supplied during registration.
 
 Default behavior and configuration
 ----------------------------------
+
+To make use of this backend, simply include the URLConf
+``registration.backends.default.urls`` at whatever location you choose
+in your URL hierarchy.
 
 This backend makes use of the following settings:
 
@@ -35,15 +38,25 @@ user registration; this can be overridden by passing the keyword
 argument ``form_class`` to the :func:`~registration.views.register`
 view.
 
+Two views are provided:
+``registration.backends.default.views.RegistrationView`` and
+``registration.backends.default.views.ActivationView``. These views
+subclass django-registration's base
+:class:`~registration.views.RegistrationView` and
+:class:`~registration.views.ActivationView`, respectively, and
+implement the two-step registration/activation process.
+
 Upon successful registration -- not activation -- the default redirect
 is to the URL pattern named ``registration_complete``; this can be
-overridden by passing the keyword argument ``success_url`` to the
-:func:`~registration.views.register` view.
+overridden in subclasses by changing
+:attr:`~registration.views.RegistrationView.success_url` or
+implementing
+:meth:`~registration.views.RegistrationView.get_success_url()`
 
 Upon successful activation, the default redirect is to the URL pattern
-named ``registration_activation_complete``; this can be overridden by
-passing the keyword argument ``success_url`` to the
-:func:`~registration.views.activate` view.
+named ``registration_activation_complete``; this can be overridden in
+subclasses by implementing
+:meth:`~registration.views.ActivationView.get_success_url()`.
 
 
 How account data is stored for activation
