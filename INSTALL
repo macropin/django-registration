@@ -22,7 +22,7 @@ directory somewhere on your Python path, or symlink to it from
 somewhere on your Python path; this is useful if you're working from a
 Mercurial checkout.
 
-Note that this application requires Python 2.4 or later, and a
-functional installation of Django 1.3 or newer. You can obtain Python
+Note that this application requires Python 2.5 or later, and a
+functional installation of Django 1.4 or newer. You can obtain Python
 from http://www.python.org/ and Django from
 http://www.djangoproject.com/.
