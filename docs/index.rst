@@ -39,7 +39,6 @@ Contents:
    quickstart
    release-notes
    upgrade
-   api
    default-backend
    simple-backend
    forms

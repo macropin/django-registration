@@ -11,6 +11,12 @@ from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
 try:
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+except ImportError:
+    from django.contrib.auth.models import User
+
+try:
     from django.utils.timezone import now as datetime_now
 except ImportError:
     datetime_now = datetime.datetime.now
