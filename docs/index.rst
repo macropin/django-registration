@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-django-registration 0.8 documentation
-=====================================
+django-registration |version| documentation
+===========================================
 
 This documentation covers the |version| release of
 django-registration, a simple but extensible application providing
