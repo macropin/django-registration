@@ -26,6 +26,7 @@ consult a specific backend's documentation for details.
 from django.conf.urls import include
 from django.conf.urls import patterns
 from django.conf.urls import url
+from django.core.urlresolvers import reverse_lazy
 
 from django.contrib.auth import views as auth_views
 
@@ -41,15 +42,18 @@ urlpatterns = patterns('',
                            name='auth_logout'),
                        url(r'^password/change/$',
                            auth_views.password_change,
+                           {'post_change_redirect': reverse_lazy('auth_password_change_done')},
                            name='auth_password_change'),
                        url(r'^password/change/done/$',
                            auth_views.password_change_done,
                            name='auth_password_change_done'),
                        url(r'^password/reset/$',
                            auth_views.password_reset,
+                           {'post_reset_redirect': reverse_lazy('auth_password_reset_done')},
                            name='auth_password_reset'),
-                       url(r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
+                       url(r'^password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
                            auth_views.password_reset_confirm,
+                           {'post_reset_redirect': reverse_lazy('auth_password_reset_complete')},
                            name='auth_password_reset_confirm'),
                        url(r'^password/reset/complete/$',
                            auth_views.password_reset_complete,
