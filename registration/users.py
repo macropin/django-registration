@@ -1,3 +1,5 @@
+from django.conf import settings
+
 
 def UserModel():
     try:

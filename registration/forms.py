@@ -12,7 +12,7 @@ you're using a custom model.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from registration import UserModel
+from registration.users import UserModel
 
 
 class RegistrationForm(forms.Form):
