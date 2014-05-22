@@ -1,7 +1,6 @@
 import datetime
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.core.urlresolvers import reverse
@@ -12,6 +11,7 @@ from registration.admin import RegistrationAdmin
 from registration.forms import RegistrationForm
 from registration.backends.default.views import RegistrationView
 from registration.models import RegistrationProfile
+from registration.users import UserModel
 
 
 class DefaultBackendViewTests(TestCase):
@@ -63,7 +63,7 @@ class DefaultBackendViewTests(TestCase):
         # the 'registration is closed' message.
         resp = self.client.get(reverse('registration_register'))
         self.assertRedirects(resp, reverse('registration_disallowed'))
-        
+
         resp = self.client.post(reverse('registration_register'),
                                 data={'username': 'bob',
                                       'email': 'bob@example.com',
@@ -77,7 +77,7 @@ class DefaultBackendViewTests(TestCase):
         """
         HTTP ``GET`` to the registration view uses the appropriate
         template and populates a registration form into the context.
-        
+
         """
         resp = self.client.get(reverse('registration_register'))
         self.assertEqual(200, resp.status_code)
@@ -100,14 +100,14 @@ class DefaultBackendViewTests(TestCase):
                                       'password2': 'secret'})
         self.assertRedirects(resp, reverse('registration_complete'))
 
-        new_user = User.objects.get(username='bob')
+        new_user = UserModel().objects.get(username='bob')
 
         self.failUnless(new_user.check_password('secret'))
         self.assertEqual(new_user.email, 'bob@example.com')
 
         # New user must not be active.
         self.failIf(new_user.is_active)
-        
+
         # A registration profile was created, and an activation email
         # was sent.
         self.assertEqual(RegistrationProfile.objects.count(), 1)
@@ -118,7 +118,7 @@ class DefaultBackendViewTests(TestCase):
         Registration still functions properly when
         ``django.contrib.sites`` is not installed; the fallback will
         be a ``RequestSite`` instance.
-        
+
         """
         Site._meta.installed = False
 
@@ -129,13 +129,13 @@ class DefaultBackendViewTests(TestCase):
                                       'password2': 'secret'})
         self.assertEqual(302, resp.status_code)
 
-        new_user = User.objects.get(username='bob')
+        new_user = UserModel().objects.get(username='bob')
 
         self.failUnless(new_user.check_password('secret'))
         self.assertEqual(new_user.email, 'bob@example.com')
 
         self.failIf(new_user.is_active)
-        
+
         self.assertEqual(RegistrationProfile.objects.count(), 1)
         self.assertEqual(len(mail.outbox), 1)
 
@@ -144,7 +144,7 @@ class DefaultBackendViewTests(TestCase):
     def test_registration_failure(self):
         """
         Registering with invalid data fails.
-        
+
         """
         resp = self.client.post(reverse('registration_register'),
                                 data={'username': 'bob',
@@ -158,7 +158,7 @@ class DefaultBackendViewTests(TestCase):
     def test_activation(self):
         """
         Activation of an account functions properly.
-        
+
         """
         resp = self.client.post(reverse('registration_register'),
                                 data={'username': 'bob',
@@ -176,7 +176,7 @@ class DefaultBackendViewTests(TestCase):
     def test_activation_expired(self):
         """
         An expired account can't be activated.
-        
+
         """
         resp = self.client.post(reverse('registration_register'),
                                 data={'username': 'bob',

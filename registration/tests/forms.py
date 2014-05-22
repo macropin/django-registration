@@ -1,7 +1,7 @@
-from django.contrib.auth.models import User
 from django.test import TestCase
 
 from registration import forms
+from registration.users import UserModel
 
 
 class RegistrationFormTests(TestCase):
@@ -17,7 +17,7 @@ class RegistrationFormTests(TestCase):
         """
         # Create a user so we can verify that duplicate usernames aren't
         # permitted.
-        User.objects.create_user('alice', 'alice@example.com', 'secret')
+        UserModel().objects.create_user('alice', 'alice@example.com', 'secret')
 
         invalid_data_dicts = [
             # Non-alphanumeric username.
@@ -81,7 +81,7 @@ class RegistrationFormTests(TestCase):
         """
         # Create a user so we can verify that duplicate addresses
         # aren't permitted.
-        User.objects.create_user('alice', 'alice@example.com', 'secret')
+        UserModel().objects.create_user('alice', 'alice@example.com', 'secret')
 
         form = forms.RegistrationFormUniqueEmail(data={'username': 'foo',
                                                        'email': 'alice@example.com',
