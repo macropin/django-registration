@@ -1,26 +1,26 @@
 import datetime
+import hashlib
 import re
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.core import management
 from django.test import TestCase
-from django.utils.hashcompat import sha_constructor
 
 from registration.models import RegistrationProfile
+from registration.users import UserModel
 
 
 class RegistrationModelTests(TestCase):
     """
     Test the model and manager used in the default backend.
-    
+
     """
     user_info = {'username': 'alice',
                  'password': 'swordfish',
                  'email': 'alice@example.com'}
-    
+
     def setUp(self):
         self.old_activation = getattr(settings, 'ACCOUNT_ACTIVATION_DAYS', None)
         settings.ACCOUNT_ACTIVATION_DAYS = 7
@@ -33,9 +33,9 @@ class RegistrationModelTests(TestCase):
         Creating a registration profile for a user populates the
         profile with the correct user and a SHA1 hash to use as
         activation key.
-        
+
         """
-        new_user = User.objects.create_user(**self.user_info)
+        new_user = UserModel().objects.create_user(**self.user_info)
         profile = RegistrationProfile.objects.create_profile(new_user)
 
         self.assertEqual(RegistrationProfile.objects.count(), 1)
@@ -48,9 +48,9 @@ class RegistrationModelTests(TestCase):
         """
         ``RegistrationProfile.send_activation_email`` sends an
         email.
-        
+
         """
-        new_user = User.objects.create_user(**self.user_info)
+        new_user = UserModel().objects.create_user(**self.user_info)
         profile = RegistrationProfile.objects.create_profile(new_user)
         profile.send_activation_email(Site.objects.get_current())
         self.assertEqual(len(mail.outbox), 1)
@@ -60,7 +60,7 @@ class RegistrationModelTests(TestCase):
         """
         Creating a new user populates the correct data, and sets the
         user's account inactive.
-        
+
         """
         new_user = RegistrationProfile.objects.create_inactive_user(site=Site.objects.get_current(),
                                                                     **self.user_info)
@@ -72,7 +72,7 @@ class RegistrationModelTests(TestCase):
     def test_user_creation_email(self):
         """
         By default, creating a new user sends an activation email.
-        
+
         """
         new_user = RegistrationProfile.objects.create_inactive_user(site=Site.objects.get_current(),
                                                                     **self.user_info)
@@ -82,7 +82,7 @@ class RegistrationModelTests(TestCase):
         """
         Passing ``send_email=False`` when creating a new user will not
         send an activation email.
-        
+
         """
         new_user = RegistrationProfile.objects.create_inactive_user(site=Site.objects.get_current(),
                                                                     send_email=False,
@@ -93,7 +93,7 @@ class RegistrationModelTests(TestCase):
         """
         ``RegistrationProfile.activation_key_expired()`` is ``False``
         within the activation window.
-        
+
         """
         new_user = RegistrationProfile.objects.create_inactive_user(site=Site.objects.get_current(),
                                                                     **self.user_info)
@@ -104,7 +104,7 @@ class RegistrationModelTests(TestCase):
         """
         ``RegistrationProfile.activation_key_expired()`` is ``True``
         outside the activation window.
-        
+
         """
         new_user = RegistrationProfile.objects.create_inactive_user(site=Site.objects.get_current(),
                                                                     **self.user_info)
@@ -117,14 +117,14 @@ class RegistrationModelTests(TestCase):
         """
         Activating a user within the permitted window makes the
         account active, and resets the activation key.
-        
+
         """
         new_user = RegistrationProfile.objects.create_inactive_user(site=Site.objects.get_current(),
                                                                     **self.user_info)
         profile = RegistrationProfile.objects.get(user=new_user)
         activated = RegistrationProfile.objects.activate_user(profile.activation_key)
 
-        self.failUnless(isinstance(activated, User))
+        self.failUnless(isinstance(activated, UserModel()))
         self.assertEqual(activated.id, new_user.id)
         self.failUnless(activated.is_active)
 
@@ -135,7 +135,7 @@ class RegistrationModelTests(TestCase):
         """
         Attempting to activate outside the permitted window does not
         activate the account.
-        
+
         """
         new_user = RegistrationProfile.objects.create_inactive_user(site=Site.objects.get_current(),
                                                                     **self.user_info)
@@ -145,10 +145,10 @@ class RegistrationModelTests(TestCase):
         profile = RegistrationProfile.objects.get(user=new_user)
         activated = RegistrationProfile.objects.activate_user(profile.activation_key)
 
-        self.failIf(isinstance(activated, User))
+        self.failIf(isinstance(activated, UserModel()))
         self.failIf(activated)
 
-        new_user = User.objects.get(username='alice')
+        new_user = UserModel().objects.get(username='alice')
         self.failIf(new_user.is_active)
 
         profile = RegistrationProfile.objects.get(user=new_user)
@@ -158,14 +158,14 @@ class RegistrationModelTests(TestCase):
         """
         Attempting to activate with a key which is not a SHA1 hash
         fails.
-        
+
         """
         self.failIf(RegistrationProfile.objects.activate_user('foo'))
 
     def test_activation_already_activated(self):
         """
         Attempting to re-activate an already-activated account fails.
-        
+
         """
         new_user = RegistrationProfile.objects.create_inactive_user(site=Site.objects.get_current(),
                                                                     **self.user_info)
@@ -179,18 +179,18 @@ class RegistrationModelTests(TestCase):
         """
         Attempting to activate with a non-existent key (i.e., one not
         associated with any account) fails.
-        
+
         """
         # Due to the way activation keys are constructed during
         # registration, this will never be a valid key.
-        invalid_key = sha_constructor('foo').hexdigest()
+        invalid_key = hashlib.sha1('foo').hexdigest()
         self.failIf(RegistrationProfile.objects.activate_user(invalid_key))
 
     def test_expired_user_deletion(self):
         """
         ``RegistrationProfile.objects.delete_expired_users()`` only
         deletes inactive users whose activation window has expired.
-        
+
         """
         new_user = RegistrationProfile.objects.create_inactive_user(site=Site.objects.get_current(),
                                                                     **self.user_info)
@@ -203,13 +203,13 @@ class RegistrationModelTests(TestCase):
 
         RegistrationProfile.objects.delete_expired_users()
         self.assertEqual(RegistrationProfile.objects.count(), 1)
-        self.assertRaises(User.DoesNotExist, User.objects.get, username='bob')
+        self.assertRaises(UserModel().DoesNotExist, UserModel().objects.get, username='bob')
 
     def test_management_command(self):
         """
         The ``cleanupregistration`` management command properly
         deletes expired accounts.
-        
+
         """
         new_user = RegistrationProfile.objects.create_inactive_user(site=Site.objects.get_current(),
                                                                     **self.user_info)
@@ -222,4 +222,4 @@ class RegistrationModelTests(TestCase):
 
         management.call_command('cleanupregistration')
         self.assertEqual(RegistrationProfile.objects.count(), 1)
-        self.assertRaises(User.DoesNotExist, User.objects.get, username='bob')
+        self.assertRaises(UserModel().DoesNotExist, UserModel().objects.get, username='bob')

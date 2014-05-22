@@ -1,9 +1,9 @@
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from registration.forms import RegistrationForm
+from registration.users import UserModel
 
 
 class SimpleBackendViewTests(TestCase):
@@ -13,7 +13,7 @@ class SimpleBackendViewTests(TestCase):
         """
         The setting ``REGISTRATION_OPEN`` appropriately controls
         whether registration is permitted.
-        
+
         """
         old_allowed = getattr(settings, 'REGISTRATION_OPEN', True)
         settings.REGISTRATION_OPEN = True
@@ -27,7 +27,7 @@ class SimpleBackendViewTests(TestCase):
         # the 'registration is closed' message.
         resp = self.client.get(reverse('registration_register'))
         self.assertRedirects(resp, reverse('registration_disallowed'))
-        
+
         resp = self.client.post(reverse('registration_register'),
                                 data={'username': 'bob',
                                       'email': 'bob@example.com',
@@ -41,7 +41,7 @@ class SimpleBackendViewTests(TestCase):
         """
         HTTP ``GET`` to the registration view uses the appropriate
         template and populates a registration form into the context.
-        
+
         """
         resp = self.client.get(reverse('registration_register'))
         self.assertEqual(200, resp.status_code)
@@ -61,7 +61,7 @@ class SimpleBackendViewTests(TestCase):
                                       'password1': 'secret',
                                       'password2': 'secret'})
 
-        new_user = User.objects.get(username='bob')
+        new_user = UserModel().objects.get(username='bob')
         self.assertEqual(302, resp.status_code)
         self.failUnless(new_user.get_absolute_url() in resp['Location'])
 
@@ -78,7 +78,7 @@ class SimpleBackendViewTests(TestCase):
     def test_registration_failure(self):
         """
         Registering with invalid data fails.
-        
+
         """
         resp = self.client.post(reverse('registration_register'),
                                 data={'username': 'bob',
