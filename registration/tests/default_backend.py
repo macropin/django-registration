@@ -195,4 +195,5 @@ class DefaultBackendViewTests(TestCase):
 
         self.assertEqual(200, resp.status_code)
         self.assertTemplateUsed(resp, 'registration/activate.html')
-        self.failIf('activation_key' in resp.context)
+        user = UserModel().objects.get(username='bob')
+        self.assertFalse(user.is_active)

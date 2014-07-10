@@ -60,7 +60,6 @@ class SimpleBackendViewTests(TestCase):
                                       'email': 'bob@example.com',
                                       'password1': 'secret',
                                       'password2': 'secret'})
-
         new_user = UserModel().objects.get(username='bob')
         self.assertEqual(302, resp.status_code)
         self.failUnless(new_user.get_absolute_url() in resp['Location'])
