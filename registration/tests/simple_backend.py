@@ -62,7 +62,7 @@ class SimpleBackendViewTests(TestCase):
                                       'password2': 'secret'})
         new_user = UserModel().objects.get(username='bob')
         self.assertEqual(302, resp.status_code)
-        self.failUnless(new_user.get_absolute_url() in resp['Location'])
+        self.failUnless(reverse('registration_complete') in resp['Location'])
 
         self.failUnless(new_user.check_password('secret'))
         self.assertEqual(new_user.email, 'bob@example.com')
