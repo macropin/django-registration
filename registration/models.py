@@ -1,14 +1,17 @@
+from __future__ import unicode_literals
+
 import datetime
 import hashlib
 import random
 import re
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.db import models
 from django.db import transaction
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import python_2_unicode_compatible
+from django.utils import six
 
 from registration.users import UserModel, UserModelString
 
@@ -78,17 +81,17 @@ class RegistrationManager(models.Manager):
         user. To disable this, pass ``send_email=False``.
 
         """
-        new_user = UserModel().objects.create_user(username, email, password)
-        new_user.is_active = False
-        new_user.save()
+        with transaction.atomic():
+            new_user = UserModel().objects.create_user(username, email, password)
+            new_user.is_active = False
+            new_user.save()
 
-        registration_profile = self.create_profile(new_user)
+            registration_profile = self.create_profile(new_user)
 
-        if send_email:
-            registration_profile.send_activation_email(site)
+            if send_email:
+                registration_profile.send_activation_email(site)
 
-        return new_user
-    create_inactive_user = transaction.commit_on_success(create_inactive_user)
+            return new_user
 
     def create_profile(self, user):
         """
@@ -100,9 +103,10 @@ class RegistrationManager(models.Manager):
         username and a random salt.
 
         """
-        salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
+        salt = hashlib.sha1(six.text_type(random.random()).encode('ascii')).hexdigest()[:5]
+        salt = salt.encode('ascii')
         username = user.username
-        if isinstance(username, unicode):
+        if isinstance(username, six.text_type):
             username = username.encode('utf-8')
         activation_key = hashlib.sha1(salt+username).hexdigest()
         return self.create(user=user,
@@ -158,6 +162,8 @@ class RegistrationManager(models.Manager):
             except UserModel().DoesNotExist:
                 profile.delete()
 
+
+@python_2_unicode_compatible
 class RegistrationProfile(models.Model):
     """
     A simple profile which stores an activation key for use during
@@ -174,7 +180,7 @@ class RegistrationProfile(models.Model):
     account registration and activation.
 
     """
-    ACTIVATED = u"ALREADY_ACTIVATED"
+    ACTIVATED = "ALREADY_ACTIVATED"
 
     user = models.ForeignKey(UserModelString(), unique=True, verbose_name=_('user'))
     activation_key = models.CharField(_('activation key'), max_length=40)
@@ -185,8 +191,8 @@ class RegistrationProfile(models.Model):
         verbose_name = _('registration profile')
         verbose_name_plural = _('registration profiles')
 
-    def __unicode__(self):
-        return u"Registration information for %s" % self.user
+    def __str__(self):
+        return "Registration information for %s" % self.user
 
     def activation_key_expired(self):
         """
@@ -211,8 +217,8 @@ class RegistrationProfile(models.Model):
 
         """
         expiration_date = datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
-        return self.activation_key == self.ACTIVATED or \
-               (self.user.date_joined + expiration_date <= datetime_now())
+        return (self.activation_key == self.ACTIVATED or
+                (self.user.date_joined + expiration_date <= datetime_now()))
     activation_key_expired.boolean = True
 
     def send_activation_email(self, site):

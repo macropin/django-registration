@@ -32,5 +32,8 @@ urlpatterns = patterns('',
                        url(r'^register/closed/$',
                            TemplateView.as_view(template_name='registration/registration_closed.html'),
                            name='registration_disallowed'),
+                       url(r'^register/complete/$',
+                           TemplateView.as_view(template_name='registration/registration_complete.html'),
+                           name='registration_complete'),
                        (r'', include('registration.auth_urls')),
                        )

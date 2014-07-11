@@ -2,6 +2,7 @@ import datetime
 import hashlib
 import re
 
+from django.utils import six
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core import mail
@@ -41,7 +42,7 @@ class RegistrationModelTests(TestCase):
         self.assertEqual(RegistrationProfile.objects.count(), 1)
         self.assertEqual(profile.user.id, new_user.id)
         self.failUnless(re.match('^[a-f0-9]{40}$', profile.activation_key))
-        self.assertEqual(unicode(profile),
+        self.assertEqual(six.text_type(profile),
                          "Registration information for alice")
 
     def test_activation_email(self):
@@ -183,7 +184,7 @@ class RegistrationModelTests(TestCase):
         """
         # Due to the way activation keys are constructed during
         # registration, this will never be a valid key.
-        invalid_key = hashlib.sha1('foo').hexdigest()
+        invalid_key = hashlib.sha1(six.b('foo')).hexdigest()
         self.failIf(RegistrationProfile.objects.activate_user(invalid_key))
 
     def test_expired_user_deletion(self):

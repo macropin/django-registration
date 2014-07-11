@@ -5,6 +5,7 @@ from django.contrib.sites.models import Site
 from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import TestCase
+from django.test.utils import override_settings
 
 from registration import signals
 from registration.admin import RegistrationAdmin
@@ -113,6 +114,9 @@ class DefaultBackendViewTests(TestCase):
         self.assertEqual(RegistrationProfile.objects.count(), 1)
         self.assertEqual(len(mail.outbox), 1)
 
+    @override_settings(
+        INSTALLED_APPS=('django.contrib.auth', 'registration',)
+    )
     def test_registration_no_sites(self):
         """
         Registration still functions properly when
@@ -120,8 +124,6 @@ class DefaultBackendViewTests(TestCase):
         be a ``RequestSite`` instance.
 
         """
-        Site._meta.installed = False
-
         resp = self.client.post(reverse('registration_register'),
                                 data={'username': 'bob',
                                       'email': 'bob@example.com',
@@ -138,8 +140,6 @@ class DefaultBackendViewTests(TestCase):
 
         self.assertEqual(RegistrationProfile.objects.count(), 1)
         self.assertEqual(len(mail.outbox), 1)
-
-        Site._meta.installed = True
 
     def test_registration_failure(self):
         """
@@ -195,4 +195,5 @@ class DefaultBackendViewTests(TestCase):
 
         self.assertEqual(200, resp.status_code)
         self.assertTemplateUsed(resp, 'registration/activate.html')
-        self.failIf('activation_key' in resp.context)
+        user = UserModel().objects.get(username='bob')
+        self.assertFalse(user.is_active)

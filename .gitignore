@@ -1,2 +1,6 @@
 *.pyc
 *.egg-info
+.tox
+*.sublime-project
+*.sublime-workspace
+MANIFEST
