@@ -7,7 +7,6 @@ DATABASES = {
 }
 
 INSTALLED_APPS = (
-    'south',
     'django.contrib.auth',
     'django.contrib.sites',
     'django.contrib.sessions',

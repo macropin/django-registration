@@ -26,7 +26,7 @@ setup(
     url='https://github.com/macropin/django-registration',
     package_dir={'registration': 'registration'},
     packages=find_packages(exclude='test_app'),
-    tests_require=['pytest-django', 'south'],
+    tests_require=['pytest-django'],
     cmdclass={'test': PyTest},
     include_package_data=True,
     classifiers=['Development Status :: 5 - Production/Stable',
