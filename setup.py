@@ -20,6 +20,7 @@ setup(
     name='django-registration',
     version=get_version().replace(' ', '-'),
     description='An extensible user-registration application for Django',
+    long_description=open('README.rst').read(),
     author='Andrew Cutler',
     author_email='macropin@gmail.com',
     url='https://github.com/macropin/django-registration',

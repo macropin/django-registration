@@ -2,7 +2,7 @@ include CHANGELOG
 include INSTALL
 include LICENSE
 include MANIFEST.in
-include README
+include README.rst
 include AUTHORS
 recursive-include docs *
 recursive-include registration/locale *
