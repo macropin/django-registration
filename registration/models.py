@@ -100,11 +100,9 @@ class RegistrationManager(models.Manager):
         username and a random salt.
 
         """
-        salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
-        username = user.username
-        if isinstance(username, unicode):
-            username = username.encode('utf-8')
-        activation_key = hashlib.sha1(salt+username).hexdigest()
+        salt = hashlib.sha1(str(random.random()).encode('utf-8')).hexdigest()[:5]
+        salted_username = salt + user.username
+        activation_key = hashlib.sha1(salted_username.encode('utf-8')).hexdigest()
         return self.create(user=user,
                            activation_key=activation_key)
 
