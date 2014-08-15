@@ -1,4 +1,4 @@
-The primary author of django-registration is James Bennett
+The original author of django-registration was James Bennett
 <james@b-list.org>, who may be found online at
 <http://www.b-list.org/>.
 
@@ -34,3 +34,5 @@ Others who have contributed to the application:
 * Patrick Samson (French translation)
 * Recep Kirmizi (Turkish translation)
 * Mohsen Mansouryar (Persian translation)
+* Jeffrey Long (Testing templates)
+* Ilya Baryshev (Test app / config)

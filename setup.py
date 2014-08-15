@@ -1,48 +1,41 @@
-from distutils.core import setup
-import os
+from setuptools import setup, find_packages
+from setuptools.command.test import test as TestCommand
+import sys
 
 from registration import get_version
 
+class PyTest(TestCommand):
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
 
-# Compile the list of packages available, because distutils doesn't have
-# an easy way to do this.
-packages, data_files = [], []
-root_dir = os.path.dirname(__file__)
-if root_dir:
-    os.chdir(root_dir)
+    def run_tests(self):
+        #import here, cause outside the eggs aren't loaded
+        import pytest
+        errno = pytest.main(self.test_args)
+        sys.exit(errno)
 
-for dirpath, dirnames, filenames in os.walk('registration'):
-    # Ignore dirnames that start with '.'
-    for i, dirname in enumerate(dirnames):
-        if dirname.startswith('.'): del dirnames[i]
-    if '__init__.py' in filenames:
-        pkg = dirpath.replace(os.path.sep, '.')
-        if os.path.altsep:
-            pkg = pkg.replace(os.path.altsep, '.')
-        packages.append(pkg)
-    elif filenames:
-        prefix = dirpath[13:] # Strip "registration/" or "registration\"
-        for f in filenames:
-            data_files.append(os.path.join(prefix, f))
-
-
-setup(name='django-registration',
-      version=get_version().replace(' ', '-'),
-      description='An extensible user-registration application for Django',
-      author='James Bennett',
-      author_email='james@b-list.org',
-      url='http://www.bitbucket.org/ubernostrum/django-registration/',
-      download_url='https://bitbucket.org/ubernostrum/django-registration/downloads/django-registration-1.0.tar.gz',
-      package_dir={'registration': 'registration'},
-      packages=packages,
-      package_data={'registration': data_files},
-      classifiers=['Development Status :: 5 - Production/Stable',
-                   'Environment :: Web Environment',
-                   'Framework :: Django',
-                   'Intended Audience :: Developers',
-                   'License :: OSI Approved :: BSD License',
-                   'Operating System :: OS Independent',
-                   'Programming Language :: Python',
-                   'Topic :: Software Development :: Libraries :: Python Modules',
-                   'Topic :: Utilities'],
-      )
+setup(
+    name='django-registration',
+    version=get_version().replace(' ', '-'),
+    description='An extensible user-registration application for Django',
+    author='Andrew Cutler',
+    author_email='macropin@gmail.com',
+    url='https://github.com/macropin/django-registration',
+    package_dir={'registration': 'registration'},
+    packages=find_packages(exclude='test_app'),
+    tests_require=['pytest-django', 'south'],
+    cmdclass={'test': PyTest},
+    include_package_data=True,
+    classifiers=['Development Status :: 5 - Production/Stable',
+        'Environment :: Web Environment',
+        'Framework :: Django',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: BSD License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Utilities'
+    ],
+)
