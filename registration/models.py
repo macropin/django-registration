@@ -7,7 +7,6 @@ import re
 
 from django.conf import settings
 from django.db import models
-from django.db import transaction
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
@@ -81,17 +80,16 @@ class RegistrationManager(models.Manager):
         user. To disable this, pass ``send_email=False``.
 
         """
-        with transaction.atomic():
-            new_user = UserModel().objects.create_user(username, email, password)
-            new_user.is_active = False
-            new_user.save()
+        new_user = UserModel().objects.create_user(username, email, password)
+        new_user.is_active = False
+        new_user.save()
 
-            registration_profile = self.create_profile(new_user)
+        registration_profile = self.create_profile(new_user)
 
-            if send_email:
-                registration_profile.send_activation_email(site)
+        if send_email:
+            registration_profile.send_activation_email(site)
 
-            return new_user
+        return new_user
 
     def create_profile(self, user):
         """
