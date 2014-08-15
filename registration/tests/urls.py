@@ -13,49 +13,49 @@ handled.
 from django.conf.urls.defaults import *
 from django.views.generic.simple import direct_to_template
 
-from registration.views import activate
-from registration.views import register
+from registration.views import ActivationView
+from registration.views import RegistrationView
 
 
 urlpatterns = patterns('',
                        # Test the 'activate' view with custom template
                        # name.
                        url(r'^activate-with-template-name/(?P<activation_key>\w+)/$',
-                           activate,
+                           ActivationView.as_view(),
                            {'template_name': 'registration/test_template_name.html',
                             'backend': 'registration.backends.default.DefaultBackend'},
                            name='registration_test_activate_template_name'),
                        # Test the 'activate' view with
                        # extra_context_argument.
                        url(r'^activate-extra-context/(?P<activation_key>\w+)/$',
-                           activate,
+                           ActivationView.as_view(),
                            {'extra_context': {'foo': 'bar', 'callable': lambda: 'called'},
                             'backend': 'registration.backends.default.DefaultBackend'},
                            name='registration_test_activate_extra_context'),
                        # Test the 'activate' view with success_url argument.
                        url(r'^activate-with-success-url/(?P<activation_key>\w+)/$',
-                           activate,
+                           ActivationView.as_view(),
                            {'success_url': 'registration_test_custom_success_url',
                             'backend': 'registration.backends.default.DefaultBackend'},
                            name='registration_test_activate_success_url'),
                        # Test the 'register' view with custom template
                        # name.
                        url(r'^register-with-template-name/$',
-                           register,
+                           RegistrationView.as_view(),
                            {'template_name': 'registration/test_template_name.html',
                             'backend': 'registration.backends.default.DefaultBackend'},
                            name='registration_test_register_template_name'),
                        # Test the'register' view with extra_context
                        # argument.
                        url(r'^register-extra-context/$',
-                           register,
+                           RegistrationView.as_view(),
                            {'extra_context': {'foo': 'bar', 'callable': lambda: 'called'},
                             'backend': 'registration.backends.default.DefaultBackend'},
                            name='registration_test_register_extra_context'),
                        # Test the 'register' view with custom URL for
                        # closed registration.
                        url(r'^register-with-disallowed-url/$',
-                           register,
+                           RegistrationView.as_view(),
                            {'disallowed_url': 'registration_test_custom_disallowed',
                             'backend': 'registration.backends.default.DefaultBackend'},
                            name='registration_test_register_disallowed_url'),
@@ -68,7 +68,7 @@ urlpatterns = patterns('',
                        # Test the 'register' view with custom redirect
                        # on successful registration.
                        url(r'^register-with-success_url/$',
-                           register,
+                           RegistrationView.as_view(),
                            {'success_url': 'registration_test_custom_success_url',
                             'backend': 'registration.backends.default.DefaultBackend'},
                            name='registration_test_register_success_url'
