@@ -16,6 +16,9 @@ install:
   - pip install coveralls
   - python setup.py -q install
 
+before_script:
+  - rm -rf build
+
 script:
   - coverage run --source=registration setup.py test
 
