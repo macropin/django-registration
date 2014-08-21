@@ -14,5 +14,6 @@ other dependencies.
 For installation instructions, see the file "INSTALL" in this
 directory; for instructions on how to use this application, and on
 what it provides, see the file "quickstart.rst" in the "docs/"
-directory. Full documentation is also `available online
-https://django-registration.readthedocs.org/`_
+directory. Full documentation is also `available online`_
+
+.. _`available online`: https://django-registration.readthedocs.org/
