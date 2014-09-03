@@ -15,6 +15,8 @@ INSTALLED_APPS = (
     'test_app',
 )
 
+DEBUG = True
+ALLOWED_HOSTS = ['*']
 SECRET_KEY = '_'
 SITE_ID = 1
 ROOT_URLCONF = 'test_app.urls'
