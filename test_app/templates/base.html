@@ -1,2 +1,38 @@
-{% block title %}{% endblock %}
-{% block content %}{% endblock %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="{{ STATIC_URL }}style.css" />
+    <title>{% block title %}User test{% endblock %}</title>
+</head>
+
+<body>
+    <div id="header">
+    {% block header %}
+    <a href="{% url 'index' %}">{% trans "Home" %}</a> |
+
+    {% if user.is_authenticated %}
+        {% trans "Logged in" %}: {{ user.username }}
+        (<a href="{% url 'auth_logout' %}">{% trans "Log out" %}</a> |
+        <a href="{% url 'auth_password_change' %}">{% trans "Change password" %}</a>)
+    {% else %}
+       <a href="{% url 'auth_login' %}">{% trans "Log In" %}</a>
+    {% endif %}
+    {% endblock %}
+    </div>
+
+    <div id="content">
+    {% block content %}
+
+    {% endblock content %}
+    </div>
+
+    <div id="footer">
+    {% block footer %}
+
+    {% endblock %}
+    </div>
+</body>
+
+</html>
