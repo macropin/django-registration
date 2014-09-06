@@ -5,6 +5,7 @@ from django.contrib.sites.models import Site
 from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import TestCase
+from django.test.client import RequestFactory
 from django.test.utils import override_settings
 
 from registration import signals
@@ -113,6 +114,29 @@ class DefaultBackendViewTests(TestCase):
         # was sent.
         self.assertEqual(RegistrationProfile.objects.count(), 1)
         self.assertEqual(len(mail.outbox), 1)
+
+
+    def test_registration_no_email(self):
+        """
+        Overriden Registration view does not send an activation email if the
+        associated class variable is set to ``False``
+
+        """
+        class RegistrationNoEmailView(RegistrationView):
+            SEND_ACTIVATION_EMAIL = False
+
+        request_factory = RequestFactory()
+        view = RegistrationNoEmailView.as_view()
+        resp = view(request_factory.post('/', data={
+            'username': 'bob',
+            'email': 'bob@example.com',
+            'password1': 'secret',
+            'password2': 'secret'}))
+
+        new_user = UserModel().objects.get(username='bob')
+        # A registration profile was created, and no activation email was sent.
+        self.assertEqual(RegistrationProfile.objects.count(), 1)
+        self.assertEqual(len(mail.outbox), 0)
 
     @override_settings(
         INSTALLED_APPS=('django.contrib.auth', 'registration',)

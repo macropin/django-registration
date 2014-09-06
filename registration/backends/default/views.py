@@ -35,6 +35,13 @@ class RegistrationView(BaseRegistrationView):
       the activation email. See the notes for this backends
       ``register`` method for details regarding these templates.
 
+    When subclassing this view, you can set the ``SEND_ACTIVATION_EMAIL``
+    class variable to False to skip sending the new user a confirmation
+    email or set ``SEND_ACTIVATION_EMAIL`` to ``False``. Doing so implies
+    that you will have to activate the user manually from the admin site or
+    send an activation by some other method. For example, by listening for
+    the ``user_registered`` signal.
+
     Additionally, registration can be temporarily closed by adding the
     setting ``REGISTRATION_OPEN`` and setting it to
     ``False``. Omitting this setting, or setting it to ``True``, will
@@ -47,6 +54,8 @@ class RegistrationView(BaseRegistrationView):
     fields and supported operations.
 
     """
+    SEND_ACTIVATION_EMAIL = getattr(settings, 'SEND_ACTIVATION_EMAIL', True)
+
     def register(self, request, **cleaned_data):
         """
         Given a username, email address and password, register a new
@@ -77,7 +86,8 @@ class RegistrationView(BaseRegistrationView):
         else:
             site = RequestSite(request)
         new_user = RegistrationProfile.objects.create_inactive_user(username, email,
-                                                                    password, site)
+                                                                    password, site,
+                                                                    send_email=self.SEND_ACTIVATION_EMAIL)
         signals.user_registered.send(sender=self.__class__,
                                      user=new_user,
                                      request=request)

@@ -38,5 +38,6 @@ MIDDLEWARE_CLASSES = (
 
 ACCOUNT_ACTIVATION_DAYS = 7
 EMAIL_SUBJECT_PREFIX = '[Django Registration Test App]'
+SEND_ACTIVATION_EMAIL = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
