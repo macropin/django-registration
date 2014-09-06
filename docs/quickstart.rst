@@ -188,7 +188,7 @@ Required templates
 
 In the default setup, you will need to create several templates
 required by django-registration, and possibly additional templates
-required by views in ``django.contrib.auth``. The templates requires
+required by views in ``django.contrib.auth``. The templates required
 by django-registration are as follows; note that, with the exception
 of the templates used for account activation emails, all of these are
 rendered using a ``RequestContext`` and so will also receive any
