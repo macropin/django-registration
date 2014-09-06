@@ -1,10 +1,7 @@
-# coding: utf-8
-
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'registration',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'dr.sqlite3',
     },
 }
 
@@ -21,7 +18,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-SECRET_KEY = 'aa2^x-^2u9(zaigih^7!3onca_rql1rnk6ec6=sahm*r$vd2-$)=5'
+SECRET_KEY = '_'
 
 SITE_ID = 1
 
@@ -41,9 +38,4 @@ MIDDLEWARE_CLASSES = (
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
-EMAIL_HOST = ""
-EMAIL_HOST_PASSWORD = ""
-EMAIL_HOST_USER = ""
-EMAIL_PORT = ""
-EMAIL_USE_TLS = False
-DEFAULT_FROM_EMAIL = ""
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
