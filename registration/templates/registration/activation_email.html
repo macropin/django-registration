@@ -45,9 +45,6 @@ Used to generate the html body of the activation email. Should display a
 link the user can click to activate the account. This template has the
 following context:
 
-``user``
-    The new user account
-
 ``activation_key``
     The activation key for the new account.
 
@@ -64,4 +61,7 @@ following context:
     documentation for the Django sites framework
     <http://docs.djangoproject.com/en/dev/ref/contrib/sites/>`_ for
     details regarding these objects' interfaces.
+
+``user``
+    The new user account
 {% endcomment %}

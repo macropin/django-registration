@@ -252,7 +252,7 @@ being used. This template has the following context:
 
 **registration/activation_email.txt**
 
-Used to generate the body of the activation email. Should display a
+Used to generate the text body of the activation email. Should display a
 link the user can click to activate the account. This template has the
 following context:
 
@@ -273,15 +273,22 @@ following context:
     <http://docs.djangoproject.com/en/dev/ref/contrib/sites/>`_ for
     details regarding these objects' interfaces.
 
-Note that the templates used to generate the account activation email
-use the extension ``.txt``, not ``.html``. Due to widespread antipathy
-toward and interoperability problems with HTML email,
-django-registration defaults to plain-text email, and so these
-templates should simply output plain text rather than HTML.
+``user``
+    The new user account
+
+**registration/activation_email.html**
+
+(Optional) If present, this template is used to generate the html body of
+the activation email. Should display the same content as the text version
+ of the activation email.
+
+The context available is the same as the text version of the template.
+
 
 To make use of the views from ``django.contrib.auth`` (which are set
 up for you by the default URLconf mentioned above), you will also need
 to create the templates required by those views. Consult `the
 documentation for Django's authentication system
 <http://docs.djangoproject.com/en/dev/topics/auth/>`_ for details
-regarding these templates.
+regarding these templates. Sample templates are provided with this
+project.
