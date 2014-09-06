@@ -239,6 +239,9 @@ class RegistrationProfile(models.Model):
         These templates will each receive the following context
         variables:
 
+        ``user``
+            The new user account
+
         ``activation_key``
             The activation key for the new account.
 
@@ -257,7 +260,8 @@ class RegistrationProfile(models.Model):
             framework for details regarding these objects' interfaces.
 
         """
-        ctx_dict = {'activation_key': self.activation_key,
+        ctx_dict = {'user': self.user,
+                    'activation_key': self.activation_key,
                     'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
                     'site': site}
         subject = getattr(settings, 'EMAIL_SUBJECT_PREFIX', '') + \
