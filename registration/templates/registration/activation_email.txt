@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load url from future %}
 {% trans "Activate account at" %} {{ site.name }}:
 
 http://{{ site.domain }}{% url 'registration_activate' activation_key %}
