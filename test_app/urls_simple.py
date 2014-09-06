@@ -8,13 +8,9 @@ urlpatterns = patterns('',
         name='index'),
 
     url(r'^accounts/',
-        include('registration.backends.default.urls')),
+        include('registration.backends.simple.urls')),
 
     url(r'^login/',
         'django.contrib.auth.views.login',
-        name='login'),
-
-    url(r'^accounts/profile/',
-        TemplateView.as_view(template_name='registration/registration_complete.html'),
-        name='profile'),
+        name='login')
 )

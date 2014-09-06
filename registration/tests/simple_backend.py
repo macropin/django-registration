@@ -7,7 +7,7 @@ from registration.users import UserModel
 
 
 class SimpleBackendViewTests(TestCase):
-    urls = 'registration.backends.simple.urls'
+    urls = 'test_app.urls_simple'
 
     def test_allow(self):
         """

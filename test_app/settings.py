@@ -22,7 +22,7 @@ SECRET_KEY = '_'
 
 SITE_ID = 1
 
-ROOT_URLCONF = 'test_app.urls'
+ROOT_URLCONF = 'test_app.urls_default'
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
