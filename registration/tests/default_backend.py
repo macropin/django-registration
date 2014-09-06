@@ -25,7 +25,7 @@ class DefaultBackendViewTests(TestCase):
     the default backend.
 
     """
-    urls = 'registration.backends.default.urls'
+    urls = 'test_app.urls_default'
 
     def setUp(self):
         """

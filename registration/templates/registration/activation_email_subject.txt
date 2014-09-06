@@ -1,3 +1,5 @@
+{% load i18n %}{% trans "Account activation on" %} {{ site.name }}
+
 {% comment %}
 **registration/activation_email_subject.txt**
 

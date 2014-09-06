@@ -1,4 +1,3 @@
-# coding: utf-8
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -16,10 +15,14 @@ INSTALLED_APPS = (
 )
 
 DEBUG = True
+
 ALLOWED_HOSTS = ['*']
+
 SECRET_KEY = '_'
+
 SITE_ID = 1
-ROOT_URLCONF = 'test_app.urls'
+
+ROOT_URLCONF = 'test_app.urls_default'
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
@@ -32,3 +35,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
+
+ACCOUNT_ACTIVATION_DAYS = 7
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
