@@ -1,6 +1,8 @@
 {% extends "registration/registration_base.html" %}
-{% block title %}Registration is closed{% endblock %}
-{% block content %}
-Sorry, but registration is closed at this moment. Come back later.
-{% endblock %}
+{% load i18n %}
 
+{% block title %}{% trans "Registration is closed" %}{% endblock %}
+
+{% block content %}
+<p>{% trans "Sorry, but registration is closed at this moment. Come back later." %}</p>
+{% endblock %}
