@@ -131,8 +131,8 @@ email-sending documentation
 <http://docs.djangoproject.com/en/dev/topics/email/>`_ for details).
 
 
-Required settings
-~~~~~~~~~~~~~~~~~
+Settings
+~~~~~~~~
 
 Begin by adding ``registration`` to the ``INSTALLED_APPS`` setting of
 your project, and specifying one additional setting:
@@ -142,6 +142,10 @@ your project, and specifying one additional setting:
     accounts after registering. If a user does not activate within
     that period, the account will remain permanently inactive and may
     be deleted by maintenance scripts provided in django-registration.
+
+``REGISTRATION_AUTO_LOGIN``
+    Optional. If this is `True`, your users will automatically log in when they
+    click on the activation link in their email. Defaults to `False`.
 
 For example, you might have something like the following in your
 Django settings file::
@@ -154,6 +158,7 @@ Django settings file::
     )
     
     ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
+    REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
 
 Once you've done this, run ``manage.py syncdb`` to install the model
 used by the default setup.
