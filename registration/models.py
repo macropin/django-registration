@@ -6,7 +6,9 @@ import random
 import re
 
 from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
 from django.db import models
+from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
@@ -269,7 +271,15 @@ class RegistrationProfile(models.Model):
         # Email subject *must not* contain newlines
         subject = ''.join(subject.splitlines())
 
-        message = render_to_string('registration/activation_email.txt',
-                                   ctx_dict)
+        message_txt = render_to_string('registration/activation_email.txt', ctx_dict)
+        email_message = EmailMultiAlternatives(subject, message_txt, settings.DEFAULT_FROM_EMAIL, [self.user.email])
 
-        self.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
+        try:
+            message_html = render_to_string('registration/activation_email.html', ctx_dict)
+        except TemplateDoesNotExist:
+            message_html = None
+
+        if message_html:
+            email_message.attach_alternative(message_html, 'text/html')
+
+        email_message.send()
