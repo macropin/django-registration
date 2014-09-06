@@ -5,4 +5,5 @@ include MANIFEST.in
 include README.rst
 include AUTHORS
 recursive-include docs *
+prune docs/_build
 recursive-include registration/locale *
