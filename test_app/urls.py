@@ -3,11 +3,18 @@ from django.views.generic import TemplateView
 
 urlpatterns = patterns('',
 
-    url(r'^$', 'test_app.views.index', name='index'),
+    url(r'^$',
+        TemplateView.as_view(template_name='index.html'),
+        name='index'),
 
-    (r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^accounts/',
+        include('registration.backends.default.urls')),
 
-    url(r'^login/', 'django.contrib.auth.views.login', name='login'),
+    url(r'^login/',
+        'django.contrib.auth.views.login',
+        name='login'),
 
-    url(r'^accounts/profile/', TemplateView.as_view(template_name='registration/registration_complete.html'), name='profile'),
+    url(r'^accounts/profile/',
+        TemplateView.as_view(template_name='registration/registration_complete.html'),
+        name='profile'),
 )
