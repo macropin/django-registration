@@ -236,7 +236,10 @@ class RegistrationProfile(models.Model):
             into only a single line.
 
         ``registration/activation_email.txt``
-            This template will be used for the body of the email.
+            This template will be used for the text body of the email.
+
+        ``registration/activation_email.html``
+            This template will be used for the html body of the email.
 
         These templates will each receive the following context
         variables:
@@ -266,7 +269,7 @@ class RegistrationProfile(models.Model):
                     'activation_key': self.activation_key,
                     'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
                     'site': site}
-        subject = getattr(settings, 'EMAIL_SUBJECT_PREFIX', '') + \
+        subject = getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '') + \
                   render_to_string('registration/activation_email_subject.txt', ctx_dict)
         # Email subject *must not* contain newlines
         subject = ''.join(subject.splitlines())
