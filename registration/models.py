@@ -80,6 +80,8 @@ class RegistrationManager(models.Manager):
 
         By default, an activation email will be sent to the new
         user. To disable this, pass ``send_email=False``.
+        Additionally, if email is sent and ``request`` is supplied,
+        it will be passed to the email template.
 
         """
         new_user = UserModel().objects.create_user(username, email, password)
@@ -265,8 +267,9 @@ class RegistrationProfile(models.Model):
             framework for details regarding these objects' interfaces.
 
         ``request``
-            HTTP Request object from view. WIll be passed to
-            the template for better flexibility.
+            Optional Django's ``HttpRequest`` object from view.
+            If supplied will be passed to the template for better
+            flexibility via ``RequestContext``.
         """
         ctx_dict = {}
         if request is not None:
