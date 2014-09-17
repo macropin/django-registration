@@ -20,7 +20,7 @@ Or if you're using ``pip``::
 Or if you'd prefer you can simply place the included ``registration``
 directory somewhere on your Python path, or symlink to it from
 somewhere on your Python path; this is useful if you're working from a
-Mercurial checkout.
+Git checkout.
 
 Note that this application requires Python 2.6 or later, and a
 functional installation of Django 1.4 or newer. You can obtain Python
