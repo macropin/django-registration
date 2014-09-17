@@ -8,7 +8,7 @@ import re
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.db import models
-from django.template import TemplateDoesNotExist
+from django.template import RequestContext, TemplateDoesNotExist
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
@@ -72,7 +72,7 @@ class RegistrationManager(models.Manager):
         return False
 
     def create_inactive_user(self, username, email, password,
-                             site, send_email=True):
+                             site, send_email=True, request=None):
         """
         Create a new, inactive ``User``, generate a
         ``RegistrationProfile`` and email its activation key to the
@@ -80,6 +80,8 @@ class RegistrationManager(models.Manager):
 
         By default, an activation email will be sent to the new
         user. To disable this, pass ``send_email=False``.
+        Additionally, if email is sent and ``request`` is supplied,
+        it will be passed to the email template.
 
         """
         new_user = UserModel().objects.create_user(username, email, password)
@@ -89,7 +91,7 @@ class RegistrationManager(models.Manager):
         registration_profile = self.create_profile(new_user)
 
         if send_email:
-            registration_profile.send_activation_email(site)
+            registration_profile.send_activation_email(site, request)
 
         return new_user
 
@@ -221,7 +223,7 @@ class RegistrationProfile(models.Model):
                 (self.user.date_joined + expiration_date <= datetime_now()))
     activation_key_expired.boolean = True
 
-    def send_activation_email(self, site):
+    def send_activation_email(self, site, request=None):
         """
         Send an activation email to the user associated with this
         ``RegistrationProfile``.
@@ -264,11 +266,24 @@ class RegistrationProfile(models.Model):
             not). Consult the documentation for the Django sites
             framework for details regarding these objects' interfaces.
 
+        ``request``
+            Optional Django's ``HttpRequest`` object from view.
+            If supplied will be passed to the template for better
+            flexibility via ``RequestContext``.
         """
-        ctx_dict = {'user': self.user,
-                    'activation_key': self.activation_key,
-                    'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
-                    'site': site}
+        ctx_dict = {}
+        if request is not None:
+            ctx_dict = RequestContext(request, ctx_dict)
+        # update ctx_dict after RequestContext is created
+        # because template context processors
+        # can overwrite some of the values like user
+        # if django.contrib.auth.context_processors.auth is used
+        ctx_dict.update({
+            'user': self.user,
+            'activation_key': self.activation_key,
+            'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
+            'site': site,
+        })
         subject = getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '') + \
                   render_to_string('registration/activation_email_subject.txt', ctx_dict)
         # Email subject *must not* contain newlines

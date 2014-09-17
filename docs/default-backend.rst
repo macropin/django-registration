@@ -124,7 +124,7 @@ the database, using the following model:
 
       :rtype: bool
 
-   .. method:: send_activation_email(site)
+   .. method:: send_activation_email(site[, request])
 
       Sends an activation email to the address of the account.
 
@@ -153,6 +153,14 @@ the database, using the following model:
           <http://docs.djangoproject.com/en/dev/ref/contrib/sites/>`_
           for details regarding these objects' interfaces.
 
+      ``request``
+          Django's ``HttpRequest`` object for better flexibility.
+          When provided, it will also provide all the data via
+          installed template context processors which can provide
+          even more flexibility by using many Django's provided
+          and custom template context processors to provide more
+          variables to the template.
+
       Because email subjects must be a single line of text, the
       rendered output of ``registration/activation_email_subject.txt``
       will be forcibly condensed to a single line.
@@ -161,6 +169,12 @@ the database, using the following model:
          was registered.
       :type site: ``django.contrib.sites.models.Site`` or
         ``django.contrib.sites.models.RequestSite``
+      :param request: Optional Django's ``HttpRequest`` object
+         from view which if supplied will be passed to the template
+         via ``RequestContext``. As a consequence, all installed
+         ``TEMPLATE_CONTEXT_PROCESSORS`` will be used to populate
+         context.
+      :type request: ``django.http.request.HttpRequest``
       :rtype: ``None``
 
 
@@ -212,7 +226,7 @@ Additionally, :class:`RegistrationProfile` has a custom manager
 
       :rtype: ``None``
 
-   .. method:: create_inactive_user(username, email, password, site[, send_email])
+   .. method:: create_inactive_user(username, email, password, site[, send_email, request])
 
       Creates a new, inactive user account and an associated instance
       of :class:`RegistrationProfile`, sends the activation email and
@@ -234,6 +248,12 @@ Additionally, :class:`RegistrationProfile` has a custom manager
          ``False``, no email will be sent (but the account will still
          be inactive)
       :type send_email: bool
+      :param request: If ``send_email`` parameter is ``True``
+         and if ``request`` is supplied, it will be passed to the
+         email templates for better flexibility.
+         Please take a look at the sample email templates
+         for better explanation how it can be used.
+      :type request: ``django.http.request.HttpRequest``
       :rtype: ``User``
 
    .. method:: create_profile(user)
