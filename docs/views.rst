@@ -5,16 +5,16 @@ Registration views
 ==================
 
 In order to allow the utmost flexibility in customizing and supporting
-different workflows, django-registration makes use of Django's support
+different workflows, |project| makes use of Django's support
 for `class-based views
 <https://docs.djangoproject.com/en/dev/topics/class-based-views/>`_. Included
-in django-registration are two base classes which can be subclassed to
+in |project| are two base classes which can be subclassed to
 implement whatever workflow is required.
 
 .. class:: RegistrationView
 
    A subclass of Django's `FormView
-   <https://docs.djangoproject.com/en/1.5/ref/class-based-views/generic-editing/#formview>`_,
+   <https://docs.djangoproject.com/en/dev/ref/class-based-views/generic-editing/#formview>`_,
    which provides the infrastructure for supporting user registration.
 
    Since it's a subclass of ``FormView``, ``RegistrationView`` has all
@@ -46,7 +46,7 @@ implement whatever workflow is required.
       The URL to redirect to after successful registration. Should be
       a string, the name of a URL pattern, or a 3-tuple of arguments
       suitable for passing to Django's `redirect shortcut
-      <https://docs.djangoproject.com/en/dev/topics/http/shortcuts/#redirect>`. Can
+      <https://docs.djangoproject.com/en/dev/topics/http/shortcuts/#redirect>`_. Can
       be overridden on a per-request basis (see below). Default value
       is ``None``, so that per-request customization is used instead.
 
@@ -86,7 +86,7 @@ implement whatever workflow is required.
 .. class:: ActivationView
 
    A subclass of Django's `TemplateView
-   <https://docs.djangoproject.com/en/1.5/ref/class-based-views/base/#templateview>`_
+   <https://docs.djangoproject.com/en/dev/ref/class-based-views/base/#templateview>`_
    which provides support for a separate account-activation step, in
    workflows which require that.
 

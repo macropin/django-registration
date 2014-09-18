@@ -3,7 +3,7 @@
 Quick start guide
 =================
 
-Before installing django-registration, you'll need to have a copy of
+Before installing |project|, you'll need to have a copy of
 `Django <http://www.djangoproject.com>`_ already installed. For the
 |version| release, Django 1.4 or newer is required.
 
@@ -12,17 +12,17 @@ For further information, consult the `Django download page
 packaged downloads and installation instructions.
 
 
-Installing django-registration
-------------------------------
+Installing |project|
+--------------------
 
-There are several ways to install django-registration:
+There are several ways to install |project|:
 
 * Automatically, via a package manager.
 
 * Manually, by downloading a copy of the release package and
   installing it yourself.
 
-* Manually, by performing a Mercurial checkout of the latest code.
+* Manually, by performing a Git checkout of the latest code.
 
 It is also highly recommended that you learn to use `virtualenv
 <http://pypi.python.org/pypi/virtualenv>`_ for development and
@@ -39,19 +39,17 @@ Automatic installation via a package manager
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Several automatic package-installation tools are available for Python;
-the recommended one is `pip <http://pip.openplans.org/>`_.
+the recommended one is `pip <https://pip.pypa.io/>`_.
 
 Using ``pip``, type::
 
-    pip install django-registration
+    pip install django-registration-redux
 
 It is also possible that your operating system distributor provides a
-packaged version of django-registration (for example, `Debian
-GNU/Linux <http://debian.org/>`_ provides a package, installable via
-``apt-get-install python-django-registration``). Consult your
+packaged version of |project|. Consult your
 operating system's package list for details, but be aware that
 third-party distributions may be providing older versions of
-django-registration, and so you should consult the documentation which
+|project|, and so you should consult the documentation which
 comes with your operating system's package.
 
 
@@ -59,16 +57,16 @@ Manual installation from a downloaded package
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you prefer not to use an automated package installer, you can
-download a copy of django-registration and install it manually. The
-latest release package can be downloaded from `django-registration's
-listing on the Python Package Index
-<http://pypi.python.org/pypi/django-registration/>`_.
+download a copy of |project| and install it manually. The
+latest release package can be downloaded from |project|'s
+`listing on the Python Package Index
+<http://pypi.python.org/pypi/django-registration-redux/>`_.
 
 Once you've downloaded the package, unpack it (on most operating
 systems, simply double-click; alternately, type ``tar zxvf
-django-registration-0.9.tar.gz`` at a command line on Linux, Mac OS X
+django-registration-redux-1.1.tar.gz`` at a command line on Linux, Mac OS X
 or other Unix-like systems). This will create the directory
-``django-registration-0.9``, which contains the ``setup.py``
+``django-registration-redux-1.1``, which contains the ``setup.py``
 installation script. From a command line in that directory, type::
 
     python setup.py install
@@ -77,36 +75,36 @@ Note that on some systems you may need to execute this with
 administrative privileges (e.g., ``sudo python setup.py install``).
 
 
-Manual installation from a Mercurial checkout
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Manual installation from a Git checkout
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you'd like to try out the latest in-development code, you can
-obtain it from the django-registration repository, which is hosted at
-`Bitbucket <http://bitbucket.org/>`_ and uses `Mercurial
-<http://www.selenic.com/mercurial/wiki/>`_ for version control. To
+obtain it from the |project| repository, which is hosted at
+`Github <http://github.com/>`_ and uses `Git
+<http://git-scm.com/>`_ for version control. To
 obtain the latest code and documentation, you'll need to have
-Mercurial installed, at which point you can type::
+Git installed, at which point you can type::
 
-    hg clone http://bitbucket.org/ubernostrum/django-registration/
+    git clone https://github.com/macropin/django-registration-redux.git
 
 You can also obtain a copy of a particular release of
-django-registration by specifying the ``-r`` argument to ``hg clone``;
+|project| by specifying the ``-b`` argument to ``git clone``;
 each release is given a tag of the form ``vX.Y``, where "X.Y" is the
 release number. So, for example, to check out a copy of the |version|
 release, type::
 
-    hg clone -r v|version| http://bitbucket.org/ubernostrum/django-registration/
+    git clone -b v1.0 https://github.com/macropin/django-registration-redux.git
 
-In either case, this will create a copy of the django-registration
-Mercurial repository on your computer; you can then add the
-``django-registration`` directory inside the checkout your Python
+In either case, this will create a copy of the |project|
+Git repository on your computer; you can then add the
+``|django-registration-redux|`` directory inside the checkout your Python
 import path, or use the ``setup.py`` script to install as a package.
 
 
 Basic configuration and use
 ---------------------------
 
-Once installed, you can add django-registration to any Django-based
+Once installed, you can add |project| to any Django-based
 project you're developing. The default setup will enable user
 registration with the following workflow:
 
@@ -141,7 +139,7 @@ your project, and specifying one additional setting:
     This is the number of days users will have to activate their
     accounts after registering. If a user does not activate within
     that period, the account will remain permanently inactive and may
-    be deleted by maintenance scripts provided in django-registration.
+    be deleted by maintenance scripts provided in |project|.
 
 ``REGISTRATION_AUTO_LOGIN``
     Optional. If this is `True`, your users will automatically log in when they
@@ -169,7 +167,7 @@ Setting up URLs
 
 The :ref:`default backend <default-backend>` includes a Django
 ``URLconf`` which sets up URL patterns for :ref:`the views in
-django-registration <views>`, as well as several useful views in
+|django-registration-redux| <views>`, as well as several useful views in
 ``django.contrib.auth`` (e.g., login, logout, password
 change/reset). This ``URLconf`` can be found at
 ``registration.backends.default.urls``, and so can simply be included
@@ -192,9 +190,9 @@ Required templates
 ~~~~~~~~~~~~~~~~~~
 
 In the default setup, you will need to create several templates
-required by django-registration, and possibly additional templates
+required by |project|, and possibly additional templates
 required by views in ``django.contrib.auth``. The templates required
-by django-registration are as follows; note that, with the exception
+by |project| are as follows; note that, with the exception
 of the templates used for account activation emails, all of these are
 rendered using a ``RequestContext`` and so will also receive any
 additional variables provided by `context processors
@@ -285,7 +283,7 @@ following context:
 
 (Optional) If present, this template is used to generate the html body of
 the activation email. Should display the same content as the text version
- of the activation email.
+of the activation email.
 
 The context available is the same as the text version of the template.
 

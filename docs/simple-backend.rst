@@ -5,7 +5,7 @@ The "simple" (one-step) backend
 ===============================
 
 As an alternative to :ref:`the default backend <default-backend>`, and
-an example of writing alternate workflows, django-registration bundles
+an example of writing alternate workflows, |project| bundles
 a one-step registration system in
 ``registration.backend.simple``. This backend's workflow is
 deliberately as simple as possible:

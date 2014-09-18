@@ -4,7 +4,7 @@
 The default backend
 ===================
 
-A default registration backend` is bundled with django-registration,
+A default registration backend` is bundled with |project|,
 as the module ``registration.backends.default``, and implements a
 simple two-step workflow in which a new user first registers, then
 confirms and activates the new account by following a link sent to the
@@ -41,7 +41,7 @@ view.
 Two views are provided:
 ``registration.backends.default.views.RegistrationView`` and
 ``registration.backends.default.views.ActivationView``. These views
-subclass django-registration's base
+subclass |project|'s base
 :class:`~registration.views.RegistrationView` and
 :class:`~registration.views.ActivationView`, respectively, and
 implement the two-step registration/activation process.
