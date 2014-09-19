@@ -1,13 +1,13 @@
-===================================
-django-registration-redux changelog
-===================================
+=====================================
+django-registration (redux) changelog
+=====================================
 
 
-Version 1.1, 30 September, 2014
+Version 1.1, 19 September, 2014
 -------------------------------
 
-This represents the first release of `django-registration-redux`.
-It is based off the defunct v1.0 `django-registration`.
+This represents the first release of `django-registration` under new a maintainer.
+It is based off the defunct v1.0 `django-registration` abandoned by James Bennett.
 
 * Compatibility: Added support for Python 3.x.
 
@@ -26,13 +26,8 @@ It is based off the defunct v1.0 `django-registration`.
 
 * Bugfix: Fixed broken tests.
 
-The change log below is from the version previously maintained
+The change log below is from the versions maintained
 by James Bennett.
-
-
-=============================
-django-registration changelog
-=============================
 
 
 Version 1.0, 17 June 2013

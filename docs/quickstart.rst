@@ -43,7 +43,7 @@ the recommended one is `pip <https://pip.pypa.io/>`_.
 
 Using ``pip``, type::
 
-    pip install django-registration-redux
+    pip install django-registration
 
 It is also possible that your operating system distributor provides a
 packaged version of |project|. Consult your
@@ -60,13 +60,13 @@ If you prefer not to use an automated package installer, you can
 download a copy of |project| and install it manually. The
 latest release package can be downloaded from |project|'s
 `listing on the Python Package Index
-<http://pypi.python.org/pypi/django-registration-redux/>`_.
+<http://pypi.python.org/pypi/django-registration/>`_.
 
 Once you've downloaded the package, unpack it (on most operating
 systems, simply double-click; alternately, type ``tar zxvf
-django-registration-redux-1.1.tar.gz`` at a command line on Linux, Mac OS X
+django-registration-1.1.tar.gz`` at a command line on Linux, Mac OS X
 or other Unix-like systems). This will create the directory
-``django-registration-redux-1.1``, which contains the ``setup.py``
+``django-registration-1.1``, which contains the ``setup.py``
 installation script. From a command line in that directory, type::
 
     python setup.py install
@@ -97,7 +97,7 @@ release, type::
 
 In either case, this will create a copy of the |project|
 Git repository on your computer; you can then add the
-``|django-registration-redux|`` directory inside the checkout your Python
+``|django-registration|`` directory inside the checkout your Python
 import path, or use the ``setup.py`` script to install as a package.
 
 
@@ -167,7 +167,7 @@ Setting up URLs
 
 The :ref:`default backend <default-backend>` includes a Django
 ``URLconf`` which sets up URL patterns for :ref:`the views in
-|django-registration-redux| <views>`, as well as several useful views in
+|django-registration| <views>`, as well as several useful views in
 ``django.contrib.auth`` (e.g., login, logout, password
 change/reset). This ``URLconf`` can be found at
 ``registration.backends.default.urls``, and so can simply be included
