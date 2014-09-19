@@ -9,6 +9,9 @@
 .. image:: https://badge.fury.io/py/django-registration.svg
     :target: https://pypi.python.org/pypi/django-registration/
 
+.. image:: https://pypip.in/download/django-registration/badge.svg
+    :target: https://pypi.python.org/pypi/django-registration/
+
 As of 19th September 2014 PyPi `handed over maintenance`_ of the "django-registration"
 package to `Andrew Cutler`_. Prior to this date, the PyPi package was maintained by
 `James Bennett`_.
@@ -29,4 +32,4 @@ directory. Full documentation is also `available online`_
 .. _`James Bennett`: https://bitbucket.org/ubernostrum/django-registration/wiki/Home
 .. _`_handed over maintenance: https://sourceforge.net/p/pypi/support-requests/407/
 .. _`Andrew Cutler`: https://github.com/macropin/django-registration
-.. _`_raise them here: https://github.com/macropin/django-registration/issues
+.. _`raise them here: https://github.com/macropin/django-registration/issues
