@@ -30,6 +30,6 @@ directory. Full documentation is also `available online`_
 
 .. _`available online`: https://django-registration-redux.readthedocs.org/
 .. _`James Bennett`: https://bitbucket.org/ubernostrum/django-registration/wiki/Home
-.. _`_handed over maintenance: https://sourceforge.net/p/pypi/support-requests/407/
+.. _`handed over maintenance`: https://sourceforge.net/p/pypi/support-requests/407/
 .. _`Andrew Cutler`: https://github.com/macropin/django-registration
-.. _`raise them here: https://github.com/macropin/django-registration/issues
+.. _`raise them here`: https://github.com/macropin/django-registration/issues
