@@ -24,7 +24,7 @@ setup(
     long_description=open('README.rst').read(),
     author='Andrew Cutler',
     author_email='macropin@gmail.com',
-    url='https://github.com/macropin/django-registration-redux',
+    url='https://github.com/macropin/django-registration',
     package_dir={'registration': 'registration'},
     packages=find_packages(exclude='test_app'),
     tests_require=['pytest-django'],

@@ -85,7 +85,7 @@ obtain it from the |project| repository, which is hosted at
 obtain the latest code and documentation, you'll need to have
 Git installed, at which point you can type::
 
-    git clone https://github.com/macropin/django-registration-redux.git
+    git clone https://github.com/macropin/django-registration.git
 
 You can also obtain a copy of a particular release of
 |project| by specifying the ``-b`` argument to ``git clone``;
@@ -93,7 +93,7 @@ each release is given a tag of the form ``vX.Y``, where "X.Y" is the
 release number. So, for example, to check out a copy of the |version|
 release, type::
 
-    git clone -b v1.0 https://github.com/macropin/django-registration-redux.git
+    git clone -b v1.0 https://github.com/macropin/django-registration.git
 
 In either case, this will create a copy of the |project|
 Git repository on your computer; you can then add the

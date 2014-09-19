@@ -19,7 +19,7 @@ General
     code. For the full terms, see the file ``LICENSE`` which came with
     your copy of |project|; if you did not receive a copy of
     this file, you can `view it online
-    <https://github.com/macropin/django-registration-redux/blob/master/LICENSE>`_.
+    <https://github.com/macropin/django-registration/blob/master/LICENSE>`_.
 
 **Why are the forms and models for the default backend not in the default backend?**
     The model and manager used by :ref:`the default backend
