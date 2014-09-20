@@ -11,7 +11,7 @@ emails and other sources.
 General
 -------
 
-**What license is django-registration under?**
+**What license is django-registration-redux under?**
     |project| is offered under a three-clause BSD-style
     license; this is `an OSI-approved open-source license
     <http://www.opensource.org/licenses/bsd-license.php>`_, and allows
@@ -57,10 +57,10 @@ General
 Installation and setup
 ----------------------
 
-**How do I install django-registration?**
+**How do I install django-registration-redux?**
     Full instructions are available in :ref:`the quick start guide <quickstart>`.
 
-**Do I need to put a copy of django-registration in every project I use it in?**
+**Do I need to put a copy of django-registration-redux in every project I use it in?**
     No; putting applications in your project directory is a very bad
     habit, and you should stop doing it. If you followed the
     instructions mentioned above, |project| was installed

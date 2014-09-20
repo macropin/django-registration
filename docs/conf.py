@@ -37,7 +37,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'django-registration'
+project = u'django-registration-redux'
 copyright = u'2007-2013, James Bennett. 2014, Andrew Cutler and others.'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -158,7 +158,7 @@ html_theme = 'default'
 #html_file_suffix = ''
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'django-registrationdoc'
+htmlhelp_basename = 'django-registration-reduxdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -172,7 +172,7 @@ htmlhelp_basename = 'django-registrationdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'django-registration.tex', u'django-registration Documentation',
+  ('index', 'django-registration-redux.tex', u'django-registration-redux Documentation',
    u'James Bennett', 'manual'),
 ]
 

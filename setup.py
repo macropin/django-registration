@@ -18,7 +18,7 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 setup(
-    name='django-registration',
+    name='django-registration-redux',
     version=get_version().replace(' ', '-'),
     description='An extensible user-registration application for Django',
     long_description=open('README.rst').read(),
