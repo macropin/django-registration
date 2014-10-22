@@ -6,9 +6,14 @@ Views which allow users to create and activate accounts.
 from django.shortcuts import redirect
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
+from django.conf import settings
+from django.utils.module_loading import import_string
 
 from registration import signals
-from registration.forms import RegistrationForm
+# from registration.forms import RegistrationForm
+
+REGISTRATION_FORM_PATH = getattr(settings, 'REGISTRATION_FORM', 'registration.forms.RegistrationForm')
+REGISTRATION_FORM = import_string( REGISTRATION_FORM_PATH )
 
 
 class _RequestPassingFormView(FormView):
@@ -63,7 +68,7 @@ class RegistrationView(_RequestPassingFormView):
 
     """
     disallowed_url = 'registration_disallowed'
-    form_class = RegistrationForm
+    form_class = REGISTRATION_FORM
     http_method_names = ['get', 'post', 'head', 'options', 'trace']
     success_url = None
     template_name = 'registration/registration_form.html'
