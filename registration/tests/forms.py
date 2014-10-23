@@ -39,7 +39,7 @@ class RegistrationFormTests(TestCase):
                       'email': 'foo@example.com',
                       'password1': 'foo',
                       'password2': 'bar'},
-            'error': ('__all__', ["The two password fields didn't match."])},
+            'error': ('password2', ["The two password fields didn't match."])},
             ]
 
         for invalid_dict in invalid_data_dicts:
