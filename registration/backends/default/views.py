@@ -6,6 +6,7 @@ from registration import signals
 from registration.models import RegistrationProfile
 from registration.views import ActivationView as BaseActivationView
 from registration.views import RegistrationView as BaseRegistrationView
+from registration.users import UserModel
 
 
 class RegistrationView(BaseRegistrationView):
