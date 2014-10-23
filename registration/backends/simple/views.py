@@ -15,11 +15,14 @@ class RegistrationView(BaseRegistrationView):
     up and logged in).
 
     """
-    def register(self, request, **cleaned_data):
-        username, email, password = cleaned_data['username'], cleaned_data['email'], cleaned_data['password1']
-        UserModel().objects.create_user(username, email, password)
+    def register(self, request, form):
+        new_user = form.save()
 
-        new_user = authenticate(username=username, password=password)
+        new_user = authenticate(
+            username=getattr(new_user, new_user.USERNAME_FIELD), 
+            password=form.cleaned_data['password1']
+        )
+        
         login(request, new_user)
         signals.user_registered.send(sender=self.__class__,
                                      user=new_user,

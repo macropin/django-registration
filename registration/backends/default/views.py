@@ -56,7 +56,7 @@ class RegistrationView(BaseRegistrationView):
     """
     SEND_ACTIVATION_EMAIL = getattr(settings, 'SEND_ACTIVATION_EMAIL', True)
 
-    def register(self, request, **cleaned_data):
+    def register(self, request, form):
         """
         Given a username, email address and password, register a new
         user account, which will initially be inactive.
@@ -80,13 +80,14 @@ class RegistrationView(BaseRegistrationView):
         class of this backend as the sender.
 
         """
-        username, email, password = cleaned_data['username'], cleaned_data['email'], cleaned_data['password1']
         if Site._meta.installed:
             site = Site.objects.get_current()
         else:
             site = RequestSite(request)
+                            
         new_user = RegistrationProfile.objects.create_inactive_user(
-            username, email, password, site,
+            new_user=form.save(),
+            site=site,
             send_email=self.SEND_ACTIVATION_EMAIL,
             request=request,
         )

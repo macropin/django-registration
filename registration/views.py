@@ -84,7 +84,7 @@ class RegistrationView(_RequestPassingFormView):
         return super(RegistrationView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, request, form):
-        new_user = self.register(request, **form.cleaned_data)
+        new_user = self.register(request, form)
         success_url = self.get_success_url(request, new_user)
 
         # success_url may be a simple string, or a tuple providing the
@@ -104,7 +104,7 @@ class RegistrationView(_RequestPassingFormView):
         """
         return True
 
-    def register(self, request, **cleaned_data):
+    def register(self, request, form):
         """
         Implement user-registration logic here. Access to both the
         request and the full cleaned_data of the registration form is
