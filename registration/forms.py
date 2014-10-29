@@ -47,7 +47,8 @@ class RegistrationForm(forms.Form):
         in use.
 
         """
-        existing = UserModel().objects.filter(username__iexact=self.cleaned_data['username'])
+        kwargs = {UserModel().USERNAME_FIELD: self.cleaned_data['username']}
+        existing = UserModel().objects.filter(**kwargs)
         if existing.exists():
             raise forms.ValidationError(_("A user with that username already exists."))
         else:
@@ -64,7 +65,14 @@ class RegistrationForm(forms.Form):
         if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
             if self.cleaned_data['password1'] != self.cleaned_data['password2']:
                 raise forms.ValidationError(_("The two password fields didn't match."))
+        if UserModel().USERNAME_FIELD == "email":
+            self.cleaned_data['email'] = self.cleaned_data['username']
         return self.cleaned_data
+
+    def __init__(self, *args, **kwargs):
+        super(RegistrationForm, self).__init__(*args, **kwargs)
+        if UserModel().USERNAME_FIELD == "email":
+            del(self.fields['email'])
 
 
 class RegistrationFormTermsOfService(RegistrationForm):
