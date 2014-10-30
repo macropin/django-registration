@@ -7,7 +7,10 @@ from django.shortcuts import redirect
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from django.conf import settings
-from django.utils.module_loading import import_string
+try:
+    from django.utils.module_loading import import_string
+except ImportError:
+    from django.utils.module_loading import import_by_path
 
 from registration import signals
 # from registration.forms import RegistrationForm
