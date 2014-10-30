@@ -10,7 +10,7 @@ from django.conf import settings
 try:
     from django.utils.module_loading import import_string
 except ImportError:
-    from django.utils.module_loading import import_by_path
+    from django.utils.module_loading import import_by_path as import_string
 
 from registration import signals
 # from registration.forms import RegistrationForm
