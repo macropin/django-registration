@@ -17,9 +17,9 @@ class RegistrationView(BaseRegistrationView):
     """
     def register(self, request, form):
         new_user = form.save()
-
+        username_field = getattr(new_user, 'USERNAME_FIELD', 'username')
         new_user = authenticate(
-            username=getattr(new_user, new_user.USERNAME_FIELD), 
+            username=getattr(new_user, username_field), 
             password=form.cleaned_data['password1']
         )
         
