@@ -92,7 +92,7 @@ class RegistrationView(BaseRegistrationView):
             new_user_instance = UserModel().objects.create_user(**form.cleaned_data)
                             
         new_user = RegistrationProfile.objects.create_inactive_user(
-            new_user=form.save(),
+            new_user=new_user_instance,
             site=site,
             send_email=self.SEND_ACTIVATION_EMAIL,
             request=request,
