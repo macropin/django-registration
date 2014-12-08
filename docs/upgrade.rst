@@ -4,7 +4,7 @@ Upgrade guide
 =============
 
 The |version| release of |project| is compatible with the legacy
-django-registration-redux (previously maintained by James Bennett)
+django-registration (previously maintained by James Bennett)
 
 
 Django version requirement
