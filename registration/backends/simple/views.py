@@ -15,6 +15,8 @@ class RegistrationView(BaseRegistrationView):
     up and logged in).
 
     """
+    success_url = 'registration_complete'
+
     def register(self, request, **cleaned_data):
         username, email, password = cleaned_data['username'], cleaned_data['email'], cleaned_data['password1']
         UserModel().objects.create_user(username, email, password)
@@ -40,6 +42,3 @@ class RegistrationView(BaseRegistrationView):
 
         """
         return getattr(settings, 'REGISTRATION_OPEN', True)
-
-    def get_success_url(self, request, user):
-        return ('registration_complete', (), {})
