@@ -14,7 +14,7 @@ class RegistrationAdmin(admin.ModelAdmin):
 
     def activate_users(self, request, queryset):
         """
-        Activates the selected users, if they are not alrady
+        Activates the selected users, if they are not already
         activated.
         
         """
