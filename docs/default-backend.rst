@@ -32,6 +32,19 @@ This backend makes use of the following settings:
     is optional, and a default of ``True`` will be assumed if it is
     not supplied.
 
+``INCLUDE_AUTH_URLS``
+    A boolean (either ``True`` or ``False``) indicating whether auth urls 
+    (mapped to ``django.contrib.auth.views``) should be included in the 
+    ``urlpatterns`` of the application backend.
+    
+``INCLUDE_REGISTER_URL``
+    A boolean (either ``True`` or ``False``) indicating whether the view 
+    for registering accounts should be included in the ``urlpatterns`` 
+    of the application backend.
+    
+``REGISTRATION_FORM``
+    A string dotted path to the desired registration form.
+
 By default, this backend uses
 :class:`registration.forms.RegistrationForm` as its form class for
 user registration; this can be overridden by passing the keyword
@@ -226,18 +239,16 @@ Additionally, :class:`RegistrationProfile` has a custom manager
 
       :rtype: ``None``
 
-   .. method:: create_inactive_user(username, email, password, site[, send_email, request])
+   .. method:: create_inactive_user(site, [new_user=None, send_email=True, request=None, **user_info])
 
       Creates a new, inactive user account and an associated instance
       of :class:`RegistrationProfile`, sends the activation email and
       returns the new ``User`` object representing the account.
 
-      :param username: The username to use for the new account.
-      :type username: string
-      :param email: The email address to use for the new account.
-      :type email: string
-      :param password: The password to use for the new account.
-      :type password: string
+      :param new_user: The user instance.
+      :type new_user: ``django.contrib.auth.models.AbstractBaseUser```      
+      :param user_info: The fields to use for the new account.
+      :type user_info: dict
       :param site: An object representing the site on which the
          account is being registered.
       :type site: ``django.contrib.sites.models.Site`` or
