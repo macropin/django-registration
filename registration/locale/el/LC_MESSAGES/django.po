@@ -65,7 +65,8 @@ msgid ""
 "Registration using free email addresses is prohibited. Please supply a "
 "different email address."
 msgstr ""
-"Η εγγραφή μέσω δωρεάν διευθύνσεων ηλεκτρονικού ταχυδρομείου απαγορεύεται. ""Παρακαλώ δώστε κάποια άλλη."
+"Η εγγραφή μέσω δωρεάν διευθύνσεων ηλεκτρονικού ταχυδρομείου απαγορεύεται. "
+"Παρακαλώ δώστε κάποια άλλη."
 
 #: models.py:188
 msgid "user"
