@@ -9,9 +9,9 @@
 
 <body>
 <p>
-    {% blocktrans %}
+    {% blocktrans with site_name=site.name %}
     You (or someone pretending to be you) have asked to register an account at
-    {{ site.name }}.  If this wasn't you, please ignore this email
+    {{ site_name }}.  If this wasn't you, please ignore this email
     and your address will be removed from our records.
     {% endblocktrans %}
 </p>
@@ -28,9 +28,9 @@
     </a>
 </p>
 <p>
-    {% blocktrans %}
+    {% blocktrans with site_name=site.name %}
     Sincerely,
-    {{ site.name }} Management
+    {{ site_name }} Management
     {% endblocktrans %}
 </p>
 </body>
