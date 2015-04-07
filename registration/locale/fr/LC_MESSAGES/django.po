@@ -8,65 +8,323 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-registration 0.8 alpha-1 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-01 14:33+0200\n"
+"POT-Creation-Date: 2015-04-04 19:35+0200\n"
 "PO-Revision-Date: 2010-07-01 14:30+0200\n"
-"Last-Translator: Patrick Samson <maxcom@laposte.net>\n"
+"Last-Translator: Jean-Marc Porcherot <jmarc.porcherot@free.fr>\n"
 "Language-Team: Français <fr@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\admin.py:23
+#: galerie/templates/registration/activate.html:5
+msgid "Account activation failed."
+msgstr "Erreur lors de l'activation du compte"
+
+#: galerie/templates/registration/activation_complete.html:4
+msgid "Account Activated"
+msgstr "Compte activé"
+
+#: galerie/templates/registration/activation_complete.html:8
+msgid "Your account is now activated."
+msgstr "Votre compte est activé"
+
+#: galerie/templates/registration/activation_complete.html:10
+msgid "You can log in."
+msgstr "Vous pouvez vous connecter."
+
+#: galerie/templates/registration/activation_email.html:7
+msgid "registration"
+msgstr "profil d'inscription"
+
+#: galerie/templates/registration/activation_email.html:12
+#, python-format
+msgid ""
+"\n"
+"    You (or someone pretending to be you) have asked to register an account "
+"at\n"
+"    %(site.name)s.  If this wasn't you, please ignore this email\n"
+"    and your address will be removed from our records.\n"
+"    "
+msgstr ""
+"\n"
+"    Vous (ou quelqu'un se faisant passer pour vous) a demandé à créer un "
+"compte sur le site\n"
+"    %(site.name)s.  Si ce n'étais pas vous, veuillez ignorer cet email\n"
+"    et votre adresse sera retirée de notre base.\n"
+"    "
+
+#: galerie/templates/registration/activation_email.html:19
+#, python-format
+msgid ""
+"\n"
+"    To activate this account, please click the following link within the "
+"next\n"
+"    %(expiration_days)s days:\n"
+"    "
+msgstr ""
+"\n"
+"    Pour activer votre compte, cliquez sur ce lien avant\n"
+"    %(expiration_days)s jours:\n"
+"    "
+
+#: galerie/templates/registration/activation_email.html:31
+msgid ""
+"\n"
+"    Sincerely,\n"
+"    %(site.name)s Management\n"
+"    "
+msgstr ""
+"\n"
+"    Cordialement,\n"
+"    "
+
+#: galerie/templates/registration/activation_email.txt:3
+#, python-format
+msgid ""
+"\n"
+"You (or someone pretending to be you) have asked to register an account at\n"
+"%(site.name)s.  If this wasn't you, please ignore this email\n"
+"and your address will be removed from our records.\n"
+msgstr ""
+"\n"
+"    Vous (ou quelqu'un se faisant passer pour vous) a demandé à créer un "
+"compte sur le site\n"
+"    %(site.name)s.  Si ce n'étais pas vous, veuillez ignorer cet email\n"
+"    et votre adresse sera retirée de notre base.\n"
+
+#: galerie/templates/registration/activation_email.txt:8
+#, python-format
+msgid ""
+"\n"
+"To activate this account, please click the following link within the next\n"
+"%(expiration_days)s days:\n"
+msgstr ""
+"\n"
+"    Pour activer votre compte, cliquez sur ce lien avant\n"
+"    %(expiration_days)s jours:\n"
+
+#: galerie/templates/registration/activation_email.txt:15
+msgid ""
+"\n"
+"Sincerely,\n"
+"%(site.name)s Management\n"
+msgstr ""
+"\n"
+"    Cordialement,\n"
+
+#: galerie/templates/registration/activation_email_subject.txt:1
+msgid "Account activation on"
+msgstr "Activation du compte sur"
+
+#: galerie/templates/registration/login.html:4
+#: galerie/templates/registration/login.html:16
+msgid "Log in"
+msgstr "Se connecter"
+
+#: galerie/templates/registration/login.html:20
+msgid "Forgot your password?"
+msgstr "Mot de passe oublié ?"
+
+#: galerie/templates/registration/login.html:20
+msgid "Reset it"
+msgstr "Le renouveler"
+
+#: galerie/templates/registration/login.html:21
+msgid "Not a member?"
+msgstr "Vous n'êtes pas membre ?"
+
+#: galerie/templates/registration/login.html:21
+msgid "Register"
+msgstr "Vous enregistrer"
+
+#: galerie/templates/registration/logout.html:4
+msgid "Logged out"
+msgstr "Déconnecté"
+
+#: galerie/templates/registration/logout.html:7
+msgid "Successfully logged out"
+msgstr "Déconnecté avec succès"
+
+#: galerie/templates/registration/password_change_done.html:4
+msgid "Password changed"
+msgstr "Mot de passe changé"
+
+#: galerie/templates/registration/password_change_done.html:7
+msgid "Password successfully changed!"
+msgstr "Mot de passe changé avec succès"
+
+#: galerie/templates/registration/password_change_form.html:4
+#: galerie/templates/registration/password_change_form.html:10
+msgid "Change password"
+msgstr "Mot de passe"
+
+#: galerie/templates/registration/password_reset_complete.html:4
+msgid "Password reset complete"
+msgstr "Changement du mot de passe effectué"
+
+#: galerie/templates/registration/password_reset_complete.html:8
+msgid "Your password has been reset!"
+msgstr "Votre mot de passe a été changé"
+
+#: galerie/templates/registration/password_reset_complete.html:9
+msgid "You may now"
+msgstr "Vous pouvez maintenant"
+
+#: galerie/templates/registration/password_reset_complete.html:9
+msgid "log in"
+msgstr "vous connecter"
+
+#: galerie/templates/registration/password_reset_confirm.html:4
+msgid "Confirm password reset"
+msgstr "Confirmer le renouvellement du mot de passe"
+
+#: galerie/templates/registration/password_reset_confirm.html:7
+msgid "Enter your new password below to reset your password:"
+msgstr "Saisissez votre nouveau mot de passe"
+
+#: galerie/templates/registration/password_reset_confirm.html:11
+msgid "Set password"
+msgstr "Modifiez votre mot de passe"
+
+#: galerie/templates/registration/password_reset_done.html:4
+msgid "Password reset"
+msgstr "Mot de passe modifié"
+
+#: galerie/templates/registration/password_reset_done.html:8
+msgid ""
+"\n"
+"    We have sent you an email with a link to reset your password.  Please "
+"check\n"
+"    your email and click the link to continue.\n"
+"    "
+msgstr ""
+"\n"
+"    Un lien vous a été envoyé pour le changement de votre mot de passe.  "
+"Veuillez consulter\n"
+"    votre boîte mail et cliquer sur le lien pour continuer.\n"
+"    "
+
+#: galerie/templates/registration/password_reset_email.html:4
+msgid "Greetings"
+msgstr "Cher"
+
+#: galerie/templates/registration/password_reset_email.html:6
+#, python-format
+msgid ""
+"\n"
+"You are receiving this email because you (or someone pretending to be you)\n"
+"requested that your password be reset on the %(domain)s site.  If you do "
+"not \n"
+"wish to reset your password, please ignore this message.\n"
+msgstr ""
+"\n"
+"Vous recevez ce courriel parce que vous (ou quelqu'un se faisant passer pour "
+"vous)\n"
+"avez demandé à renouveler votre mot de passe sur le site %(domain)s. \n"
+"Si vous ne souhaitez pas renouveler votre mot de passe, veuillez ignorer ce "
+"message.\n"
+
+#: galerie/templates/registration/password_reset_email.html:12
+msgid ""
+"\n"
+"To reset your password, please click the following link, or copy and paste "
+"it\n"
+"into your web browser:\n"
+msgstr ""
+"\n"
+"Pour renouveler votre mot de passe, veuillez cliquer sur le lien ci-"
+"dessous,\n"
+"ou le copier/coller dans la barre d'adresse de votre navigateur :\n"
+
+#: galerie/templates/registration/password_reset_email.html:19
+msgid "Your username, in case you've forgotten:"
+msgstr "Rappel de votre nom d'utilisateur, si vous l'avez oublié :"
+
+#: galerie/templates/registration/password_reset_email.html:22
+msgid "Best regards"
+msgstr "Cordialement"
+
+#: galerie/templates/registration/password_reset_email.html:23
+msgid "Management"
+msgstr ""
+
+#: galerie/templates/registration/password_reset_form.html:4
+#: galerie/templates/registration/password_reset_form.html:15
+msgid "Reset password"
+msgstr "Renouveler le mot de passe"
+
+#: galerie/templates/registration/password_reset_form.html:8
+msgid ""
+"\n"
+"    Forgot your password?  Enter your email in the form below and we'll send "
+"you instructions for creating a new one.\n"
+"    "
+msgstr ""
+"\n"
+"    Mot de passe oublié ?  Saisissez votre adresse mail ci-dessous afin que "
+"nous vous envoyions les instructions pour que vous puissiez le renouveler.\n"
+"    "
+
+#: galerie/templates/registration/registration_closed.html:4
+msgid "Registration is closed"
+msgstr "L'inscription est indisponible"
+
+#: galerie/templates/registration/registration_closed.html:7
+msgid "Sorry, but registration is closed at this moment. Come back later."
+msgstr ""
+"Désolé, l'inscription est indisponible pour le moment. Veuillez réessayer "
+"plus tard"
+
+#: galerie/templates/registration/registration_complete.html:4
+msgid "Activation email sent"
+msgstr "Le mail d'activation a été envoyé"
+
+#: galerie/templates/registration/registration_complete.html:7
+msgid "Please check your email to complete the registration process."
+msgstr ""
+"Veuillez consulter votre boîte mail pour terminer le processus "
+"d'enregistrement"
+
+#: galerie/templates/registration/registration_form.html:4
+msgid "Register for an account"
+msgstr "Créer un compte"
+
+#: galerie/templates/registration/registration_form.html:19
+msgid "Submit"
+msgstr "Envoyer"
+
 msgid "Activate users"
-msgstr "Active les utilisateurs"
+msgstr "Activer les utilisateurs"
 
-#: .\admin.py:43
-msgid "Re-send activation emails"
-msgstr "Envoie à nouveau les courriels d'activation"
-
-#: .\forms.py:35
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
-#: .\forms.py:36
 msgid "This value must contain only letters, numbers and underscores."
-msgstr "Cette valeur ne doit contenir que des lettres, chiffres et tirets bas."
+msgstr ""
+"Cette valeur ne doit contenir que des lettres, chiffres et tirets bas."
 
-#: .\forms.py:39
 msgid "Email address"
 msgstr "Adresse courriel"
 
-#: .\forms.py:41
-msgid "Password"
-msgstr "Mot de passe"
-
-#: .\forms.py:43
-msgid "Password (again)"
-msgstr "Mot de passe (vérification)"
-
-#: .\forms.py:55
 msgid "A user with that username already exists."
-msgstr "Un utilisateur avec ce nom existe déjà."
+msgstr "Ce nom d'utilisateur est déjà utilisé."
 
-#: .\forms.py:67
 msgid "The two password fields didn't match."
 msgstr "Les deux mots de passe ne correspondent pas."
 
-#: .\forms.py:78
 msgid "I have read and agree to the Terms of Service"
 msgstr "J'ai lu et accepté les Conditions Générales d'Utilisation"
 
-#: .\forms.py:79
 msgid "You must agree to the terms to register"
 msgstr "Vous devez accepter les conditions d'utilisation pour vous inscrire"
 
-#: .\forms.py:95
 msgid ""
 "This email address is already in use. Please supply a different email "
 "address."
-msgstr "Cette adresse courriel est déjà utilisée. Veuillez en indiquer une autre."
+msgstr ""
+"Cette adresse courriel est déjà utilisée. Veuillez en indiquer une autre."
 
-#: .\forms.py:122
 msgid ""
 "Registration using free email addresses is prohibited. Please supply a "
 "different email address."
@@ -74,18 +332,8 @@ msgstr ""
 "L'inscription avec adresse courriel de compte gratuit est interdite. "
 "Veuillez en indiquer une autre."
 
-#: .\models.py:165
 msgid "user"
 msgstr "utilisateur"
 
-#: .\models.py:166
-msgid "activation key"
-msgstr "clé d'activation"
-
-#: .\models.py:171
-msgid "registration profile"
-msgstr "profil d'inscription"
-
-#: .\models.py:172
 msgid "registration profiles"
 msgstr "profils d'inscription"
