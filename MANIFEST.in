@@ -7,3 +7,4 @@ include AUTHORS
 recursive-include docs *
 prune docs/_build
 recursive-include registration/locale *
+recursive-include registration/templates *
