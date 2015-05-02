@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
+from distutils.version import StrictVersion
 
+from django import get_version
 from django.test import TestCase
 
 from registration import forms
@@ -21,13 +23,17 @@ class RegistrationFormTests(TestCase):
         # permitted.
         UserModel().objects.create_user('alice', 'alice@example.com', 'secret')
 
+        bad_username_error = 'This value may contain only letters, numbers and @/./+/-/_ characters.'
+        if StrictVersion(get_version()) >= StrictVersion('1.8'):
+            bad_username_error = 'Enter a valid username. ' + bad_username_error
+
         invalid_data_dicts = [
             # Non-alphanumeric username.
             {'data': {'username': 'foo/bar',
                       'email': 'foo@example.com',
                       'password1': 'foo',
                       'password2': 'foo'},
-            'error': ('username', ["This value may contain only letters, numbers and @/./+/-/_ characters."])},
+            'error': ('username', [bad_username_error])},
             # Already-existing username.
             {'data': {'username': 'alice',
                       'email': 'alice@example.com',
