@@ -7,11 +7,13 @@ from django.shortcuts import redirect
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from django.conf import settings
+from django.utils.decorators import method_decorator
+from django.views.decorators.debug import sensitive_post_parameters
 try:
     from django.utils.module_loading import import_string
 except ImportError:
     from registration.utils import import_string
-    
+
 
 from registration import signals
 # from registration.forms import RegistrationForm
@@ -77,6 +79,7 @@ class RegistrationView(_RequestPassingFormView):
     success_url = None
     template_name = 'registration/registration_form.html'
 
+    @method_decorator(sensitive_post_parameters('password1', 'password2'))
     def dispatch(self, request, *args, **kwargs):
         """
         Check that user signup is allowed before even bothering to
