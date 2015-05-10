@@ -141,6 +141,11 @@ your project, and specifying one additional setting:
     that period, the account will remain permanently inactive and may
     be deleted by maintenance scripts provided in |project|.
 
+``REGISTRATION_DEFAULT_FROM_EMAIL``
+    Optional. If set, emails sent through the registration app will use this
+    string. Falls back to using Django's built-in ``DEFAULT_FROM_EMAIL``
+    setting.
+
 ``REGISTRATION_AUTO_LOGIN``
     Optional. If this is `True`, your users will automatically log in when they
     click on the activation link in their email. Defaults to `False`.
@@ -154,7 +159,7 @@ Django settings file::
         'registration',
         # ...other installed applications...
     )
-    
+
     ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
     REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
 
