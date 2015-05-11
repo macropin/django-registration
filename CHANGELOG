@@ -3,18 +3,24 @@ django-registration-redux changelog
 ===================================
 
 
-Version 1.2, 23 October, 2014
+Version 1.2, 11 May, 2015
 -------------------------------
+
+* BACKWARDS-INCOMPATIBLE CHANGE: An initial migration for Django > 1.7 has been provided.
+  South users will need to configure a null migration with (`SOUTH_MIGRATION_MODULES`).
 
 * BACKWARDS-INCOMPATIBLE CHANGE: A `base.html` template is now assumed to exist.
 
-* Feature: Added settings' options that allows to exlude the default auth urls (`INCLUDE_AUTH_URLS`) and register url (`INCLUDE_REGISTER_URL`).
+* Feature: Added settings' options that allows to exlude the default auth urls (`INCLUDE_AUTH_URLS`)
+  and register url (`INCLUDE_REGISTER_URL`).
 
-* Feature: Added support to dynamically import any chosen registration form using the settings option `REGISTRATION_FORM`.
+* Feature: Added support to dynamically import any chosen registration form using the settings option
+  `REGISTRATION_FORM`.
 
 * Enhancement: Make `RegistrationForm` a subclass of Django's `UserCreationForm`
 
-* Enhancement: Use registration form `save` method to create user instance, whenever form is a subclass of Django's `ModelForm`.
+* Enhancement: Use registration form `save` method to create user instance, whenever form is a subclass of
+  Django's `ModelForm`.
 
 
 
