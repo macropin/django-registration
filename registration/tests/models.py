@@ -24,10 +24,17 @@ class RegistrationModelTests(TestCase):
 
     def setUp(self):
         self.old_activation = getattr(settings, 'ACCOUNT_ACTIVATION_DAYS', None)
+        self.old_reg_email = getattr(settings, 'REGISTRATION_DEFAULT_FROM_EMAIL', None)
+        self.old_django_email = getattr(settings, 'DEFAULT_FROM_EMAIL', None)
+
         settings.ACCOUNT_ACTIVATION_DAYS = 7
+        settings.REGISTRATION_DEFAULT_FROM_EMAIL = 'registration@email.com'
+        settings.DEFAULT_FROM_EMAIL = 'django@email.com'
 
     def tearDown(self):
         settings.ACCOUNT_ACTIVATION_DAYS = self.old_activation
+        settings.REGISTRATION_DEFAULT_FROM_EMAIL = self.old_reg_email
+        settings.DEFAULT_FROM_EMAIL = self.old_django_email
 
     def test_profile_creation(self):
         """
@@ -56,6 +63,29 @@ class RegistrationModelTests(TestCase):
         profile.send_activation_email(Site.objects.get_current())
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].to, [self.user_info['email']])
+
+    def test_activation_email_uses_registration_default_from_email(self):
+        """
+        ``RegistrationProfile.send_activation_email`` sends an
+        email.
+
+        """
+        new_user = UserModel().objects.create_user(**self.user_info)
+        profile = RegistrationProfile.objects.create_profile(new_user)
+        profile.send_activation_email(Site.objects.get_current())
+        self.assertEqual(mail.outbox[0].from_email, 'registration@email.com')
+
+    def test_activation_email_falls_back_to_django_default_from_email(self):
+        """
+        ``RegistrationProfile.send_activation_email`` sends an
+        email.
+
+        """
+        settings.REGISTRATION_DEFAULT_FROM_EMAIL = None
+        new_user = UserModel().objects.create_user(**self.user_info)
+        profile = RegistrationProfile.objects.create_profile(new_user)
+        profile.send_activation_email(Site.objects.get_current())
+        self.assertEqual(mail.outbox[0].from_email, 'django@email.com')
 
     def test_user_creation(self):
         """

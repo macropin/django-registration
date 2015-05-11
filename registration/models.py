@@ -290,9 +290,10 @@ class RegistrationProfile(models.Model):
                   render_to_string('registration/activation_email_subject.txt', ctx_dict)
         # Email subject *must not* contain newlines
         subject = ''.join(subject.splitlines())
-
+        from_email = getattr(settings, 'REGISTRATION_DEFAULT_FROM_EMAIL', settings.DEFAULT_FROM_EMAIL)
         message_txt = render_to_string('registration/activation_email.txt', ctx_dict)
-        email_message = EmailMultiAlternatives(subject, message_txt, settings.DEFAULT_FROM_EMAIL, [self.user.email])
+
+        email_message = EmailMultiAlternatives(subject, message_txt, from_email, [self.user.email])
 
         try:
             message_html = render_to_string('registration/activation_email.html', ctx_dict)
