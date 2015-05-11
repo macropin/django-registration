@@ -191,16 +191,17 @@ Another ``URLConf`` is also provided -- at ``registration.auth_urls``
 those at a different location.
 
 
-Required templates
-~~~~~~~~~~~~~~~~~~
+Templates
+~~~~~~~~~
 
-In the default setup, you will need to create several templates
-required by |project|, and possibly additional templates
-required by views in ``django.contrib.auth``. The templates required
-by |project| are as follows; note that, with the exception
-of the templates used for account activation emails, all of these are
-rendered using a ``RequestContext`` and so will also receive any
-additional variables provided by `context processors
+The templates in |project| assume you have a `base.html` template in your
+project's template directory. Other than that, every template needed is
+included. You can extend and customize the included templates as needed. Some
+of the templates you'll probably want to customize are covered here:
+
+Note that, with the exception of the templates used for account activation
+emails, all of these are rendered using a ``RequestContext`` and so will also
+receive any additional variables provided by `context processors
 <http://docs.djangoproject.com/en/dev/ref/templates/api/#id1>`_.
 
 **registration/registration_form.html**
