@@ -35,12 +35,8 @@ supported:
     registration of new accounts is currently permitted. A default of
     ``True`` will be assumed if this setting is not supplied.
 
-Upon successful registration, the default redirect is to the URL
-specified by the ``get_absolute_url()`` method of the newly-created
-``User`` object; by default, this will be ``/users/<username>/``,
-although it can be overridden by implementing
-:meth:`~registration.views.RegistrationView.get_success_url()` on a
-subclass of ``registration.backends.simple.views.RegistrationView``.
+Upon successful registration, the default redirect is to the
+``registration_complete`` view (at ``accounts/register/complete/``).
 
 The default form class used for account registration will be
 :class:`registration.forms.RegistrationForm`, although this can be
