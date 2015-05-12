@@ -17,15 +17,21 @@ older Django releases may work, but are officially unsupported.
 Backwards-incompatible changes
 ------------------------------
 
-**Base Templates**
-A `base.html` template is now assumed to exist. Please ensure that your project provides on for |project| to inherit
-from.
+Version 1.2
+```````````
+  - **Native migration support breaks South compatibility**: An initial native
+    migration for Django > 1.7 has been provided. South users will need to
+    configure a null migration with (`SOUTH_MIGRATION_MODULES`) in
+    `settings.py` as shown below:
 
-**South Users**
-Initial migration for Django > 1.7 has been provided. South users will need to configure a null migration with
-(`SOUTH_MIGRATION_MODULES`) in `settings.py` as shown below:
+    ::
 
+        SOUTH_MIGRATION_MODULES = {
+            'registration': 'registration.south_migrations',
 
-    SOUTH_MIGRATION_MODULES = {
-        'registration': 'registration.south_migrations',
-    }
+Version 1.1
+```````````
+
+  - **base.html template required**: A `base.html` template is now assumed to
+    exist. Please ensure that your project provides one for |project| to inherit
+    from.
