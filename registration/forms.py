@@ -36,7 +36,7 @@ class RegistrationForm(UserCreationForm):
     
     class Meta:
         model  = User
-        fields = (User.USERNAME_FIELD, "email")
+        fields = (getattr(User, 'USERNAME_FIELD', 'username'), "email")
 
 
 class RegistrationFormTermsOfService(RegistrationForm):
