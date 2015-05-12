@@ -35,3 +35,6 @@ Version 1.1
   - **base.html template required**: A `base.html` template is now assumed to
     exist. Please ensure that your project provides one for |project| to inherit
     from.
+  - **HTML email templates**: |project| now uses HTML email templates. If you
+    previously customized text email templates, you need to do the same with
+    the new HTML templates.
