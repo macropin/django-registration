@@ -146,6 +146,10 @@ your project, and specifying one additional setting:
     string. Falls back to using Django's built-in ``DEFAULT_FROM_EMAIL``
     setting.
 
+``REGISTRATION_EMAIL_HTML``
+    Optional. If this is `False`, registration emails will be send in plain
+    text. If this is `True`, emails will be sent as HTML. Defaults to `True`.
+
 ``REGISTRATION_AUTO_LOGIN``
     Optional. If this is `True`, your users will automatically log in when they
     click on the activation link in their email. Defaults to `False`.
@@ -261,6 +265,10 @@ being used. This template has the following context:
 
 **registration/activation_email.txt**
 
+**IMPORTANT**: If you override this template, you must also override the HTML
+version (below), or disable HTML emails by adding
+``REGISTRATION_EMAIL_HTML = False`` to your settings.py.
+
 Used to generate the text body of the activation email. Should display a
 link the user can click to activate the account. This template has the
 following context:
@@ -287,17 +295,7 @@ following context:
 
 **registration/activation_email.html**
 
-(Optional) If present, this template is used to generate the html body of
-the activation email. Should display the same content as the text version
-of the activation email.
+This template is used to generate the html body of the activation email.
+Should display the same content as the text version of the activation email.
 
 The context available is the same as the text version of the template.
-
-
-To make use of the views from ``django.contrib.auth`` (which are set
-up for you by the default URLconf mentioned above), you will also need
-to create the templates required by those views. Consult `the
-documentation for Django's authentication system
-<http://docs.djangoproject.com/en/dev/topics/auth/>`_ for details
-regarding these templates. Sample templates are provided with this
-project.

@@ -295,12 +295,12 @@ class RegistrationProfile(models.Model):
 
         email_message = EmailMultiAlternatives(subject, message_txt, from_email, [self.user.email])
 
-        try:
-            message_html = render_to_string('registration/activation_email.html', ctx_dict)
-        except TemplateDoesNotExist:
-            message_html = None
-
-        if message_html:
-            email_message.attach_alternative(message_html, 'text/html')
+        if getattr(settings, 'REGISTRATION_EMAIL_HTML', True):
+            try:
+                message_html = render_to_string('registration/activation_email.html', ctx_dict)
+            except TemplateDoesNotExist:
+                pass
+            else:
+                email_message.attach_alternative(message_html, 'text/html')
 
         email_message.send()
