@@ -25,15 +25,18 @@ class RegistrationModelTests(TestCase):
     def setUp(self):
         self.old_activation = getattr(settings, 'ACCOUNT_ACTIVATION_DAYS', None)
         self.old_reg_email = getattr(settings, 'REGISTRATION_DEFAULT_FROM_EMAIL', None)
+        self.old_email_html = getattr(settings, 'REGISTRATION_EMAIL_HTML', None)
         self.old_django_email = getattr(settings, 'DEFAULT_FROM_EMAIL', None)
 
         settings.ACCOUNT_ACTIVATION_DAYS = 7
         settings.REGISTRATION_DEFAULT_FROM_EMAIL = 'registration@email.com'
+        settings.REGISTRATION_EMAIL_HTML = True
         settings.DEFAULT_FROM_EMAIL = 'django@email.com'
 
     def tearDown(self):
         settings.ACCOUNT_ACTIVATION_DAYS = self.old_activation
         settings.REGISTRATION_DEFAULT_FROM_EMAIL = self.old_reg_email
+        settings.REGISTRATION_EMAIL_HTML = self.old_email_html
         settings.DEFAULT_FROM_EMAIL = self.old_django_email
 
     def test_profile_creation(self):
@@ -86,6 +89,31 @@ class RegistrationModelTests(TestCase):
         profile = RegistrationProfile.objects.create_profile(new_user)
         profile.send_activation_email(Site.objects.get_current())
         self.assertEqual(mail.outbox[0].from_email, 'django@email.com')
+
+    def test_activation_email_is_html_by_default(self):
+        """
+        ``RegistrationProfile.send_activation_email`` sends an html
+        email by default.
+
+        """
+        new_user = UserModel().objects.create_user(**self.user_info)
+        profile = RegistrationProfile.objects.create_profile(new_user)
+        profile.send_activation_email(Site.objects.get_current())
+
+        self.assertEqual(len(mail.outbox[0].alternatives), 1)
+
+    def test_activation_email_is_plain_text_if_html_disabled(self):
+        """
+        ``RegistrationProfile.send_activation_email`` sends a plain
+        text email if settings.REGISTRATION_EMAIL_HTML is False.
+
+        """
+        settings.REGISTRATION_EMAIL_HTML = False
+        new_user = UserModel().objects.create_user(**self.user_info)
+        profile = RegistrationProfile.objects.create_profile(new_user)
+        profile.send_activation_email(Site.objects.get_current())
+
+        self.assertEqual(len(mail.outbox[0].alternatives), 0)
 
     def test_user_creation(self):
         """
