@@ -29,6 +29,9 @@ Version 1.2
         SOUTH_MIGRATION_MODULES = {
             'registration': 'registration.south_migrations',
 
+  - **register method in RegistrationView has different parameters**: The
+    parameters of the`register` method in RegistrationView have changed.
+
 Version 1.1
 ```````````
 
