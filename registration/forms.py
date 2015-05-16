@@ -16,6 +16,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 from registration.users import UserModel
 
+User = UserModel()
 
 class RegistrationForm(UserCreationForm):
     """
@@ -34,8 +35,8 @@ class RegistrationForm(UserCreationForm):
     email = forms.EmailField(label=_("E-mail"))
     
     class Meta:
-        model  = UserModel()
-        fields = ("username", "email")
+        model  = User
+        fields = (getattr(User, 'USERNAME_FIELD', 'username'), "email")
 
 
 class RegistrationFormTermsOfService(RegistrationForm):
@@ -61,7 +62,7 @@ class RegistrationFormUniqueEmail(RegistrationForm):
         site.
 
         """
-        if UserModel().objects.filter(email__iexact=self.cleaned_data['email']):
+        if User.objects.filter(email__iexact=self.cleaned_data['email']):
             raise forms.ValidationError(_("This email address is already in use. Please supply a different email address."))
         return self.cleaned_data['email']
 
