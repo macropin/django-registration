@@ -14,7 +14,7 @@ from django import forms
 from django.utils.translation  import ugettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm
 
-from registration.users import UserModel
+from registration.users import UserModel, UsernameField
 
 
 class RegistrationForm(UserCreationForm):
@@ -32,10 +32,10 @@ class RegistrationForm(UserCreationForm):
     """
     required_css_class = 'required'
     email = forms.EmailField(label=_("E-mail"))
-    
+
     class Meta:
         model  = UserModel()
-        fields = ("username", "email")
+        fields = (UsernameField(), "email")
 
 
 class RegistrationFormTermsOfService(RegistrationForm):

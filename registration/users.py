@@ -15,3 +15,7 @@ def UserModelString():
         return settings.AUTH_USER_MODEL
     except AttributeError:
         return 'auth.User'
+
+
+def UsernameField():
+    return getattr(UserModel(), 'USERNAME_FIELD', 'username')

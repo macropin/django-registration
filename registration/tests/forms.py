@@ -8,11 +8,15 @@ from registration import forms
 from registration.users import UserModel
 
 
+DJANGO_VERSION = StrictVersion(get_version())
+
+
 class RegistrationFormTests(TestCase):
     """
     Test the default registration forms.
 
     """
+
     def test_registration_form(self):
         """
         Test that ``RegistrationForm`` enforces username constraints
@@ -24,7 +28,7 @@ class RegistrationFormTests(TestCase):
         UserModel().objects.create_user('alice', 'alice@example.com', 'secret')
 
         bad_username_error = 'This value may contain only letters, numbers and @/./+/-/_ characters.'
-        if StrictVersion(get_version()) >= StrictVersion('1.8'):
+        if DJANGO_VERSION >= StrictVersion('1.8'):
             bad_username_error = 'Enter a valid username. ' + bad_username_error
 
         invalid_data_dicts = [
