@@ -1,9 +1,9 @@
 .. -*-restructuredtext-*-
 
-.. image:: https://travis-ci.org/macropin/django-registration.png?branch=master
+.. image:: https://travis-ci.org/macropin/django-registration.svg?branch=master
     :target: https://travis-ci.org/macropin/django-registration
 
-.. image:: https://coveralls.io/repos/macropin/django-registration/badge.png?branch=master
+.. image:: https://coveralls.io/repos/macropin/django-registration/badge.svg?branch=master
     :target: https://coveralls.io/r/macropin/django-registration/
 
 .. image:: https://badge.fury.io/py/django-registration-redux.svg

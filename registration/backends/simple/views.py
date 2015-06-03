@@ -2,9 +2,8 @@ from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 
-from registration import signals
-from registration.views import RegistrationView as BaseRegistrationView
-from registration.users import UserModel
+from ... import signals
+from ...views import RegistrationView as BaseRegistrationView
 
 
 class RegistrationView(BaseRegistrationView):
@@ -21,7 +20,7 @@ class RegistrationView(BaseRegistrationView):
         new_user = form.save()
         username_field = getattr(new_user, 'USERNAME_FIELD', 'username')
         new_user = authenticate(
-            username=getattr(new_user, username_field), 
+            username=getattr(new_user, username_field),
             password=form.cleaned_data['password1']
         )
 

@@ -1,17 +1,17 @@
 from django.contrib import admin
-from django.contrib.sites.models import RequestSite
-from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
 
-from registration.models import RegistrationProfile
-from registration.users import UsernameField
+from .models import RegistrationProfile
+from .users import UsernameField
+from .compat import RequestSite, is_app_installed, get_site_model
 
 
 class RegistrationAdmin(admin.ModelAdmin):
     actions = ['activate_users', 'resend_activation_email']
     list_display = ('user', 'activation_key_expired')
     raw_id_fields = ['user']
-    search_fields = ('user__{0}'.format(UsernameField()), 'user__first_name', 'user__last_name')
+    search_fields = ('user__{0}'.format(UsernameField()),
+                     'user__first_name', 'user__last_name')
 
     def activate_users(self, request, queryset):
         """
@@ -33,8 +33,8 @@ class RegistrationAdmin(admin.ModelAdmin):
         activated.
 
         """
-        if Site._meta.installed:
-            site = Site.objects.get_current()
+        if is_app_installed('django.contrib.sites'):
+            site = get_site_model().objects.get_current()
         else:
             site = RequestSite(request)
 
