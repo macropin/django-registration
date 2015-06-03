@@ -1,6 +1,6 @@
-from . import urls
+from registration import admin, urls
 
 
 def test():
-    assert(urls)
-    pass
+    assert admin
+    assert urls
