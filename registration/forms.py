@@ -11,10 +11,10 @@ from __future__ import unicode_literals
 
 
 from django import forms
-from django.utils.translation  import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm
 
-from registration.users import UserModel, UsernameField
+from .users import UserModel, UsernameField
 
 User = UserModel()
 

@@ -1,12 +1,11 @@
 from django.conf import settings
-from django.contrib.sites.models import RequestSite
-from django.contrib.sites.models import Site
 
-from registration import signals
-from registration.models import RegistrationProfile
-from registration.views import ActivationView as BaseActivationView
-from registration.views import RegistrationView as BaseRegistrationView
-from registration.users import UserModel
+from ... import signals
+from ...models import RegistrationProfile
+from ...views import ActivationView as BaseActivationView
+from ...views import RegistrationView as BaseRegistrationView
+from ...compat import RequestSite, is_app_installed, get_site_model
+from ...users import UserModel
 
 
 class RegistrationView(BaseRegistrationView):
@@ -82,16 +81,17 @@ class RegistrationView(BaseRegistrationView):
         class of this backend as the sender.
 
         """
-        if Site._meta.installed:
-            site = Site.objects.get_current()
+        if is_app_installed('django.contrib.sites'):
+            site = get_site_model().objects.get_current()
         else:
             site = RequestSite(request)
-        
+
         if hasattr(form, 'save'):
             new_user_instance = form.save()
         else:
-            new_user_instance = UserModel().objects.create_user(**form.cleaned_data)
-                            
+            new_user_instance = (UserModel().objects
+                                 .create_user(**form.cleaned_data))
+
         new_user = RegistrationProfile.objects.create_inactive_user(
             new_user=new_user_instance,
             site=site,
@@ -131,7 +131,8 @@ class ActivationView(BaseActivationView):
         the class of this backend as the sender.
 
         """
-        activated_user = RegistrationProfile.objects.activate_user(activation_key)
+        activated_user = (RegistrationProfile.objects
+                          .activate_user(activation_key))
         if activated_user:
             signals.user_activated.send(sender=self.__class__,
                                         user=activated_user,

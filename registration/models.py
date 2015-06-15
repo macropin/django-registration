@@ -14,7 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils import six
 
-from registration.users import UserModel, UserModelString
+from .users import UserModel, UserModelString
 
 
 try:
@@ -71,7 +71,8 @@ class RegistrationManager(models.Manager):
                 return user
         return False
 
-    def create_inactive_user(self, site, new_user=None, send_email=True, request=None, **user_info):
+    def create_inactive_user(self, site, new_user=None, send_email=True,
+                             request=None, **user_info):
         """
         Create a new, inactive ``User``, generate a
         ``RegistrationProfile`` and email its activation key to the
@@ -83,10 +84,10 @@ class RegistrationManager(models.Manager):
         it will be passed to the email template.
 
         """
-        if new_user == None:
+        if new_user is None:
             password = user_info.pop('password')
             new_user = UserModel()(**user_info)
-            new_user.set_password( password )
+            new_user.set_password(password)
         new_user.is_active = False
         new_user.save()
 
@@ -107,7 +108,8 @@ class RegistrationManager(models.Manager):
         pk and a random salt.
 
         """
-        salt = hashlib.sha1(six.text_type(random.random()).encode('ascii')).hexdigest()[:5]
+        salt = hashlib.sha1(six.text_type(random.random())
+                            .encode('ascii')).hexdigest()[:5]
         salt = salt.encode('ascii')
         user_pk = str(user.pk)
         if isinstance(user_pk, six.text_type):
@@ -220,7 +222,8 @@ class RegistrationProfile(models.Model):
            method returns ``True``.
 
         """
-        expiration_date = datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
+        expiration_date = datetime.timedelta(
+            days=settings.ACCOUNT_ACTIVATION_DAYS)
         return (self.activation_key == self.ACTIVATED or
                 (self.user.date_joined + expiration_date <= datetime_now()))
     activation_key_expired.boolean = True
@@ -264,7 +267,7 @@ class RegistrationProfile(models.Model):
             is installed, this may be an instance of either
             ``django.contrib.sites.models.Site`` (if the sites
             application is installed) or
-            ``django.contrib.sites.models.RequestSite`` (if
+            ``django.contrib.sites.requests.RequestSite`` (if
             not). Consult the documentation for the Django sites
             framework for details regarding these objects' interfaces.
 
@@ -286,18 +289,23 @@ class RegistrationProfile(models.Model):
             'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
             'site': site,
         })
-        subject = getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '') + \
-                  render_to_string('registration/activation_email_subject.txt', ctx_dict)
+        subject = (getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '') +
+                   render_to_string(
+                       'registration/activation_email_subject.txt', ctx_dict))
         # Email subject *must not* contain newlines
         subject = ''.join(subject.splitlines())
-        from_email = getattr(settings, 'REGISTRATION_DEFAULT_FROM_EMAIL', settings.DEFAULT_FROM_EMAIL)
-        message_txt = render_to_string('registration/activation_email.txt', ctx_dict)
+        from_email = getattr(settings, 'REGISTRATION_DEFAULT_FROM_EMAIL',
+                             settings.DEFAULT_FROM_EMAIL)
+        message_txt = render_to_string('registration/activation_email.txt',
+                                       ctx_dict)
 
-        email_message = EmailMultiAlternatives(subject, message_txt, from_email, [self.user.email])
+        email_message = EmailMultiAlternatives(subject, message_txt,
+                                               from_email, [self.user.email])
 
         if getattr(settings, 'REGISTRATION_EMAIL_HTML', True):
             try:
-                message_html = render_to_string('registration/activation_email.html', ctx_dict)
+                message_html = render_to_string(
+                    'registration/activation_email.html', ctx_dict)
             except TemplateDoesNotExist:
                 pass
             else:

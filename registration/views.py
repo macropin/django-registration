@@ -9,17 +9,14 @@ from django.views.generic.edit import FormView
 from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
-try:
-    from django.utils.module_loading import import_string
-except ImportError:
-    from registration.utils import import_string
 
+from .compat import import_string
+# from .forms import RegistrationForm
+# from . import signals
 
-from registration import signals
-# from registration.forms import RegistrationForm
-
-REGISTRATION_FORM_PATH = getattr(settings, 'REGISTRATION_FORM', 'registration.forms.RegistrationForm')
-REGISTRATION_FORM = import_string( REGISTRATION_FORM_PATH )
+REGISTRATION_FORM_PATH = getattr(settings, 'REGISTRATION_FORM',
+                                 'registration.forms.RegistrationForm')
+REGISTRATION_FORM = import_string(REGISTRATION_FORM_PATH)
 
 
 class _RequestPassingFormView(FormView):
