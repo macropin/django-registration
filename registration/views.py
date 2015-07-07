@@ -16,7 +16,6 @@ from .compat import import_string
 
 REGISTRATION_FORM_PATH = getattr(settings, 'REGISTRATION_FORM',
                                  'registration.forms.RegistrationForm')
-REGISTRATION_FORM = import_string(REGISTRATION_FORM_PATH)
 
 
 class _RequestPassingFormView(FormView):
@@ -71,7 +70,7 @@ class RegistrationView(_RequestPassingFormView):
 
     """
     disallowed_url = 'registration_disallowed'
-    form_class = REGISTRATION_FORM
+
     http_method_names = ['get', 'post', 'head', 'options', 'trace']
     success_url = None
     template_name = 'registration/registration_form.html'
@@ -86,6 +85,9 @@ class RegistrationView(_RequestPassingFormView):
         if not self.registration_allowed(request):
             return redirect(self.disallowed_url)
         return super(RegistrationView, self).dispatch(request, *args, **kwargs)
+
+    def get_form_class(self, request=None):
+        return import_string(REGISTRATION_FORM_PATH)
 
     def form_valid(self, request, form):
         new_user = self.register(request, form)
