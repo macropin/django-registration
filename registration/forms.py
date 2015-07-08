@@ -16,8 +16,6 @@ from django.contrib.auth.forms import UserCreationForm
 
 from .users import UserModel, UsernameField
 
-User = UserModel()
-
 
 class RegistrationForm(UserCreationForm):
     """
@@ -36,7 +34,7 @@ class RegistrationForm(UserCreationForm):
     email = forms.EmailField(label=_("E-mail"))
 
     class Meta:
-        model = User
+        model = UserModel()
         fields = (UsernameField(), "email")
 
 
