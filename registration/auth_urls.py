@@ -32,12 +32,9 @@ from django.contrib.auth import views as auth_views
 
 
 def login_user(request, template_name):
-    response = auth_views.login(request, template_name)
-    if request.method == 'POST':
-        if request.POST.get('remember_me', None) is None:
-            # user's session cookie will expire when the browser is closed
-            request.session.set_expiry(0)
-    return response
+    if not request.POST.has_key('remember_me'):
+        request.session.set_expiry(0)
+    return auth_views.login(request, template_name)
 
 
 urlpatterns = patterns('',
