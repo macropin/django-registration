@@ -46,12 +46,13 @@ class RegistrationManager(models.Manager):
         If the key is not valid or has expired, return ``False``.
 
         If the key is valid but the ``User`` is already active,
-        return ``False``.
+        return ``User``.
+
+        If the key is valid but the ``User`` is inactive, return ``False``.
 
         To prevent reactivation of an account which has been
-        deactivated by site administrators, the activation key is
-        reset to the string constant ``RegistrationProfile.ACTIVATED``
-        after successful activation.
+        deactivated by site administrators, ``RegistrationProfile.activated``
+        is set to ``True`` after successful activation.
 
         """
         # Make sure the key we're trying conforms to the pattern of a
@@ -61,12 +62,26 @@ class RegistrationManager(models.Manager):
             try:
                 profile = self.get(activation_key=activation_key)
             except self.model.DoesNotExist:
+                # This is an actual activation failure as the activation
+                # key does not exist. It is *not* the scenario where an
+                # already activated User reuses an activation key.
                 return False
+
+            if profile.activated:
+                # The User has already activated and is trying to activate
+                # again. If the User is active, return the User. Else,
+                # return False as the User has been deactivated by a site
+                # administrator.
+                if profile.user.is_active:
+                    return profile.user
+                else:
+                    return False
+
             if not profile.activation_key_expired():
                 user = profile.user
                 user.is_active = True
                 user.save()
-                profile.activation_key = self.model.ACTIVATED
+                profile.activated = True
                 profile.save()
                 return user
         return False
@@ -186,10 +201,9 @@ class RegistrationProfile(models.Model):
     account registration and activation.
 
     """
-    ACTIVATED = "ALREADY_ACTIVATED"
-
     user = models.OneToOneField(UserModelString(), verbose_name=_('user'))
     activation_key = models.CharField(_('activation key'), max_length=40)
+    activated = models.BooleanField(default=False)
 
     objects = RegistrationManager()
 
@@ -208,10 +222,9 @@ class RegistrationProfile(models.Model):
 
         Key expiration is determined by a two-step process:
 
-        1. If the user has already activated, the key will have been
-           reset to the string constant ``ACTIVATED``. Re-activating
-           is not permitted, and so this method returns ``True`` in
-           this case.
+        1. If the user has already activated, ``self.activated`` will
+           be ``True``. Re-activating is not permitted, and so this
+           method returns ``True`` in this case.
 
         2. Otherwise, the date the user signed up is incremented by
            the number of days specified in the setting
@@ -224,7 +237,7 @@ class RegistrationProfile(models.Model):
         """
         expiration_date = datetime.timedelta(
             days=settings.ACCOUNT_ACTIVATION_DAYS)
-        return (self.activation_key == self.ACTIVATED or
+        return (self.activated or
                 (self.user.date_joined + expiration_date <= datetime_now()))
     activation_key_expired.boolean = True
 

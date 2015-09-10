@@ -33,15 +33,15 @@ This backend makes use of the following settings:
     not supplied.
 
 ``INCLUDE_AUTH_URLS``
-    A boolean (either ``True`` or ``False``) indicating whether auth urls 
-    (mapped to ``django.contrib.auth.views``) should be included in the 
+    A boolean (either ``True`` or ``False``) indicating whether auth urls
+    (mapped to ``django.contrib.auth.views``) should be included in the
     ``urlpatterns`` of the application backend.
-    
+
 ``INCLUDE_REGISTER_URL``
-    A boolean (either ``True`` or ``False``) indicating whether the view 
-    for registering accounts should be included in the ``urlpatterns`` 
+    A boolean (either ``True`` or ``False``) indicating whether the view
+    for registering accounts should be included in the ``urlpatterns``
     of the application backend.
-    
+
 ``REGISTRATION_FORM``
     A string dotted path to the desired registration form.
 
@@ -107,15 +107,14 @@ the database, using the following model:
    .. attribute:: activation_key
 
       A 40-character ``CharField``, storing the activation key for the
-      account. Initially, the activation key is the hexdigest of a
-      SHA1 hash; after activation, this is reset to :attr:`ACTIVATED`.
+      account. The activation key is the hexdigest of a SHA1 hash.
 
-   Additionally, one class attribute exists:
+   .. attribute:: activated
 
-   .. attribute:: ACTIVATED
-
-      A constant string used as the value of :attr:`activation_key`
-      for accounts which have been activated.
+      A ``BooleanField``, storing whether or not the the User has activated
+      their account. Storing this independent from ``self.user.is_active``
+      allows accounts to be deactivated and prevent being reactivated without
+      authorization.
 
    And the following methods:
 
@@ -125,7 +124,7 @@ the database, using the following model:
       and returns a boolean (``True`` if expired, ``False``
       otherwise). Uses the following algorithm:
 
-      1. If :attr:`activation_key` is :attr:`ACTIVATED`, the account
+      1. If :attr:`activated` is ``True``, the account
          has already been activated and so the key is considered to
          have expired.
 
@@ -205,10 +204,9 @@ Additionally, :class:`RegistrationProfile` has a custom manager
       Validates ``activation_key`` and, if valid, activates the
       associated account by setting its ``is_active`` field to
       ``True``. To prevent re-activation of accounts, the
-      :attr:`~RegistrationProfile.activation_key` of the
+      :attr:`~RegistrationProfile.activated` of the
       :class:`RegistrationProfile` for the account will be set to
-      :attr:`RegistrationProfile.ACTIVATED` after successful
-      activation.
+      ``True`` after successful activation.
 
       Returns the ``User`` instance representing the account if
       activation is successful, ``False`` otherwise.
@@ -246,7 +244,7 @@ Additionally, :class:`RegistrationProfile` has a custom manager
       returns the new ``User`` object representing the account.
 
       :param new_user: The user instance.
-      :type new_user: ``django.contrib.auth.models.AbstractBaseUser```      
+      :type new_user: ``django.contrib.auth.models.AbstractBaseUser```
       :param user_info: The fields to use for the new account.
       :type user_info: dict
       :param site: An object representing the site on which the

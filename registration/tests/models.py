@@ -196,7 +196,7 @@ class RegistrationModelTests(TestCase):
         self.failUnless(activated.is_active)
 
         profile = RegistrationProfile.objects.get(user=new_user)
-        self.assertEqual(profile.activation_key, RegistrationProfile.ACTIVATED)
+        self.assertTrue(profile.activated)
 
     def test_expired_activation(self):
         """
@@ -221,8 +221,7 @@ class RegistrationModelTests(TestCase):
         self.failIf(new_user.is_active)
 
         profile = RegistrationProfile.objects.get(user=new_user)
-        self.assertNotEqual(profile.activation_key,
-                            RegistrationProfile.ACTIVATED)
+        self.assertFalse(profile.activated)
 
     def test_activation_invalid_key(self):
         """
@@ -243,8 +242,24 @@ class RegistrationModelTests(TestCase):
         RegistrationProfile.objects.activate_user(profile.activation_key)
 
         profile = RegistrationProfile.objects.get(user=new_user)
-        self.failIf(RegistrationProfile.objects
-                    .activate_user(profile.activation_key))
+        self.assertEqual(RegistrationProfile.objects.activate_user(profile.activation_key), new_user)
+
+    def test_activation_deactivated(self):
+        """
+        Attempting to re-activate a deactivated account fails.
+        """
+        new_user = RegistrationProfile.objects.create_inactive_user(
+            site=Site.objects.get_current(), **self.user_info)
+        profile = RegistrationProfile.objects.get(user=new_user)
+        RegistrationProfile.objects.activate_user(profile.activation_key)
+
+        # Deactivate the new user.
+        new_user.is_active = False
+        new_user.save()
+
+        # Try to activate again and ensure False is returned.
+        failed = RegistrationProfile.objects.activate_user(profile.activation_key)
+        self.assertFalse(failed)
 
     def test_activation_nonexistent_key(self):
         """
