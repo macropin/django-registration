@@ -4,7 +4,7 @@ django-registration-redux changelog
 
 
 Version 1.2, 11 May, 2015
--------------------------------
+-------------------------
 
 * BACKWARDS-INCOMPATIBLE CHANGE: When overriding the
   `registration/activation_email.txt` template, you must also now override the

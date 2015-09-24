@@ -30,7 +30,8 @@ setup(
     tests_require=['pytest-django'],
     cmdclass={'test': PyTest},
     include_package_data=True,
-    classifiers=['Development Status :: 5 - Production/Stable',
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
