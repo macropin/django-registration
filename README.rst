@@ -37,16 +37,15 @@ directory. Full documentation is also `available online`_
 Installation
 ------------
 
-To install it, run the following command inside this directory::
-
-    python setup.py install
-
-
 Install, upgrade and uninstall django-registration-redux with these commands::
 
     pip install django-registration-redux
     pip install --upgrade django-registration-redux
     pip uninstall django-registration-redux
+
+To install it manually, run the following command inside this source directory::
+
+    python setup.py install
 
 
 Or if you'd prefer you can simply place the included ``registration``
