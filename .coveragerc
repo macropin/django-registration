@@ -1,4 +1,5 @@
 [run]
+branch = True
 omit = 
   */migrations/*
   */south_migrations/*
