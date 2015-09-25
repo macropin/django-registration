@@ -93,3 +93,20 @@ class RegistrationFormNoFreeEmail(RegistrationForm):
         if email_domain in self.bad_domains:
             raise forms.ValidationError(_("Registration using free email addresses is prohibited. Please supply a different email address."))
         return self.cleaned_data['email']
+
+
+class RegistrationFormTOSAndUniqueEmail(RegistrationFormTermsOfService, RegistrationFormUniqueEmail):
+    """
+    Subclasses both ``RegistrationFormTermsOfService`` and ``RegistrationFormUniqueEmail`` 
+    which forces a unique email and an agreement of the terms of service.
+    """
+    pass
+
+
+class RegistrationFormTOSAndNoFreeEmail(RegistrationFormTermsOfService, RegistrationFormNoFreeEmail):
+    """
+    Subclasses both ``RegistrationFormTermsOfService`` and ``RegistrationFormNoFreeEmail`` 
+    enforcing a terms of service agreement and validates that an email
+    is also not from a popular free webmail service.
+    """
+    pass
