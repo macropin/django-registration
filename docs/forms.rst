@@ -98,3 +98,22 @@ mind, but may also be useful in other situations.
 
    To change this, subclass this form and set the class attribute
    ``bad_domains`` to a list of domains you wish to disallow.
+
+
+Multiple Form Inheritance
+----------------
+
+Multiple :class:`RegistrationForm` subclasses can be inherited into
+one class.  For instance, if your project requires a terms of service 
+and a unique email upon registration, those subclasses can be inherited 
+into a single class.  That would look like this:
+
+   class CustomForm(RegistrationFormTermsOfService, RegistrationFormUniqueEmail):
+      pass
+
+NOTE: If inheriting both :class:`RegistrationFormNoFreeEmail` and 
+:class:`RegistrationFormUniqueEmail`.  :class:`RegistrationFormNoFreeEmail` must
+be inherited first, like this:
+
+   class CustomForm(RegistrationFormNoFreeEmail, RegistrationFormUniqueEmail):
+      pass
