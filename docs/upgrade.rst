@@ -3,8 +3,8 @@
 Upgrade guide
 =============
 
-The |version| release of |project| is compatible with the legacy
-django-registration (previously maintained by James Bennett)
+The |version| release of |project| is not compatible with the legacy
+django-registration (previously maintained by James Bennett).
 
 
 Django version requirement
