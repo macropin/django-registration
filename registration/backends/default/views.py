@@ -1,11 +1,14 @@
 from django.conf import settings
-from django.contrib.sites.shortcuts import get_current_site
+try:
+    from django.contrib.sites.shortcuts import get_current_site
+except ImportError:
+    from django.contrib.sites.models import get_current_site
 
 from ... import signals
 from ...models import RegistrationProfile
 from ...views import ActivationView as BaseActivationView
 from ...views import RegistrationView as BaseRegistrationView
-from ...compat import RequestSite, is_app_installed, get_site_model
+from ...compat import RequestSite, is_app_installed
 from ...users import UserModel
 
 
