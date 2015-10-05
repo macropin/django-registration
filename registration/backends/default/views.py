@@ -1,10 +1,14 @@
 from django.conf import settings
+try:
+    from django.contrib.sites.shortcuts import get_current_site
+except ImportError:
+    from django.contrib.sites.models import get_current_site
 
 from ... import signals
 from ...models import RegistrationProfile
 from ...views import ActivationView as BaseActivationView
 from ...views import RegistrationView as BaseRegistrationView
-from ...compat import RequestSite, is_app_installed, get_site_model
+from ...compat import RequestSite, is_app_installed
 from ...users import UserModel
 
 
@@ -81,10 +85,7 @@ class RegistrationView(BaseRegistrationView):
         class of this backend as the sender.
 
         """
-        if is_app_installed('django.contrib.sites'):
-            site = get_site_model().objects.get_current()
-        else:
-            site = RequestSite(request)
+        site = get_current_site(request)
 
         if hasattr(form, 'save'):
             new_user_instance = form.save()
