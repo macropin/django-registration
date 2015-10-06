@@ -320,7 +320,6 @@ class RegistrationModelTests(TestCase):
     def test_resend_activation_email(self):
         """
         Test resending activation email to an existing user
-
         """
         user = RegistrationProfile.objects.create_inactive_user(
             site=Site.objects.get_current(), send_email=False, **self.user_info)
@@ -343,8 +342,42 @@ class RegistrationModelTests(TestCase):
     def test_resend_activation_email_nonexistent_user(self):
         """
         Test resending activation email to a nonexisting user
-
         """
+        self.assertFalse(RegistrationProfile.objects.resend_activation_mail(
+            email=self.user_info['email'],
+            site=Site.objects.get_current(),
+        ))
+        self.assertEqual(len(mail.outbox), 0)
+
+    def test_resend_activation_email_activated_user(self):
+        """
+        Test the scenario where user tries to resend activation code
+        to the already activated user's email
+        """
+        user = RegistrationProfile.objects.create_inactive_user(
+            site=Site.objects.get_current(), send_email=False, **self.user_info)
+
+        profile = RegistrationProfile.objects.get(user=user)
+        activated = (RegistrationProfile.objects
+                     .activate_user(profile.activation_key))
+        self.assertTrue(activated.is_active)
+
+        self.assertFalse(RegistrationProfile.objects.resend_activation_mail(
+            email=self.user_info['email'],
+            site=Site.objects.get_current(),
+        ))
+        self.assertEqual(len(mail.outbox), 0)
+
+    def test_resend_activation_email_expired_user(self):
+        new_user = RegistrationProfile.objects.create_inactive_user(
+            site=Site.objects.get_current(), send_email=False, **self.user_info)
+        new_user.date_joined -= datetime.timedelta(
+            days=settings.ACCOUNT_ACTIVATION_DAYS + 1)
+        new_user.save()
+
+        profile = RegistrationProfile.objects.get(user=new_user)
+        self.assertTrue(profile.activation_key_expired())
+
         self.assertFalse(RegistrationProfile.objects.resend_activation_mail(
             email=self.user_info['email'],
             site=Site.objects.get_current(),
