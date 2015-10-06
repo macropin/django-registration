@@ -129,10 +129,7 @@ class RegistrationManager(models.Manager):
         """
         profile = self.model(user=user, **profile_info)
 
-        if 'activation_key' in profile_info:
-            profile.activation_key = profile_info.pop('activation_key')
-
-        else:
+        if 'activation_key' not in profile_info:
             profile.create_new_activation_key(save=False)
 
         profile.save()

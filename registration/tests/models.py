@@ -369,6 +369,10 @@ class RegistrationModelTests(TestCase):
         self.assertEqual(len(mail.outbox), 0)
 
     def test_resend_activation_email_expired_user(self):
+        """
+        Test the scenario where user tries to resend activation code
+        to the expired user's email
+        """
         new_user = RegistrationProfile.objects.create_inactive_user(
             site=Site.objects.get_current(), send_email=False, **self.user_info)
         new_user.date_joined -= datetime.timedelta(
