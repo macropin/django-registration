@@ -152,6 +152,9 @@ class RegistrationManager(models.Manager):
         except ObjectDoesNotExist:
             return False
 
+        if profile.activated or profile.activation_key_expired():
+            return False
+
         profile.create_new_activation_key()
         profile.send_activation_email(site, request)
 
