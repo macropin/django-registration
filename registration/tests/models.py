@@ -316,3 +316,37 @@ class RegistrationModelTests(TestCase):
         self.assertEqual(RegistrationProfile.objects.count(), 1)
         self.assertRaises(UserModel().DoesNotExist,
                           UserModel().objects.get, username='bob')
+
+    def test_resend_activation_email(self):
+        """
+        Test resending activation email to an existing user
+
+        """
+        user = RegistrationProfile.objects.create_inactive_user(
+            site=Site.objects.get_current(), send_email=False, **self.user_info)
+        self.assertEqual(len(mail.outbox), 0)
+
+        profile = RegistrationProfile.objects.get(user=user)
+        orig_activation_key = profile.activation_key
+
+        self.assertTrue(RegistrationProfile.objects.resend_activation_mail(
+            email=self.user_info['email'],
+            site=Site.objects.get_current(),
+        ))
+
+        profile = RegistrationProfile.objects.get(pk=profile.pk)
+        new_activation_key = profile.activation_key
+
+        self.assertNotEqual(orig_activation_key, new_activation_key)
+        self.assertEqual(len(mail.outbox), 1)
+
+    def test_resend_activation_email_nonexistent_user(self):
+        """
+        Test resending activation email to a nonexisting user
+
+        """
+        self.assertFalse(RegistrationProfile.objects.resend_activation_mail(
+            email=self.user_info['email'],
+            site=Site.objects.get_current(),
+        ))
+        self.assertEqual(len(mail.outbox), 0)

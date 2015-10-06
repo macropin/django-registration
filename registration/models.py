@@ -6,6 +6,7 @@ import random
 import re
 
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMultiAlternatives
 from django.db import models, transaction
 from django.template import RequestContext, TemplateDoesNotExist
@@ -126,21 +127,32 @@ class RegistrationManager(models.Manager):
         pk and a random salt.
 
         """
+        profile = RegistrationProfile(user=user, **profile_info)
+
         if 'activation_key' in profile_info:
-            activation_key = profile_info.pop('activation_key')
+            profile.activation_key = profile_info.pop('activation_key')
 
         else:
-            salt = hashlib.sha1(six.text_type(random.random())
-                                .encode('ascii')).hexdigest()[:5]
-            salt = salt.encode('ascii')
-            user_pk = str(user.pk)
-            if isinstance(user_pk, six.text_type):
-                user_pk = user_pk.encode('utf-8')
-            activation_key = hashlib.sha1(salt+user_pk).hexdigest()
+            profile.create_new_activation_key(save=False)
 
-        return self.create(user=user,
-                           activation_key=activation_key,
-                           **profile_info)
+        profile.save()
+
+        return profile
+
+    def resend_activation_mail(self, email, site, request=None):
+        """
+        Resets activation key for the user and resends activation email.
+        """
+        try:
+            profile = self.get(user__email=email)
+        except ObjectDoesNotExist:
+            return False
+
+        profile.create_new_activation_key()
+        profile.send_activation_email(site, request)
+
+        return True
+
 
     def delete_expired_users(self):
         """
@@ -222,6 +234,21 @@ class RegistrationProfile(models.Model):
 
     def __str__(self):
         return "Registration information for %s" % self.user
+
+    def create_new_activation_key(self, save=True):
+        """
+        Create a new activation key for the user
+        """
+        salt = hashlib.sha1(six.text_type(random.random())
+                            .encode('ascii')).hexdigest()[:5]
+        salt = salt.encode('ascii')
+        user_pk = str(self.user.pk)
+        if isinstance(user_pk, six.text_type):
+            user_pk = user_pk.encode('utf-8')
+        self.activation_key = hashlib.sha1(salt+user_pk).hexdigest()
+        if save:
+            self.save()
+        return self.activation_key
 
     def activation_key_expired(self):
         """
