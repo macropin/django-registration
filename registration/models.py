@@ -131,7 +131,7 @@ class RegistrationManager(models.Manager):
         pk and a random salt.
 
         """
-        profile = RegistrationProfile(user=user, **profile_info)
+        profile = self.model(user=user, **profile_info)
 
         if 'activation_key' in profile_info:
             profile.activation_key = profile_info.pop('activation_key')
