@@ -32,7 +32,7 @@ from django.contrib.auth import views as auth_views
 
 
 def login_user(request, template_name):
-    if not 'remember_me' in request.POST:
+    if request.method == 'POST' and not 'remember_me' in request.POST:
         request.session.set_expiry(0)
     return auth_views.login(request, template_name)
 
