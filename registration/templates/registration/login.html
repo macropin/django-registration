@@ -7,6 +7,7 @@
 <form method="post" action="">
     {% csrf_token %}
     {{ form.as_p }}
+    <p><label><input type="checkbox" name="remember_me" />{% trans "Remember Me" %}</label></p>
     <input type="submit" value="{% trans 'Log in' %}" />
     <input type="hidden" name="next" value="{{ next }}" />
 </form>

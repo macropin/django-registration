@@ -31,9 +31,15 @@ from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth import views as auth_views
 
 
+def login_user(request, template_name):
+    if request.method == 'POST' and not 'remember_me' in request.POST:
+        request.session.set_expiry(0)
+    return auth_views.login(request, template_name)
+
+
 urlpatterns = patterns('',
                        url(r'^login/$',
-                           auth_views.login,
+                           login_user,
                            {'template_name': 'registration/login.html'},
                            name='auth_login'),
                        url(r'^logout/$',
