@@ -18,7 +18,7 @@ from registration.views import ActivationView
 from registration.views import RegistrationView
 
 
-urlpatterns = patterns('',
+urlpatterns = [
                        # Test the 'activate' view with custom template
                        # name.
                        url(r'^activate-with-template-name/(?P<activation_key>\w+)/$',
@@ -77,5 +77,5 @@ urlpatterns = patterns('',
                        url(r'^custom-success/$',
                             TemplateView.as_view(template_name='registration/test_template_name.html'),
                            name='registration_test_custom_success_url'),
-                       (r'', include('registration.backends.default.urls')),
-                       )
+                       url(r'', include('registration.backends.default.urls')),
+                       ]
