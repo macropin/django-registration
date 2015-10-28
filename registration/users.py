@@ -1,13 +1,9 @@
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 from .compat import get_model
 
-try:
-    from django.contrib.auth import get_user_model
-    UserModel = get_user_model
-except ImportError:
-    UserModel = lambda: get_model('auth', 'User')
-
+UserModel = get_user_model
 
 def UserModelString():
     try:

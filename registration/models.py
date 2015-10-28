@@ -12,15 +12,11 @@ from django.template import RequestContext, TemplateDoesNotExist
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.timezone import now as datetime_now
 from django.utils import six
 
 from .users import UserModel, UserModelString
 
-
-try:
-    from django.utils.timezone import now as datetime_now
-except ImportError:
-    datetime_now = datetime.datetime.now
 
 
 SHA1_RE = re.compile('^[a-f0-9]{40}$')

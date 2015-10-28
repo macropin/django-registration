@@ -1,12 +1,10 @@
 from __future__ import unicode_literals
 from distutils.version import StrictVersion
 try:
-    from importlib import reload  # Python 3.4+ reload()
-except:
-    try:
-        from imp import reload  # Python 3.0+ reload()
-    except:
-        pass  # Python 2 reload()
+    from importlib import reload        # Python 3.4+
+except ImportError:
+    pass                                # Python 2 reload()
+
 
 from django import get_version
 from django.conf import settings
