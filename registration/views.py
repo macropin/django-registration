@@ -8,9 +8,9 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from django.conf import settings
 from django.utils.decorators import method_decorator
+from django.utils.module_loading import import_string
 from django.views.decorators.debug import sensitive_post_parameters
 
-from .compat import import_string
 # from .forms import RegistrationForm
 # from . import signals
 

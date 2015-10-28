@@ -1,8 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 
-from .compat import get_model
-
 UserModel = get_user_model
 
 def UserModelString():
