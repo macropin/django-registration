@@ -3,7 +3,10 @@ from distutils.version import StrictVersion
 try:
     from importlib import reload        # Python 3.4+
 except ImportError:
-    pass                                # Python 2 reload()
+    try:
+        from imp import reload              # Python 3.3
+    except:
+        pass                                # Python 2 reload()
 
 
 from django import get_version
