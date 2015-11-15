@@ -26,9 +26,17 @@ class _RequestPassingFormView(FormView):
     enable finer-grained processing.
 
     """
+    def _clean_next_param(self, request):
+        # removes xss attacks from next param
+        # unfortunatly can't just remove it from
+        next = request.GET.get('next')
+        if next and ('"' in next or '\'' in next):
+            raise ValueError('Invalid request param')
+
     def get(self, request, *args, **kwargs):
         # Pass request to get_form_class and get_form for per-request
         # form control.
+        self._clean_next_param(request)
         form_class = self.get_form_class(request)
         form = self.get_form(form_class)
         return self.render_to_response(self.get_context_data(form=form))
