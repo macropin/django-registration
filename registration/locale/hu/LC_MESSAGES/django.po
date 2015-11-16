@@ -7,13 +7,63 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-register-redux 1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-04 10:50+0200\n"
+"POT-Creation-Date: 2015-09-04 16:46+0200\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: admin.py:24
+msgid "Activate users"
+msgstr "Felhasználók aktiválása"
+
+#: admin.py:44
+msgid "Re-send activation emails"
+msgstr "Aktiváló emailek újraküldése"
+
+#: forms.py:36
+msgid "E-mail"
+msgstr "E-mail"
+
+#: forms.py:50
+msgid "I have read and agree to the Terms of Service"
+msgstr "Elolvastam és elfogadom a felhasználási feltételeket"
+
+#: forms.py:51
+msgid "You must agree to the terms to register"
+msgstr "El kell fogadnod a feltételeket a regisztráláshoz"
+
+#: forms.py:67
+msgid ""
+"This email address is already in use. Please supply a different email "
+"address."
+msgstr ""
+"Ez az email cím már foglalt. Kérlek adj meg egy másikat."
+
+#: forms.py:94
+msgid ""
+"Registration using free email addresses is prohibited. Please supply a "
+"different email address."
+msgstr ""
+"Ingyenes email címről regisztrálni tilos. Kérlek adj meg egy másikat."
+
+#: models.py:189
+msgid "user"
+msgstr "felhasználó"
+
+#: models.py:190
+msgid "activation key"
+msgstr "aktiválási kulcs"
+
+#: models.py:195
+msgid "registration profile"
+msgstr "regisztrációs profil"
+
+#: models.py:196
+msgid "registration profiles"
+msgstr "regisztrációs profilok"
 
 #: activate.html:5
 msgid "Account activation failed."
@@ -46,8 +96,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"    Te (vagy valaki a nevedben) kérte egy fiók regisztrálását "
-"erre az oldalra\n"
+"    Te (vagy valaki a nevedben) kérte egy fiók regisztrálását erre az "
+"oldalra\n"
 "    %(site_name)s.  Ha nem te voltál, hagyd ezt figyelmen kívül,\n"
 "    és a címed törölve lesz az adatbázisból.\n"
 "    "
@@ -118,7 +168,7 @@ msgstr ""
 msgid "Account activation on"
 msgstr "Fiók aktiválása a következőre:"
 
-#: login.html:4 login.html.py:10
+#: login.html:4 login.html:10
 msgid "Log in"
 msgstr "Bejelentkezés"
 
@@ -154,7 +204,8 @@ msgstr "Megváltozott jelszó"
 msgid "Password successfully changed!"
 msgstr "A jelszavad sikeresen megváltozott!"
 
-#: password_change_form.html:4 password_change_form.html.py:10
+#: password_change_form.html:4
+#: password_change_form.html:10
 msgid "Change password"
 msgstr "Jelszó megváltoztatása"
 
@@ -229,8 +280,8 @@ msgid ""
 "into your web browser:\n"
 msgstr ""
 "\n"
-"A jelszavad visszaállításához kérlek kattints az alábbi linkre, vagy másold"
-"ki\n"
+"A jelszavad visszaállításához kérlek kattints az alábbi linkre, vagy "
+"másold ki\n"
 "a böngésződbe:\n"
 
 #: password_reset_email.html:19
@@ -245,7 +296,8 @@ msgstr "Minden jót"
 msgid "Management"
 msgstr "Ügyfélszolgálat"
 
-#: password_reset_form.html:4 password_reset_form.html.py:15
+#: password_reset_form.html:4
+#: password_reset_form.html:15
 msgid "Reset password"
 msgstr "Jelszó visszaállítás"
 
