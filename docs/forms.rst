@@ -34,17 +34,12 @@ mind, but may also be useful in other situations.
    ``password2``
       The password to use for the new account. This represented as a
       password input (``input type="password"`` in the rendered HTML).
+      Password mismatches are recorded as errors of ``password2``.
 
    The constraints on usernames and email addresses match those
    enforced by Django's default authentication backend for instances
    of ``django.contrib.auth.models.User``. The repeated entry of the
    password serves to catch typos.
-
-   Because it does not apply to any single field of the form, the
-   validation error for mismatched passwords is attached to the form
-   itself, and so must be accessed via the form's
-   ``non_field_errors()`` method.
-
 
 .. class:: RegistrationFormTermsOfService
 
