@@ -41,6 +41,7 @@ mind, but may also be useful in other situations.
    of ``django.contrib.auth.models.User``. The repeated entry of the
    password serves to catch typos.
 
+
 .. class:: RegistrationFormTermsOfService
 
    A subclass of :class:`RegistrationForm` which adds one additional,
