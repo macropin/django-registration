@@ -1,5 +1,4 @@
 {% load i18n %}
-{% load url from future %}
 {% blocktrans with site_name=site.name %}
 You (or someone pretending to be you) have asked to register an account at
 {{ site_name }}.  If this wasn't you, please ignore this email

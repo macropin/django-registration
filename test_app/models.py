@@ -1,10 +1,6 @@
 # coding: utf-8
 
-try:
-    from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-except ImportError:
-    from django.contrib.auth.models import User as AbstractBaseUser, UserManager as BaseUserManager
-
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 
 

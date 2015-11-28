@@ -1,7 +1,7 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.views.generic import TemplateView
 
-urlpatterns = patterns('',
+urlpatterns = [
 
     url(r'^$',
         TemplateView.as_view(template_name='index.html'),
@@ -17,4 +17,4 @@ urlpatterns = patterns('',
     url(r'^login/',
         'django.contrib.auth.views.login',
         name='login')
-)
+]
