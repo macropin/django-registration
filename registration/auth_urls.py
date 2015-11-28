@@ -24,14 +24,13 @@ consult a specific backend's documentation for details.
 """
 
 from django.conf.urls import include
-from django.conf.urls import patterns
 from django.conf.urls import url
 from django.core.urlresolvers import reverse_lazy
 
 from django.contrib.auth import views as auth_views
 
 
-urlpatterns = patterns('',
+urlpatterns = [
                        url(r'^login/$',
                            auth_views.login,
                            {'template_name': 'registration/login.html'},
@@ -57,22 +56,22 @@ urlpatterns = patterns('',
                        url(r'^password/reset/done/$',
                            auth_views.password_reset_done,
                            name='auth_password_reset_done'),
-)
+]
 
 
 from django import get_version
 from distutils.version import LooseVersion
 if (LooseVersion(get_version()) >= LooseVersion('1.6')):
-    urlpatterns += patterns('',
+    urlpatterns += [
                             url(r'^password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
                                 auth_views.password_reset_confirm,
                             {'post_reset_redirect': reverse_lazy('auth_password_reset_complete')},
                                 name='auth_password_reset_confirm')
-                        )
+                        ]
 else:
-    urlpatterns += patterns('',
+    urlpatterns += [
                             url(r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]{1,13})-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
                                 auth_views.password_reset_confirm,
                             {'post_reset_redirect': reverse_lazy('auth_password_reset_complete')},
                                 name='auth_password_reset_confirm')
-                        )
+                        ]

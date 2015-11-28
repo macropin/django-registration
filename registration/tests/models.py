@@ -3,6 +3,7 @@ import hashlib
 import re
 
 from django.utils import six
+from django.apps import apps
 from django.conf import settings
 from django.core import mail
 from django.core import management
@@ -10,9 +11,8 @@ from django.test import TestCase
 
 from registration.models import RegistrationProfile
 from registration.users import UserModel
-from registration.compat import get_site_model
 
-Site = get_site_model()
+Site = apps.get_model('sites', 'Site')
 
 
 class RegistrationModelTests(TestCase):
