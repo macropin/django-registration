@@ -40,8 +40,9 @@ class RegistrationAdmin(admin.ModelAdmin):
             site = RequestSite(request)
 
         for profile in queryset:
-            if not profile.activation_key_expired():
-                profile.send_activation_email(site)
+            user = profile.user
+            RegistrationProfile.objects.resend_activation_mail(user.email, site)
+
     resend_activation_email.short_description = _("Re-send activation emails")
 
 
