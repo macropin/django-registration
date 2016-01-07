@@ -279,7 +279,10 @@ class RegistrationProfile(models.Model):
         Send an activation email to the user associated with this
         ``RegistrationProfile``.
 
-        The activation email will make use of two templates:
+        The activation email will make use of two templates (path to
+        templates are specified in settings variables
+        ACTIVATION_EMAIL_SUBJECT, ACTIVATION_EMAIL_BODY,
+        ACTIVATION_EMAIL_HTML, or default templates will be using):
 
         ``registration/activation_email_subject.txt``
             This template will be used for the subject line of the
@@ -322,6 +325,13 @@ class RegistrationProfile(models.Model):
             If supplied will be passed to the template for better
             flexibility via ``RequestContext``.
         """
+        activation_email_subject = getattr(settings, 'ACTIVATION_EMAIL_SUBJECT',
+                                           'registration/activation_email_subject.txt')
+        activation_email_body = getattr(settings, 'ACTIVATION_EMAIL_BODY',
+                                        'registration/activation_email.txt')
+        activation_email_html = getattr(settings, 'ACTIVATION_EMAIL_HTML',
+                                        'registration/activation_email.html')
+
         ctx_dict = {}
         if request is not None:
             ctx_dict = RequestContext(request, ctx_dict)
@@ -337,12 +347,12 @@ class RegistrationProfile(models.Model):
         })
         subject = (getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '') +
                    render_to_string(
-                       'registration/activation_email_subject.txt', ctx_dict))
+                       activation_email_subject, ctx_dict))
         # Email subject *must not* contain newlines
         subject = ''.join(subject.splitlines())
         from_email = getattr(settings, 'REGISTRATION_DEFAULT_FROM_EMAIL',
                              settings.DEFAULT_FROM_EMAIL)
-        message_txt = render_to_string('registration/activation_email.txt',
+        message_txt = render_to_string(activation_email_body,
                                        ctx_dict)
 
         email_message = EmailMultiAlternatives(subject, message_txt,
@@ -351,7 +361,7 @@ class RegistrationProfile(models.Model):
         if getattr(settings, 'REGISTRATION_EMAIL_HTML', True):
             try:
                 message_html = render_to_string(
-                    'registration/activation_email.html', ctx_dict)
+                    activation_email_html, ctx_dict)
             except TemplateDoesNotExist:
                 pass
             else:
