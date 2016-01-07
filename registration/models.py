@@ -279,10 +279,9 @@ class RegistrationProfile(models.Model):
         Send an activation email to the user associated with this
         ``RegistrationProfile``.
 
-        The activation email will make use of two templates (path to
-        templates are specified in settings variables
-        ACTIVATION_EMAIL_SUBJECT, ACTIVATION_EMAIL_BODY,
-        ACTIVATION_EMAIL_HTML, or default templates will be using):
+        The activation email will use the following templates,
+        which can be overriden by setting ACTIVATION_EMAIL_SUBJECT,
+        ACTIVATION_EMAIL_BODY, and ACTIVATION_EMAIL_HTML appropriately:
 
         ``registration/activation_email_subject.txt``
             This template will be used for the subject line of the
