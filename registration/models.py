@@ -6,8 +6,9 @@ import random
 import re
 
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMultiAlternatives
-from django.db import models
+from django.db import models, transaction
 from django.template import RequestContext, TemplateDoesNotExist
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
@@ -16,8 +17,6 @@ from django.utils.timezone import now as datetime_now
 from django.utils import six
 
 from .users import UserModel, UserModelString
-
-
 
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
@@ -31,7 +30,7 @@ class RegistrationManager(models.Manager):
     keys), and for cleaning out expired inactive accounts.
 
     """
-    def activate_user(self, activation_key):
+    def activate_user(self, activation_key, get_profile=False):
         """
         Validate an activation key and activate the corresponding
         ``User`` if valid.
@@ -76,14 +75,20 @@ class RegistrationManager(models.Manager):
             if not profile.activation_key_expired():
                 user = profile.user
                 user.is_active = True
-                user.save()
                 profile.activated = True
-                profile.save()
-                return user
+
+                with transaction.atomic():
+                    user.save()
+                    profile.save()
+
+                if get_profile:
+                    return profile
+                else:
+                    return user
         return False
 
     def create_inactive_user(self, site, new_user=None, send_email=True,
-                             request=None, **user_info):
+                             request=None, profile_info={}, **user_info):
         """
         Create a new, inactive ``User``, generate a
         ``RegistrationProfile`` and email its activation key to the
@@ -100,16 +105,17 @@ class RegistrationManager(models.Manager):
             new_user = UserModel()(**user_info)
             new_user.set_password(password)
         new_user.is_active = False
-        new_user.save()
 
-        registration_profile = self.create_profile(new_user)
+        with transaction.atomic():
+            new_user.save()
+            registration_profile = self.create_profile(new_user, **profile_info)
 
         if send_email:
             registration_profile.send_activation_email(site, request)
 
         return new_user
 
-    def create_profile(self, user):
+    def create_profile(self, user, **profile_info):
         """
         Create a ``RegistrationProfile`` for a given
         ``User``, and return the ``RegistrationProfile``.
@@ -119,15 +125,31 @@ class RegistrationManager(models.Manager):
         pk and a random salt.
 
         """
-        salt = hashlib.sha1(six.text_type(random.random())
-                            .encode('ascii')).hexdigest()[:5]
-        salt = salt.encode('ascii')
-        user_pk = str(user.pk)
-        if isinstance(user_pk, six.text_type):
-            user_pk = user_pk.encode('utf-8')
-        activation_key = hashlib.sha1(salt+user_pk).hexdigest()
-        return self.create(user=user,
-                           activation_key=activation_key)
+        profile = self.model(user=user, **profile_info)
+
+        if 'activation_key' not in profile_info:
+            profile.create_new_activation_key(save=False)
+
+        profile.save()
+
+        return profile
+
+    def resend_activation_mail(self, email, site, request=None):
+        """
+        Resets activation key for the user and resends activation email.
+        """
+        try:
+            profile = self.get(user__email=email)
+        except ObjectDoesNotExist:
+            return False
+
+        if profile.activated or profile.activation_key_expired():
+            return False
+
+        profile.create_new_activation_key()
+        profile.send_activation_email(site, request)
+
+        return True
 
     def delete_expired_users(self):
         """
@@ -209,6 +231,21 @@ class RegistrationProfile(models.Model):
 
     def __str__(self):
         return "Registration information for %s" % self.user
+
+    def create_new_activation_key(self, save=True):
+        """
+        Create a new activation key for the user
+        """
+        salt = hashlib.sha1(six.text_type(random.random())
+                            .encode('ascii')).hexdigest()[:5]
+        salt = salt.encode('ascii')
+        user_pk = str(self.user.pk)
+        if isinstance(user_pk, six.text_type):
+            user_pk = user_pk.encode('utf-8')
+        self.activation_key = hashlib.sha1(salt+user_pk).hexdigest()
+        if save:
+            self.save()
+        return self.activation_key
 
     def activation_key_expired(self):
         """
