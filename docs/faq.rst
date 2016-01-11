@@ -130,6 +130,11 @@ Troubleshooting
     general, it is always a good idea to follow normal Python
     practices for installing and using Django applications).
 
+**I want to use custom templates, but django keeps using the admin templates instead of mine!**
+
+    To fix this, make sure that in the ``INSTALLED_APPS`` of your
+    ``settings.py`` the entry for the ``registration`` app is placed
+    above ``django.contrib.admin``.
 
 Tips and tricks
 ---------------
