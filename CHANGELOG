@@ -3,6 +3,28 @@ django-registration-redux changelog
 ===================================
 
 
+Version 1.3, 12 January, 2016
+-----------------------------
+
+* Add support for Django 1.9. django-registration supports Django 1.7 and newer.
+
+* Feature: Added support for additional registration forms;
+  `RegistrationFormTOSAndUniqueEmail` and `RegistrationFormTOSAndNoFreeEmail`.
+  See `#113 <https://github.com/macropin/django-registration/pull/113>`_.
+
+* Bugfix: Properly extend the base registration template.
+
+* Enhancement: Distinguish between account activation failure and attempted
+  reactivation. See `#72 <https://github.com/macropin/django-registration/pull/72>`_.
+
+* Bugfix: Install an unzipped package in order to support running migrations.
+  See `#104 <https://github.com/macropin/django-registration/pull/104>`_.
+
+* Feature: Added Hungarian and Russian localizations.
+
+* Feature: Added support for specifying template paths for activation email.
+
+
 Version 1.2, 11 May, 2015
 -------------------------
 
