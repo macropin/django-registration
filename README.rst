@@ -57,6 +57,17 @@ Note that this application requires Python 2.7/3.4 or later, and a
 functional installation of Django 1.7 or newer.
 
 
+Alternatives
+------------
+
+`djangopackages.com <https://www.djangopackages.com/grids/g/registration/>`_
+has a comprehensive comparison of Django packages used for user registration
+and authentication.
+
+For example, `django-allauth <http://www.intenct.nl/projects/django-allauth/>`_
+is an alternative to django-regisitration-redux that provides user registration
+in addition to social authentication and email address management.
+
 License
 -------
 
