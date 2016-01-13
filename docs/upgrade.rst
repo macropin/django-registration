@@ -18,6 +18,11 @@ older Django releases may work, but are officially unsupported. Additionally,
 Backwards-incompatible changes
 ------------------------------
 
+Version 1.3
+```````````
+- Django 1.7 or newer is required. Please ensure you upgrade your Django
+  version before upgrading.
+
 Version 1.2
 ```````````
 - **Native migration support breaks South compatibility**: An initial native
