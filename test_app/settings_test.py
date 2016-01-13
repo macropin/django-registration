@@ -1,6 +1,4 @@
 # coding: utf-8
-import os
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
