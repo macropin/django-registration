@@ -10,8 +10,9 @@ django-registration (previously maintained by James Bennett).
 Django version requirement
 --------------------------
 
-As of |version|, |project| requires Django 1.4 or newer;
-older Django releases may work, but are officially unsupported.
+As of |version|, |project| requires Django 1.7 or newer;
+older Django releases may work, but are officially unsupported. Additionally,
+|project| officially supports Python 2.7, 3.3, 3.4, and 3.5.
 
 
 Backwards-incompatible changes
