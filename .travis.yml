@@ -21,12 +21,14 @@ matrix:
 install:
   - pip install -q $DJANGO
   - pip install coveralls
+  - pip install flake8
   - python setup.py -q install
 
 before_script:
   - rm -rf build
 
 script:
+  - flake8
   - coverage run --source=registration setup.py test
 
 after_success:

@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 
 UserModel = get_user_model
 
+
 def UserModelString():
     try:
         return settings.AUTH_USER_MODEL
