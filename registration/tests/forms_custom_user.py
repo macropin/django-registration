@@ -1,12 +1,12 @@
 from __future__ import unicode_literals
 from distutils.version import StrictVersion
 try:
-    from importlib import reload        # Python 3.4+
+    from importlib import reload  # Python 3.4+
 except ImportError:
     try:
-        from imp import reload              # Python 3.3
+        from imp import reload  # Python 3.3
     except:
-        pass                                # Python 2 reload()
+        pass  # Python 2 reload()
 
 
 from django import get_version
@@ -15,7 +15,6 @@ from django.test import TestCase
 
 from registration import forms
 from registration.users import UsernameField
-from test_app.models import CustomUser
 
 
 DJANGO_VERSION = StrictVersion(get_version())
@@ -46,7 +45,6 @@ class RegistrationFormTests(TestCase):
         form = forms.RegistrationForm()
 
         self.assertTrue(UsernameField() in form.fields)
-
 
     def test_registration_form_subclass_is_valid_for_django_18(self):
         """

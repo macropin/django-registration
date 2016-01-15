@@ -37,20 +37,20 @@ class RegistrationFormTests(TestCase):
                       'email': 'foo@example.com',
                       'password1': 'foo',
                       'password2': 'foo'},
-            'error': ('username', [bad_username_error])},
+             'error': ('username', [bad_username_error])},
             # Already-existing username.
             {'data': {'username': 'alice',
                       'email': 'alice@example.com',
                       'password1': 'secret',
                       'password2': 'secret'},
-            'error': ('username', ["A user with that username already exists."])},
+             'error': ('username', ["A user with that username already exists."])},
             # Mismatched passwords.
             {'data': {'username': 'foo',
                       'email': 'foo@example.com',
                       'password1': 'foo',
                       'password2': 'bar'},
-            'error': ('password2', ["The two password fields didn't match."])},
-            ]
+             'error': ('password2', ["The two password fields didn't match."])},
+        ]
 
         for invalid_dict in invalid_data_dicts:
             form = forms.RegistrationForm(data=invalid_dict['data'])

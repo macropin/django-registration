@@ -242,7 +242,7 @@ class RegistrationProfile(models.Model):
         user_pk = str(self.user.pk)
         if isinstance(user_pk, six.text_type):
             user_pk = user_pk.encode('utf-8')
-        self.activation_key = hashlib.sha1(salt+user_pk).hexdigest()
+        self.activation_key = hashlib.sha1(salt + user_pk).hexdigest()
         if save:
             self.save()
         return self.activation_key
