@@ -56,4 +56,3 @@ if getattr(settings, 'INCLUDE_AUTH_URLS', True):
     urlpatterns += [
         url(r'', include('registration.auth_urls')),
     ]
-
