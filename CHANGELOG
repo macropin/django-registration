@@ -2,6 +2,11 @@
 django-registration-redux changelog
 ===================================
 
+Version 1.4, TBD
+-----------------------------
+
+* Compatibility: Added support for Django 1.10
+
 
 Version 1.3, 12 January, 2016
 -----------------------------

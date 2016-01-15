@@ -1,5 +1,6 @@
 from django.conf.urls import include, url
 from django.views.generic import TemplateView
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
 
@@ -15,6 +16,6 @@ urlpatterns = [
         name='profile'),
 
     url(r'^login/',
-        'django.contrib.auth.views.login',
+        auth_views.login,
         name='login')
 ]
