@@ -59,7 +59,7 @@ class RegistrationView(BaseRegistrationView):
     SEND_ACTIVATION_EMAIL = getattr(settings, 'SEND_ACTIVATION_EMAIL', True)
     success_url = 'registration_complete'
 
-    def register(self, request, form):
+    def register(self, form):
         """
         Given a username, email address and password, register a new
         user account, which will initially be inactive.
@@ -83,7 +83,7 @@ class RegistrationView(BaseRegistrationView):
         class of this backend as the sender.
 
         """
-        site = get_current_site(request)
+        site = get_current_site(self.request)
 
         if hasattr(form, 'save'):
             new_user_instance = form.save()
@@ -95,14 +95,14 @@ class RegistrationView(BaseRegistrationView):
             new_user=new_user_instance,
             site=site,
             send_email=self.SEND_ACTIVATION_EMAIL,
-            request=request,
+            request=self.request,
         )
         signals.user_registered.send(sender=self.__class__,
                                      user=new_user,
-                                     request=request)
+                                     request=self.request)
         return new_user
 
-    def registration_allowed(self, request):
+    def registration_allowed(self):
         """
         Indicate whether account registration is currently permitted,
         based on the value of the setting ``REGISTRATION_OPEN``. This
@@ -119,7 +119,7 @@ class RegistrationView(BaseRegistrationView):
 
 
 class ActivationView(BaseActivationView):
-    def activate(self, request, activation_key):
+    def activate(self, activation_key):
         """
         Given an an activation key, look up and activate the user
         account corresponding to that key (if possible).
@@ -135,8 +135,8 @@ class ActivationView(BaseActivationView):
         if activated_user:
             signals.user_activated.send(sender=self.__class__,
                                         user=activated_user,
-                                        request=request)
+                                        request=self.request)
         return activated_user
 
-    def get_success_url(self, request, user):
+    def get_success_url(self, user):
         return ('registration_activation_complete', (), {})
