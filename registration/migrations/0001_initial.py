@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
                 ('activation_key', models.CharField(verbose_name='activation key', max_length=40)),
-                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL, verbose_name='user')),
+                ('user', models.OneToOneField(on_delete=models.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
                 'verbose_name': 'registration profile',
