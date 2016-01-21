@@ -219,7 +219,11 @@ class RegistrationProfile(models.Model):
     account registration and activation.
 
     """
-    user = models.OneToOneField(UserModelString(), verbose_name=_('user'))
+    user = models.OneToOneField(
+        UserModelString(),
+        on_delete=models.CASCADE,
+        verbose_name=_('user'),
+    )
     activation_key = models.CharField(_('activation key'), max_length=40)
     activated = models.BooleanField(default=False)
 
