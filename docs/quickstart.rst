@@ -167,7 +167,7 @@ Django settings file::
     ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
     REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
 
-Once you've done this, run ``manage.py syncdb`` to install the model
+Once you've done this, run ``python manage.py migrate`` to install the model
 used by the default setup.
 
 
