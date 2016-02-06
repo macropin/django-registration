@@ -1,4 +1,5 @@
 from django.conf.urls import include, url
+from django.contrib import admin
 from django.views.generic import TemplateView
 
 urlpatterns = [
@@ -16,5 +17,9 @@ urlpatterns = [
 
     url(r'^login/',
         'django.contrib.auth.views.login',
-        name='login')
+        name='login'),
+
+    url(r'^admin/',
+        include(admin.site.urls),
+        name='admin'),
 ]
