@@ -20,8 +20,8 @@ class AdminCustomActionsTestCase(TestCase):
         self.client.login(username=admin_user.username, password=admin_user)
 
         self.user_info = {'username': 'alice',
-                         'password': 'swordfish',
-                         'email': 'alice@example.com'}
+                          'password': 'swordfish',
+                          'email': 'alice@example.com'}
 
         self.old_activation = getattr(settings,
                                       'ACCOUNT_ACTIVATION_DAYS', None)
