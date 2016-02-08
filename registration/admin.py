@@ -41,7 +41,7 @@ class RegistrationAdmin(admin.ModelAdmin):
 
         for profile in queryset:
             user = profile.user
-            RegistrationProfile.objects.resend_activation_mail(user.email, site)
+            RegistrationProfile.objects.resend_activation_mail(user.email, site, request)
 
     resend_activation_email.short_description = _("Re-send activation emails")
 
