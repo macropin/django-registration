@@ -10,6 +10,9 @@ Version 1.4, TBD
 
 * Compatibility: Added support for Django 1.10
 
+* Bugfix: Pass request object into `resend_activation_mail` so the email
+  template can render the site URL with the correct schema (HTTP, HTTPS).
+
 
 Version 1.3, 12 January, 2016
 -----------------------------
