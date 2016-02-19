@@ -60,7 +60,7 @@ class RegistrationView(FormView):
         """
         return True
 
-    def register(self, request, form):
+    def register(self, form):
         """
         Implement user-registration logic here.
 

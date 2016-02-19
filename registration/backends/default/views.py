@@ -117,7 +117,7 @@ class RegistrationView(BaseRegistrationView):
 
 
 class ActivationView(BaseActivationView):
-    def activate(self, activation_key):
+    def activate(self, *args, **kwargs):
         """
         Given an an activation key, look up and activate the user
         account corresponding to that key (if possible).
@@ -128,6 +128,7 @@ class ActivationView(BaseActivationView):
         the class of this backend as the sender.
 
         """
+        activation_key = kwargs.get('activation_key', '')
         activated_user = (RegistrationProfile.objects
                           .activate_user(activation_key))
         if activated_user:
