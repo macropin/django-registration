@@ -13,6 +13,8 @@ Version 1.4, TBD
 * Bugfix: Pass request object into `resend_activation_mail` so the email
   template can render the site URL with the correct schema (HTTP, HTTPS).
 
+* Bugfix: Ensure `register` method has consistent arguments.
+  See `#153 <https://github.com/macropin/django-registration/pull/153>`_.
 
 Version 1.3, 12 January, 2016
 -----------------------------
