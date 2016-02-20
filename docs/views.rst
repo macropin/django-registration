@@ -68,11 +68,11 @@ implement whatever workflow is required.
       Should return a boolean indicating whether user registration is
       allowed, either in general or for this specific request.
 
-   .. method:: register(**cleaned_data)
+   .. method:: register(form)
 
-      Actually perform the business of registering a new user. Receives all of
-      the ``cleaned_data`` from the registration form. Should return the new
-      user who was just registered.
+      Actually perform the business of registering a new user. Receives the
+      registration ``form``. Should return the new user who was just
+      registered.
 
 
 .. class:: ActivationView
