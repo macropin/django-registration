@@ -1,20 +1,22 @@
-.PHONY: install\
+.PHONY: installdeps\
+		build\
 		test\
 		lint\
 		coverage\
 		clean
 
-install:
-	# Let developers manage their python versions
-	# and Django versions independently
-	pip install coveralls flake8
+installdeps:
+	pip install -U -r requirements.txt
+
+build:
+	invoke build $(ARGS)
 
 test:
-	python setup.py test
+	invoke test
 
 lint:
-	flake8
+	invoke lint
 
 clean:
-	find . -type f -name '*.py[cod]' -delete
+	invoke clean $(ARGS)
 

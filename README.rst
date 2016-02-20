@@ -56,6 +56,40 @@ Git checkout.
 Note that this application requires Python 2.7/3.4 or later, and a
 functional installation of Django 1.7 or newer.
 
+Getting started with development
+------------
+
+To get started with development, first install the required packages:
+
+```bash
+make installdeps
+```
+
+For convenience a `Makefile` is included which wraps the Python `invoke
+<http://www.pyinvoke.org/>`_ library. Once you work on a patch, you can test
+the functionality by running:
+
+```bash
+make test
+```
+
+Or equivalently:
+
+```bash
+invoke test
+```
+
+Command line arguments can be passed to the `invoke` script through the
+`Makefile` via the `ARGS` parameter. For example:
+
+```bash
+make build ARGS=--docs
+```
+
+Or equivalently:
+```bash
+invoke build --docs
+```
 
 Alternatives
 ------------

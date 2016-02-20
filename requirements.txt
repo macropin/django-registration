@@ -1,0 +1,5 @@
+flake8
+coveralls
+Sphinx
+Django>1.7,<1.9
+invoke==0.12.2
