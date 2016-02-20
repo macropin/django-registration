@@ -59,32 +59,27 @@ functional installation of Django 1.7 or newer.
 Getting started with development
 ------------
 
-To get started with development, first install the required packages:
+To get started with development, first install the required packages::
 
-.. code-block:: bash
     make installdeps
 
 For convenience a ``Makefile`` is included which wraps the Python `invoke
 <http://www.pyinvoke.org/>`_ library. Once you work on a patch, you can test
-the functionality by running:
+the functionality by running::
 
-.. code-block:: bash
     make test
 
-Or equivalently:
+Or equivalently::
 
-.. code-block:: ruby
     invoke test
 
 Command line arguments can be passed to the ``invoke`` script through the
-``Makefile`` via the ``ARGS`` parameter. For example:
+``Makefile`` via the ``ARGS`` parameter. For example::
 
-.. code-block:: bash
     make build ARGS=--docs
 
-Or equivalently:
+Or equivalently::
 
-.. code-block:: bash
     invoke build --docs
 
 Alternatives
