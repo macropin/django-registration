@@ -3,16 +3,12 @@ from invoke import task
 
 
 @task
-def clean(docs=False, bytecode=True, extra=''):
-    patterns = ['build']
-    if docs:
-        patterns.append('docs/_build')
-    if bytecode:
-        patterns.append('**/*.pyc')
-    if extra:
-        patterns.append(extra)
-    for pattern in patterns:
-        run("rm -rf %s" % pattern)
+def clean(all=False):
+    if all:
+        flag = "--all"
+    else:
+        flag = ""
+    run("python setup.py clean {}".format(flag))
 
 
 @task
