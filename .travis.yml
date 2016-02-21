@@ -19,9 +19,8 @@ matrix:
       env: DJANGO=Django==1.9
 
 install:
+  - pip install -r requirements.txt
   - pip install -q $DJANGO
-  - pip install coveralls
-  - pip install flake8
   - python setup.py -q install
 
 before_script:
