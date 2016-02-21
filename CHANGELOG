@@ -16,6 +16,10 @@ Version 1.4, TBD
 * Bugfix: Ensure `register` method has consistent arguments.
   See `#153 <https://github.com/macropin/django-registration/pull/153>`_.
 
+* Enhancement: Add invoke tasks, requirements.txt file, and make wrapper to
+  help developers get setup.
+  See `#154 <https://github.com/macropin/django-registration/pull/154>`_.
+
 Version 1.3, 12 January, 2016
 -----------------------------
 
