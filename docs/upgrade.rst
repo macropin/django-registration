@@ -18,6 +18,14 @@ older Django releases may work, but are officially unsupported. Additionally,
 Backwards-incompatible changes
 ------------------------------
 
+Version 1.4
+```````````
+
+- Remove unnecessary `_RequestPassingFormView`.
+  See `#56 <https://github.com/macropin/django-registration/pull/56>`_. Please
+  ensure that you update any subclassed views to reference ``self.request``
+  instead of accepting ``request`` as an argument.
+
 Version 1.3
 ```````````
 - Django 1.7 or newer is required. Please ensure you upgrade your Django
