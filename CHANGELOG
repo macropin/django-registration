@@ -2,8 +2,12 @@
 django-registration-redux changelog
 ===================================
 
+Version 1.5, TBD
+----------------
+
+
 Version 1.4, 21 February, 2016
------------------------------
+------------------------------
 
 * BACKWARDS-INCOMPATIBLE CHANGE: Remove unnecessary `_RequestPassingFormView`.
   See `#56 <https://github.com/macropin/django-registration/pull/56>`_.
