@@ -17,9 +17,9 @@
 .. image:: https://badge.fury.io/py/django-registration-redux.svg
     :target: https://pypi.python.org/pypi/django-registration-redux/
 
-.. image:: https://pypip.in/download/django-registration-redux/badge.svg
-    :target: https://pypi.python.org/pypi/django-registration-redux/
-
+.. image:: https://readthedocs.org/projects/django-registration-redux/badge/?version=latest
+    :target: http://django-registration-redux.readthedocs.org/en/latest/?badge=latest
+    :alt: Documentation Status
 
 
 If you have issues with the "django-registration-redux" package then please `raise them here`_.
