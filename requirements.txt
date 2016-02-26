@@ -3,3 +3,4 @@ coveralls
 Sphinx
 Django>1.7
 invoke==0.12.2
+docutils==0.12

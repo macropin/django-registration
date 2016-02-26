@@ -25,4 +25,5 @@ def test():
 
 @task
 def lint():
+    run("rst2html.py README.rst > /dev/null")
     run("flake8")
