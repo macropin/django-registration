@@ -27,18 +27,22 @@ class _RequestPassingFormView(FormView):
     def _clean_next_param(self, request):
         # removes xss attacks from next param
         # unfortunatly can't just remove it from
-        next = request.POST.get('next')
-
+        next = request.GET.get('next')
+        print next
         if next and ('"' in next or '\'' in next or not is_safe_url(next)):
             raise ValueError('Invalid request param')
+        return next
 
     def get(self, request, *args, **kwargs):
         # Pass request to get_form_class and get_form for per-request
         # form control.
-        self._clean_next_param(request)
+        next = self._clean_next_param(request)
         form_class = self.get_form_class(request)
         form = self.get_form(form_class)
-        return self.render_to_response(self.get_context_data(form=form))
+        context = self.get_context_data(form=form)
+        if next:
+            context.update(dict(next=next))
+        return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
         # Pass request to get_form_class and get_form for per-request
@@ -94,7 +98,7 @@ class RegistrationView(_RequestPassingFormView):
             return redirect(self.disallowed_url)
         return super(RegistrationView, self).dispatch(request, *args, **kwargs)
 
-    def form_valid(self, form):
+    def form_valid(self, request, form):
         new_user = self.register(form)
         success_url = self.get_success_url(new_user)
 

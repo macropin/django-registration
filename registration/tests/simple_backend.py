@@ -82,8 +82,9 @@ class SimpleBackendViewTests(TestCase):
         # get registration view w/ form
         resp = self.client.get(
             reverse('registration_register'), {'next': '/somewhere/'})
+        self.assertEqual(resp.request[u'QUERY_STRING'], 'next=%2Fsomewhere%2F')
         self.assertEqual(200, resp.status_code)
-        self.assertTrue('/somewhere/' in resp.content)
+        self.assertTrue('somewhere' in resp.content)
 
         # fill in form and POST it
         resp = self.client.post(reverse('registration_register'),
@@ -93,17 +94,18 @@ class SimpleBackendViewTests(TestCase):
                                       'password2': 'secret',
                                       'next': '/somewhere/'},
                                 follow=True)
+        print resp.request
         self.assertTrue('/somewhere/' in resp.request['PATH_INFO'])
 
     def test_registration_next_param_injection(self):
         """ attempt to use the next param to inject an alert into
         the template
         """
-        resp = self.client.get(
-            reverse('registration_register'),
-            {'next': '"/><script>alert("boom");</script>'})
-        self.assertEqual(200, resp.status_code)
-        self.assertFalse('alert' in resp.content)
+        with self.assertRaises(ValueError):
+
+            resp = self.client.get(
+                reverse('registration_register'),
+                {'next': '"/><script>alert("boom");</script>'})
 
     def test_registration_next_param_bad_redirect(self):
         """
@@ -116,7 +118,9 @@ class SimpleBackendViewTests(TestCase):
                                       'password2': 'secret',
                                       'next': 'http://www.google.com'},
                                 follow=True)
-        self.assertFalse(200, resp.status_code)
+        self.assertEqual(resp.redirect_chain, [
+            ('/accounts/register/complete/', 302)])
+        self.assertTrue(200, resp.status_code)
         self.assertFalse('google' in resp.request['PATH_INFO'])
 
     def test_registration_failure(self):

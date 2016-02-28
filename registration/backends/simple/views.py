@@ -16,13 +16,13 @@ class RegistrationView(BaseRegistrationView):
     """
     success_url = 'registration_complete'
 
-    def get_success_url(self, request=None, user=None):
+    def get_success_url(self, user=None, request=None):
         # is sanitized in BaseRegistrationView.get method
-        if request.GET.get('next'):
+        if self.request.GET.get('next'):
             return request.GET.get('next')
         else:
             return super(RegistrationView, self).get_success_url(
-                request=None, user=None
+                user=None
             )
 
     def register(self, form):
