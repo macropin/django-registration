@@ -9,6 +9,7 @@ from django.views.generic.edit import FormView
 from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.utils.module_loading import import_string
+from django.utils.http import is_safe_url
 from django.views.decorators.debug import sensitive_post_parameters
 
 REGISTRATION_FORM_PATH = getattr(settings, 'REGISTRATION_FORM',
@@ -26,8 +27,9 @@ class _RequestPassingFormView(FormView):
     def _clean_next_param(self, request):
         # removes xss attacks from next param
         # unfortunatly can't just remove it from
-        next = request.GET.get('next')
-        if next and ('"' in next or '\'' in next):
+        next = request.POST.get('next')
+
+        if next and ('"' in next or '\'' in next or not is_safe_url(next)):
             raise ValueError('Invalid request param')
 
     def get(self, request, *args, **kwargs):

@@ -17,6 +17,7 @@ class RegistrationView(BaseRegistrationView):
     success_url = 'registration_complete'
 
     def get_success_url(self, request=None, user=None):
+        # is sanitized in BaseRegistrationView.get method
         if request.GET.get('next'):
             return request.GET.get('next')
         else:

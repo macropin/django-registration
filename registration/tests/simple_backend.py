@@ -74,6 +74,51 @@ class SimpleBackendViewTests(TestCase):
         resp = self.client.get(reverse('registration_register'))
         self.failUnless(resp.context['user'].is_authenticated())
 
+    def test_registration_next_param(self):
+        """
+        using the next param to skip the registration_complete page
+        after successful registration and target another path
+        """
+        # get registration view w/ form
+        resp = self.client.get(
+            reverse('registration_register'), {'next': '/somewhere/'})
+        self.assertEqual(200, resp.status_code)
+        self.assertTrue('/somewhere/' in resp.content)
+
+        # fill in form and POST it
+        resp = self.client.post(reverse('registration_register'),
+                                data={'username': 'bob',
+                                      'email': 'bob@example.com',
+                                      'password1': 'secret',
+                                      'password2': 'secret',
+                                      'next': '/somewhere/'},
+                                follow=True)
+        self.assertTrue('/somewhere/' in resp.request['PATH_INFO'])
+
+    def test_registration_next_param_injection(self):
+        """ attempt to use the next param to inject an alert into
+        the template
+        """
+        resp = self.client.get(
+            reverse('registration_register'),
+            {'next': '"/><script>alert("boom");</script>'})
+        self.assertEqual(200, resp.status_code)
+        self.assertFalse('alert' in resp.content)
+
+    def test_registration_next_param_bad_redirect(self):
+        """
+        attempt to misuse next param to go to another host
+        """
+        resp = self.client.post(reverse('registration_register'),
+                                data={'username': 'bob',
+                                      'email': 'bob@example.com',
+                                      'password1': 'secret',
+                                      'password2': 'secret',
+                                      'next': 'http://www.google.com'},
+                                follow=True)
+        self.assertFalse(200, resp.status_code)
+        self.assertFalse('google' in resp.request['PATH_INFO'])
+
     def test_registration_failure(self):
         """
         Registering with invalid data fails.
