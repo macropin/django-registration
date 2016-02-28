@@ -16,6 +16,14 @@ class RegistrationView(BaseRegistrationView):
     """
     success_url = 'registration_complete'
 
+    def get_success_url(self, request=None, user=None):
+        if request.GET.get('next'):
+            return request.GET.get('next')
+        else:
+            return super(RegistrationView, self).get_success_url(
+                request=None, user=None
+            )
+
     def register(self, form):
         new_user = form.save()
         username_field = getattr(new_user, 'USERNAME_FIELD', 'username')
