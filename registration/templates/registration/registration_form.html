@@ -4,7 +4,7 @@
 {% block title %}{% trans "Register for an account" %}{% endblock %}
 
 {% block content %}
-<form method="post" action="{% if request.GET.next %}?next={{request.GET.next}}{% endif %}">
+<form method="post" action="">
     {% csrf_token %}
     {% if request.GET.next %}
       <input type="hidden" name="next" value="{{request.GET.next}}">
