@@ -4,7 +4,7 @@ django-registration-redux changelog
 
 Version 1.5, TBD
 ----------------
-
+* Bugfix: Add page title to `activate.html`
 
 Version 1.4, 21 February, 2016
 ------------------------------
