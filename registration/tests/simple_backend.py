@@ -111,17 +111,18 @@ class SimpleBackendViewTests(TestCase):
         """
         attempt to misuse next param to go to another host
         """
-        resp = self.client.post(reverse('registration_register'),
-                                data={'username': 'bob',
-                                      'email': 'bob@example.com',
-                                      'password1': 'secret',
-                                      'password2': 'secret',
-                                      'next': 'http://www.google.com'},
-                                follow=True)
-        self.assertEqual(resp.redirect_chain, [
-            ('/accounts/register/complete/', 302)])
-        self.assertTrue(200, resp.status_code)
-        self.assertFalse('google' in resp.request['PATH_INFO'])
+        with self.assertRaises(ValueError):
+            resp = self.client.post(reverse('registration_register'),
+                                    data={'username': 'bob',
+                                          'email': 'bob@example.com',
+                                          'password1': 'secret',
+                                          'password2': 'secret',
+                                          'next': 'http://www.google.com'},
+                                    follow=True)
+            self.assertEqual(resp.redirect_chain, [
+                ('/accounts/register/complete/', 302)])
+            self.assertTrue(200, resp.status_code)
+            self.assertFalse('google' in resp.request['PATH_INFO'])
 
     def test_registration_failure(self):
         """
