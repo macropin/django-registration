@@ -57,7 +57,7 @@ Note that this application requires Python 2.7/3.4 or later, and a
 functional installation of Django 1.7 or newer.
 
 Getting started with development
-------------
+--------------------------------
 
 To get started with development, first install the required packages::
 
