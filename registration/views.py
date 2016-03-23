@@ -104,3 +104,24 @@ class ActivationView(TemplateView):
 
     def get_success_url(self, user):
         raise NotImplementedError
+
+
+class ResendActivationView(ActivationView):
+    """
+    Base class for resending activation views.
+
+    """
+    template_name = 'registration/resend_activation.html'
+
+    def activate(self, *args, **kwargs):
+        return self.resend_activation(*args, **kwargs)
+
+    def resend_activation(self, *args, **kwargs):
+        """
+        Implement resend activation logic here.
+
+        """
+        raise NotImplementedError
+
+    def get_success_url(self, user):
+        raise NotImplementedError

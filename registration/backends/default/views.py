@@ -5,6 +5,7 @@ from ... import signals
 from ...models import RegistrationProfile
 from ...views import ActivationView as BaseActivationView
 from ...views import RegistrationView as BaseRegistrationView
+from ...views import ResendActivationView as BaseResendActivationView
 from ...users import UserModel
 
 
@@ -139,3 +140,18 @@ class ActivationView(BaseActivationView):
 
     def get_success_url(self, user):
         return ('registration_activation_complete', (), {})
+
+
+class ResendActivationView(BaseResendActivationView):
+    def resend_activation(self, *args, **kwargs):
+        """
+        Given an email, look up user by email and resend activation key if user
+        is not already activated or previous activation key has not expired.
+        """
+        site = get_current_site(self.request)
+        email = kwargs.get('email', '')
+        return RegistrationProfile.objects.resend_activation_mail(
+            email, site, self.request)
+
+    def get_success_url(self, user):
+        return ('registration_resend_activation_complete', (), {})

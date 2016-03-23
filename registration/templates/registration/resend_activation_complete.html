@@ -1,0 +1,16 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Account Activation Resent" %}{% endblock %}
+
+{% block content %}
+<p>{% trans "Your account activation key was resent to {{ email }}." %}
+</p>
+{% endblock %}
+
+
+{% comment %}
+**registration/resend_activation_success.html**
+
+Used after successful resending of account activation.
+{% endcomment %}
