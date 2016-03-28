@@ -158,9 +158,9 @@ For example, you might have something like the following in your
 Django settings file::
 
     INSTALLED_APPS = (
-        'django.contrib.auth',
         'django.contrib.sites',
-        'registration',
+        'registration', #should be immediately above 'django.contrib.auth'
+        'django.contrib.auth',
         # ...other installed applications...
     )
 
