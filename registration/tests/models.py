@@ -137,9 +137,9 @@ class RegistrationModelTests(TestCase):
         self.failUnless(new_user.check_password('swordfish'))
         self.failIf(new_user.is_active)
         self.failIf(new_user.date_joined <=
-                     datetime_now() - timedelta(
-                         settings.ACCOUNT_ACTIVATION_DAYS)
-                     )
+                    datetime_now() - timedelta(
+                        settings.ACCOUNT_ACTIVATION_DAYS)
+                    )
 
     def test_user_creation_email(self):
         """
@@ -172,9 +172,9 @@ class RegistrationModelTests(TestCase):
         self.failUnless(new_user.check_password('swordfish'))
         self.failIf(new_user.is_active)
         self.failIf(new_user.date_joined <=
-                     datetime_now() - timedelta(
-                         settings.ACCOUNT_ACTIVATION_DAYS)
-                     )
+                    datetime_now() - timedelta(
+                        settings.ACCOUNT_ACTIVATION_DAYS)
+                    )
 
     def test_unexpired_account_old_date_joined(self):
         """
