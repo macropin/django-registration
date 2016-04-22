@@ -106,6 +106,10 @@ class RegistrationManager(models.Manager):
             new_user.set_password(password)
         new_user.is_active = False
 
+        # Since we calculate the RegistrationProfile expiration from this date,
+        # we want to ensure that it is current
+        new_user.date_joined = datetime_now()
+
         with transaction.atomic():
             new_user.save()
             registration_profile = self.create_profile(new_user, **profile_info)
