@@ -113,7 +113,6 @@ class ResendActivationView(FormView):
     Base class for resending activation views.
     """
     form_class = ResendActivationForm
-    success_url = None
     template_name = 'registration/resend_activation_form.html'
 
     def form_valid(self, form):
