@@ -4,13 +4,19 @@
 {% block title %}{% trans "Account Activation Resent" %}{% endblock %}
 
 {% block content %}
-<p>{% trans "Your account activation key was resent to {{ email }}." %}
+<p>
+  {% blocktrans %}
+  We have sent an email to {{ email }} with further instructions.
+  {% endblocktrans %}
 </p>
 {% endblock %}
 
 
 {% comment %}
-**registration/resend_activation_success.html**
+**registration/resend_activation_complete.html**
+Used after form for resending account activation is submitted. By default has
+the following context:
 
-Used after successful resending of account activation.
+``email``
+    The email address submitted in the resend activation form.
 {% endcomment %}

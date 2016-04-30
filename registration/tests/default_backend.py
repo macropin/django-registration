@@ -236,20 +236,18 @@ class DefaultBackendViewTests(TestCase):
 
         profile = RegistrationProfile.objects.get(user__username='bob')
 
-        resp = self.client.get(
-            reverse('registration_resend_activation',
-                    args=(),
-                    kwargs={'email': profile.user.email}))
-        self.assertRedirects(
-            resp, reverse('registration_resend_activation_complete'))
+        resp = self.client.post(reverse('registration_resend_activation'),
+                                data={'email': profile.user.email})
+        self.assertTemplateUsed(resp,
+                                'registration/resend_activation_complete.html')
+        self.assertEqual(resp.context['email'], profile.user.email)
 
     def test_resend_activation_invalid_email(self):
         """
-        Calling resend with an invalid email fails.
+        Calling resend with an invalid email shows the same template.
 
         """
-        resp = self.client.get(
-            reverse('registration_resend_activation',
-                    args=(),
-                    kwargs={'email': 'invalid@example.com'}))
-        self.assertTemplateUsed(resp, 'registration/resend_activation.html')
+        resp = self.client.post(reverse('registration_resend_activation'),
+                                data={'email': 'invalid@example.com'})
+        self.assertTemplateUsed(resp,
+                                'registration/resend_activation_complete.html')
