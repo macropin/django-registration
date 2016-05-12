@@ -340,19 +340,12 @@ class RegistrationProfile(models.Model):
         activation_email_html = getattr(settings, 'ACTIVATION_EMAIL_HTML',
                                         'registration/activation_email.html')
 
-        ctx_dict = {}
-        if request is not None:
-            ctx_dict = RequestContext(request, ctx_dict)
-        # update ctx_dict after RequestContext is created
-        # because template context processors
-        # can overwrite some of the values like user
-        # if django.contrib.auth.context_processors.auth is used
-        ctx_dict.update({
+        ctx_dict = {
             'user': self.user,
             'activation_key': self.activation_key,
             'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
             'site': site,
-        })
+        }
         subject = (getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '') +
                    render_to_string(
                        activation_email_subject, ctx_dict))
