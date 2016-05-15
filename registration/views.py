@@ -124,7 +124,7 @@ class ResendActivationView(FormView):
         self.resend_activation(form)
         return self.render_form_submitted_template(form)
 
-    def resend_activation(self,form):
+    def resend_activation(self, form):
         """
         Implement resend activation key logic here.
 
