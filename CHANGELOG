@@ -4,6 +4,9 @@ django-registration-redux changelog
 
 Version 1.5, TBD
 ----------------
+
+* Enhancement: Separate logic between account creation and activation.
+  See: `#171 <https://github.com/macropin/django-registration/issues/171>`_.
 * Bugfix: Add page title to `activate.html`
 
 Version 1.4, 21 February, 2016
