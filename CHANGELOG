@@ -5,6 +5,8 @@ django-registration-redux changelog
 Version 1.5, TBD
 ----------------
 
+* Feature: Added workflow to resend activation email. See
+  `#161 <https://github.com/macropin/django-registration/pull/161>`_.
 * Enhancement: Separate logic between account creation and activation.
   See: `#171 <https://github.com/macropin/django-registration/issues/171>`_.
 * Bugfix: Add page title to `activate.html`
