@@ -146,6 +146,7 @@ class RegistrationManager(models.Manager):
             profile = self.get(user__email=email)
         except ObjectDoesNotExist:
             return False
+        # TODO: Catch multiple objects returned exception?
 
         if profile.activated or profile.activation_key_expired():
             return False

@@ -11,6 +11,8 @@ from django.utils.decorators import method_decorator
 from django.utils.module_loading import import_string
 from django.views.decorators.debug import sensitive_post_parameters
 
+from registration.forms import ResendActivationForm
+
 REGISTRATION_FORM_PATH = getattr(settings, 'REGISTRATION_FORM',
                                  'registration.forms.RegistrationForm')
 REGISTRATION_FORM = import_string(REGISTRATION_FORM_PATH)
@@ -103,4 +105,35 @@ class ActivationView(TemplateView):
         raise NotImplementedError
 
     def get_success_url(self, user):
+        raise NotImplementedError
+
+
+class ResendActivationView(FormView):
+    """
+    Base class for resending activation views.
+    """
+    form_class = ResendActivationForm
+    template_name = 'registration/resend_activation_form.html'
+
+    def form_valid(self, form):
+        """
+        Regardless if resend_activation is successful, display the same
+        confirmation template.
+
+        """
+        self.resend_activation(form)
+        return self.render_form_submitted_template(form)
+
+    def resend_activation(self, form):
+        """
+        Implement resend activation key logic here.
+
+        """
+        raise NotImplementedError
+
+    def render_form_submitted_template(self, form):
+        """
+        Implement rendering of confirmation template here.
+
+        """
         raise NotImplementedError
