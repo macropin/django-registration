@@ -3,6 +3,9 @@ from django.contrib.auth import login, get_backends
 from django.dispatch import Signal
 
 
+# An admin has approved a user's account
+user_approved = Signal(providing_args=["user", "request"])
+
 # A new user has registered.
 user_registered = Signal(providing_args=["user", "request"])
 

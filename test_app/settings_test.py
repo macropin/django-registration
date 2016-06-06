@@ -20,7 +20,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 SECRET_KEY = '_'
 SITE_ID = 1
-ROOT_URLCONF = 'test_app.urls_default'
+ROOT_URLCONF = 'test_app.urls_enhanced'
 
 TEMPLATES = [
     {
@@ -48,4 +48,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+)
+
+ADMINS = (
+    ('admin1', 'admin1@mail.server.com'),
+    ('admin2', 'admin2@mail.server.com'),
 )

@@ -1,0 +1,35 @@
+{% load i18n %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>{{ site.name }} {% trans "registration" %}</title>
+</head>
+
+<body>
+<p>
+    {% blocktrans with site_name=site.name %}
+    The following user (NEED TO ADD USER HERE) has asked to register an account at
+    {{ site_name }}.
+    {% endblocktrans %}
+</p>
+<p>
+    {% blocktrans %}
+    To approve this, please click the following link.
+    {% endblocktrans %}
+</p>
+
+<p>
+    <a href="http://{{site.domain}}{% url 'registration_admin_approve' user_id %}">
+        {{site.domain}}{% url 'registration_admin_approve' user_id%}
+    </a>
+</p>
+<p>
+    {% blocktrans with site_name=site.name %}
+    Sincerely,
+    {{ site_name }} Management
+    {% endblocktrans %}
+</p>
+</body>
+
+</html>

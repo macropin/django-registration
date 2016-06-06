@@ -1,0 +1,12 @@
+{% load i18n %}
+{% blocktrans with site_name=site.name %}
+Your account is now approved. You can log in.
+{% endblocktrans %}
+
+{% comment %}
+**registration/admin_approve_complete_email.txt**
+
+Used after successful account activation. This template has no context
+variables of its own, and should simply inform the user that their
+account is now active.
+{% endcomment %}
