@@ -2,12 +2,15 @@ import datetime
 import hashlib
 import re
 
+from datetime import timedelta
+
 from django.utils import six
 from django.apps import apps
 from django.conf import settings
 from django.core import mail
 from django.core import management
 from django.test import TestCase
+from django.utils.timezone import now as datetime_now
 
 from registration.models import RegistrationProfile, SupervisedRegistrationProfile
 from registration.users import UserModel
@@ -133,6 +136,10 @@ class RegistrationModelTests(TestCase):
         self.assertEqual(new_user.email, 'alice@example.com')
         self.failUnless(new_user.check_password('swordfish'))
         self.failIf(new_user.is_active)
+        self.failIf(new_user.date_joined <=
+                    datetime_now() - timedelta(
+                        settings.ACCOUNT_ACTIVATION_DAYS)
+                    )
 
     def test_user_creation_email(self):
         """
@@ -153,6 +160,34 @@ class RegistrationModelTests(TestCase):
             site=Site.objects.get_current(),
             send_email=False, **self.user_info)
         self.assertEqual(len(mail.outbox), 0)
+
+    def test_user_creation_old_date_joined(self):
+        """
+        If ``user.date_joined`` is well in the past, ensure that we reset it.
+        """
+        new_user = RegistrationProfile.objects.create_inactive_user(
+            site=Site.objects.get_current(), **self.user_info)
+        self.assertEqual(new_user.username, 'alice')
+        self.assertEqual(new_user.email, 'alice@example.com')
+        self.failUnless(new_user.check_password('swordfish'))
+        self.failIf(new_user.is_active)
+        self.failIf(new_user.date_joined <=
+                    datetime_now() - timedelta(
+                        settings.ACCOUNT_ACTIVATION_DAYS)
+                    )
+
+    def test_unexpired_account_old_date_joined(self):
+        """
+        ``RegistrationProfile.activation_key_expired()`` is ``False`` within
+        the activation window. Even if the user was created in the past.
+
+        """
+        self.user_info['date_joined'] = datetime_now(
+        ) - timedelta(settings.ACCOUNT_ACTIVATION_DAYS + 1)
+        new_user = RegistrationProfile.objects.create_inactive_user(
+            site=Site.objects.get_current(), **self.user_info)
+        profile = RegistrationProfile.objects.get(user=new_user)
+        self.failIf(profile.activation_key_expired())
 
     def test_unexpired_account(self):
         """
@@ -242,7 +277,8 @@ class RegistrationModelTests(TestCase):
         RegistrationProfile.objects.activate_user(profile.activation_key)
 
         profile = RegistrationProfile.objects.get(user=new_user)
-        self.assertEqual(RegistrationProfile.objects.activate_user(profile.activation_key), new_user)
+        self.assertEqual(RegistrationProfile.objects.activate_user(
+            profile.activation_key), new_user)
 
     def test_activation_deactivated(self):
         """
@@ -258,7 +294,8 @@ class RegistrationModelTests(TestCase):
         new_user.save()
 
         # Try to activate again and ensure False is returned.
-        failed = RegistrationProfile.objects.activate_user(profile.activation_key)
+        failed = RegistrationProfile.objects.activate_user(
+            profile.activation_key)
         self.assertFalse(failed)
 
     def test_activation_nonexistent_key(self):

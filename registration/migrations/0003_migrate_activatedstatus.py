@@ -11,7 +11,7 @@ def migrate_activated_status(apps, schema_editor):
     # Filter the queryset to only fetch already activated profiles.
     # Note, we don't use the string constant `ACTIVATED` because we are using
     # the actual model, not necessarily the Python class which has said attribute.
-    for rp in RegistrationProfile.objects.filter(activation_key='ALREADY_ACTIVATED'):
+    for rp in RegistrationProfile.objects.filter(activation_key='ALREADY_ACTIVATED').iterator():
         # Note, it's impossible to get the original activation key, so just
         # leave the ALREADY_ACTIVATED string.
         rp.activated = True

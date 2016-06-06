@@ -222,3 +222,32 @@ class DefaultBackendViewTests(TestCase):
         self.assertTemplateUsed(resp, 'registration/activate.html')
         user = UserModel().objects.get(username='bob')
         self.assertFalse(user.is_active)
+
+    def test_resend_activation(self):
+        """
+        Resend activation functions properly.
+
+        """
+        resp = self.client.post(reverse('registration_register'),
+                                data={'username': 'bob',
+                                      'email': 'bob@example.com',
+                                      'password1': 'secret',
+                                      'password2': 'secret'})
+
+        profile = RegistrationProfile.objects.get(user__username='bob')
+
+        resp = self.client.post(reverse('registration_resend_activation'),
+                                data={'email': profile.user.email})
+        self.assertTemplateUsed(resp,
+                                'registration/resend_activation_complete.html')
+        self.assertEqual(resp.context['email'], profile.user.email)
+
+    def test_resend_activation_invalid_email(self):
+        """
+        Calling resend with an invalid email shows the same template.
+
+        """
+        resp = self.client.post(reverse('registration_resend_activation'),
+                                data={'email': 'invalid@example.com'})
+        self.assertTemplateUsed(resp,
+                                'registration/resend_activation_complete.html')

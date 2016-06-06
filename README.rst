@@ -1,11 +1,12 @@
 .. -*-restructuredtext-*-
 
 :Description: Django-registration provides user registration functionality for Django websites.
-:maintainers: Macropin_ & Dicato_
+:maintainers: Macropin_, DiCato_, and Joshblum_
 :contributors: `list of contributors <https://github.com/macropin/django-registration/graphs/contributors>`_
 
 .. _Macropin: https://github.com/macropin
-.. _Dicato: https://github.com/dicato
+.. _DiCato: https://github.com/dicato
+.. _Joshblum: https://github.com/joshblum
 
 
 .. image:: https://travis-ci.org/macropin/django-registration.svg?branch=master
