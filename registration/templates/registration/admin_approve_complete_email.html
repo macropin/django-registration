@@ -1,13 +1,20 @@
-{% extends "registration/registration_base.html" %}
 {% load i18n %}
+<!doctype html>
+<html lang="en">
 
-{% block title %}{% trans "Account Approved" %}{% endblock %}
+<head>
+    <title>{{ site.name }} {% trans "admin approval" %}</title>
+</head>
 
-{% block content %}
+<body>
 <p>
-    {% trans "Your account is now approved. You can log in" %}
+    {% blocktrans %}
+    Your account is now approved. You can log in.
+    {% endblocktrans %}
 </p>
-{% endblock %}
+</body>
+
+</html>
 
 
 {% comment %}
