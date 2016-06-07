@@ -610,6 +610,69 @@ class SupervisedRegistrationModelTests(TestCase):
 
         self.assertEqual(len(mail.outbox[0].alternatives), 0)
 
+    def test_admin_approval_complete_email(self):
+        """
+        ``SupervisedRegistrationManager.send_admin_approve_complete_email``
+        sends an email to the approved user
+
+        """
+        new_user = UserModel().objects.create_user(**self.user_info)
+        profile = SupervisedRegistrationProfile.objects.create_profile(new_user)
+        profile.send_admin_approve_complete_email(Site.objects.get_current())
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].to, [self.user_info['email']])
+
+    def test_admin_approval_complete_email_uses_registration_default_from_email(self):
+        """
+        ``SupervisedRegistrationManager.send_admin_approve_complete_email``
+        sends an email
+
+        """
+        new_user = UserModel().objects.create_user(**self.user_info)
+        profile = SupervisedRegistrationProfile.objects.create_profile(new_user)
+        profile.send_admin_approve_complete_email(Site.objects.get_current())
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].from_email, 'registration@email.com')
+
+    def test_admin_approval_complete_email_falls_back_to_django_default_from_email(self):
+        """
+        ``SupervisedRegistrationManager.send_admin_approve_complete_email``
+        sends an email
+
+        """
+        settings.REGISTRATION_DEFAULT_FROM_EMAIL = None
+        new_user = UserModel().objects.create_user(**self.user_info)
+        profile = SupervisedRegistrationProfile.objects.create_profile(new_user)
+        profile.send_admin_approve_complete_email(Site.objects.get_current())
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].from_email, 'django@email.com')
+
+    def test_admin_approval_complete_email_is_html_by_default(self):
+        """
+        ``SupervisedRegistrationProfile.send_admin_approve_complete_email``
+        sends an html email by default.
+
+        """
+        new_user = UserModel().objects.create_user(**self.user_info)
+        profile = SupervisedRegistrationProfile.objects.create_profile(new_user)
+        profile.send_admin_approve_complete_email(Site.objects.get_current())
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(len(mail.outbox[0].alternatives), 1)
+
+    def test_admin_approval_complete_email_is_plain_text_if_html_disabled(self):
+        """
+        ``SupervisedRegistrationProfile.send_admin_approve_complete_email``
+        sends a plain text email if settings.REGISTRATION_EMAIL_HTML is False.
+
+        """
+        settings.REGISTRATION_EMAIL_HTML = False
+        new_user = UserModel().objects.create_user(**self.user_info)
+        profile = SupervisedRegistrationProfile.objects.create_profile(new_user)
+        profile.send_admin_approve_complete_email(Site.objects.get_current())
+        self.assertEqual(len(mail.outbox), 1)
+
+        self.assertEqual(len(mail.outbox[0].alternatives), 0)
+
     def test_user_creation(self):
         """
         Creating a new user populates the correct data, and sets the
