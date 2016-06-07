@@ -439,7 +439,7 @@ class SupervisedRegistrationManager(models.Manager):
                     return True
         return False
 
-    def admin_approve_user(self, profile, site, get_profile=False, request=None):
+    def admin_approve_user(self, profile_id, site, get_profile=False, request=None):
         """
         Approve the ``SupervisedRegistrationProfile``
         object with the given ``id``.
@@ -458,7 +458,7 @@ class SupervisedRegistrationManager(models.Manager):
 
         """
         try:
-            profile = SupervisedRegistrationProfile.objects.get(id=profile)
+            profile = SupervisedRegistrationProfile.objects.get(id=profile_id)
             if profile.activated:
                 if profile.user.is_active:
                     return profile.user
