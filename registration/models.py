@@ -379,7 +379,7 @@ class RegistrationProfile(models.Model):
         email_message.send()
 
 
-class SupervisedRegistrationManager(models.Manager):
+class SupervisedRegistrationManager(RegistrationManager):
 
     def activate_user(self, activation_key, site, get_profile=False):
         """
@@ -482,34 +482,6 @@ class SupervisedRegistrationManager(models.Manager):
                 return profile.user
         except self.model.DoesNotExist:
             return False
-
-    def create_inactive_user(self, site, new_user=None, send_email=True,
-                             request=None, profile_info={}, **user_info):
-        """
-        Create a new, inactive ``User``, generate a
-        ``SupervisedRegistrationProfile`` and email its activation key to the
-        ``User``, returning the new ``User``.
-
-        By default, an activation email will be sent to the new
-        user. To disable this, pass ``send_email=False``.
-        Additionally, if email is sent and ``request`` is supplied,
-        it will be passed to the email template.
-
-        """
-        if new_user is None:
-            password = user_info.pop('password')
-            new_user = UserModel()(**user_info)
-            new_user.set_password(password)
-        new_user.is_active = False
-
-        with transaction.atomic():
-            new_user.save()
-            registration_profile = self.create_profile(new_user, **profile_info)
-
-        if send_email:
-            registration_profile.send_activation_email(site, request)
-
-        return new_user
 
     def send_admin_approve_email(self, user, site, request=None):
 
@@ -616,42 +588,6 @@ class SupervisedRegistrationManager(models.Manager):
                 email_message.attach_alternative(message_html, 'text/html')
 
         email_message.send()
-
-    def create_profile(self, user, **profile_info):
-        """
-        Create a ``SupervisedRegistrationProfile`` for a given
-        ``User``, and return the ``SupervisedRegistrationProfile``.
-
-        The activation key for the ``SupervisedRegistrationProfile`` will be a
-        SHA1 hash, generated from a combination of the ``User``'s
-        pk and a random salt.
-
-        """
-        profile = self.model(user=user, **profile_info)
-
-        if 'activation_key' not in profile_info:
-            profile.create_new_activation_key(save=False)
-
-        profile.save()
-
-        return profile
-
-    def resend_activation_mail(self, email, site, request=None):
-        """
-        Resets activation key for the user and resends activation email.
-        """
-        try:
-            profile = self.get(user__email=email)
-        except ObjectDoesNotExist:
-            return False
-
-        if profile.activated or profile.activation_key_expired():
-            return False
-
-        profile.create_new_activation_key()
-        profile.send_activation_email(site, request)
-
-        return True
 
     def delete_expired_users(self):
         """
