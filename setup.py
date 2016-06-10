@@ -41,8 +41,10 @@ class install_lib(_install_lib):
         try:
             # django 1.7+
             from django.core.management.commands.compilemessages import Command
+            os.chdir('registration')
             cmd = Command()
             cmd.handle(verbosity=0, exclude=[], locale=[])
+            os.chdir('..')
             return
         except ImportError:
             pass
