@@ -1,6 +1,9 @@
+#!/usr/bin/env python
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
+from setuptools.command.install_lib import install_lib as _install_lib
 import sys
+import os
 
 from registration import get_version
 
@@ -17,6 +20,33 @@ class PyTest(TestCommand):
         errno = pytest.main(self.test_args)
         sys.exit(errno)
 
+
+class install_lib(_install_lib):
+    """
+        install_lib class extended to compile the locales
+        from the .po source files in .mo files.
+    """
+    def run(self):
+        _install_lib.run(self)
+        try:
+            # django before 1.7
+            from django.core.management.commands.compilemessages \
+                import compile_messages
+            os.chdir('registration')
+            compile_messages(sys.stderr)
+            os.chdir("..")
+            return
+        except ImportError:
+            pass
+        try:
+            # django 1.7+
+            from django.core.management.commands.compilemessages import Command
+            cmd = Command()
+            cmd.handle(verbosity=0, exclude=[], locale=[])
+            return
+        except ImportError:
+            pass
+
 setup(
     name='django-registration-redux',
     version=get_version().replace(' ', '-'),
@@ -28,7 +58,7 @@ setup(
     package_dir={'registration': 'registration'},
     packages=find_packages(exclude='test_app'),
     tests_require=['pytest-django'],
-    cmdclass={'test': PyTest},
+    cmdclass={'test': PyTest, 'install_lib': install_lib},
     include_package_data=True,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
