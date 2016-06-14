@@ -68,9 +68,5 @@ following context:
     ``HttpRequest`` instance for better flexibility.
     For example it can be used to compute absolute register URL:
 
-        http{% if request.is_secure %}s{% endif %}://{{ request.get_host }}{% url 'registration_activate' activation_key %}
-
-    or when using Django >= 1.7:
-
         {{ request.scheme }}://{{ request.get_host }}{% url 'registration_activate' activation_key %}
 {% endcomment %}
