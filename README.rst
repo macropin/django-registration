@@ -27,7 +27,7 @@ If you have issues with the "django-registration-redux" package then please `rai
 
 This is a fairly simple user-registration application for Django,
 designed to make allowing user signups as painless as possible. It
-requires a functional installation of Django 1.7 or newer, but has no
+requires a functional installation of Django 1.8 or newer, but has no
 other dependencies.
 
 For instructions on how to use this application, and on
@@ -55,7 +55,7 @@ somewhere on your Python path; this is useful if you're working from a
 Git checkout.
 
 Note that this application requires Python 2.7/3.4 or later, and a
-functional installation of Django 1.7 or newer.
+functional installation of Django 1.8 or newer.
 
 Getting started with development
 --------------------------------

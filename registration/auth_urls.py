@@ -23,8 +23,6 @@ consult a specific backend's documentation for details.
 
 """
 
-from distutils.version import LooseVersion
-from django import get_version
 from django.conf.urls import url
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth import views as auth_views
@@ -56,20 +54,8 @@ urlpatterns = [
     url(r'^password/reset/done/$',
         auth_views.password_reset_done,
         name='auth_password_reset_done'),
+    url(r'^password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
+        auth_views.password_reset_confirm,
+        {'post_reset_redirect': reverse_lazy('auth_password_reset_complete')},
+        name='auth_password_reset_confirm'),
 ]
-
-
-if (LooseVersion(get_version()) >= LooseVersion('1.6')):
-    urlpatterns += [
-        url(r'^password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
-            auth_views.password_reset_confirm,
-            {'post_reset_redirect': reverse_lazy('auth_password_reset_complete')},
-            name='auth_password_reset_confirm')
-    ]
-else:
-    urlpatterns += [
-        url(r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]{1,13})-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-            auth_views.password_reset_confirm,
-            {'post_reset_redirect': reverse_lazy('auth_password_reset_complete')},
-            name='auth_password_reset_confirm')
-    ]
