@@ -543,15 +543,11 @@ class SupervisedRegistrationManager(RegistrationManager):
             'registration/admin_approve_email.html'
         )
 
-        ctx_dict = {}
-        if request is not None:
-            ctx_dict = RequestContext(request, ctx_dict)
-
-        ctx_dict.update({
+        ctx_dict = {
             'user': user,
             'profile_id': user.registrationprofile.id,
             'site': site,
-        })
+        }
         subject = (getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '') +
                    render_to_string(
                        admin_approve_email_subject, ctx_dict))
@@ -699,17 +695,10 @@ class SupervisedRegistrationProfile(RegistrationProfile):
             settings, 'APPROVAL_COMPLETE_EMAIL_HTML',
             'registration/admin_approve_complete_email.html')
 
-        ctx_dict = {}
-        if request is not None:
-            ctx_dict = RequestContext(request, ctx_dict)
-        # update ctx_dict after RequestContext is created
-        # because template context processors
-        # can overwrite some of the values like user
-        # if django.contrib.auth.context_processors.auth is used
-        ctx_dict.update({
+        ctx_dict = {
             'user': self.user,
             'site': site,
-        })
+        }
         subject = (getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '') +
                    render_to_string(
                        admin_approve_complete_email_subject, ctx_dict))
