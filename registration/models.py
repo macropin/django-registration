@@ -572,7 +572,7 @@ class SupervisedRegistrationManager(RegistrationManager):
         admins = [admin[1] for admin in admins]
         if not admins:
             raise ImproperlyConfigured(
-                'Using the enhanced registration backend'
+                'Using the admin_approval registration backend'
                 ' requires at least one admin in settings.ADMINS')
 
         email_message = EmailMultiAlternatives(subject, message_txt,

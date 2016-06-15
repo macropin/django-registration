@@ -8,7 +8,7 @@ from django.test.client import RequestFactory
 from django.test.utils import override_settings
 
 from registration.forms import RegistrationForm
-from registration.backends.enhanced.views import RegistrationView
+from registration.backends.admin_approval.views import RegistrationView
 from registration.models import SupervisedRegistrationProfile as \
     RegistrationProfile
 from registration.users import UserModel
@@ -16,7 +16,7 @@ from registration.users import UserModel
 
 class EnhancedBackendViewTests(TestCase):
     """
-    Test the enhanced registration backend.
+    Test the admin_approval registration backend.
 
     Running these tests successfully will require two templates to be
     created for the sending of activation emails; details on these
@@ -24,7 +24,7 @@ class EnhancedBackendViewTests(TestCase):
     the default backend.
 
     """
-    urls = 'test_app.urls_enhanced'
+    urls = 'test_app.urls_admin_approval'
 
     def setUp(self):
         """

@@ -428,7 +428,7 @@ class RegistrationModelTests(TestCase):
 
 class SupervisedRegistrationModelTests(TestCase):
     """
-    Test the model and manager used in the enhanced backend.
+    Test the model and manager used in the admin_approval backend.
 
     """
     user_info = {'username': 'alice',

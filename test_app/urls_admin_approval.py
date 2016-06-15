@@ -10,7 +10,7 @@ urlpatterns = [
         name='index'),
 
     url(r'^accounts/',
-        include('registration.backends.enhanced.urls')),
+        include('registration.backends.admin_approval.urls')),
 
     url(r'^accounts/profile/',
         TemplateView.as_view(template_name='profile.html'),

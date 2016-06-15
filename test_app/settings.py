@@ -23,7 +23,7 @@ SECRET_KEY = '_'
 
 SITE_ID = 1
 
-ROOT_URLCONF = 'test_app.urls_enhanced'
+ROOT_URLCONF = 'test_app.urls_admin_approval'
 
 TEMPLATES = [
     {
