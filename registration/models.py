@@ -431,8 +431,7 @@ class SupervisedRegistrationManager(RegistrationManager):
                 # do not set ``User.is_active`` as True. This will be set
                 # when a site administrator approves this account.
                 profile.activated = True
-                with transaction.atomic():
-                    profile.save()
+                profile.save()
                 if get_profile:
                     return profile
                 else:
@@ -470,9 +469,7 @@ class SupervisedRegistrationManager(RegistrationManager):
             else:
                 return False
 
-            with transaction.atomic():
-                profile.user.save()
-
+            profile.user.save()
             profile.send_admin_approve_complete_email(site, request)
 
             if get_profile:
