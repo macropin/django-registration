@@ -22,6 +22,38 @@ from .users import UserModel, UserModelString
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
 
+def send_email(addresses_to, ctx_dict, subject_template, body_template,
+               body_html_template):
+    """
+    Function that sends an email
+    """
+    subject = (
+        getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '') +
+        render_to_string(
+            subject_template, ctx_dict)
+    )
+    # Email subject *must not* contain newlines
+    subject = ''.join(subject.splitlines())
+    from_email = getattr(settings, 'REGISTRATION_DEFAULT_FROM_EMAIL',
+                         settings.DEFAULT_FROM_EMAIL)
+    message_txt = render_to_string(body_template,
+                                   ctx_dict)
+
+    email_message = EmailMultiAlternatives(subject, message_txt,
+                                           from_email, addresses_to)
+
+    if getattr(settings, 'REGISTRATION_EMAIL_HTML', True):
+        try:
+            message_html = render_to_string(
+                body_html_template, ctx_dict)
+        except TemplateDoesNotExist:
+            pass
+        else:
+            email_message.attach_alternative(message_html, 'text/html')
+
+    email_message.send()
+
+
 class RegistrationManager(models.Manager):
     """
     Custom manager for the ``RegistrationProfile`` model.
@@ -548,37 +580,16 @@ class SupervisedRegistrationManager(RegistrationManager):
             'profile_id': user.registrationprofile.id,
             'site': site,
         }
-        subject = (getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '') +
-                   render_to_string(
-                       admin_approve_email_subject, ctx_dict))
-        # Email subject *must not* contain newlines
-        subject = ''.join(subject.splitlines())
-        from_email = getattr(settings, 'REGISTRATION_DEFAULT_FROM_EMAIL',
-                             settings.DEFAULT_FROM_EMAIL)
-        message_txt = render_to_string(admin_approve_email_body,
-                                       ctx_dict)
-
-        # try:
-        admins = getattr(settings, 'ADMINS')
-        admins = [admin[1] for admin in admins]
+        admins = getattr(settings, 'ADMINS', None)
         if not admins:
             raise ImproperlyConfigured(
                 'Using the admin_approval registration backend'
                 ' requires at least one admin in settings.ADMINS')
-
-        email_message = EmailMultiAlternatives(subject, message_txt,
-                                               from_email, admins)
-
-        if getattr(settings, 'REGISTRATION_EMAIL_HTML', True):
-            try:
-                message_html = render_to_string(
-                    admin_approve_email_html, ctx_dict)
-            except TemplateDoesNotExist:
-                pass
-            else:
-                email_message.attach_alternative(message_html, 'text/html')
-
-        email_message.send()
+        admins = [admin[1] for admin in admins]
+        send_email(
+            admins, ctx_dict, admin_approve_email_subject,
+            admin_approve_email_body, admin_approve_email_html
+        )
 
     def delete_expired_users(self):
         """
@@ -699,26 +710,9 @@ class SupervisedRegistrationProfile(RegistrationProfile):
             'user': self.user,
             'site': site,
         }
-        subject = (getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '') +
-                   render_to_string(
-                       admin_approve_complete_email_subject, ctx_dict))
-        # Email subject *must not* contain newlines
-        subject = ''.join(subject.splitlines())
-        from_email = getattr(settings, 'REGISTRATION_DEFAULT_FROM_EMAIL',
-                             settings.DEFAULT_FROM_EMAIL)
-        message_txt = render_to_string(admin_approve_complete_email_body,
-                                       ctx_dict)
-
-        email_message = EmailMultiAlternatives(subject, message_txt,
-                                               from_email, [self.user.email])
-
-        if getattr(settings, 'REGISTRATION_EMAIL_HTML', True):
-            try:
-                message_html = render_to_string(
-                    admin_approve_complete_email_html, ctx_dict)
-            except TemplateDoesNotExist:
-                pass
-            else:
-                email_message.attach_alternative(message_html, 'text/html')
-
-        email_message.send()
+        send_email(
+            [self.user.email], ctx_dict,
+            admin_approve_complete_email_subject,
+            admin_approve_complete_email_body,
+            admin_approve_complete_email_html
+        )
