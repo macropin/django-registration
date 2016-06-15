@@ -7,4 +7,4 @@ The following user (NEED TO ADD USER HERE) has asked to register an account at
 To approve this, please click the following link.
 {% endblocktrans %}
 
-http://{{site.domain}}{% url 'registration_admin_approve' user_id %}
+http://{{site.domain}}{% url 'registration_admin_approve' profile_id %}

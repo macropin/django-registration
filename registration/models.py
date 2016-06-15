@@ -512,7 +512,7 @@ class SupervisedRegistrationManager(RegistrationManager):
         ``user``
             The new user account
 
-        ``user_id``
+        ``profile_id``
             The id of the associated``SupervisedRegistrationProfile``
             object.
 
@@ -554,7 +554,7 @@ class SupervisedRegistrationManager(RegistrationManager):
 
         ctx_dict.update({
             'user': user,
-            'user_id': user.registrationprofile.id,
+            'profile_id': user.registrationprofile.id,
             'site': site,
         })
         subject = (getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '') +
