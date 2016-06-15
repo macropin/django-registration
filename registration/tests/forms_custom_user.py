@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-from distutils.version import StrictVersion
 try:
     from importlib import reload  # Python 3.4+
 except ImportError:
@@ -9,15 +8,11 @@ except ImportError:
         pass  # Python 2 reload()
 
 
-from django import get_version
 from django.conf import settings
 from django.test import TestCase
 
 from registration import forms
 from registration.users import UsernameField
-
-
-DJANGO_VERSION = StrictVersion(get_version())
 
 
 class RegistrationFormTests(TestCase):
@@ -46,18 +41,16 @@ class RegistrationFormTests(TestCase):
 
         self.assertTrue(UsernameField() in form.fields)
 
-    def test_registration_form_subclass_is_valid_for_django_18(self):
+    def test_registration_form_subclass_is_valid(self):
         """
-        Test that ``RegistrationForm`` subclasses can save in
-        Django > 1.8
+        Test that ``RegistrationForm`` subclasses can save
 
         """
-        if DJANGO_VERSION >= StrictVersion('1.8'):
-            data = {'new_field': 'custom username',
-                    'email': 'foo@example.com',
-                    'password1': 'foo',
-                    'password2': 'foo'}
+        data = {'new_field': 'custom username',
+                'email': 'foo@example.com',
+                'password1': 'foo',
+                'password2': 'foo'}
 
-            form = forms.RegistrationForm(data=data)
+        form = forms.RegistrationForm(data=data)
 
-            self.assertTrue(form.is_valid())
+        self.assertTrue(form.is_valid())

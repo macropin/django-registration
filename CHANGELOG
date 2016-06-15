@@ -5,6 +5,7 @@ django-registration-redux changelog
 Version 1.5, TBD
 ----------------
 
+* BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Django 1.7.
 * Feature: Added workflow to resend activation email. See
   `#161 <https://github.com/macropin/django-registration/pull/161>`_.
 * Enhancement: Separate logic between account creation and activation.

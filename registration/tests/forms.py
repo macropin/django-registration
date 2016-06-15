@@ -1,14 +1,9 @@
 from __future__ import unicode_literals
-from distutils.version import StrictVersion
 
-from django import get_version
 from django.test import TestCase
 
 from registration import forms
 from registration.users import UserModel
-
-
-DJANGO_VERSION = StrictVersion(get_version())
 
 
 class RegistrationFormTests(TestCase):
@@ -26,11 +21,10 @@ class RegistrationFormTests(TestCase):
         # Create a user so we can verify that duplicate usernames aren't
         # permitted.
         UserModel().objects.create_user('alice', 'alice@example.com', 'secret')
-
-        bad_username_error = 'This value may contain only letters, numbers and @/./+/-/_ characters.'
-        if DJANGO_VERSION >= StrictVersion('1.8'):
-            bad_username_error = 'Enter a valid username. ' + bad_username_error
-
+        bad_username_error = (
+            'Enter a valid username. This value may contain only letters, '
+            'numbers and @/./+/-/_ characters.'
+        )
         invalid_data_dicts = [
             # Non-alphanumeric username.
             {'data': {'username': 'foo/bar',
