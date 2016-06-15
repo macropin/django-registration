@@ -455,7 +455,6 @@ class SupervisedRegistrationManager(RegistrationManager):
         If the id is valid but the ``SupervisedRegistrationProfile``
         object is not activated, return ``False``.
 
-
         """
         try:
             profile = SupervisedRegistrationProfile.objects.get(id=profile_id)
@@ -463,7 +462,7 @@ class SupervisedRegistrationManager(RegistrationManager):
                 if profile.user.is_active:
                     return profile.user
 
-            # If the user has not activated his profile the admin should
+            # If the user has not activated their profile the admin should
             # not be able to approve his account (at least not following
             # this process)
             if profile.activated:
@@ -484,7 +483,6 @@ class SupervisedRegistrationManager(RegistrationManager):
             return False
 
     def send_admin_approve_email(self, user, site, request=None):
-
         """
         Send an approval email to the site administrators to
         approve this user.
