@@ -1,7 +1,8 @@
 {% load i18n %}
-{% blocktrans with site_name=site.name %}
-Your account is now approved. You can log in.
+{% blocktrans %}
+Your account is now approved. You can log in using the following link
 {% endblocktrans %}
+http://{{site.domain}}{% url 'django.contrib.auth.views.login' %}
 
 {% comment %}
 **registration/admin_approve_complete_email.txt**

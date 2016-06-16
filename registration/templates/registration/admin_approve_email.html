@@ -9,20 +9,15 @@
 <body>
 <p>
     {% blocktrans with site_name=site.name %}
-    The following user (NEED TO ADD USER HERE) has asked to register an account at
+    The following user ({{ user }}) has asked to register an account at
     {{ site_name }}.
     {% endblocktrans %}
 </p>
 <p>
     {% blocktrans %}
-    To approve this, please click the following link.
+    To approve this, please 
     {% endblocktrans %}
-</p>
-
-<p>
-    <a href="http://{{site.domain}}{% url 'registration_admin_approve' profile_id %}">
-        {{site.domain}}{% url 'registration_admin_approve' profile_id %}
-    </a>
+    <a href="http://{{site.domain}}{% url 'registration_admin_approve' profile_id %}"> {% trans "click here" %}</a>.
 </p>
 <p>
     {% blocktrans with site_name=site.name %}

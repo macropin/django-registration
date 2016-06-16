@@ -9,8 +9,9 @@
 <body>
 <p>
     {% blocktrans %}
-    Your account is now approved. You can log in.
+    Your account is now approved. You can 
     {% endblocktrans %}
+    <a href="http://{{site.domain}}{% url 'django.contrib.auth.views.login' %}">{% trans "log in." %}</a>
 </p>
 </body>
 
