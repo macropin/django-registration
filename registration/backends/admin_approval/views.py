@@ -1,8 +1,10 @@
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
+from django.shortcuts import render
 
 from ... import signals
 from ...models import SupervisedRegistrationProfile as RegistrationProfile
+from ...views import ResendActivationView as BaseResendActivationView
 from ...views import ActivationView as BaseActivationView
 from ...views import RegistrationView as BaseRegistrationView
 from ...views import ApprovalView as BaseApprovalView
@@ -142,6 +144,33 @@ class ActivationView(BaseActivationView):
 
     def get_success_url(self, user):
         return ('registration_activation_complete', (), {})
+
+
+class ResendActivationView(BaseResendActivationView):
+
+    def resend_activation(self, form):
+        """
+        Given an email, look up user by email and resend activation key if user
+        is not already activated or previous activation key has not expired.
+
+        Returns True if activation key was successfully sent, False otherwise.
+
+        """
+        site = get_current_site(self.request)
+        email = form.cleaned_data['email']
+        return RegistrationProfile.objects.resend_activation_mail(
+            email, site, self.request)
+
+    def render_form_submitted_template(self, form):
+        """
+        Renders resend activation complete template with the submitted email.
+
+        """
+        email = form.cleaned_data['email']
+        context = {'email': email}
+        return render(self.request,
+                      'registration/resend_activation_complete.html',
+                      context)
 
 
 class ApprovalView(BaseApprovalView):

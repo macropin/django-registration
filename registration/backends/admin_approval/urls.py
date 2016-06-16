@@ -26,9 +26,13 @@ from django.contrib.auth.decorators import permission_required
 from .views import ActivationView
 from .views import RegistrationView
 from .views import ApprovalView
+from registration.backends.admin_approval.views import ResendActivationView
 
 
 urlpatterns = [
+    url(r'^activate/resend/$',
+        ResendActivationView.as_view(),
+        name='registration_resend_activation'),
     url(r'^activate/complete/$',
         TemplateView.as_view(
             template_name='registration/activation_complete_admin_pending.html'

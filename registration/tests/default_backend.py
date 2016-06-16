@@ -25,6 +25,10 @@ class DefaultBackendViewTests(TestCase):
     """
     urls = 'test_app.urls_default'
 
+    registration_profile = RegistrationProfile
+
+    registration_view = RegistrationView
+
     def setUp(self):
         """
         Create an instance of the default backend for use in testing,
@@ -111,7 +115,7 @@ class DefaultBackendViewTests(TestCase):
 
         # A registration profile was created, and an activation email
         # was sent.
-        self.assertEqual(RegistrationProfile.objects.count(), 1)
+        self.assertEqual(self.registration_profile.objects.count(), 1)
         self.assertEqual(len(mail.outbox), 1)
 
     def test_registration_no_email(self):
@@ -120,7 +124,7 @@ class DefaultBackendViewTests(TestCase):
         associated class variable is set to ``False``
 
         """
-        class RegistrationNoEmailView(RegistrationView):
+        class RegistrationNoEmailView(self.registration_view):
             SEND_ACTIVATION_EMAIL = False
 
         request_factory = RequestFactory()
@@ -133,7 +137,7 @@ class DefaultBackendViewTests(TestCase):
 
         UserModel().objects.get(username='bob')
         # A registration profile was created, and no activation email was sent.
-        self.assertEqual(RegistrationProfile.objects.count(), 1)
+        self.assertEqual(self.registration_profile.objects.count(), 1)
         self.assertEqual(len(mail.outbox), 0)
 
     @override_settings(
@@ -160,7 +164,7 @@ class DefaultBackendViewTests(TestCase):
 
         self.failIf(new_user.is_active)
 
-        self.assertEqual(RegistrationProfile.objects.count(), 1)
+        self.assertEqual(self.registration_profile.objects.count(), 1)
         self.assertEqual(len(mail.outbox), 1)
 
     def test_registration_failure(self):
@@ -188,7 +192,7 @@ class DefaultBackendViewTests(TestCase):
                                       'password1': 'secret',
                                       'password2': 'secret'})
 
-        profile = RegistrationProfile.objects.get(user__username='bob')
+        profile = self.registration_profile.objects.get(user__username='bob')
 
         resp = self.client.get(
             reverse('registration_activate',
@@ -207,7 +211,7 @@ class DefaultBackendViewTests(TestCase):
                                       'password1': 'secret',
                                       'password2': 'secret'})
 
-        profile = RegistrationProfile.objects.get(user__username='bob')
+        profile = self.registration_profile.objects.get(user__username='bob')
         user = profile.user
         user.date_joined -= datetime.timedelta(
             days=settings.ACCOUNT_ACTIVATION_DAYS)
@@ -234,7 +238,7 @@ class DefaultBackendViewTests(TestCase):
                                       'password1': 'secret',
                                       'password2': 'secret'})
 
-        profile = RegistrationProfile.objects.get(user__username='bob')
+        profile = self.registration_profile.objects.get(user__username='bob')
 
         resp = self.client.post(reverse('registration_resend_activation'),
                                 data={'email': profile.user.email})
