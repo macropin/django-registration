@@ -9,6 +9,7 @@ from django.apps import apps
 from django.conf import settings
 from django.core import mail
 from django.core import management
+from django.test import override_settings
 from django.test import TestCase
 from django.utils.timezone import now as datetime_now
 
@@ -65,6 +66,19 @@ class RegistrationModelTests(TestCase):
                          "Registration information for alice")
 
     def test_activation_email(self):
+        """
+        ``RegistrationProfile.send_activation_email`` sends an
+        email.
+
+        """
+        new_user = UserModel().objects.create_user(**self.user_info)
+        profile = RegistrationProfile.objects.create_profile(new_user)
+        profile.send_activation_email(Site.objects.get_current())
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].to, [self.user_info['email']])
+
+    @override_settings(ACTIVATION_EMAIL_HTML='')
+    def test_activation_email_missing_template(self):
         """
         ``RegistrationProfile.send_activation_email`` sends an
         email.
@@ -233,6 +247,26 @@ class RegistrationModelTests(TestCase):
         profile = RegistrationProfile.objects.get(user=new_user)
         self.assertTrue(profile.activated)
 
+    def test_valid_activation_with_profile(self):
+        """
+        Activating a user within the permitted window makes the
+        account active, and resets the activation key.
+
+        """
+        new_user = RegistrationProfile.objects.create_inactive_user(
+            site=Site.objects.get_current(), **self.user_info)
+        profile = RegistrationProfile.objects.get(user=new_user)
+        activated_profile = (RegistrationProfile.objects
+                     .activate_user(profile.activation_key, get_profile=True))
+
+        self.failUnless(isinstance(activated_profile, RegistrationProfile))
+        self.assertEqual(activated_profile.id, profile.id)
+        self.failUnless(activated_profile.activated)
+
+        new_user.refresh_from_db()
+        self.assertTrue(activated_profile.user.id, new_user.id)
+        self.assertTrue(new_user.is_active)
+
     def test_expired_activation(self):
         """
         Attempting to activate outside the permitted window does not
@@ -326,6 +360,33 @@ class RegistrationModelTests(TestCase):
         expired_user.date_joined -= datetime.timedelta(
             days=settings.ACCOUNT_ACTIVATION_DAYS + 1)
         expired_user.save()
+
+        RegistrationProfile.objects.delete_expired_users()
+        self.assertEqual(RegistrationProfile.objects.count(), 1)
+        self.assertRaises(UserModel().DoesNotExist,
+                          UserModel().objects.get, username='bob')
+
+    def test_expired_user_deletion_missing_user(self):
+        """
+        ``RegistrationProfile.objects.delete_expired_users()`` only deletes
+        inactive users whose activation window has expired. If a ``UserModel``
+        is not present, the delete continues gracefully.
+
+        """
+        RegistrationProfile.objects.create_inactive_user(
+            site=Site.objects.get_current(), **self.user_info)
+        expired_user = (RegistrationProfile.objects
+                        .create_inactive_user(
+                            site=Site.objects.get_current(),
+                            username='bob',
+                            password='secret',
+                            email='bob@example.com'))
+        expired_user.date_joined -= datetime.timedelta(
+            days=settings.ACCOUNT_ACTIVATION_DAYS + 1)
+        expired_user.save()
+        # Ensure that we cleanup the expired profile even if the user does not
+        # exist
+        expired_user.delete()
 
         RegistrationProfile.objects.delete_expired_users()
         self.assertEqual(RegistrationProfile.objects.count(), 1)
