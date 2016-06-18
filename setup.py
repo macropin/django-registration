@@ -29,17 +29,8 @@ class install_lib(_install_lib):
     def run(self):
         _install_lib.run(self)
         try:
-            # django before 1.7
-            from django.core.management.commands.compilemessages \
-                import compile_messages
-            os.chdir('registration')
-            compile_messages(sys.stderr)
-            os.chdir("..")
-            return
-        except ImportError:
-            pass
-        try:
-            # django 1.7+
+            # Use the management command to compile messages
+            # tested with django 1.7-1.9, 1.9 does not need the chdir anymore
             from django.core.management.commands.compilemessages import Command
             os.chdir('registration')
             cmd = Command()
