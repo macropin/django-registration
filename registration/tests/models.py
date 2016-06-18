@@ -257,7 +257,7 @@ class RegistrationModelTests(TestCase):
             site=Site.objects.get_current(), **self.user_info)
         profile = RegistrationProfile.objects.get(user=new_user)
         activated_profile = (RegistrationProfile.objects
-                     .activate_user(profile.activation_key, get_profile=True))
+                             .activate_user(profile.activation_key, get_profile=True))
 
         self.failUnless(isinstance(activated_profile, RegistrationProfile))
         self.assertEqual(activated_profile.id, profile.id)
