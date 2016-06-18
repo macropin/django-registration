@@ -77,7 +77,7 @@ class RegistrationModelTests(TestCase):
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].to, [self.user_info['email']])
 
-    @override_settings(ACTIVATION_EMAIL_HTML='')
+    @override_settings(ACTIVATION_EMAIL_HTML='does-not-exist')
     def test_activation_email_missing_template(self):
         """
         ``RegistrationProfile.send_activation_email`` sends an
