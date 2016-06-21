@@ -23,7 +23,7 @@ SECRET_KEY = '_'
 
 SITE_ID = 1
 
-ROOT_URLCONF = 'test_app.urls_admin_approval'
+ROOT_URLCONF = 'test_app.urls_default'
 
 TEMPLATES = [
     {
@@ -59,9 +59,3 @@ SEND_ACTIVATION_EMAIL = True
 REGISTRATION_AUTO_LOGIN = False
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-
-ADMINS = (
-    ('admin1', 'admin1@mail.server.com'),
-    ('admin2', 'admin2@mail.server.com'),
-)
