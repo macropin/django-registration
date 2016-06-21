@@ -1,17 +1,8 @@
-# import datetime
-
-# from django.conf import settings
-# from django.core import mail
 from django.core.urlresolvers import reverse
-# from django.test import TestCase
-# from django.test.client import RequestFactory
-# from django.test.utils import override_settings
-
-# from registration.forms import RegistrationForm
 from registration.models import SupervisedRegistrationProfile
 from registration.backends.admin_approval.views import RegistrationView
 from registration.users import UserModel
-from default_backend import DefaultBackendViewTests
+from .default_backend import DefaultBackendViewTests
 
 
 class AdminApprovalBackendViewTests(DefaultBackendViewTests):
