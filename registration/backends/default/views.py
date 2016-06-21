@@ -162,7 +162,7 @@ class ResendActivationView(BaseResendActivationView):
         """
         site = get_current_site(self.request)
         email = form.cleaned_data['email']
-        return  self.registration_profile.objects.resend_activation_mail(
+        return self.registration_profile.objects.resend_activation_mail(
             email, site, self.request)
 
     def render_form_submitted_template(self, form):
