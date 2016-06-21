@@ -11,7 +11,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMultiAlternatives
 from django.db import models, transaction
-from django.template import RequestContext, TemplateDoesNotExist
+from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
@@ -150,7 +150,8 @@ class RegistrationManager(models.Manager):
 
         with transaction.atomic():
             new_user.save()
-            registration_profile = self.create_profile(new_user, **profile_info)
+            registration_profile = self.create_profile(
+                new_user, **profile_info)
 
         if send_email:
             registration_profile.send_activation_email(site, request)
@@ -378,28 +379,21 @@ class RegistrationProfile(models.Model):
         activation_email_html = getattr(settings, 'ACTIVATION_EMAIL_HTML',
                                         'registration/activation_email.html')
 
-        ctx_dict = {}
-        if request is not None:
-            ctx_dict = RequestContext(request, ctx_dict)
-        # update ctx_dict after RequestContext is created
-        # because template context processors
-        # can overwrite some of the values like user
-        # if django.contrib.auth.context_processors.auth is used
-        ctx_dict.update({
+        ctx_dict = {
             'user': self.user,
             'activation_key': self.activation_key,
             'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
             'site': site,
-        })
+        }
         subject = (getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '') +
                    render_to_string(
-                       activation_email_subject, ctx_dict))
+                       activation_email_subject, ctx_dict, request=request))
         # Email subject *must not* contain newlines
         subject = ''.join(subject.splitlines())
         from_email = getattr(settings, 'REGISTRATION_DEFAULT_FROM_EMAIL',
                              settings.DEFAULT_FROM_EMAIL)
         message_txt = render_to_string(activation_email_body,
-                                       ctx_dict)
+                                       ctx_dict, request=request)
 
         email_message = EmailMultiAlternatives(subject, message_txt,
                                                from_email, [self.user.email])
@@ -407,7 +401,7 @@ class RegistrationProfile(models.Model):
         if getattr(settings, 'REGISTRATION_EMAIL_HTML', True):
             try:
                 message_html = render_to_string(
-                    activation_email_html, ctx_dict)
+                    activation_email_html, ctx_dict, request=request)
             except TemplateDoesNotExist:
                 pass
             else:
