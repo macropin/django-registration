@@ -6,6 +6,7 @@ import random
 import re
 
 from django.conf import settings
+from django.contrib.sites.models import Site
 from django.core.exceptions import ImproperlyConfigured
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMultiAlternatives
@@ -63,6 +64,20 @@ class RegistrationManager(models.Manager):
     keys), and for cleaning out expired inactive accounts.
 
     """
+
+    def _activate(self, profile, get_profile):
+        user = profile.user
+        user.is_active = True
+        profile.activated = True
+
+        with transaction.atomic():
+            user.save()
+            profile.save()
+        if get_profile:
+            return profile
+        else:
+            return user
+
     def activate_user(self, activation_key, get_profile=False):
         """
         Validate an activation key and activate the corresponding
@@ -106,18 +121,8 @@ class RegistrationManager(models.Manager):
                     return False
 
             if not profile.activation_key_expired():
-                user = profile.user
-                user.is_active = True
-                profile.activated = True
+                return self._activate(profile, get_profile)
 
-                with transaction.atomic():
-                    user.save()
-                    profile.save()
-
-                if get_profile:
-                    return profile
-                else:
-                    return user
         return False
 
     def create_inactive_user(self, site, new_user=None, send_email=True,
@@ -413,62 +418,20 @@ class RegistrationProfile(models.Model):
 
 class SupervisedRegistrationManager(RegistrationManager):
 
-    def activate_user(self, activation_key, site, get_profile=False):
-        """
-        Validate an activation key and activate the corresponding
-        registration profile object. The user is not yet activated
-        as the account is pending admin approval
+    def _activate(self, profile, get_profile):
 
-        If the key is valid and has not expired, return the ``True``
-        after activating.
+        if not profile.user.is_active and not profile.activated:
+            site = Site.objects.get_current()
+            self.send_admin_approve_email(profile.user, site)
 
-        If the key is not valid or has expired, return ``False``.
-
-        If the key is valid but the ``User`` is already active,
-        return ``True``.
-
-        If the key is valid but the ``User`` is inactive, return ``False``.
-
-        To prevent reactivation of an account which has been
-        deactivated by site administrators, ``SupervisedRegistrationProfile.activated``
-        is set to ``True`` after successful activation.
-
-        """
-        # Make sure the key we're trying conforms to the pattern of a
-        # SHA1 hash; if it doesn't, no point trying to look it up in
-        # the database.
-        if SHA1_RE.search(activation_key):
-            try:
-                profile = self.get(activation_key=activation_key)
-            except self.model.DoesNotExist:
-                # This is an actual activation failure as the activation
-                # key does not exist. It is *not* the scenario where an
-                # already activated User reuses an activation key.
-                return False
-
-            if profile.activated:
-                # The User has already activated and is trying to activate
-                # again. If the User is active, return the User. Else,
-                # return False as the User has not yet been approved by
-                # a site administrator or has been deactivated.
-                if profile.user.is_active:
-                    return True
-                else:
-                    return False
-
-            if not profile.activation_key_expired():
-                if not profile.user.is_active and not profile.activated:
-                    self.send_admin_approve_email(profile.user, site)
-
-                # do not set ``User.is_active`` as True. This will be set
-                # when a site administrator approves this account.
-                profile.activated = True
-                profile.save()
-                if get_profile:
-                    return profile
-                else:
-                    return True
-        return False
+        # do not set ``User.is_active`` as True. This will be set
+        # when a site administrator approves this account.
+        profile.activated = True
+        profile.save()
+        if get_profile:
+            return profile
+        else:
+            return True
 
     def admin_approve_user(self, profile_id, site, get_profile=False, request=None):
         """
@@ -642,7 +605,6 @@ class SupervisedRegistrationManager(RegistrationManager):
                 profile.delete()
 
 
-@python_2_unicode_compatible
 class SupervisedRegistrationProfile(RegistrationProfile):
 
     # Same model as ``RegistrationProfile``, just a different

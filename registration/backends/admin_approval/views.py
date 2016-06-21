@@ -134,7 +134,6 @@ class ActivationView(BaseActivationView):
         activation_key = kwargs.get('activation_key', '')
         activated_user = RegistrationProfile.objects.activate_user(
             activation_key,
-            get_current_site(self.request),
         )
         if activated_user:
             signals.user_activated.send(sender=self.__class__,
