@@ -430,7 +430,7 @@ class SupervisedRegistrationManager(RegistrationManager):
     def admin_approve_user(self, profile_id, site, get_profile=False, request=None):
         """
         Approve the ``SupervisedRegistrationProfile``
-        object with the given ``id``.
+        object with the given ``profile_id``.
 
         If the id is valid, return the ``User``
         after approving.
