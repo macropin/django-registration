@@ -413,6 +413,13 @@ class RegistrationProfile(models.Model):
 class SupervisedRegistrationManager(RegistrationManager):
 
     def _activate(self, profile, get_profile):
+        """
+        Activate the ``SupervisedRegistrationProfile`` given as argument.
+
+        Send an email to the site administrators to approve the user.
+
+        User is not able to login yet, as ``is_active`` is not yet ``True``
+        """
 
         if not profile.user.is_active and not profile.activated:
             site = Site.objects.get_current()
