@@ -606,9 +606,6 @@ class SupervisedRegistrationProfile(RegistrationProfile):
     # in admin approval
     objects = SupervisedRegistrationManager()
 
-    def __str__(self):
-        return "Registration information for %s" % self.user
-
     def send_admin_approve_complete_email(self, site, request=None):
         """
         Send an "approval is complete" email to the user associated with this
