@@ -46,7 +46,7 @@ class ResendActivationView(BaseResendActivationView):
 
 
 class ApprovalView(BaseApprovalView):
-    def admin_approve(self, *args, **kwargs):
+    def approve(self, *args, **kwargs):
         """
         Given a user id, look up and approve the user account
         corresponding to that key (if possible).

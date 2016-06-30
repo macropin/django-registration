@@ -143,7 +143,7 @@ class ApprovalView(TemplateView):
     template_name = 'registration/admin_approve.html'
 
     def get(self, request, *args, **kwargs):
-        approved_user = self.admin_approve(*args, **kwargs)
+        approved_user = self.approve(*args, **kwargs)
         if approved_user:
             success_url = self.get_success_url(approved_user)
             try:
@@ -154,7 +154,7 @@ class ApprovalView(TemplateView):
                 return redirect(to, *args, **kwargs)
         return super(ApprovalView, self).get(request, *args, **kwargs)
 
-    def admin_approve(self, *args, **kwargs):
+    def approve(self, *args, **kwargs):
         """
         Implement admin-approval logic here.
 
