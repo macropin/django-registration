@@ -66,6 +66,10 @@ class RegistrationManager(models.Manager):
     """
 
     def _activate(self, profile, get_profile):
+        """
+        Activate the ``RegistrationProfile`` given as argument.
+        User is able to login, as ``is_active`` is set to ``True``
+        """
         user = profile.user
         user.is_active = True
         profile.activated = True
