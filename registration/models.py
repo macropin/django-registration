@@ -453,7 +453,6 @@ class SupervisedRegistrationManager(RegistrationManager):
 
         If the id is valid but the ``SupervisedRegistrationProfile``
         object is not activated, return ``False``.
-
         """
         try:
             profile = SupervisedRegistrationProfile.objects.get(id=profile_id)
