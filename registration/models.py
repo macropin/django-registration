@@ -432,7 +432,7 @@ class SupervisedRegistrationManager(RegistrationManager):
         if get_profile:
             return profile
         else:
-            return True
+            return profile.user
 
     def admin_approve_user(self, profile_id, site, get_profile=False, request=None):
         """
