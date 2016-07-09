@@ -31,10 +31,9 @@ class install_lib(_install_lib):
         try:
             # Use the management command to compile messages
             # tested with django 1.7-1.9, 1.9 does not need the chdir anymore
-            from django.core.management.commands.compilemessages import Command
+            from django.core.management import call_command
             os.chdir('registration')
-            cmd = Command()
-            cmd.handle(verbosity=0, exclude=[], locale=[])
+            call_command("compilemessages")
             os.chdir('..')
             return
         except ImportError:
