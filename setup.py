@@ -2,6 +2,7 @@
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 from setuptools.command.install_lib import install_lib as _install_lib
+from django.core.management import call_command
 import sys
 import os
 
@@ -30,12 +31,10 @@ class install_lib(_install_lib):
         _install_lib.run(self)
         try:
             # Use the management command to compile messages
-            # tested with django 1.7-1.9, 1.9 does not need the chdir anymore
-            from django.core.management import call_command
+            # django 1.9 does not need the chdir anymore
             os.chdir('registration')
             call_command("compilemessages")
             os.chdir('..')
-            return
         except ImportError:
             pass
 
