@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
-from setuptools.command.install_lib import install_lib as _install_lib
+from setuptools.command.build_py import build_py as _build_py
 from django.core.management import call_command
 import sys
 import os
@@ -22,13 +22,12 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 
-class install_lib(_install_lib):
+class build_py(_build_py):
     """
-        install_lib class extended to compile the locales
+        build_py class extended to compile the locales
         from the .po source files in .mo files.
     """
     def run(self):
-        _install_lib.run(self)
         try:
             # Use the management command to compile messages
             # django 1.9 does not need the chdir anymore
@@ -37,6 +36,7 @@ class install_lib(_install_lib):
             os.chdir('..')
         except ImportError:
             pass
+        _build_py.run(self)
 
 setup(
     name='django-registration-redux',
@@ -49,7 +49,7 @@ setup(
     package_dir={'registration': 'registration'},
     packages=find_packages(exclude='test_app'),
     tests_require=['pytest-django'],
-    cmdclass={'test': PyTest, 'install_lib': install_lib},
+    cmdclass={'test': PyTest, 'build_py': build_py},
     include_package_data=True,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
