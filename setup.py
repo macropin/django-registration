@@ -28,7 +28,7 @@ class install_lib(_install_lib):
         from the .po source files in .mo files.
     """
     def run(self):
-        super(self, install_lib).run()
+        _install_lib.run(self)
         try:
             # Use the management command to compile messages
             # django 1.9 does not need the chdir anymore
