@@ -9,11 +9,14 @@ python:
 env:
   - DJANGO=Django==1.8.13
   - DJANGO=Django==1.9.7
+  - DJANGO=Django==1.10b1
 
 matrix:
   exclude:
     - python: 3.3
       env: DJANGO=Django==1.9.7
+    - python: 3.3
+      env: DJANGO=Django==1.10b1
 
 install:
   - pip install -r requirements.txt
