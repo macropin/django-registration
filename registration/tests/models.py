@@ -489,6 +489,12 @@ class RegistrationModelTests(TestCase):
         self.assertEqual(len(mail.outbox), 0)
 
 
+@override_settings(
+    ADMINS=(
+        ('T-Rex', 'admin1@iamtrex.com'),
+        ('Flea', 'admin2@iamaflea.com')
+    )
+)
 class SupervisedRegistrationModelTests(RegistrationModelTests):
     """
     Test the model and manager used in the admin_approval backend.
@@ -500,33 +506,6 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
                  'email': 'alice@example.com'}
 
     registration_profile = SupervisedRegistrationProfile
-
-    def setUp(self):
-        self.old_activation = getattr(settings,
-                                      'ACCOUNT_ACTIVATION_DAYS', None)
-        self.old_reg_email = getattr(settings,
-                                     'REGISTRATION_DEFAULT_FROM_EMAIL', None)
-        self.old_email_html = getattr(settings,
-                                      'REGISTRATION_EMAIL_HTML', None)
-        self.old_django_email = getattr(settings,
-                                        'DEFAULT_FROM_EMAIL', None)
-        self.old_admins = getattr(settings,
-                                  'ADMINS', None)
-
-        settings.ACCOUNT_ACTIVATION_DAYS = 7
-        settings.REGISTRATION_DEFAULT_FROM_EMAIL = 'registration@email.com'
-        settings.REGISTRATION_EMAIL_HTML = True
-        settings.DEFAULT_FROM_EMAIL = 'django@email.com'
-        settings.ADMINS = (
-            ('T-Rex', 'admin1@iamtrex.com'),
-            ('Flea', 'admin2@iamaflea.com')
-        )
-
-    def tearDown(self):
-        settings.ACCOUNT_ACTIVATION_DAYS = self.old_activation
-        settings.REGISTRATION_DEFAULT_FROM_EMAIL = self.old_reg_email
-        settings.REGISTRATION_EMAIL_HTML = self.old_email_html
-        settings.DEFAULT_FROM_EMAIL = self.old_django_email
 
     def test_valid_activation(self):
         """
