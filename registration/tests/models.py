@@ -50,7 +50,6 @@ class RegistrationModelTests(TestCase):
         settings.REGISTRATION_DEFAULT_FROM_EMAIL = self.old_reg_email
         settings.REGISTRATION_EMAIL_HTML = self.old_email_html
         settings.DEFAULT_FROM_EMAIL = self.old_django_email
-        UserModel().objects.all().delete()
 
     def test_profile_creation(self):
         """
