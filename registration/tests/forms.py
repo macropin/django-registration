@@ -22,8 +22,8 @@ class RegistrationFormTests(TestCase):
         # permitted.
         UserModel().objects.create_user('alice', 'alice@example.com', 'secret')
         bad_username_error = (
-            'Enter a valid username. This value may contain only letters, '
-            'numbers and @/./+/-/_ characters.'
+            'Enter a valid username. This value may contain only English letters, '
+            'numbers, and @/./+/-/_ characters.'
         )
         invalid_data_dicts = [
             # Non-alphanumeric username.
