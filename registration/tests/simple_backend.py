@@ -1,13 +1,13 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from registration.forms import RegistrationForm
 from registration.users import UserModel
 
 
+@override_settings(ROOT_URLCONF='test_app.urls_simple')
 class SimpleBackendViewTests(TestCase):
-    urls = 'test_app.urls_simple'
 
     def test_allow(self):
         """

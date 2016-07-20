@@ -13,6 +13,7 @@ from registration.models import RegistrationProfile
 from registration.users import UserModel
 
 
+@override_settings(ROOT_URLCONF='test_app.urls_default')
 class DefaultBackendViewTests(TestCase):
     """
     Test the default registration backend.
@@ -23,7 +24,6 @@ class DefaultBackendViewTests(TestCase):
     the default backend.
 
     """
-    urls = 'test_app.urls_default'
 
     registration_profile = RegistrationProfile
 

@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 
+import django
 from django.test import TestCase
+from django.utils import six
 
 from registration import forms
 from registration.users import UserModel
@@ -22,9 +24,13 @@ class RegistrationFormTests(TestCase):
         # permitted.
         UserModel().objects.create_user('alice', 'alice@example.com', 'secret')
         bad_username_error = (
-            'Enter a valid username. This value may contain only English letters, '
+            'Enter a valid username. This value may contain only letters, '
             'numbers, and @/./+/-/_ characters.'
         )
+        if django.VERSION < (1, 10):
+            bad_username_error = bad_username_error.replace('numbers,', 'numbers')
+        elif six.PY2:
+            bad_username_error = bad_username_error.replace('letters', 'English letters')
         invalid_data_dicts = [
             # Non-alphanumeric username.
             {'data': {'username': 'foo/bar',
