@@ -127,7 +127,6 @@ class ResendActivationView(FormView):
     def resend_activation(self, form):
         """
         Implement resend activation key logic here.
-
         """
         raise NotImplementedError
 
@@ -136,4 +135,31 @@ class ResendActivationView(FormView):
         Implement rendering of confirmation template here.
 
         """
+
+
+class ApprovalView(TemplateView):
+
+    http_method_names = ['get']
+    template_name = 'registration/admin_approve.html'
+
+    def get(self, request, *args, **kwargs):
+        approved_user = self.approve(*args, **kwargs)
+        if approved_user:
+            success_url = self.get_success_url(approved_user)
+            try:
+                to, args, kwargs = success_url
+            except ValueError:
+                return redirect(success_url)
+            else:
+                return redirect(to, *args, **kwargs)
+        return super(ApprovalView, self).get(request, *args, **kwargs)
+
+    def approve(self, *args, **kwargs):
+        """
+        Implement admin-approval logic here.
+
+        """
+        raise NotImplementedError
+
+    def get_success_url(self, user):
         raise NotImplementedError

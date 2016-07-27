@@ -59,6 +59,8 @@ class RegistrationView(BaseRegistrationView):
     SEND_ACTIVATION_EMAIL = getattr(settings, 'SEND_ACTIVATION_EMAIL', True)
     success_url = 'registration_complete'
 
+    registration_profile = RegistrationProfile
+
     def register(self, form):
         """
         Given a username, email address and password, register a new
@@ -91,7 +93,7 @@ class RegistrationView(BaseRegistrationView):
             new_user_instance = (UserModel().objects
                                  .create_user(**form.cleaned_data))
 
-        new_user = RegistrationProfile.objects.create_inactive_user(
+        new_user = self.registration_profile.objects.create_inactive_user(
             new_user=new_user_instance,
             site=site,
             send_email=self.SEND_ACTIVATION_EMAIL,
@@ -119,6 +121,9 @@ class RegistrationView(BaseRegistrationView):
 
 
 class ActivationView(BaseActivationView):
+
+    registration_profile = RegistrationProfile
+
     def activate(self, *args, **kwargs):
         """
         Given an an activation key, look up and activate the user
@@ -131,7 +136,7 @@ class ActivationView(BaseActivationView):
 
         """
         activation_key = kwargs.get('activation_key', '')
-        activated_user = (RegistrationProfile.objects
+        activated_user = (self.registration_profile.objects
                           .activate_user(activation_key))
         if activated_user:
             signals.user_activated.send(sender=self.__class__,
@@ -145,6 +150,8 @@ class ActivationView(BaseActivationView):
 
 class ResendActivationView(BaseResendActivationView):
 
+    registration_profile = RegistrationProfile
+
     def resend_activation(self, form):
         """
         Given an email, look up user by email and resend activation key if user
@@ -155,7 +162,7 @@ class ResendActivationView(BaseResendActivationView):
         """
         site = get_current_site(self.request)
         email = form.cleaned_data['email']
-        return RegistrationProfile.objects.resend_activation_mail(
+        return self.registration_profile.objects.resend_activation_mail(
             email, site, self.request)
 
     def render_form_submitted_template(self, form):

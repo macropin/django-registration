@@ -6,6 +6,8 @@ import random
 import re
 
 from django.conf import settings
+from django.contrib.sites.models import Site
+from django.core.exceptions import ImproperlyConfigured
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMultiAlternatives
 from django.db import models, transaction
@@ -21,6 +23,38 @@ from .users import UserModel, UserModelString
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
 
+def send_email(addresses_to, ctx_dict, subject_template, body_template,
+               body_html_template):
+    """
+    Function that sends an email
+    """
+    subject = (
+        getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '') +
+        render_to_string(
+            subject_template, ctx_dict)
+    )
+    # Email subject *must not* contain newlines
+    subject = ''.join(subject.splitlines())
+    from_email = getattr(settings, 'REGISTRATION_DEFAULT_FROM_EMAIL',
+                         settings.DEFAULT_FROM_EMAIL)
+    message_txt = render_to_string(body_template,
+                                   ctx_dict)
+
+    email_message = EmailMultiAlternatives(subject, message_txt,
+                                           from_email, addresses_to)
+
+    if getattr(settings, 'REGISTRATION_EMAIL_HTML', True):
+        try:
+            message_html = render_to_string(
+                body_html_template, ctx_dict)
+        except TemplateDoesNotExist:
+            pass
+        else:
+            email_message.attach_alternative(message_html, 'text/html')
+
+    email_message.send()
+
+
 class RegistrationManager(models.Manager):
     """
     Custom manager for the ``RegistrationProfile`` model.
@@ -30,6 +64,23 @@ class RegistrationManager(models.Manager):
     keys), and for cleaning out expired inactive accounts.
 
     """
+
+    def _activate(self, profile, get_profile):
+        """
+        Activate the ``RegistrationProfile`` given as argument.
+        User is able to login, as ``is_active`` is set to ``True``
+        """
+        user = profile.user
+        user.is_active = True
+        profile.activated = True
+
+        with transaction.atomic():
+            user.save()
+            profile.save()
+        if get_profile:
+            return profile
+        else:
+            return user
 
     def activate_user(self, activation_key, get_profile=False):
         """
@@ -74,18 +125,8 @@ class RegistrationManager(models.Manager):
                     return False
 
             if not profile.activation_key_expired():
-                user = profile.user
-                user.is_active = True
-                profile.activated = True
+                return self._activate(profile, get_profile)
 
-                with transaction.atomic():
-                    user.save()
-                    profile.save()
-
-                if get_profile:
-                    return profile
-                else:
-                    return user
         return False
 
     def create_inactive_user(self, site, new_user=None, send_email=True,
@@ -203,8 +244,8 @@ class RegistrationManager(models.Manager):
                 if profile.activation_key_expired():
                     user = profile.user
                     if not user.is_active:
-                        user.delete()
                         profile.delete()
+                        user.delete()
             except UserModel().DoesNotExist:
                 profile.delete()
 
@@ -371,3 +412,220 @@ class RegistrationProfile(models.Model):
                 email_message.attach_alternative(message_html, 'text/html')
 
         email_message.send()
+
+
+class SupervisedRegistrationManager(RegistrationManager):
+
+    def _activate(self, profile, get_profile):
+        """
+        Activate the ``SupervisedRegistrationProfile`` given as argument.
+
+        Send an email to the site administrators to approve the user.
+
+        User is not able to login yet, as ``is_active`` is not yet ``True``
+        """
+
+        if not profile.user.is_active and not profile.activated:
+            site = Site.objects.get_current()
+            self.send_admin_approve_email(profile.user, site)
+
+        # do not set ``User.is_active`` as True. This will be set
+        # when a site administrator approves this account.
+        profile.activated = True
+        profile.save()
+        if get_profile:
+            return profile
+        else:
+            return profile.user
+
+    def admin_approve_user(self, profile_id, site, get_profile=False, request=None):
+        """
+        Approve the ``SupervisedRegistrationProfile``
+        object with the given ``profile_id``.
+
+        If the id is valid, return the ``User``
+        after approving.
+
+        If the id is not valid, return ``False``.
+
+        If the id is valid but the ``User`` is already active,
+        return ``User``.
+
+        If the id is valid but the ``SupervisedRegistrationProfile``
+        object is not activated, return ``False``.
+        """
+        try:
+            profile = SupervisedRegistrationProfile.objects.get(id=profile_id)
+            if profile.activated:
+                if profile.user.is_active:
+                    return profile.user
+
+            # If the user has not activated their profile the admin should
+            # not be able to approve his account (at least not following
+            # this process)
+            if profile.activated:
+                profile.user.is_active = True
+            else:
+                return False
+
+            profile.user.save()
+            profile.send_admin_approve_complete_email(site, request)
+
+            if get_profile:
+                return profile
+            else:
+                return profile.user
+        except self.model.DoesNotExist:
+            return False
+
+    def send_admin_approve_email(self, user, site, request=None):
+        """
+        Send an approval email to the site administrators to
+        approve this user.
+
+        The approval email will use the following templates,
+        which can be overriden by setting APPROVAL_EMAIL_SUBJECT,
+        APPROVAL_EMAIL_BODY, and APPROVAL_EMAIL_HTML appropriately:
+
+        ``registration/admin_approve_email_subject.txt``
+            This template will be used for the subject line of the
+            email. Because it is used as the subject line of an email,
+            this template's output **must** be only a single line of
+            text; output longer than one line will be forcibly joined
+            into only a single line.
+
+        ``registration/admin_approve_email.txt``
+            This template will be used for the text body of the email.
+
+        ``registration/admin_approve_email.html``
+            This template will be used for the html body of the email.
+
+        These templates will each receive the following context
+        variables:
+
+        ``user``
+            The new user account
+
+        ``profile_id``
+            The id of the associated``SupervisedRegistrationProfile``
+            object.
+
+        ``site``
+            An object representing the site on which the user
+            registered; depending on whether ``django.contrib.sites``
+            is installed, this may be an instance of either
+            ``django.contrib.sites.models.Site`` (if the sites
+            application is installed) or
+            ``django.contrib.sites.requests.RequestSite`` (if
+            not). Consult the documentation for the Django sites
+            framework for details regarding these objects' interfaces.
+
+        ``request``
+            Optional Django's ``HttpRequest`` object from view.
+            If supplied will be passed to the template for better
+            flexibility via ``RequestContext``.
+        """
+
+        admin_approve_email_subject = getattr(
+            settings,
+            'ADMIN_APPROVAL_EMAIL_SUBJECT',
+            'registration/admin_approve_email_subject.txt'
+        )
+        admin_approve_email_body = getattr(
+            settings,
+            'ADMIN_APPROVAL_EMAIL_BODY',
+            'registration/admin_approve_email.txt'
+        )
+        admin_approve_email_html = getattr(
+            settings,
+            'ADMIN_APPROVAL_EMAIL_HTML',
+            'registration/admin_approve_email.html'
+        )
+
+        ctx_dict = {
+            'user': user,
+            'profile_id': user.registrationprofile.id,
+            'site': site,
+        }
+        admins = getattr(settings, 'ADMINS', None)
+        if not admins:
+            raise ImproperlyConfigured(
+                'Using the admin_approval registration backend'
+                ' requires at least one admin in settings.ADMINS')
+        admins = [admin[1] for admin in admins]
+        send_email(
+            admins, ctx_dict, admin_approve_email_subject,
+            admin_approve_email_body, admin_approve_email_html
+        )
+
+
+class SupervisedRegistrationProfile(RegistrationProfile):
+
+    # Same model as ``RegistrationProfile``, just a different
+    # Manager to implement the extra functionality required
+    # in admin approval
+    objects = SupervisedRegistrationManager()
+
+    def send_admin_approve_complete_email(self, site, request=None):
+        """
+        Send an "approval is complete" email to the user associated with this
+        ``SupervisedRegistrationProfile``.
+
+        The email will use the following templates,
+        which can be overriden by settings APPROVAL_COMPLETE_EMAIL_SUBJECT,
+        APPROVAL_COMPLETE_EMAIL_BODY, and APPROVAL_COMPLETE_EMAIL_HTML appropriately:
+
+        ``registration/admin_approve_complete_email_subject.txt``
+            This template will be used for the subject line of the
+            email. Because it is used as the subject line of an email,
+            this template's output **must** be only a single line of
+            text; output longer than one line will be forcibly joined
+            into only a single line.
+
+        ``registration/admin_approve_complete_email.txt``
+            This template will be used for the text body of the email.
+
+        ``registration/admin_approve_complete_email.html``
+            This template will be used for the text body of the email.
+
+        These templates will each receive the following context
+        variables:
+
+        ``user``
+            The new user account
+
+        ``site``
+            An object representing the site on which the user
+            registered; depending on whether ``django.contrib.sites``
+            is installed, this may be an instance of either
+            ``django.contrib.sites.models.Site`` (if the sites
+            application is installed) or
+            ``django.contrib.sites.requests.RequestSite`` (if
+            not). Consult the documentation for the Django sites
+            framework for details regarding these objects' interfaces.
+
+        ``request``
+            Optional Django's ``HttpRequest`` object from view.
+            If supplied will be passed to the template for better
+            flexibility via ``RequestContext``.
+        """
+        admin_approve_complete_email_subject = getattr(
+            settings, 'APPROVAL_COMPLETE_EMAIL_SUBJECT',
+            'registration/admin_approve_complete_email_subject.txt')
+        admin_approve_complete_email_body = getattr(
+            settings, 'APPROVAL_COMPLETE_EMAIL_BODY',
+            'registration/admin_approve_complete_email.txt')
+        admin_approve_complete_email_html = getattr(
+            settings, 'APPROVAL_COMPLETE_EMAIL_HTML',
+            'registration/admin_approve_complete_email.html')
+
+        ctx_dict = {
+            'user': self.user.username,
+            'site': site,
+        }
+        send_email(
+            [self.user.email], ctx_dict,
+            admin_approve_complete_email_subject,
+            admin_approve_complete_email_body,
+            admin_approve_complete_email_html
+        )
