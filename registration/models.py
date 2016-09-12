@@ -288,7 +288,7 @@ class RegistrationProfile(models.Model):
         Create a new activation key for the user
         """
         random_string = get_random_string(length=32, allowed_chars=string.printable)
-        self.activation_key = hashlib.sha1(random_string).hexdigest()
+        self.activation_key = hashlib.sha1(random_string.encode('utf-8')).hexdigest()
 
         if save:
             self.save()
