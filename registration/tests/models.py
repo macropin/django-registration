@@ -1,6 +1,7 @@
 import datetime
 import hashlib
 import re
+import random
 
 from datetime import timedelta
 
@@ -488,6 +489,42 @@ class RegistrationModelTests(TestCase):
         ))
         self.assertEqual(len(mail.outbox), 0)
 
+    def test_activation_key_backwards_compatibility(self):
+        """
+        Make sure that users created witht the old create_new_activation_key method can still be
+        activated.
+        """
+        current_method = self.registration_profile.create_new_activation_key
+
+        def old_method(self, save=True):
+            salt = hashlib.sha1(six.text_type(random.random())
+                                .encode('ascii')).hexdigest()[:5]
+            salt = salt.encode('ascii')
+            user_pk = str(self.user.pk)
+            if isinstance(user_pk, six.text_type):
+                user_pk = user_pk.encode('utf-8')
+            self.activation_key = hashlib.sha1(salt + user_pk).hexdigest()
+            if save:
+                self.save()
+            return self.activation_key
+
+        self.registration_profile.create_new_activation_key = old_method
+
+        new_user = self.registration_profile.objects.create_inactive_user(
+            site=Site.objects.get_current(), **self.user_info)
+        profile = self.registration_profile.objects.get(user=new_user)
+
+        self.registration_profile.create_new_activation_key = current_method
+        activated = (self.registration_profile.objects
+                     .activate_user(profile.activation_key))
+
+        self.failUnless(isinstance(activated, UserModel()))
+        self.assertEqual(activated.id, new_user.id)
+        self.failUnless(activated.is_active)
+
+        profile = self.registration_profile.objects.get(user=new_user)
+        self.assertTrue(profile.activated)
+
 
 @override_settings(
     ADMINS=(
@@ -781,3 +818,39 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
         profile = self.registration_profile.objects.get(user=new_user)
         self.assertEqual(self.registration_profile.objects.activate_user(
             profile.activation_key), False)
+
+    def test_activation_key_backwards_compatibility(self):
+        """
+        Make sure that users created witht the old create_new_activation_key method can still be
+        activated.
+        """
+        current_method = self.registration_profile.create_new_activation_key
+
+        def old_method(self, save=True):
+            salt = hashlib.sha1(six.text_type(random.random())
+                                .encode('ascii')).hexdigest()[:5]
+            salt = salt.encode('ascii')
+            user_pk = str(self.user.pk)
+            if isinstance(user_pk, six.text_type):
+                user_pk = user_pk.encode('utf-8')
+            self.activation_key = hashlib.sha1(salt + user_pk).hexdigest()
+            if save:
+                self.save()
+            return self.activation_key
+
+        self.registration_profile.create_new_activation_key = old_method
+
+        new_user = self.registration_profile.objects.create_inactive_user(
+            site=Site.objects.get_current(), **self.user_info)
+        profile = self.registration_profile.objects.get(user=new_user)
+
+        self.registration_profile.create_new_activation_key = current_method
+        activated = (self.registration_profile.objects
+                     .activate_user(profile.activation_key))
+
+        self.failUnless(isinstance(activated, UserModel()))
+        self.assertEqual(activated.id, new_user.id)
+        self.failIf(activated.is_active)
+
+        profile = self.registration_profile.objects.get(user=new_user)
+        self.assertTrue(profile.activated)
