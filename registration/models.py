@@ -2,8 +2,8 @@ from __future__ import unicode_literals
 
 import datetime
 import hashlib
-import random
 import re
+import string
 
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -13,10 +13,10 @@ from django.core.mail import EmailMultiAlternatives
 from django.db import models, transaction
 from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext_lazy as _
+from django.utils.crypto import get_random_string
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timezone import now as datetime_now
-from django.utils import six
+from django.utils.translation import ugettext_lazy as _
 
 from .users import UserModel, UserModelString
 
@@ -168,8 +168,7 @@ class RegistrationManager(models.Manager):
         ``User``, and return the ``RegistrationProfile``.
 
         The activation key for the ``RegistrationProfile`` will be a
-        SHA1 hash, generated from a combination of the ``User``'s
-        pk and a random salt.
+        SHA1 hash, generated from a secure random string.
 
         """
         profile = self.model(user=user, **profile_info)
@@ -288,15 +287,12 @@ class RegistrationProfile(models.Model):
         """
         Create a new activation key for the user
         """
-        salt = hashlib.sha1(six.text_type(random.random())
-                            .encode('ascii')).hexdigest()[:5]
-        salt = salt.encode('ascii')
-        user_pk = str(self.user.pk)
-        if isinstance(user_pk, six.text_type):
-            user_pk = user_pk.encode('utf-8')
-        self.activation_key = hashlib.sha1(salt + user_pk).hexdigest()
+        random_string = get_random_string(length=32, allowed_chars=string.printable)
+        self.activation_key = hashlib.sha1(random_string).hexdigest()
+
         if save:
             self.save()
+
         return self.activation_key
 
     def activation_key_expired(self):
