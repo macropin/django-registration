@@ -11,8 +11,10 @@ Version 1.5, TBD
 * Enhancement: Separate logic between account creation and activation.
   See: `#171 <https://github.com/macropin/django-registration/issues/171>`_.
 * Bugfix: Add page title to `activate.html`
+* Feature: Added a 3-step registration flow requiring manual admin approval.
+  See: `#184 <https://github.com/macropin/django-registration/pull/184>`_.
 * Enhancement: Using a more cryptographically secure method for generating activation keys.
-  See: `#213 <https://github.com/macropin/django-registration/issues/213>`
+  See: `#213 <https://github.com/macropin/django-registration/issues/213>`_.
 
 Version 1.4, 21 February, 2016
 ------------------------------
