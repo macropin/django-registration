@@ -21,5 +21,6 @@ def login_user(sender, user, request, **kwargs):
     request.session['REGISTRATION_AUTO_LOGIN'] = True
     request.session.modified = True
 
+
 if getattr(settings, 'REGISTRATION_AUTO_LOGIN', False):
     user_activated.connect(login_user)

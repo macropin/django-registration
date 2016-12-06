@@ -10,6 +10,7 @@ from registration import get_version
 
 
 class PyTest(TestCommand):
+
     def finalize_options(self):
         TestCommand.finalize_options(self)
         self.test_args = []
@@ -27,6 +28,7 @@ class build_py(_build_py):
         build_py class extended to compile the locales
         from the .po source files in .mo files.
     """
+
     def run(self):
         try:
             # Use the management command to compile messages
@@ -37,6 +39,7 @@ class build_py(_build_py):
         except ImportError:
             pass
         _build_py.run(self)
+
 
 setup(
     name='django-registration-redux',
