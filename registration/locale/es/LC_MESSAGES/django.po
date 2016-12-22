@@ -57,7 +57,7 @@ msgid ""
 "This email address is already in use. Please supply a different email "
 "address."
 msgstr ""
-"La dirección de correo electrónico ya está siendo usada. Por favor"
+"La dirección de correo electrónico ya está siendo usada. Por favor "
 "proporciona otra dirección."
 
 #: forms.py:153
@@ -65,7 +65,7 @@ msgid ""
 "Registration using free email addresses is prohibited. Please supply a "
 "different email address."
 msgstr ""
-"El registro usando una dirección de correo electrónico gratis está prohibido."
+"El registro usando una dirección de correo electrónico gratis está prohibido. "
 "Por favor proporciona otra dirección."
 
 #: models.py:188
