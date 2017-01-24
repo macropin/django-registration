@@ -48,9 +48,6 @@ To install it manually, run the following command inside this source directory::
 
     python setup.py install
 
-For manual installation or pip installation from source folder / source dist,
-you need to have the ``gettext`` utility installed.
-
 
 Or if you'd prefer you can simply place the included ``registration``
 directory somewhere on your Python path, or symlink to it from
