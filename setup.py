@@ -18,6 +18,7 @@ class PyTest(TestCommand):
         errno = pytest.main(self.test_args)
         sys.exit(errno)
 
+
 setup(
     name='django-registration-redux',
     version=get_version().replace(' ', '-'),
