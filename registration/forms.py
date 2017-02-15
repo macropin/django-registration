@@ -40,21 +40,10 @@ class RegistrationForm(UserCreationForm):
         model = User
         fields = (UsernameField(), "email")
 
-    def save(self, commit=True):
-        user = super(UserCreationForm, self).save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
-
-        if User.objects.filter(username=user.username.lower()).count():
+    def clean_username(self):
+        self.instance.username = self.cleaned_data.get('username')
+        if User.objects.filter(username=self.instance.username.lower()).count():
            raise ValidationError(_('A user with that username already exists'), code='invalid')
-
-
-        if commit:
-            user.save()
-
-        return user
-
-
-
 
 class RegistrationFormTermsOfService(RegistrationForm):
     """
