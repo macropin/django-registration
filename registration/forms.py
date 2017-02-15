@@ -45,7 +45,7 @@ class RegistrationForm(UserCreationForm):
         if User.objects.filter(username=username.lower()).count() > 0:
            raise ValidationError(_('A user with that username already exists'))
 
-        return username
+        return username.lower()
 
 
 class RegistrationFormTermsOfService(RegistrationForm):
