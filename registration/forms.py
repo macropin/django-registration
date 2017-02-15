@@ -41,9 +41,12 @@ class RegistrationForm(UserCreationForm):
         fields = (UsernameField(), "email")
 
     def clean_username(self):
-        self.instance.username = self.cleaned_data.get('username')
-        if User.objects.filter(username=self.instance.username.lower()).count():
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username.lower()).count():
            raise ValidationError(_('A user with that username already exists'), code='invalid')
+
+        return username
+
 
 class RegistrationFormTermsOfService(RegistrationForm):
     """
