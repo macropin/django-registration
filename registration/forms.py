@@ -43,7 +43,7 @@ class RegistrationForm(UserCreationForm):
         user = super(UserCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
 
-        if User.objects.filter(username=instance.username.lower()).count():
+        if User.objects.filter(username=user.username.lower()).count():
            raise ValueError('A user with that username already exists')
 
         if commit:
