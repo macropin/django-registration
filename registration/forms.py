@@ -13,6 +13,7 @@ from __future__ import unicode_literals
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm
+from django.forms import ValidationError
 
 from .users import UserModel, UsernameField
 
@@ -38,6 +39,13 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = (UsernameField(), "email")
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username__iexact=username).exists():
+           raise ValidationError(_('A user with that username already exists'))
+
+        return username
 
 
 class RegistrationFormTermsOfService(RegistrationForm):
