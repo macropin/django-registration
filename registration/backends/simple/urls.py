@@ -29,15 +29,14 @@ urlpatterns = [
     url(r'^register/closed/$',
         TemplateView.as_view(template_name='registration/registration_closed.html'),
         name='registration_disallowed'),
-    url(r'^register/complete/$',
-        TemplateView.as_view(template_name='registration/registration_complete.html'),
-        name='registration_complete'),
 ]
 
 if getattr(settings, 'INCLUDE_REGISTER_URL', True):
     urlpatterns += [
         url(r'^register/$',
-            RegistrationView.as_view(),
+            RegistrationView.as_view(
+                success_url=getattr(settings, 'SIMPLE_BACKEND_REDIRECT_URL', '/'),
+            ),
             name='registration_register'),
     ]
 

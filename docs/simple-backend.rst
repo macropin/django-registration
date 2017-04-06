@@ -35,8 +35,9 @@ supported:
     registration of new accounts is currently permitted. A default of
     ``True`` will be assumed if this setting is not supplied.
 
-Upon successful registration, the default redirect is to the
-``registration_complete`` view (at ``accounts/register/complete/``).
+``SIMPLE_BACKEND_REDIRECT_URL``
+    Redirection url after successful registration.
+    Default value is ``/``
 
 The default form class used for account registration will be
 :class:`registration.forms.RegistrationForm`, although this can be
