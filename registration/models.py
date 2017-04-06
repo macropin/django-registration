@@ -6,7 +6,7 @@ import re
 import string
 
 from django.conf import settings
-from django.contrib.sites.models import Site
+from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ImproperlyConfigured
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMultiAlternatives
@@ -422,7 +422,7 @@ class SupervisedRegistrationManager(RegistrationManager):
         """
 
         if not profile.user.is_active and not profile.activated:
-            site = Site.objects.get_current()
+            site = get_current_site()
             self.send_admin_approve_email(profile.user, site)
 
         # do not set ``User.is_active`` as True. This will be set
