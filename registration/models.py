@@ -65,7 +65,7 @@ class RegistrationManager(models.Manager):
 
     """
 
-    def _activate(self, profile, get_profile):
+    def _activate(self, profile, site, get_profile):
         """
         Activate the ``RegistrationProfile`` given as argument.
         User is able to login, as ``is_active`` is set to ``True``
@@ -82,7 +82,7 @@ class RegistrationManager(models.Manager):
         else:
             return user
 
-    def activate_user(self, activation_key, get_profile=False):
+    def activate_user(self, activation_key, site, get_profile=False):
         """
         Validate an activation key and activate the corresponding
         ``User`` if valid.
@@ -125,7 +125,7 @@ class RegistrationManager(models.Manager):
                     return False
 
             if not profile.activation_key_expired():
-                return self._activate(profile, get_profile)
+                return self._activate(profile, site, get_profile)
 
         return False
 
@@ -412,7 +412,7 @@ class RegistrationProfile(models.Model):
 
 class SupervisedRegistrationManager(RegistrationManager):
 
-    def _activate(self, profile, get_profile):
+    def _activate(self, profile, site, get_profile):
         """
         Activate the ``SupervisedRegistrationProfile`` given as argument.
 
@@ -422,7 +422,6 @@ class SupervisedRegistrationManager(RegistrationManager):
         """
 
         if not profile.user.is_active and not profile.activated:
-            site = get_current_site()
             self.send_admin_approve_email(profile.user, site)
 
         # do not set ``User.is_active`` as True. This will be set

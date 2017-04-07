@@ -199,7 +199,7 @@ Additionally, :class:`RegistrationProfile` has a custom manager
    This manager provides several convenience methods for creating and
    working with instances of :class:`RegistrationProfile`:
 
-   .. method:: activate_user(activation_key)
+   .. method:: activate_user(activation_key, site)
 
       Validates ``activation_key`` and, if valid, activates the
       associated account by setting its ``is_active`` field to
@@ -214,6 +214,8 @@ Additionally, :class:`RegistrationProfile` has a custom manager
       :param activation_key: The activation key to use for the
          activation.
       :type activation_key: string, a 40-character SHA1 hexdigest
+      :type site: ``django.contrib.sites.models.Site`` or
+        ``django.contrib.sites.models.RequestSite``
       :rtype: ``User`` or bool
 
    .. method:: delete_expired_users

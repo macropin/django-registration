@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.sites.requests import RequestSite
+from django.contrib.sites.shortcuts import get_current_site
 from django.apps import apps
 
 from .models import RegistrationProfile
@@ -20,8 +21,10 @@ class RegistrationAdmin(admin.ModelAdmin):
         activated.
 
         """
+
+        site = get_current_site(request)
         for profile in queryset:
-            RegistrationProfile.objects.activate_user(profile.activation_key)
+            RegistrationProfile.objects.activate_user(profile.activation_key, site)
     activate_users.short_description = _("Activate users")
 
     def resend_activation_email(self, request, queryset):
@@ -34,11 +37,8 @@ class RegistrationAdmin(admin.ModelAdmin):
         activated.
 
         """
-        if apps.is_installed('django.contrib.sites'):
-            site = apps.get_model('sites', 'Site').objects.get_current()
-        else:
-            site = RequestSite(request)
 
+        site = get_current_site(request)
         for profile in queryset:
             user = profile.user
             RegistrationProfile.objects.resend_activation_mail(user.email, site, request)
