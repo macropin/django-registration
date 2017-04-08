@@ -2,10 +2,14 @@
 django-registration-redux changelog
 ===================================
 
-Version 1.5, 06 April, 2017
+Version 1.5, 08 April, 2017
 ----------------
 
 * BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Django 1.7.
+* BACKWARDS-INCOMPATIBLE CHANGE: Change signature of
+``RegistrationProfileManager.activate_user``.
+``site`` is now a required positional argument.
+  `#244 <https://github.com/macropin/django-registration/pull/244>`_.
 * Feature: Added workflow to resend activation email. See
   `#161 <https://github.com/macropin/django-registration/pull/161>`_.
 * Enhancement: Separate logic between account creation and activation.
