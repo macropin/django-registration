@@ -184,7 +184,7 @@ class RegistrationManager(models.Manager):
         Resets activation key for the user and resends activation email.
         """
         try:
-            profile = self.get(user__email=email)
+            profile = self.get(user__email__iexact=email)
         except ObjectDoesNotExist:
             return False
         # TODO: Catch multiple objects returned exception?
