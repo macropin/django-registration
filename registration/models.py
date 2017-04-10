@@ -6,7 +6,6 @@ import re
 import string
 
 from django.conf import settings
-from django.contrib.sites.models import Site
 from django.core.exceptions import ImproperlyConfigured
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMultiAlternatives
@@ -65,7 +64,7 @@ class RegistrationManager(models.Manager):
 
     """
 
-    def _activate(self, profile, get_profile):
+    def _activate(self, profile, site, get_profile):
         """
         Activate the ``RegistrationProfile`` given as argument.
         User is able to login, as ``is_active`` is set to ``True``
@@ -82,7 +81,7 @@ class RegistrationManager(models.Manager):
         else:
             return user
 
-    def activate_user(self, activation_key, get_profile=False):
+    def activate_user(self, activation_key, site, get_profile=False):
         """
         Validate an activation key and activate the corresponding
         ``User`` if valid.
@@ -125,7 +124,7 @@ class RegistrationManager(models.Manager):
                     return False
 
             if not profile.activation_key_expired():
-                return self._activate(profile, get_profile)
+                return self._activate(profile, site, get_profile)
 
         return False
 
@@ -185,7 +184,7 @@ class RegistrationManager(models.Manager):
         Resets activation key for the user and resends activation email.
         """
         try:
-            profile = self.get(user__email=email)
+            profile = self.get(user__email__iexact=email)
         except ObjectDoesNotExist:
             return False
         # TODO: Catch multiple objects returned exception?
@@ -412,7 +411,7 @@ class RegistrationProfile(models.Model):
 
 class SupervisedRegistrationManager(RegistrationManager):
 
-    def _activate(self, profile, get_profile):
+    def _activate(self, profile, site, get_profile):
         """
         Activate the ``SupervisedRegistrationProfile`` given as argument.
 
@@ -422,7 +421,6 @@ class SupervisedRegistrationManager(RegistrationManager):
         """
 
         if not profile.user.is_active and not profile.activated:
-            site = Site.objects.get_current()
             self.send_admin_approve_email(profile.user, site)
 
         # do not set ``User.is_active`` as True. This will be set

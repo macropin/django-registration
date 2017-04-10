@@ -2,10 +2,14 @@
 django-registration-redux changelog
 ===================================
 
-Version 1.5, TBD
+Version 1.5, 08 April, 2017
 ----------------
 
 * BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Django 1.7.
+* BACKWARDS-INCOMPATIBLE CHANGE: Change signature of
+``RegistrationProfileManager.activate_user``.
+``site`` is now a required positional argument.
+  `#244 <https://github.com/macropin/django-registration/pull/244>`_.
 * Feature: Added workflow to resend activation email. See
   `#161 <https://github.com/macropin/django-registration/pull/161>`_.
 * Enhancement: Separate logic between account creation and activation.
@@ -13,8 +17,12 @@ Version 1.5, TBD
 * Bugfix: Add page title to `activate.html`
 * Feature: Added a 3-step registration flow requiring manual admin approval.
   See: `#184 <https://github.com/macropin/django-registration/pull/184>`_.
-* Enhancement: Using a more cryptographically secure method for generating activation keys.
+* Enhancement: Using a more cryptographically secure method for generating
+activation keys.
   See: `#213 <https://github.com/macropin/django-registration/issues/213>`_.
+* Bugfix: Add redirection setting for simple backend after successful
+registration.
+  See: `#239 <https://github.com/macropin/django-registration/pull/239>`_.
 
 Version 1.4, 21 February, 2016
 ------------------------------
