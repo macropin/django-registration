@@ -43,7 +43,7 @@ class RegistrationForm(UserCreationForm):
     def clean_username(self):
         username = self.cleaned_data.get('username')
         if User.objects.filter(username=username.lower()).exists():
-           raise ValidationError(_('A user with that username already exists'))
+            raise ValidationError(_('A user with that username already exists'))
 
         return username.lower()
 
