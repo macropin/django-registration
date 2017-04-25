@@ -48,7 +48,7 @@ class RegistrationFormUsernameLowercase(RegistrationForm):
     """
     def clean_username(self):
         username = self.cleaned_data.get('username', '').lower()
-        if User.objects.filter(email=username).exists():
+        if User.objects.filter(username=username).exists():
             raise forms.ValidationError(_('A user with that username already exists.'))
 
         return username
