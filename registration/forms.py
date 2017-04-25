@@ -39,10 +39,15 @@ class RegistrationForm(UserCreationForm):
         model = User
         fields = (UsernameField(), "email")
 
-class RegistrationFormUsernameLowercase(RegistrationForm):
 
+class RegistrationFormUsernameLowercase(RegistrationForm):
+    """
+    A subclass of :class:`RegistrationForm` which enforces unique case insensitive 
+    usernames, make all usernames to lower case.
+
+    """
     def clean_username(self):
-        username = self.cleaned_data.get('username','').lower()
+        username = self.cleaned_data.get('username', '').lower()
         if User.objects.filter(email=username).exists():
             raise forms.ValidationError(_('A user with that username already exists.'))
 
