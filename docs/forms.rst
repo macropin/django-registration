@@ -42,6 +42,7 @@ mind, but may also be useful in other situations.
    password serves to catch typos.
 
 .. class:: RegistrationFormUniqueEmail
+
    A subclass of :class:`RegistrationForm` which enforces unique case insensitive 
    usernames, make all usernames to lower case.
 
