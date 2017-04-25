@@ -11,9 +11,9 @@ from __future__ import unicode_literals
 
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ValidationError
+from django.utils.translation import ugettext_lazy as _
 
 from .users import UserModel, UsernameField
 
@@ -41,11 +41,11 @@ class RegistrationForm(UserCreationForm):
         fields = (UsernameField(), "email")
 
     def clean_username(self):
-        username = self.cleaned_data.get('username')
-        if User.objects.filter(username=username.lower()).exists():
+        username = self.cleaned_data.get('username').lower()
+        if User.objects.filter(username=username).exists():
             raise ValidationError(_('A user with that username already exists.'))
 
-        return username.lower()
+        return username
 
 
 class RegistrationFormTermsOfService(RegistrationForm):
