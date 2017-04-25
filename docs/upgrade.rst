@@ -18,10 +18,18 @@ older Django releases may work, but are officially unsupported. Additionally,
 Backwards-incompatible changes
 ------------------------------
 
+Version 1.6
+```````````
+
+- None
+
 Version 1.5
 ```````````
 
 - Support for Django 1.7 is removed, and Django 1.8 or newer is required.
+- Change signature of ``RegistrationProfileManager.activate_user``.
+  ``site`` is now a required positional argument.
+  See `#244 <https://github.com/macropin/django-registration/pull/244>`_.
 
 Version 1.4
 ```````````

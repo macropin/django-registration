@@ -2,6 +2,16 @@
 django-registration-redux changelog
 ===================================
 
+Version 1.6, 25 April, 2017
+----------------
+
+* Feature: Make search for email case insensitive when resending activation
+email.
+  `#250 <https://github.com/macropin/django-registration/pull/250>`_.
+* Feature: Add ``RegistrationFormUsernameLowercase`` to force all usernames to
+lowercase.
+  `#251 <https://github.com/macropin/django-registration/pull/251>`_.
+
 Version 1.5, 08 April, 2017
 ----------------
 
