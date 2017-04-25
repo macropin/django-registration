@@ -75,17 +75,17 @@ class RegistrationFormTests(TestCase):
         UserModel().objects.create_user('alice', 'alice@example.com', 'secret')
 
         form = forms.RegistrationFormUsernameLowercase(data={'username': 'Alice',
-                                                       'email': 'alice@example.com',
-                                                       'password1': 'foo',
-                                                       'password2': 'foo'})
+                                                             'email': 'alice@example.com',
+                                                             'password1': 'foo',
+                                                             'password2': 'foo'})
         self.failIf(form.is_valid())
         self.assertEqual(form.errors['username'],
                          ["A user with that username already exists."])
 
         form = forms.RegistrationFormUsernameLowercase(data={'username': 'foo',
-                                                       'email': 'alice@example.com',
-                                                       'password1': 'foo',
-                                                       'password2': 'foo'})
+                                                             'email': 'alice@example.com',
+                                                             'password1': 'foo',
+                                                             'password2': 'foo'})
         self.failUnless(form.is_valid())
 
     def test_registration_form_tos(self):

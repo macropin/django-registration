@@ -42,7 +42,7 @@ class RegistrationForm(UserCreationForm):
 
 class RegistrationFormUsernameLowercase(RegistrationForm):
     """
-    A subclass of :class:`RegistrationForm` which enforces unique case insensitive 
+    A subclass of :class:`RegistrationForm` which enforces unique case insensitive
     usernames, make all usernames to lower case.
 
     """
