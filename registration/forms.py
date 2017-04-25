@@ -11,8 +11,8 @@ from __future__ import unicode_literals
 
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm
+from django.utils.translation import ugettext_lazy as _
 
 from .users import UserModel, UsernameField
 
@@ -38,6 +38,20 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = (UsernameField(), "email")
+
+
+class RegistrationFormUsernameLowercase(RegistrationForm):
+    """
+    A subclass of :class:`RegistrationForm` which enforces unique case insensitive
+    usernames, make all usernames to lower case.
+
+    """
+    def clean_username(self):
+        username = self.cleaned_data.get('username', '').lower()
+        if User.objects.filter(**{UsernameField(): username}).exists():
+            raise forms.ValidationError(_('A user with that username already exists.'))
+
+        return username
 
 
 class RegistrationFormTermsOfService(RegistrationForm):
