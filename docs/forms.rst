@@ -41,6 +41,9 @@ mind, but may also be useful in other situations.
    of ``django.contrib.auth.models.User``. The repeated entry of the
    password serves to catch typos.
 
+.. class:: RegistrationFormUniqueEmail
+   A subclass of :class:`RegistrationForm` which enforces unique case insensitive 
+   usernames, make all usernames to lower case.
 
 .. class:: RegistrationFormTermsOfService
 
