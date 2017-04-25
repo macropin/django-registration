@@ -64,6 +64,30 @@ class RegistrationFormTests(TestCase):
                                             'password2': 'foo'})
         self.failUnless(form.is_valid())
 
+    def test_registration_form_username_lowercase(self):
+        """
+        Test that ``RegistrationFormUniqueEmail`` validates uniqueness
+        of email addresses.
+
+        """
+        # Create a user so we can verify that duplicate addresses
+        # aren't permitted.
+        UserModel().objects.create_user('alice', 'alice@example.com', 'secret')
+
+        form = forms.RegistrationFormUsernameLowercase(data={'username': 'Alice',
+                                                       'email': 'alice@example.com',
+                                                       'password1': 'foo',
+                                                       'password2': 'foo'})
+        self.failIf(form.is_valid())
+        self.assertEqual(form.errors['username'],
+                         ["A user with that username already exists."])
+
+        form = forms.RegistrationFormUsernameLowercase(data={'username': 'foo',
+                                                       'email': 'alice@example.com',
+                                                       'password1': 'foo',
+                                                       'password2': 'foo'})
+        self.failUnless(form.is_valid())
+
     def test_registration_form_tos(self):
         """
         Test that ``RegistrationFormTermsOfService`` requires

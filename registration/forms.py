@@ -12,7 +12,6 @@ from __future__ import unicode_literals
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.forms import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from .users import UserModel, UsernameField
@@ -40,10 +39,12 @@ class RegistrationForm(UserCreationForm):
         model = User
         fields = (UsernameField(), "email")
 
+class RegistrationFormUsernameLowercase(RegistrationForm):
+
     def clean_username(self):
-        username = self.cleaned_data.get('username').lower()
-        if User.objects.filter(username=username).exists():
-            raise ValidationError(_('A user with that username already exists.'))
+        username = self.cleaned_data.get('username','').lower()
+        if User.objects.filter(email=username).exists():
+            raise forms.ValidationError(_('A user with that username already exists.'))
 
         return username
 
