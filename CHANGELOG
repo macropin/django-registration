@@ -2,6 +2,11 @@
 django-registration-redux changelog
 ===================================
 
+Version 1.7, TBD
+----------------
+
+* Improve German translation - `#259 <https://github.com/macropin/django-registration/pull/259>_`
+
 Version 1.6, 25 April, 2017
 ----------------
 
