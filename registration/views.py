@@ -36,6 +36,8 @@ class RegistrationView(FormView):
         dispatch or do other processing.
 
         """
+        if self.request.user.is_authenticated():
+            return redirect(settings.LOGIN_REDIRECT_URL)
         if not self.registration_allowed():
             return redirect(self.disallowed_url)
         return super(RegistrationView, self).dispatch(request, *args, **kwargs)
