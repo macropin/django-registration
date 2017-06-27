@@ -198,10 +198,15 @@ those at a different location.
 Templates
 ~~~~~~~~~
 
-The templates in |project| assume you have a `base.html` template in your
-project's template directory. This base template should include a ``title`` block and a ``content`` block. Other than that, every template needed is
-included.  You can extend and customize the included templates as needed. Some
-of the templates you'll probably want to customize are covered here:
+The templates in |project| assume you have a ``base.html`` template in your
+project's template directory. This base template should include a ``title``,
+``meta``, and ``content`` block. The ``title`` block should allow customization
+of the ``<title>`` tag. The ``meta`` block should appear within the ``<head>``
+tag to allow for custom ``<meta`` tags for security reasons. The ``content``
+block should be within the ``<body>`` tag.  Other than that, every template
+needed is included.  You can extend and customize the included templates as
+needed.  Some of the templates you'll probably want to customize are covered
+here:
 
 Note that, with the exception of the templates used for account activation
 emails, all of these are rendered using a ``RequestContext`` and so will also
