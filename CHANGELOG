@@ -2,12 +2,17 @@
 django-registration-redux changelog
 ===================================
 
-Version 1.7, TBD
+Version 1.8, TBD
+----------------
+
+Version 1.7, 18 July, 2017
 ----------------
 * Fix security issue of leaking password reset token through the Referer
 header. - `#268 <https://github.com/macropin/django-registration/pull/268>_`
 * Fix migration issue when using multiple databases - `#264 <https://github.com/macropin/django-registration/pull/264>_`
 * Improve German translation - `#259 <https://github.com/macropin/django-registration/pull/259>_`
+* Fix bug in templates if password reset is unsuccessful - `#269
+<https://github.com/macropin/django-registration/pull/269>_`
 
 Version 1.6, 25 April, 2017
 ----------------
