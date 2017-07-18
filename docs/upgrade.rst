@@ -18,6 +18,11 @@ older Django releases may work, but are officially unsupported. Additionally,
 Backwards-incompatible changes
 ------------------------------
 
+Version 1.7
+```````````
+
+- None
+
 Version 1.6
 ```````````
 
