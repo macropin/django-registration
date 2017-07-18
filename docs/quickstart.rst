@@ -184,7 +184,7 @@ in your project's root URL configuration. For example, to place the
 URLs under the prefix ``/accounts/``, you could add the following to
 your project's root ``URLconf``::
 
-    (r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^accounts/', include('registration.backends.default.urls')),
 
 Users would then be able to register by visiting the URL
 ``/accounts/register/``, login (once activated) at
