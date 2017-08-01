@@ -158,3 +158,28 @@ Tips and tricks
     this. In the admin for the ``RegistrationProfile`` model, click
     the checkbox for the user(s) you'd like to activate, then select
     the "Activate users" action.
+
+**How do I send an email with html content?**
+	By default, the email content will only be plain text. To allow HTML
+	content to be sent, you should add a url pattern before including 
+	``django-registration``'s urls (i.e ``registration.backends.default.urls``).
+	For example, if your email template is ``registration/password_reset_email.html``,
+	your ``urls.py`` could look like::
+
+	    from django.conf.urls import url, include
+	    from django.contrib.auth import views as auth_views
+	    from django.core.urlresolvers import reverse_lazy
+	    
+	    url(r'^password/reset/$',
+	        auth_views.PasswordResetView.as_view(
+                    success_url=reverse_lazy('auth_password_reset_done'),
+		    html_email_template_name='registration/password_reset_email.html'
+	     ), name='auth_password_reset'),
+
+	    # other url patterns
+
+	    # last the default registration backends
+	    url(r'', include('registration.backends.default.urls')),
+	
+	We provide default HTML templates in the 
+	``registration/templates/registration`` directory.
