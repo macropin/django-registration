@@ -17,6 +17,8 @@ deliberately as simple as possible:
 
 3. The new user is logged in immediately.
 
+The simple backend supports the `next` url param as does the django auth_login view too.
+
 
 Configuration
 -------------
