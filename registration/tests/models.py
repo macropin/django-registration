@@ -46,6 +46,7 @@ class RegistrationModelTests(TestCase):
         self.old_registration_admins = getattr(settings, 'REGISTRATION_ADMINS',
                                                None)
 
+        warnings.simplefilter('always', UserWarning)
         settings.ACCOUNT_ACTIVATION_DAYS = 7
         settings.REGISTRATION_DEFAULT_FROM_EMAIL = 'registration@email.com'
         settings.REGISTRATION_EMAIL_HTML = True
