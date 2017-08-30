@@ -4,6 +4,7 @@ import datetime
 import hashlib
 import re
 import string
+import warnings
 
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
@@ -541,11 +542,20 @@ class SupervisedRegistrationManager(RegistrationManager):
             'profile_id': user.registrationprofile.id,
             'site': site,
         }
-        admins = getattr(settings, 'ADMINS', None)
+        registration_admins = getattr(settings, 'REGISTRATION_ADMINS', None)
+        admins = registration_admins or getattr(settings, 'ADMINS', None)
+
+        if not registration_admins:
+            warnings.warn('No registration admin defined in'
+                          ' settings.REGISTRATION_ADMINS.'
+                          ' Using settings.ADMINS for the admin approval',
+                          UserWarning)
         if not admins:
             raise ImproperlyConfigured(
                 'Using the admin_approval registration backend'
-                ' requires at least one admin in settings.ADMINS')
+                ' requires at least one admin in settings.ADMINS'
+                ' or settings.REGISTRATION_ADMINS')
+
         admins = [admin[1] for admin in admins]
         send_email(
             admins, ctx_dict, admin_approve_email_subject,
