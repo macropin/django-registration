@@ -4,6 +4,10 @@ django-registration-redux changelog
 
 Version 1.8, TBD
 ----------------
+* Redirect logged in users away from the registration page if authenticated. -
+`#262 <https://github.com/macropin/django-registration/pull/262>_`
+* Document how to send password reset email with HTML content. -
+`#276 <https://github.com/macropin/django-registration/pull/276>_`
 
 Version 1.7, 18 July, 2017
 ----------------
