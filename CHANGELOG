@@ -4,6 +4,9 @@ django-registration-redux changelog
 
 Version 1.8, TBD
 ----------------
+* Feature: Added `REGISTRATION_ADMINS` setting to support different admins (than those in `ADMINS`) in charge of registration.
+Falls back to `ADMINS` in case this is not set
+* Documentation: Added documentation regarding admin approval registration
 
 Version 1.7, 18 July, 2017
 ----------------
