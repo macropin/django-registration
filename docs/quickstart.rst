@@ -304,3 +304,104 @@ This template is used to generate the html body of the activation email.
 Should display the same content as the text version of the activation email.
 
 The context available is the same as the text version of the template.
+
+
+**registration/admin_approve_email_subject.txt**
+
+Used to generate the subject line of the approval email sent to the admin.
+Because the subject line of an email must be a single line of text, any output
+from this template will be forcibly condensed to a single line before
+being used. This template has the following context:
+
+``site``
+    An object representing the site on which the user registered;
+    depending on whether ``django.contrib.sites`` is installed, this
+    may be an instance of either ``django.contrib.sites.models.Site``
+    (if the sites application is installed) or
+    ``django.contrib.sites.models.RequestSite`` (if not). Consult `the
+    documentation for the Django sites framework
+    <http://docs.djangoproject.com/en/dev/ref/contrib/sites/>`_ for
+    details regarding these objects' interfaces.
+
+**registration/admin_approve_email.txt**
+
+**IMPORTANT**: If you override this template, you must also override the HTML
+version (below), or disable HTML emails by adding
+``REGISTRATION_EMAIL_HTML = False`` to your settings.py.
+
+Used to generate the text body of the approval email sent to the admin.
+Should display a link the user can click to activate the account.
+This template has the following context:
+
+``user``
+    The username of the user that requests approval for the new account.
+
+``site``
+    An object representing the site on which the user registered;
+    depending on whether ``django.contrib.sites`` is installed, this
+    may be an instance of either ``django.contrib.sites.models.Site``
+    (if the sites application is installed) or
+    ``django.contrib.sites.models.RequestSite`` (if not). Consult `the
+    documentation for the Django sites framework
+    <http://docs.djangoproject.com/en/dev/ref/contrib/sites/>`_ for
+    details regarding these objects' interfaces.
+
+**registration/admin_approve_email.html**
+
+This template is used to generate the html body of the approval email sent to
+the admin.
+Should display the same content as the text version of the approval email.
+
+The context available is the same as the text version of the template.
+
+**registration/admin_approve_complete.html**
+
+Used after successful account approval. This template has no context
+variables of its own, and should simply inform the admin that the user
+account is now approved.
+
+**registration/admin_approve_complete_email_subject.txt**
+
+Used to generate the subject line of the admin approval complete email. Because
+the subject line of an email must be a single line of text, any output
+from this template will be forcibly condensed to a single line before
+being used. This template has the following context:
+
+``site``
+    An object representing the site on which the user registered;
+    depending on whether ``django.contrib.sites`` is installed, this
+    may be an instance of either ``django.contrib.sites.models.Site``
+    (if the sites application is installed) or
+    ``django.contrib.sites.requests.RequestSite`` (if not). Consult `the
+    documentation for the Django sites framework
+    <http://docs.djangoproject.com/en/dev/ref/contrib/sites/>`_ for
+    details regarding these objects' interfaces.
+
+**registration/admin_approve_complete_email.txt**
+
+**IMPORTANT**: If you override this template, you must also override the HTML
+version (below), or disable HTML emails by adding
+``REGISTRATION_EMAIL_HTML = False`` to your settings.py.
+
+Used after successful account activation.
+This template has the following context:
+
+``site``
+    An object representing the site on which the user registered;
+    depending on whether ``django.contrib.sites`` is installed, this
+    may be an instance of either ``django.contrib.sites.models.Site``
+    (if the sites application is installed) or
+    ``django.contrib.sites.requests.RequestSite`` (if not). Consult `the
+    documentation for the Django sites framework
+    <http://docs.djangoproject.com/en/dev/ref/contrib/sites/>`_ for
+    details regarding these objects' interfaces.
+
+
+**registration/admin_approve_complete_email.html**
+
+This template is used to generate the html body of the approval complete email
+sent to the user.
+Should display the same content as the text version of the approval complete
+email.
+
+The context available is the same as the text version of the template.

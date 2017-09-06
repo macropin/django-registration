@@ -41,6 +41,7 @@ Contents:
    upgrade
    default-backend
    simple-backend
+   admin-approval-backend
    forms
    views
    signals

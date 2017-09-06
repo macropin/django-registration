@@ -54,3 +54,9 @@ ADMINS = (
     ('admin1', 'admin1@mail.server.com'),
     ('admin2', 'admin2@mail.server.com'),
 )
+
+
+REGISTRATION_ADMINS = (
+    ('admin1', 'registration_admin1@mail.server.com'),
+    ('admin2', 'registration_admin2@mail.server.com'),
+)

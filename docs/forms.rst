@@ -97,7 +97,7 @@ mind, but may also be useful in other situations.
 
 
 Multiple Form Inheritance
-----------------
+-------------------------
 
 Multiple :class:`RegistrationForm` subclasses can be inherited into
 one class.  For instance, if your project requires a terms of service 

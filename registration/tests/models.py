@@ -2,6 +2,7 @@ import datetime
 import hashlib
 import re
 import random
+import warnings
 
 from datetime import timedelta
 
@@ -13,6 +14,7 @@ from django.core import management
 from django.test import override_settings
 from django.test import TestCase
 from django.utils.timezone import now as datetime_now
+from django.core.exceptions import ImproperlyConfigured
 
 from registration.models import RegistrationProfile, SupervisedRegistrationProfile
 from registration.users import UserModel
@@ -40,7 +42,11 @@ class RegistrationModelTests(TestCase):
                                       'REGISTRATION_EMAIL_HTML', None)
         self.old_django_email = getattr(settings,
                                         'DEFAULT_FROM_EMAIL', None)
+        self.old_django_admins = getattr(settings, 'ADMINS', None)
+        self.old_registration_admins = getattr(settings, 'REGISTRATION_ADMINS',
+                                               None)
 
+        warnings.simplefilter('always', UserWarning)
         settings.ACCOUNT_ACTIVATION_DAYS = 7
         settings.REGISTRATION_DEFAULT_FROM_EMAIL = 'registration@email.com'
         settings.REGISTRATION_EMAIL_HTML = True
@@ -51,6 +57,8 @@ class RegistrationModelTests(TestCase):
         settings.REGISTRATION_DEFAULT_FROM_EMAIL = self.old_reg_email
         settings.REGISTRATION_EMAIL_HTML = self.old_email_html
         settings.DEFAULT_FROM_EMAIL = self.old_django_email
+        settings.ADMINS = self.old_django_admins
+        settings.REGISTRATION_ADMINS = self.old_registration_admins
 
     def test_profile_creation(self):
         """
@@ -609,7 +617,7 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
         # Outbox has one mail, admin approve mail
 
         self.assertEqual(len(mail.outbox), 1)
-        admins_emails = [value[1] for value in settings.ADMINS]
+        admins_emails = [value[1] for value in settings.REGISTRATION_ADMINS]
         for email in mail.outbox[0].to:
             self.assertIn(email, admins_emails)
 
@@ -625,7 +633,7 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
         self.registration_profile.objects.send_admin_approve_email(
             new_user, Site.objects.get_current())
         self.assertEqual(len(mail.outbox), 1)
-        admins_emails = [value[1] for value in settings.ADMINS]
+        admins_emails = [value[1] for value in settings.REGISTRATION_ADMINS]
         for email in mail.outbox[0].to:
             self.assertIn(email, admins_emails)
 
@@ -861,3 +869,35 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
 
         profile = self.registration_profile.objects.get(user=new_user)
         self.assertTrue(profile.activated)
+
+    def test_no_admins_registered(self):
+        """
+        Approving a non existent user profile does nothing and returns False
+        """
+        new_user = self.registration_profile.objects.create_inactive_user(
+            site=Site.objects.get_current(), **self.user_info)
+
+        settings.ADMINS = ()
+        settings.REGISTRATION_ADMINS = ()
+        with self.assertRaises(ImproperlyConfigured):
+            self.registration_profile.objects.send_admin_approve_email(
+                new_user, Site.objects.get_current())
+
+    def test_no_registration_admins_registered(self):
+        """
+        Approving a non existent user profile does nothing and returns False
+        """
+        new_user = self.registration_profile.objects.create_inactive_user(
+            site=Site.objects.get_current(), **self.user_info)
+
+        settings.REGISTRATION_ADMINS = ()
+
+        with warnings.catch_warnings(record=True) as _warning:
+            self.registration_profile.objects.send_admin_approve_email(
+                new_user, Site.objects.get_current())
+
+            assertion_error = '''No warning triggered for unregistered
+             REGISTRATION_ADMINS'''
+            self.assertTrue(len(_warning) > 0, assertion_error)
+            self.assertTrue('REGISTRATION_ADMINS' in str(_warning[-1].message),
+                            assertion_error)
