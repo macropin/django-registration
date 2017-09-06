@@ -1,6 +1,7 @@
 import datetime
 
 from django.conf import settings
+from django.contrib.auth.models import AnonymousUser
 from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import TestCase
@@ -129,11 +130,13 @@ class DefaultBackendViewTests(TestCase):
 
         request_factory = RequestFactory()
         view = RegistrationNoEmailView.as_view()
-        view(request_factory.post('/', data={
+        request = request_factory.post('/', data={
             'username': 'bob',
             'email': 'bob@example.com',
             'password1': 'secret',
-            'password2': 'secret'}))
+            'password2': 'secret'})
+        request.user = AnonymousUser()
+        view(request)
 
         UserModel().objects.get(username='bob')
         # A registration profile was created, and no activation email was sent.
