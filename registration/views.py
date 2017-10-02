@@ -11,6 +11,7 @@ from django.utils.decorators import method_decorator
 from django.utils.module_loading import import_string
 from django.views.decorators.debug import sensitive_post_parameters
 
+from registration.compatibility import is_authenticated
 from registration.forms import ResendActivationForm
 
 REGISTRATION_FORM_PATH = getattr(settings, 'REGISTRATION_FORM',
@@ -38,13 +39,13 @@ class RegistrationView(FormView):
 
         """
         if ACCOUNT_AUTHENTICATED_REGISTRATION_REDIRECTS:
-            if self.request.user.is_authenticated():
+            if is_authenticated(self.request.user):
                 if settings.LOGIN_REDIRECT_URL is not None:
                     return redirect(settings.LOGIN_REDIRECT_URL)
                 else:
                     raise Exception("You must set a URL with LOGIN_REDIRECT_URL in settings.py or set ACCOUNT_AUTHENTICATED_REGISTRATION_REDIRECTS=False")
 
-        if self.request.user.is_authenticated():
+        if is_authenticated(self.request.user):
             return redirect(settings.LOGIN_REDIRECT_URL)
         if not self.registration_allowed():
             return redirect(self.disallowed_url)
