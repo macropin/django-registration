@@ -92,6 +92,8 @@ mind, but may also be useful in other situations.
 
    * ``yahoo.com``
 
+   * ``outlook.com``
+
    To change this, subclass this form and set the class attribute
    ``bad_domains`` to a list of domains you wish to disallow.
 
