@@ -22,7 +22,6 @@ matrix:
       env: DJANGO=Django==1.11.4
 
 install:
-  - pip install --upgrade pip
   - pip install -r requirements.txt
   - pip install -q $DJANGO
   - python setup.py -q install
