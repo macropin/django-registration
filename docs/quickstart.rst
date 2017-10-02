@@ -5,7 +5,7 @@ Quick start guide
 
 Before installing |project|, you'll need to have a copy of
 `Django <http://www.djangoproject.com>`_ already installed. For the
-|version| release, Django 1.8 or newer is required.
+|version| release, Django 1.11 or newer is required.
 
 For further information, consult the `Django download page
 <http://www.djangoproject.com/download/>`_, which offers convenient

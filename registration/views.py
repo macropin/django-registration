@@ -39,7 +39,7 @@ class RegistrationView(FormView):
 
         """
         if ACCOUNT_AUTHENTICATED_REGISTRATION_REDIRECTS:
-            if self.request.user.is_authenticated():
+            if self.request.user.is_authenticated:
                 if settings.LOGIN_REDIRECT_URL is not None:
                     return redirect(settings.LOGIN_REDIRECT_URL)
                 else:

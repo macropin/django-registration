@@ -1,10 +1,11 @@
 from __future__ import unicode_literals
 
 from django.contrib.admin import helpers
-from django.core import mail, urlresolvers
+from django.core import mail
 from django.test import TestCase
 from django.test.client import Client
 from django.test.utils import override_settings
+from django.urls import reverse
 from registration.models import RegistrationProfile
 from registration.users import UserModel
 
@@ -38,7 +39,7 @@ class AdminCustomActionsTestCase(TestCase):
 
         self.assertFalse(profile.activated)
 
-        registrationprofile_list = urlresolvers.reverse(
+        registrationprofile_list = reverse(
             'admin:registration_registrationprofile_changelist')
         post_data = {
             'action': 'activate_users',
@@ -56,7 +57,7 @@ class AdminCustomActionsTestCase(TestCase):
         new_user = UserModel().objects.create_user(**self.user_info)
         profile = RegistrationProfile.objects.create_profile(new_user)
 
-        registrationprofile_list = urlresolvers.reverse(
+        registrationprofile_list = reverse(
             'admin:registration_registrationprofile_changelist')
         post_data = {
             'action': 'resend_activation_email',

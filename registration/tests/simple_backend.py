@@ -1,6 +1,6 @@
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.test import TestCase, override_settings
+from django.urls import reverse
 
 from registration.forms import RegistrationForm
 from registration.users import UserModel
@@ -70,7 +70,7 @@ class SimpleBackendViewTests(TestCase):
 
         # New user must be logged in.
         resp = self.client.get(reverse('registration_register'), follow=True)
-        self.failUnless(resp.context['user'].is_authenticated())
+        self.failUnless(resp.context['user'].is_authenticated)
 
     def test_registration_failure(self):
         """
