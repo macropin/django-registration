@@ -4,9 +4,16 @@ django-registration-redux changelog
 
 Version 1.8, TBD
 ----------------
-* Feature: Added `REGISTRATION_ADMINS` setting to support different admins (than those in `ADMINS`) in charge of registration.
-Falls back to `ADMINS` in case this is not set
-* Documentation: Added documentation regarding admin approval registration
+* Bugfix: Add outlook.com to the list of free email providers. -
+`#287 <https://github.com/macropin/django-registration/pull/287>_`
+* Documentation: Add possible settings for activation emails. -
+`#283 <https://github.com/macropin/django-registration/pull/282>_`
+* Feature: Added `REGISTRATION_ADMINS` setting to support different admins
+(than those in `ADMINS`) in charge of registration. Falls back to `ADMINS` in
+case this is not set. -
+`#279 <https://github.com/macropin/django-registration/pull/279>_`
+* Documentation: Added documentation regarding admin approval registration. -
+`#279 <https://github.com/macropin/django-registration/pull/279>_`
 * Redirect logged in users away from the registration page if authenticated. -
 `#262 <https://github.com/macropin/django-registration/pull/262>_`
 * Document how to send password reset email with HTML content. -
@@ -52,6 +59,9 @@ activation keys.
 * Bugfix: Add redirection setting for simple backend after successful
 registration.
   See: `#239 <https://github.com/macropin/django-registration/pull/239>`_.
+* Bugfix: Use dict instead of `RequestContext` when sending activation email.
+-
+  See: `#194 <https://github.com/macropin/django-registration/pull/194>`_.
 
 Version 1.4, 21 February, 2016
 ------------------------------
