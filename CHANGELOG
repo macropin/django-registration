@@ -2,6 +2,13 @@
 django-registration-redux changelog
 ===================================
 
+Version 2.0, TBD
+----------------
+* BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Django < 1.11.
+* BACKWARDS-INCOMPATIBLE CHANGE: Remove `registration/urls.py` in favor of
+`registration/backends/default/urls.py`
+* Feature: Add compatibility for Django 2.0.
+
 Version 1.10, TBD
 ----------------
 

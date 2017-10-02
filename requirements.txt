@@ -2,5 +2,6 @@
 Sphinx
 twine
 pytest>3.2.1
-Django>1.8
+Django>1.11
+invoke==0.12.2
 docutils==0.12

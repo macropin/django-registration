@@ -71,7 +71,7 @@ class SimpleBackendViewTests(TestCase):
 
         # New user must be logged in.
         resp = self.client.get(reverse('registration_register'), follow=True)
-        self.failUnless(resp.context['user'].is_authenticated())
+        self.failUnless(resp.context['user'].is_authenticated)
 
     def test_registration_failure(self):
         """

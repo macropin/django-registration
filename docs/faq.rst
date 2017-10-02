@@ -168,8 +168,8 @@ Tips and tricks
 
 	    from django.conf.urls import url, include
 	    from django.contrib.auth import views as auth_views
-	    from django.core.urlresolvers import reverse_lazy
-	    
+	    from django.urls import reverse_lazy
+	
 	    url(r'^password/reset/$',
 	        auth_views.PasswordResetView.as_view(
                     success_url=reverse_lazy('auth_password_reset_done'),
