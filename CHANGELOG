@@ -2,9 +2,9 @@
 django-registration-redux changelog
 ===================================
 
-Version 1.8, TBD
+Version 1.8, 03 October, 2017
 ----------------
-* Bugfix: Add outlook.com to the list of free email providers. -
+* Bugfix: Add `outlook.com` to the list of free email providers. -
 `#287 <https://github.com/macropin/django-registration/pull/287>_`
 * Documentation: Add possible settings for activation emails. -
 `#283 <https://github.com/macropin/django-registration/pull/282>_`
