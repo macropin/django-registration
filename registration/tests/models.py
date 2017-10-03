@@ -22,6 +22,10 @@ from registration.users import UserModel
 Site = apps.get_model('sites', 'Site')
 
 
+@override_settings(ACCOUNT_ACTIVATION_DAYS=7,
+                   REGISTRATION_DEFAULT_FROM_EMAIL='registration@email.com',
+                   REGISTRATION_EMAIL_HTML=True,
+                   DEFAULT_FROM_EMAIL='django@email.com')
 class RegistrationModelTests(TestCase):
     """
     Test the model and manager used in the default backend.
@@ -34,31 +38,7 @@ class RegistrationModelTests(TestCase):
     registration_profile = RegistrationProfile
 
     def setUp(self):
-        self.old_activation = getattr(settings,
-                                      'ACCOUNT_ACTIVATION_DAYS', None)
-        self.old_reg_email = getattr(settings,
-                                     'REGISTRATION_DEFAULT_FROM_EMAIL', None)
-        self.old_email_html = getattr(settings,
-                                      'REGISTRATION_EMAIL_HTML', None)
-        self.old_django_email = getattr(settings,
-                                        'DEFAULT_FROM_EMAIL', None)
-        self.old_django_admins = getattr(settings, 'ADMINS', None)
-        self.old_registration_admins = getattr(settings, 'REGISTRATION_ADMINS',
-                                               None)
-
         warnings.simplefilter('always', UserWarning)
-        settings.ACCOUNT_ACTIVATION_DAYS = 7
-        settings.REGISTRATION_DEFAULT_FROM_EMAIL = 'registration@email.com'
-        settings.REGISTRATION_EMAIL_HTML = True
-        settings.DEFAULT_FROM_EMAIL = 'django@email.com'
-
-    def tearDown(self):
-        settings.ACCOUNT_ACTIVATION_DAYS = self.old_activation
-        settings.REGISTRATION_DEFAULT_FROM_EMAIL = self.old_reg_email
-        settings.REGISTRATION_EMAIL_HTML = self.old_email_html
-        settings.DEFAULT_FROM_EMAIL = self.old_django_email
-        settings.ADMINS = self.old_django_admins
-        settings.REGISTRATION_ADMINS = self.old_registration_admins
 
     def test_profile_creation(self):
         """
@@ -112,13 +92,13 @@ class RegistrationModelTests(TestCase):
         profile.send_activation_email(Site.objects.get_current())
         self.assertEqual(mail.outbox[0].from_email, 'registration@email.com')
 
+    @override_settings(REGISTRATION_DEFAULT_FROM_EMAIL=None)
     def test_activation_email_falls_back_to_django_default_from_email(self):
         """
         ``RegistrationProfile.send_activation_email`` sends an
         email.
 
         """
-        settings.REGISTRATION_DEFAULT_FROM_EMAIL = None
         new_user = UserModel().objects.create_user(**self.user_info)
         profile = self.registration_profile.objects.create_profile(new_user)
         profile.send_activation_email(Site.objects.get_current())
@@ -136,13 +116,13 @@ class RegistrationModelTests(TestCase):
 
         self.assertEqual(len(mail.outbox[0].alternatives), 1)
 
+    @override_settings(REGISTRATION_EMAIL_HTML=False)
     def test_activation_email_is_plain_text_if_html_disabled(self):
         """
         ``RegistrationProfile.send_activation_email`` sends a plain
         text email if settings.REGISTRATION_EMAIL_HTML is False.
 
         """
-        settings.REGISTRATION_EMAIL_HTML = False
         new_user = UserModel().objects.create_user(**self.user_info)
         profile = self.registration_profile.objects.create_profile(new_user)
         profile.send_activation_email(Site.objects.get_current())
@@ -271,7 +251,8 @@ class RegistrationModelTests(TestCase):
                              .activate_user(profile.activation_key, Site.objects.get_current(),
                                             get_profile=True))
 
-        self.failUnless(isinstance(activated_profile, self.registration_profile))
+        self.failUnless(isinstance(activated_profile,
+                                   self.registration_profile))
         self.assertEqual(activated_profile.id, profile.id)
         self.failUnless(activated_profile.activated)
 
@@ -589,7 +570,8 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
                              .activate_user(profile.activation_key, Site.objects.get_current(),
                                             get_profile=True))
 
-        self.failUnless(isinstance(activated_profile, self.registration_profile))
+        self.failUnless(isinstance(activated_profile,
+                                   self.registration_profile))
         self.assertEqual(activated_profile.id, profile.id)
         self.failUnless(activated_profile.activated)
 
@@ -650,13 +632,13 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
             new_user, Site.objects.get_current())
         self.assertEqual(mail.outbox[0].from_email, 'registration@email.com')
 
+    @override_settings(REGISTRATION_DEFAULT_FROM_EMAIL=None)
     def test_admin_approval_email_falls_back_to_django_default_from_email(self):
         """
         ``SupervisedRegistrationManager.send_admin_approve_email`` sends an
         email.
 
         """
-        settings.REGISTRATION_DEFAULT_FROM_EMAIL = None
         new_user = UserModel().objects.create_user(**self.user_info)
         profile = self.registration_profile.objects.create_profile(new_user)
         profile.activated = True
@@ -678,13 +660,13 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
 
         self.assertEqual(len(mail.outbox[0].alternatives), 1)
 
+    @override_settings(REGISTRATION_EMAIL_HTML=False)
     def test_admin_approval_email_is_plain_text_if_html_disabled(self):
         """
         ``SupervisedRegistrationProfile.send_activation_email`` sends a plain
         text email if settings.REGISTRATION_EMAIL_HTML is False.
 
         """
-        settings.REGISTRATION_EMAIL_HTML = False
         new_user = UserModel().objects.create_user(**self.user_info)
         profile = self.registration_profile.objects.create_profile(new_user)
         profile.activated = True
@@ -717,13 +699,13 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].from_email, 'registration@email.com')
 
+    @override_settings(REGISTRATION_DEFAULT_FROM_EMAIL=None)
     def test_admin_approval_complete_email_falls_back_to_django_default_from_email(self):
         """
         ``SupervisedRegistrationManager.send_admin_approve_complete_email``
         sends an email
 
         """
-        settings.REGISTRATION_DEFAULT_FROM_EMAIL = None
         new_user = UserModel().objects.create_user(**self.user_info)
         profile = self.registration_profile.objects.create_profile(new_user)
         profile.send_admin_approve_complete_email(Site.objects.get_current())
@@ -742,13 +724,13 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(len(mail.outbox[0].alternatives), 1)
 
+    @override_settings(REGISTRATION_EMAIL_HTML=False)
     def test_admin_approval_complete_email_is_plain_text_if_html_disabled(self):
         """
         ``SupervisedRegistrationProfile.send_admin_approve_complete_email``
         sends a plain text email if settings.REGISTRATION_EMAIL_HTML is False.
 
         """
-        settings.REGISTRATION_EMAIL_HTML = False
         new_user = UserModel().objects.create_user(**self.user_info)
         profile = self.registration_profile.objects.create_profile(new_user)
         profile.send_admin_approve_complete_email(Site.objects.get_current())
@@ -870,6 +852,7 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
         profile = self.registration_profile.objects.get(user=new_user)
         self.assertTrue(profile.activated)
 
+    @override_settings(ADMINS=(), REGISTRATION_ADMINS=())
     def test_no_admins_registered(self):
         """
         Approving a non existent user profile does nothing and returns False
@@ -877,20 +860,17 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
         new_user = self.registration_profile.objects.create_inactive_user(
             site=Site.objects.get_current(), **self.user_info)
 
-        settings.ADMINS = ()
-        settings.REGISTRATION_ADMINS = ()
         with self.assertRaises(ImproperlyConfigured):
             self.registration_profile.objects.send_admin_approve_email(
                 new_user, Site.objects.get_current())
 
+    @override_settings(REGISTRATION_ADMINS=())
     def test_no_registration_admins_registered(self):
         """
         Approving a non existent user profile does nothing and returns False
         """
         new_user = self.registration_profile.objects.create_inactive_user(
             site=Site.objects.get_current(), **self.user_info)
-
-        settings.REGISTRATION_ADMINS = ()
 
         with warnings.catch_warnings(record=True) as _warning:
             self.registration_profile.objects.send_admin_approve_email(
