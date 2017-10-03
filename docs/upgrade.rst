@@ -19,7 +19,7 @@ older Django releases may work, but are officially unsupported. Additionally,
 
 Backwards-incompatible changes
 ------------------------------
-Version 2.0
+Version 2.0a1
 ```````````
 
 - Removed support for Django < 1.11.
