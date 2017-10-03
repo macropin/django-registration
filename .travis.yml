@@ -5,21 +5,28 @@ python:
   - 3.3
   - 3.4
   - 3.5
+  - 3.6
 
 env:
   - DJANGO=Django==1.8.18
   - DJANGO=Django==1.9.13
-  - DJANGO=Django==1.10.7
-  - DJANGO=Django==1.11.4
+  - DJANGO=Django==1.10.8
+  - DJANGO=Django==1.11.5
 
 matrix:
   exclude:
     - python: 3.3
       env: DJANGO=Django==1.9.13
     - python: 3.3
-      env: DJANGO=Django==1.10.7
+      env: DJANGO=Django==1.10.8
     - python: 3.3
-      env: DJANGO=Django==1.11.4
+      env: DJANGO=Django==1.11.5
+    - python: 3.6
+      env: DJANGO=Django==1.8.18
+    - python: 3.6
+      env: DJANGO=Django==1.9.13
+    - python: 3.6
+      env: DJANGO=Django==1.10.8
 
 install:
   - pip install -r requirements.txt
