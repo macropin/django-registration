@@ -37,9 +37,8 @@ install this version by running::
     pip install django-registration-redux==2.0a2
 
 If you find any issues with this alpha release, please submit an issue or a
-pull request (compared against the ``django-2.0`` branch). Once Django 2.0 is
-officially released, we will take our version out of alpha and officially drop
-support for Django<1.11 on master.
+pull request (compared against the  `django-2.0 branch <https://github.com/macropin/django-registration/tree/django-2.0>`_). Once Django 2.0 is officially released, we will take our version out of alpha and
+officially drop support for Django<1.11 on master.
 
 
 Installation
