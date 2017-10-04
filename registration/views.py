@@ -16,7 +16,8 @@ from registration.forms import ResendActivationForm
 REGISTRATION_FORM_PATH = getattr(settings, 'REGISTRATION_FORM',
                                  'registration.forms.RegistrationForm')
 REGISTRATION_FORM = import_string(REGISTRATION_FORM_PATH)
-ACCOUNT_AUTHENTICATED_REGISTRATION_REDIRECTS = getattr(settings, 'ACCOUNT_AUTHENTICATED_REGISTRATION_REDIRECTS', True)
+ACCOUNT_AUTHENTICATED_REGISTRATION_REDIRECTS = getattr(
+    settings, 'ACCOUNT_AUTHENTICATED_REGISTRATION_REDIRECTS', True)
 
 
 class RegistrationView(FormView):
@@ -42,10 +43,11 @@ class RegistrationView(FormView):
                 if settings.LOGIN_REDIRECT_URL is not None:
                     return redirect(settings.LOGIN_REDIRECT_URL)
                 else:
-                    raise Exception("You must set a URL with LOGIN_REDIRECT_URL in settings.py or set ACCOUNT_AUTHENTICATED_REGISTRATION_REDIRECTS=False")
+                    raise Exception((
+                        'You must set a URL with LOGIN_REDIRECT_URL in '
+                        'settings.py or set '
+                        'ACCOUNT_AUTHENTICATED_REGISTRATION_REDIRECTS=False'))
 
-        if self.request.user.is_authenticated():
-            return redirect(settings.LOGIN_REDIRECT_URL)
         if not self.registration_allowed():
             return redirect(self.disallowed_url)
         return super(RegistrationView, self).dispatch(request, *args, **kwargs)
