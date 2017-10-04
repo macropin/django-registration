@@ -14,7 +14,8 @@ from registration.models import RegistrationProfile
 from registration.users import UserModel
 
 
-@override_settings(ROOT_URLCONF='test_app.urls_default')
+@override_settings(ROOT_URLCONF='test_app.urls_default',
+                   ACCOUNT_ACTIVATION_DAYS=7)
 class DefaultBackendViewTests(TestCase):
     """
     Test the default registration backend.
@@ -30,40 +31,18 @@ class DefaultBackendViewTests(TestCase):
 
     registration_view = RegistrationView
 
-    def setUp(self):
-        """
-        Create an instance of the default backend for use in testing,
-        and set ``ACCOUNT_ACTIVATION_DAYS`` if it's not set already.
-
-        """
-        self.old_activation = getattr(settings,
-                                      'ACCOUNT_ACTIVATION_DAYS', None)
-        if self.old_activation is None:
-            settings.ACCOUNT_ACTIVATION_DAYS = 7  # pragma: no cover
-
-    def tearDown(self):
-        """
-        Yank ``ACCOUNT_ACTIVATION_DAYS`` back out if it wasn't
-        originally set.
-
-        """
-        if self.old_activation is None:
-            # pragma: no cover
-            settings.ACCOUNT_ACTIVATION_DAYS = self.old_activation
-
-    def test_allow(self):
+    @override_settings(REGISTRATION_OPEN=True)
+    def test_registration_open(self):
         """
         The setting ``REGISTRATION_OPEN`` appropriately controls
         whether registration is permitted.
 
         """
-        old_allowed = getattr(settings, 'REGISTRATION_OPEN', True)
-        settings.REGISTRATION_OPEN = True
-
         resp = self.client.get(reverse('registration_register'))
         self.assertEqual(200, resp.status_code)
 
-        settings.REGISTRATION_OPEN = False
+    @override_settings(REGISTRATION_OPEN=False)
+    def test_registration_closed(self):
 
         # Now all attempts to hit the register view should redirect to
         # the 'registration is closed' message.
@@ -77,8 +56,6 @@ class DefaultBackendViewTests(TestCase):
                                       'password2': 'secret'})
         self.assertRedirects(resp, reverse('registration_disallowed'))
 
-        settings.REGISTRATION_OPEN = old_allowed
-
     def test_registration_get(self):
         """
         HTTP ``GET`` to the registration view uses the appropriate
@@ -90,7 +67,7 @@ class DefaultBackendViewTests(TestCase):
         self.assertTemplateUsed(resp,
                                 'registration/registration_form.html')
         self.failUnless(isinstance(resp.context['form'],
-                        RegistrationForm))
+                                   RegistrationForm))
 
     def test_registration(self):
         """

@@ -9,19 +9,18 @@ from registration.users import UserModel
 @override_settings(ROOT_URLCONF='test_app.urls_simple')
 class SimpleBackendViewTests(TestCase):
 
-    def test_allow(self):
+    @override_settings(REGISTRATION_OPEN=True)
+    def test_registration_open(self):
         """
         The setting ``REGISTRATION_OPEN`` appropriately controls
         whether registration is permitted.
 
         """
-        old_allowed = getattr(settings, 'REGISTRATION_OPEN', True)
-        settings.REGISTRATION_OPEN = True
-
         resp = self.client.get(reverse('registration_register'))
         self.assertEqual(200, resp.status_code)
 
-        settings.REGISTRATION_OPEN = False
+    @override_settings(REGISTRATION_OPEN=False)
+    def test_registration_closed(self):
 
         # Now all attempts to hit the register view should redirect to
         # the 'registration is closed' message.
@@ -35,8 +34,6 @@ class SimpleBackendViewTests(TestCase):
                                       'password2': 'secret'})
         self.assertRedirects(resp, reverse('registration_disallowed'))
 
-        settings.REGISTRATION_OPEN = old_allowed
-
     def test_registration_get(self):
         """
         HTTP ``GET`` to the registration view uses the appropriate
@@ -48,7 +45,7 @@ class SimpleBackendViewTests(TestCase):
         self.assertTemplateUsed(resp,
                                 'registration/registration_form.html')
         self.failUnless(isinstance(resp.context['form'],
-                        RegistrationForm))
+                                   RegistrationForm))
 
     def test_registration(self):
         """
