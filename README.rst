@@ -1,13 +1,12 @@
 .. -*-restructuredtext-*-
 
 :Description: Django-registration provides user registration functionality for Django websites.
-:maintainers: Macropin_, DiCato_, and Joshblum_
+:maintainers: Macropin_, DiCato_, and joshblum_
 :contributors: `list of contributors <https://github.com/macropin/django-registration/graphs/contributors>`_
 
 .. _Macropin: https://github.com/macropin
 .. _DiCato: https://github.com/dicato
-.. _Joshblum: https://github.com/joshblum
-
+.. _joshblum: https://github.com/joshblum
 
 .. image:: https://travis-ci.org/macropin/django-registration.svg?branch=master
     :target: https://travis-ci.org/macropin/django-registration
@@ -22,7 +21,6 @@
     :target: http://django-registration-redux.readthedocs.org/en/latest/?badge=latest
     :alt: Documentation Status
 
-
 If you have issues with the "django-registration-redux" package then please `raise them here`_.
 
 This is a fairly simple user-registration application for Django,
@@ -30,9 +28,18 @@ designed to make allowing user signups as painless as possible. It
 requires a functional installation of Django 1.8 or newer, but has no
 other dependencies.
 
-For instructions on how to use this application, and on
-what it provides, see the file "quickstart.rst" in the "docs/"
-directory. Full documentation is also `available online`_
+Django 2.0 Alpha Pre-Release
+---------------------
+
+We have a pre-release available to begin testing against Django 2.0.  You can
+install this version by running::
+
+    pip install django-registration-redux==2.0a2
+
+If you find any issues with this alpha release, please submit an issue or a
+pull request (compared against the ``django-2.0`` branch). Once Django 2.0 is
+officially released, we will take our version out of alpha and officially drop
+support for Django<1.11 on master.
 
 
 Installation
