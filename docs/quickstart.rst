@@ -154,6 +154,11 @@ your project, and specifying one additional setting:
     Optional. If this is `True`, your users will automatically log in when they
     click on the activation link in their email. Defaults to `False`.
 
+``ACCOUNT_AUTHENTICATED_REGISTRATION_REDIRECTS``
+    Optional. If this is `True`, your users will automatically be
+    redirected to ``LOGIN_REDIRECT_URL`` when trying to access the
+    ``RegistrationView``. Defaults to `True`.
+
 For example, you might have something like the following in your
 Django settings file::
 
