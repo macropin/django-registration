@@ -6,6 +6,7 @@ import re
 import string
 import warnings
 
+from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.exceptions import ObjectDoesNotExist
@@ -25,6 +26,22 @@ from .users import UserModelString
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
 
+def get_from_email(site=None):
+    if getattr(settings, 'REGISTRATION_USE_SITE_EMAIL', False):
+        user_email = getattr(settings, 'REGISTRATION_SITE_USER_EMAIL', None)
+        if not user_email:
+            raise ImproperlyConfigured((
+                'REGISTRATION_SITE_USER_EMAIL must be set when using '
+                'REGISTRATION_USE_SITE_EMAIL.'))
+        Site = apps.get_model('sites', 'Site')
+        site = site or Site.objects.get_current()
+        from_email = '{}@{}'.format(user_email, site.domain)
+    else:
+        from_email = getattr(settings, 'REGISTRATION_DEFAULT_FROM_EMAIL',
+                             settings.DEFAULT_FROM_EMAIL)
+    return from_email
+
+
 def send_email(addresses_to, ctx_dict, subject_template, body_template,
                body_html_template):
     """
@@ -37,8 +54,7 @@ def send_email(addresses_to, ctx_dict, subject_template, body_template,
     )
     # Email subject *must not* contain newlines
     subject = ''.join(subject.splitlines())
-    from_email = getattr(settings, 'REGISTRATION_DEFAULT_FROM_EMAIL',
-                         settings.DEFAULT_FROM_EMAIL)
+    from_email = get_from_email(ctx_dict.get('site'))
     message_txt = render_to_string(body_template,
                                    ctx_dict)
 
@@ -289,8 +305,10 @@ class RegistrationProfile(models.Model):
         """
         Create a new activation key for the user
         """
-        random_string = get_random_string(length=32, allowed_chars=string.printable)
-        self.activation_key = hashlib.sha1(random_string.encode('utf-8')).hexdigest()
+        random_string = get_random_string(
+            length=32, allowed_chars=string.printable)
+        self.activation_key = hashlib.sha1(
+            random_string.encode('utf-8')).hexdigest()
 
         if save:
             self.save()
@@ -392,8 +410,7 @@ class RegistrationProfile(models.Model):
                        activation_email_subject, ctx_dict, request=request))
         # Email subject *must not* contain newlines
         subject = ''.join(subject.splitlines())
-        from_email = getattr(settings, 'REGISTRATION_DEFAULT_FROM_EMAIL',
-                             settings.DEFAULT_FROM_EMAIL)
+        from_email = get_from_email(site)
         message_txt = render_to_string(activation_email_body,
                                        ctx_dict, request=request)
 
