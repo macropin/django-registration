@@ -173,7 +173,8 @@ Django settings file::
     REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
 
 Once you've done this, run ``python manage.py migrate`` to install the model
-used by the default setup.
+used by the default setup. Note, in order for the templates to properly work,
+the ``registration`` app **must** appear above ``django.contrib.auth``.
 
 
 Setting up URLs
