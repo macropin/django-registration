@@ -11,15 +11,17 @@ This documentation covers the |version| release of
 user registration functionality for `Django
 <http://www.djangoproject.com>`_ powered websites.
 
-Although nearly all aspects of the registration process are
-customizable, out-of-the-box support is provided for two common use
-cases:
+Although nearly all aspects of the registration process are customizable,
+out-of-the-box support is provided for the following use cases:
+
+* One-phase registration, where a user signs up and is immediately
+  active and logged in.
 
 * Two-phase registration, consisting of initial signup followed by a
   confirmation email with instructions for activating the new account.
 
-* One-phase registration, where a user signs up and is immediately
-  active and logged in.
+* Three-phase registration, where a user signs up, confirms their account via
+  email, and then an admin approves the account allowing the user to login.
 
 To get up and running quickly, consult the :ref:`quick-start guide
 <quickstart>`, which describes all the necessary steps to install
@@ -29,7 +31,8 @@ process (and support for alternate registration systems), read through
 the documentation listed below.
 
 If you are upgrading from a previous release, please read the
-:ref:`upgrade guide <upgrade>` for information on what's changed.
+<https://github.com/macropin/django-registration/blob/master/CHANGELOG>`_
+for information on what's changed.
 
 Contents:
 

@@ -64,9 +64,9 @@ latest release package can be downloaded from |project|'s
 
 Once you've downloaded the package, unpack it (on most operating
 systems, simply double-click; alternately, type ``tar zxvf
-django-registration-redux-1.1.tar.gz`` at a command line on Linux, Mac OS X
+django-registration-redux-x.x.tar.gz`` at a command line on Linux, Mac OS X
 or other Unix-like systems). This will create the directory
-``django-registration-redux-1.1``, which contains the ``setup.py``
+``django-registration-redux-x.x``, which contains the ``setup.py``
 installation script. From a command line in that directory, type::
 
     python setup.py install
@@ -210,8 +210,13 @@ of the ``<title>`` tag. The ``meta`` block should appear within the ``<head>``
 tag to allow for custom ``<meta`` tags for security reasons. The ``content``
 block should be within the ``<body>`` tag.  Other than that, every template
 needed is included.  You can extend and customize the included templates as
-needed.  Some of the templates you'll probably want to customize are covered
-here:
+needed. To customize the templates, create a ``registration`` folder where the
+`template loader is configured to find templates
+<https://docs.djangoproject.com/en/dev/topics/templates/#configuration>`_. Copy
+the existing templates from the installed package or for your `version on
+Github <https://github.com/macropin/django-registration/releases>`_ and modify
+them as necessary. Some of the templates you'll probably want to customize are
+covered here:
 
 Note that, with the exception of the templates used for account activation
 emails, all of these are rendered using a ``RequestContext`` and so will also

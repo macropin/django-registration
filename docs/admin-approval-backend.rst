@@ -14,13 +14,13 @@ steps are the following:
 1. A user signs up by filling out a registration form.
 
 2. The user confirms the account by following the link sent to the email
-   address supplied during registration
+   address supplied during registration.
 
 3. An admin receives an email with a link that will approve the user
-   registration
+   registration.
 
 4. When the admin approves the request, the user receives an email informing
-   them that they can now login
+   them that they can now login.
 
 
 Configuration
