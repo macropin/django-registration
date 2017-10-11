@@ -9,12 +9,12 @@ you're using a custom model.
 """
 from __future__ import unicode_literals
 
-
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext_lazy as _
 
-from .users import UserModel, UsernameField
+from .users import UserModel
+from .users import UsernameField
 
 User = UserModel()
 

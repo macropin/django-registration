@@ -37,7 +37,7 @@ before_script:
   - rm -rf build
 
 script:
-  - flake8
+  - make lint
   - coverage run --source=registration setup.py test
 
 after_success:

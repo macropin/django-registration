@@ -10,13 +10,11 @@ handled.
 
 """
 
-from django.conf.urls import include, url
-
+from django.conf.urls import include
+from django.conf.urls import url
 from django.views.generic import TemplateView
-
 from registration.views import ActivationView
 from registration.views import RegistrationView
-
 
 urlpatterns = [
     # Test the 'activate' view with custom template

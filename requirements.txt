@@ -2,6 +2,7 @@ flake8
 coveralls
 Sphinx
 twine
+isort
 pytest>3.2.1
 Django>1.8
 invoke==0.12.2

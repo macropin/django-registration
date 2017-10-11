@@ -17,17 +17,16 @@ your own URL patterns for these views instead.
 """
 
 
+from django.conf import settings
 from django.conf.urls import include
 from django.conf.urls import url
-from django.conf import settings
-from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import permission_required
-
-from .views import ActivationView
-from .views import RegistrationView
-from .views import ApprovalView
+from django.views.generic.base import TemplateView
 from registration.backends.admin_approval.views import ResendActivationView
 
+from .views import ActivationView
+from .views import ApprovalView
+from .views import RegistrationView
 
 urlpatterns = [
     url(r'^activate/resend/$',

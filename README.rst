@@ -29,7 +29,7 @@ requires a functional installation of Django 1.8 or newer, but has no
 other dependencies.
 
 Django 2.0 Alpha Pre-Release
----------------------
+----------------------------
 
 We have a pre-release available to begin testing against Django 2.0.  You can
 install this version by running::
