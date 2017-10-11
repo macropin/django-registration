@@ -1,9 +1,10 @@
 import sys
 
-from registration import get_version
 from setuptools import find_packages
 from setuptools import setup
 from setuptools.command.test import test as TestCommand
+
+from registration import get_version
 
 
 class PyTest(TestCommand):

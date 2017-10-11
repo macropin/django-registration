@@ -14,6 +14,7 @@ from django.test import TestCase
 from django.test import override_settings
 from django.utils import six
 from django.utils.timezone import now as datetime_now
+
 from registration.models import RegistrationProfile
 from registration.models import SupervisedRegistrationProfile
 from registration.users import UserModel
