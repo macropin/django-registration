@@ -26,7 +26,6 @@ from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 
-
 urlpatterns = [
     url(r'^login/$',
         auth_views.LoginView.as_view(
