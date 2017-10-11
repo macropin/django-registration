@@ -6,6 +6,7 @@ from django.core import urlresolvers
 from django.test import TestCase
 from django.test.client import Client
 from django.test.utils import override_settings
+
 from registration.models import RegistrationProfile
 from registration.users import UserModel
 

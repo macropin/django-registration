@@ -22,11 +22,12 @@ from django.conf.urls import include
 from django.conf.urls import url
 from django.contrib.auth.decorators import permission_required
 from django.views.generic.base import TemplateView
-from registration.backends.admin_approval.views import ResendActivationView
 
 from .views import ActivationView
 from .views import ApprovalView
 from .views import RegistrationView
+
+from registration.backends.admin_approval.views import ResendActivationView
 
 urlpatterns = [
     url(r'^activate/resend/$',
