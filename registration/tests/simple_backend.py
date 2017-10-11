@@ -1,7 +1,7 @@
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test import override_settings
+from django.urls import reverse
 
 from registration.forms import RegistrationForm
 from registration.users import UserModel
