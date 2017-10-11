@@ -1,8 +1,9 @@
 from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
-from registration.models import SupervisedRegistrationProfile
 from registration.backends.admin_approval.views import RegistrationView
+from registration.models import SupervisedRegistrationProfile
 from registration.users import UserModel
+
 from .default_backend import DefaultBackendViewTests
 
 

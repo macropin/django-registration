@@ -23,11 +23,9 @@ consult a specific backend's documentation for details.
 
 """
 import django
-
 from django.conf.urls import url
-from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth import views as auth_views
-
+from django.core.urlresolvers import reverse_lazy
 
 if django.VERSION >= (1, 11):
     urlpatterns = [

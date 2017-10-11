@@ -4,10 +4,10 @@ from django.shortcuts import render
 
 from ... import signals
 from ...models import RegistrationProfile
+from ...users import UserModel
 from ...views import ActivationView as BaseActivationView
 from ...views import RegistrationView as BaseRegistrationView
 from ...views import ResendActivationView as BaseResendActivationView
-from ...users import UserModel
 
 
 class RegistrationView(BaseRegistrationView):

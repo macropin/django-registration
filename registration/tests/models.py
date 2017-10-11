@@ -1,22 +1,21 @@
 import datetime
 import hashlib
-import re
 import random
+import re
 import warnings
-
 from datetime import timedelta
 
-from django.utils import six
 from django.apps import apps
 from django.conf import settings
 from django.core import mail
 from django.core import management
-from django.test import override_settings
-from django.test import TestCase
-from django.utils.timezone import now as datetime_now
 from django.core.exceptions import ImproperlyConfigured
-
-from registration.models import RegistrationProfile, SupervisedRegistrationProfile
+from django.test import TestCase
+from django.test import override_settings
+from django.utils import six
+from django.utils.timezone import now as datetime_now
+from registration.models import RegistrationProfile
+from registration.models import SupervisedRegistrationProfile
 from registration.users import UserModel
 
 Site = apps.get_model('sites', 'Site')

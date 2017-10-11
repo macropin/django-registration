@@ -10,7 +10,8 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMultiAlternatives
-from django.db import models, transaction
+from django.db import models
+from django.db import transaction
 from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
@@ -18,7 +19,8 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timezone import now as datetime_now
 from django.utils.translation import ugettext_lazy as _
 
-from .users import UserModel, UserModelString
+from .users import UserModel
+from .users import UserModelString
 
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
 

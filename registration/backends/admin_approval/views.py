@@ -1,12 +1,11 @@
 from django.contrib.sites.shortcuts import get_current_site
 
-from ..default.views import ResendActivationView as BaseResendActivationView
-from ..default.views import ActivationView as BaseActivationView
-from ..default.views import RegistrationView as BaseRegistrationView
-
 from ... import signals
 from ...models import SupervisedRegistrationProfile
 from ...views import ApprovalView as BaseApprovalView
+from ..default.views import ActivationView as BaseActivationView
+from ..default.views import RegistrationView as BaseRegistrationView
+from ..default.views import ResendActivationView as BaseResendActivationView
 
 
 class RegistrationView(BaseRegistrationView):

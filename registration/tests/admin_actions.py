@@ -1,7 +1,8 @@
 from __future__ import unicode_literals
 
 from django.contrib.admin import helpers
-from django.core import mail, urlresolvers
+from django.core import mail
+from django.core import urlresolvers
 from django.test import TestCase
 from django.test.client import Client
 from django.test.utils import override_settings

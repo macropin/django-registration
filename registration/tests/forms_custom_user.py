@@ -1,4 +1,10 @@
 from __future__ import unicode_literals
+
+from django.test import TestCase
+from django.test.utils import override_settings
+from registration import forms
+from registration.users import UsernameField
+
 try:
     from importlib import reload  # Python 3.4+
 except ImportError:
@@ -6,13 +12,6 @@ except ImportError:
         from imp import reload  # Python 3.3
     except:
         pass  # Python 2 reload()
-
-
-from django.test import TestCase
-from django.test.utils import override_settings
-
-from registration import forms
-from registration.users import UsernameField
 
 
 @override_settings(AUTH_USER_MODEL='test_app.CustomUser')
