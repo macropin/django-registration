@@ -120,6 +120,6 @@ must be inherited first, like this:
 
 You can also add any customization to the form, to add additional fields for
 example. Once you have built your form you must update the
-``REGISTRATION_FORM_PATH`` reflect the string dotted path to the form you wish
+``REGISTRATION_FORM`` reflect the string dotted path to the form you wish
 to use. For our example in ``settings.py`` you would change
-``REGISTRATION_FORM_PATH = 'myapp.forms.CustomForm'``.
+``REGISTRATION_FORM = 'myapp.forms.CustomForm'``.
