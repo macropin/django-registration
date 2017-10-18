@@ -2,6 +2,11 @@
 django-registration-redux changelog
 ===================================
 
+Version 1.9, XXX
+----------------
+* Bugfix: Update all translation strings with `django-admin makemessages --all`. -
+`#304 <https://github.com/macropin/django-registration/pull/304>_`
+
 Version 1.8, 03 October, 2017
 ----------------
 * Bugfix: Add `outlook.com` to the list of free email providers. -
