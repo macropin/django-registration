@@ -104,6 +104,33 @@ class RegistrationModelTests(TestCase):
         profile.send_activation_email(Site.objects.get_current())
         self.assertEqual(mail.outbox[0].from_email, 'django@email.com')
 
+    @override_settings(REGISTRATION_USE_SITE_EMAIL=True,
+                       REGISTRATION_SITE_USER_EMAIL='admin')
+    def test_activation_email_uses_site_address(self):
+        """
+        ``RegistrationProfile.send_activation_email`` sends an
+        email with the ``from`` address configured by the site.
+
+        """
+        new_user = UserModel().objects.create_user(**self.user_info)
+        profile = self.registration_profile.objects.create_profile(new_user)
+        site = Site.objects.get_current()
+        profile.send_activation_email(site)
+        from_email = 'admin@{}'.format(site.domain)
+        self.assertEqual(mail.outbox[0].from_email, from_email)
+
+    @override_settings(REGISTRATION_USE_SITE_EMAIL=True)
+    def test_activation_email_uses_site_address_improperly_configured(self):
+        """
+        ``RegistrationProfile.send_activation_email`` won't send an email if
+        improperly configured.
+
+        """
+        new_user = UserModel().objects.create_user(**self.user_info)
+        profile = self.registration_profile.objects.create_profile(new_user)
+        with self.assertRaises(ImproperlyConfigured):
+            profile.send_activation_email(Site.objects.get_current())
+
     def test_activation_email_is_html_by_default(self):
         """
         ``RegistrationProfile.send_activation_email`` sends an html

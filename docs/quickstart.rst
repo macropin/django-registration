@@ -159,6 +159,16 @@ your project, and specifying one additional setting:
     redirected to ``LOGIN_REDIRECT_URL`` when trying to access the
     ``RegistrationView``. Defaults to `True`.
 
+``REGISTRATION_USE_SITE_EMAIL``
+    Optional. If this is `True`, the ``Site`` object will determine the domain
+    that emails are sent. The ``REGISTRATION_SITE_USER_EMAIL`` setting must be
+    set if this is `True`. Defaults to `False`.
+
+``REGISTRATION_SITE_USER_EMAIL``
+    Required if ``REGISTRATION_USE_SITE_EMAIL`` is set. Determines the user
+    that emails are sent by. For example, if this is set to ``admin`` emails
+    will be sent from ``admin@<your-site-domain.com>``.
+
 For example, you might have something like the following in your
 Django settings file::
 
