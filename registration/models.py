@@ -27,6 +27,13 @@ SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
 
 def get_from_email(site=None):
+    """
+    Return the email address by which mail is sent.
+    If the `REGISTRATION_USE_SITE_EMAIL` setting is set, the `Site` object will
+    provide the domain and the REGISTRATION_SITE_USER_EMAIL will provide the
+    username. Otherwise the `REGISTRATION_DEFAULT_FROM_EMAIL` or
+    `DEFAULT_FROM_EMAIL` settings are used.
+    """
     if getattr(settings, 'REGISTRATION_USE_SITE_EMAIL', False):
         user_email = getattr(settings, 'REGISTRATION_SITE_USER_EMAIL', None)
         if not user_email:
