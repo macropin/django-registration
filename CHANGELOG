@@ -4,6 +4,8 @@ django-registration-redux changelog
 
 Version 1.9, TBD
 ----------------
+* Bugfix: Updates `pt_BR` translation messages. -
+`#305 <https://github.com/macropin/django-registration/pull/305>_`
 * Bugfix: Update all translation strings with `django-admin makemessages --all`. -
 `#304 <https://github.com/macropin/django-registration/pull/304>_`
 * Feature: Configure from email address from ``Site`` object. -
