@@ -1,0 +1,5 @@
+flake8
+coveralls
+isort
+tox-travis
+invoke==0.12.2
