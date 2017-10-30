@@ -155,8 +155,10 @@ class ResendActivationView(BaseResendActivationView):
 
     def resend_activation(self, form):
         """
-        Given an email, look up user by email and resend activation key if user
-        is not already activated or previous activation key has not expired.
+        Given an email, look up user by email and resend activation key
+        if user is not already activated or previous activation key has
+        not expired. Note that if multiple users exist with the given
+        email, no emails will be sent.
 
         Returns True if activation key was successfully sent, False otherwise.
 

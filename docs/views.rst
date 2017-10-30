@@ -105,3 +105,29 @@ implement whatever workflow is required.
       :attr:`~success_url`. Should be a string, the name of a URL
       pattern, or a 3-tuple of arguments suitable for passing to
       Django's ``redirect`` shortcut.
+
+.. class:: ResendActivationView
+
+   A subclass of Django's FormView`
+   <https://docs.djangoproject.com/en/1.11/ref/class-based-views/generic-editing/#formview>`_
+   which provides support for resending an activation email to a user.
+
+   Useful places to override or customize on an ``ResendActivationView``
+   subclass are:
+
+   .. attribute:: template_name
+
+      The template to use for user activation. Should be a
+      string. Default value is ``registration/resend_activation_form.html``.
+
+   .. method:: resend_activation(self, form)
+        Given an email, look up user by email and resend activation key
+        if user is not already activated or previous activation key has
+        not expired. Note that if multiple users exist with the given
+        email, no emails will be sent.  Returns True if activation key
+        was successfully sent, False otherwise.
+
+
+   .. method:: render_form_submitted_template(self, form)
+        Renders resend activation complete template with the submitted
+        email.

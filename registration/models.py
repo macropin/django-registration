@@ -9,6 +9,7 @@ import warnings
 from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
+from django.core.exceptions import MultipleObjectsReturned
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMultiAlternatives
 from django.db import models
@@ -216,7 +217,8 @@ class RegistrationManager(models.Manager):
             profile = self.get(user__email__iexact=email)
         except ObjectDoesNotExist:
             return False
-        # TODO: Catch multiple objects returned exception?
+        except MultipleObjectsReturned:
+            return False
 
         if profile.activated or profile.activation_key_expired():
             return False
