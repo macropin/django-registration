@@ -11,7 +11,7 @@ try:
 except ImportError:
     try:
         from imp import reload  # Python 3.3
-    except:
+    except Exception:
         pass  # Python 2 reload()
 
 
