@@ -4,17 +4,21 @@ django-registration-redux changelog
 
 Version 1.9, TBD
 ----------------
+* Bugfix: Fix ``SupervisedRegistrationProfile`` so expiration depends on
+profiles that have completed the entire process or have exceeded the
+``ACCOUNT_ACTIVATION_DAYS``  -
 * Bugfix: Prevent resending an activation email if multiple
 ``RegistrationProfile`` objects exist for the given email address. -
 `#311 <https://github.com/macropin/django-registration/pull/311>_`
 * Bugfix: Add logging to ``RegistrationProfile.delete_expired_users``, use
 ``profile.activated`` instead of ``user.is_active``. -
 `#308 <https://github.com/macropin/django-registration/pull/308>_`
+`#310 <https://github.com/macropin/django-registration/pull/310>_`
 * BACKWARDS-INCOMPATIBLE CHANGE: Change of return signature of
 ``RegistrationProfileManager.activate_user``. A tuple containing the User
 instance and a boolean of whether or not said user was activated is now
-returned.
-  `#309 <https://github.com/macropin/django-registration/pull/309>`_.
+returned. -
+`#309 <https://github.com/macropin/django-registration/pull/309>`_.
 * Bugfix: Updates `pt_BR` translation messages. -
 `#305 <https://github.com/macropin/django-registration/pull/305>_`
 * Bugfix: Update all translation strings with `django-admin makemessages --all`. -

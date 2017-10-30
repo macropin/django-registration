@@ -354,7 +354,6 @@ class RegistrationProfile(models.Model):
             days=settings.ACCOUNT_ACTIVATION_DAYS)
         return (self.activated or
                 (self.user.date_joined + expiration_date <= datetime_now()))
-    activation_key_expired.boolean = True
 
     def send_activation_email(self, site, request=None):
         """
@@ -444,6 +443,32 @@ class RegistrationProfile(models.Model):
 
 
 class SupervisedRegistrationManager(RegistrationManager):
+
+    def activation_key_expired(self):
+        """
+        Determine whether this ``RegistrationProfile``'s activation
+        key has expired, returning a boolean -- ``True`` if the key
+        has expired.
+
+        Key expiration is determined by a two-step process:
+
+        1. If the user has already activated, ``self.activated`` and
+        `self.user.is_active`` will be ``True``.  Re-activating is not
+        permitted, and so this method returns ``True`` in this case.
+
+        2. Otherwise, the date the user signed up is incremented by the number
+        of days specified in the setting ``ACCOUNT_ACTIVATION_DAYS`` (which
+        should be the number of days after signup during which a user is
+        allowed to activate their account); if the result is less than or equal
+        to the current date, the key has expired and this method returns
+        ``True``.
+        """
+        expiration_date = datetime.timedelta(
+            days=settings.ACCOUNT_ACTIVATION_DAYS)
+        # A user is only considered activated when the entire registration
+        # process is completed (i.e. an admin has approved the account)
+        is_activated = self.activated and self.user.is_active
+        return (is_activated or self.user.date_joined + expiration_date <= datetime_now())
 
     def _activate(self, profile, site, get_profile):
         """
