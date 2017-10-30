@@ -16,4 +16,6 @@ class Command(BaseCommand):
     help = "Delete expired user registrations from the database"
 
     def handle(self, *args, **options):
+        self.stdout.write('Running cleanupregistration.')
         RegistrationProfile.objects.delete_expired_users()
+        self.stdout.write('cleanupregistration completed.')
