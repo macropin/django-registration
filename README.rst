@@ -21,6 +21,9 @@
     :target: http://django-registration-redux.readthedocs.org/en/latest/?badge=latest
     :alt: Documentation Status
 
+.. image:: https://img.shields.io/pypi/pyversions/django-registration-redux.svg
+    :target: https://pypi.python.org/pypi/django-registration-redux
+
 If you have issues with the "django-registration-redux" package then please `raise them here`_.
 
 This is a fairly simple user-registration application for Django,
