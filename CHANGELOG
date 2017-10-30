@@ -7,6 +7,9 @@ Version 1.9, TBD
 * Bugfix: Prevent resending an activation email if multiple
 ``RegistrationProfile`` objects exist for the given email address. -
 `#311 <https://github.com/macropin/django-registration/pull/311>_`
+* Bugfix: Add logging to ``RegistrationProfile.delete_expired_users``, use
+``profile.activated`` instead of ``user.is_active``. -
+`#308 <https://github.com/macropin/django-registration/pull/308>_`
 * BACKWARDS-INCOMPATIBLE CHANGE: Change of return signature of
 ``RegistrationProfileManager.activate_user``. A tuple containing the User
 instance and a boolean of whether or not said user was activated is now
