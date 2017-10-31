@@ -374,7 +374,7 @@ class RegistrationModelTests(TestCase):
             invalid_key, Site.objects.get_current())
         self.failIf(activated)
 
-    def test_expired_user_deletion(self):
+    def test_expired_user_deletion_activation_window(self):
         """
         ``RegistrationProfile.objects.delete_expired_users()`` only
         deletes inactive users whose activation window has expired.
@@ -396,6 +396,32 @@ class RegistrationModelTests(TestCase):
         self.assertEqual(self.registration_profile.objects.count(), 1)
         self.assertRaises(UserModel().DoesNotExist,
                           UserModel().objects.get, username='bob')
+
+    def test_expired_user_deletion_ignore_activated(self):
+        """
+        ``RegistrationProfile.objects.delete_expired_users()`` only
+        deletes inactive users whose activation window has expired and if
+        their profile is not activated.
+
+        """
+        user = (self.registration_profile.objects
+                .create_inactive_user(
+                    site=Site.objects.get_current(),
+                    username='bob',
+                    password='secret',
+                    email='bob@example.com'))
+        profile = self.registration_profile.objects.get(user=user)
+        _, activated = self.registration_profile.objects.activate_user(
+            profile.activation_key, Site.objects.get_current())
+        self.assertTrue(activated)
+        # Expire the activation window.
+        user.date_joined -= datetime.timedelta(
+            days=settings.ACCOUNT_ACTIVATION_DAYS + 1)
+        user.save()
+
+        self.registration_profile.objects.delete_expired_users()
+        self.assertEqual(self.registration_profile.objects.count(), 1)
+        self.assertEqual(UserModel().objects.get(username='bob'), user)
 
     def test_expired_user_deletion_missing_user(self):
         """
