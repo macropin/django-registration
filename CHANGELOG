@@ -4,6 +4,11 @@ django-registration-redux changelog
 
 Version 1.9, TBD
 ----------------
+* BACKWARDS-INCOMPATIBLE CHANGE: Change of return signature of
+``RegistrationProfileManager.activate_user``. A tuple containing the User
+instance and a boolean of whether or not said user was activated is now
+returned.
+  `#309 <https://github.com/macropin/django-registration/pull/309>`_.
 * Bugfix: Updates `pt_BR` translation messages. -
 `#305 <https://github.com/macropin/django-registration/pull/305>_`
 * Bugfix: Update all translation strings with `django-admin makemessages --all`. -

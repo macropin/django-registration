@@ -109,18 +109,21 @@ class RegistrationManager(models.Manager):
 
     def activate_user(self, activation_key, site, get_profile=False):
         """
-        Validate an activation key and activate the corresponding
-        ``User`` if valid.
+        Validate an activation key and activate the corresponding ``User`` if
+        valid, returns a tuple of (``User``, ``activated``). The activated flag
+        indicates if the user was newly activated or an error occurred.
 
-        If the key is valid and has not expired, return the ``User``
-        after activating.
+        If the key is valid and has not expired, return the (``User``,
+        ``True``) after activating.
 
-        If the key is not valid or has expired, return ``False``.
+        If the key is not valid or has expired, return (``User`` or ``False``,
+        ``False``).
 
         If the key is valid but the ``User`` is already active,
-        return ``User``.
+        return (``User``, ``False``).
 
-        If the key is valid but the ``User`` is inactive, return ``False``.
+        If the key is valid but the ``User`` is inactive, return (``User``,
+        ``False``).
 
         To prevent reactivation of an account which has been
         deactivated by site administrators, ``RegistrationProfile.activated``
@@ -137,7 +140,7 @@ class RegistrationManager(models.Manager):
                 # This is an actual activation failure as the activation
                 # key does not exist. It is *not* the scenario where an
                 # already activated User reuses an activation key.
-                return False
+                return (False, False)
 
             if profile.activated:
                 # The User has already activated and is trying to activate
@@ -145,14 +148,14 @@ class RegistrationManager(models.Manager):
                 # return False as the User has been deactivated by a site
                 # administrator.
                 if profile.user.is_active:
-                    return profile.user
+                    return (profile.user, False)
                 else:
-                    return False
+                    return (profile.user, False)
 
             if not profile.activation_key_expired():
-                return self._activate(profile, site, get_profile)
+                return (self._activate(profile, site, get_profile), True)
 
-        return False
+        return (False, False)
 
     def create_inactive_user(self, site, new_user=None, send_email=True,
                              request=None, profile_info={}, **user_info):
