@@ -3,6 +3,7 @@ import hashlib
 import random
 import re
 import warnings
+from copy import copy
 from datetime import timedelta
 
 from django.apps import apps
@@ -511,6 +512,24 @@ class RegistrationModelTests(TestCase):
         profile = self.registration_profile.objects.get(user=new_user)
         self.assertTrue(profile.activation_key_expired())
 
+        self.assertFalse(self.registration_profile.objects.resend_activation_mail(
+            email=self.user_info['email'],
+            site=Site.objects.get_current(),
+        ))
+        self.assertEqual(len(mail.outbox), 0)
+
+    def test_resend_activation_email_nonunique_email(self):
+        """
+        Test the scenario where user tries to resend activation code
+        to the expired user's email
+        """
+        user1 = self.registration_profile.objects.create_inactive_user(
+            site=Site.objects.get_current(), send_email=False, **self.user_info)
+        user2_info = copy(self.user_info)
+        user2_info['username'] = 'bob'
+        user2 = self.registration_profile.objects.create_inactive_user(
+            site=Site.objects.get_current(), send_email=False, **user2_info)
+        self.assertEqual(user1.email, user2.email)
         self.assertFalse(self.registration_profile.objects.resend_activation_mail(
             email=self.user_info['email'],
             site=Site.objects.get_current(),

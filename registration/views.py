@@ -147,6 +147,7 @@ class ResendActivationView(FormView):
         Implement rendering of confirmation template here.
 
         """
+        raise NotImplementedError
 
 
 class ApprovalView(TemplateView):
