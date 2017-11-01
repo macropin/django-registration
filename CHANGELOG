@@ -7,6 +7,7 @@ Version 1.9, TBD
 * Bugfix: Fix ``SupervisedRegistrationProfile`` so expiration depends on
 profiles that have completed the entire process or have exceeded the
 ``ACCOUNT_ACTIVATION_DAYS``  -
+`#310 <https://github.com/macropin/django-registration/pull/310>_`
 * Bugfix: Prevent resending an activation email if multiple
 ``RegistrationProfile`` objects exist for the given email address. -
 `#311 <https://github.com/macropin/django-registration/pull/311>_`
