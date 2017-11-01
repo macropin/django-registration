@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import datetime
 import hashlib
+import logging
 import re
 import string
 import warnings
@@ -24,6 +25,7 @@ from django.utils.translation import ugettext_lazy as _
 from .users import UserModel
 from .users import UserModelString
 
+logger = logging.getLogger(__name__)
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
 
@@ -233,12 +235,11 @@ class RegistrationManager(models.Manager):
         Remove expired instances of ``RegistrationProfile`` and their
         associated ``User``s.
 
-        Accounts to be deleted are identified by searching for
-        instances of ``RegistrationProfile`` with expired activation
-        keys, and then checking to see if their associated ``User``
-        instances have the field ``is_active`` set to ``False``; any
-        ``User`` who is both inactive and has an expired activation
-        key will be deleted.
+        Accounts to be deleted are identified by searching for instances of
+        ``RegistrationProfile`` with expired activation keys and an
+        ``activated`` field that is set to ``False``. If these conditions are
+        met both the ``RegistrationProfile`` and the ``User`` objects will be
+        deleted.
 
         It is recommended that this method be executed regularly as
         part of your routine site maintenance; this application
@@ -270,12 +271,13 @@ class RegistrationManager(models.Manager):
         """
         for profile in self.all():
             try:
-                if profile.activation_key_expired():
+                if profile.activation_key_expired() and not profile.activated:
                     user = profile.user
-                    if not user.is_active:
-                        profile.delete()
-                        user.delete()
+                    logger.warning('Deleting expired Registration profile {} and user {}.'.format(profile, user))
+                    profile.delete()
+                    user.delete()
             except UserModel().DoesNotExist:
+                logger.warning('Deleting expired Registration profile'.format(profile))
                 profile.delete()
 
 
