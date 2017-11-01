@@ -14,7 +14,6 @@ profiles that have completed the entire process or have exceeded the
 * Bugfix: Add logging to ``RegistrationProfile.delete_expired_users``, use
 ``profile.activated`` instead of ``user.is_active``. -
 `#308 <https://github.com/macropin/django-registration/pull/308>_`
-`#310 <https://github.com/macropin/django-registration/pull/310>_`
 * BACKWARDS-INCOMPATIBLE CHANGE: Change of return signature of
 ``RegistrationProfileManager.activate_user``. A tuple containing the User
 instance and a boolean of whether or not said user was activated is now
