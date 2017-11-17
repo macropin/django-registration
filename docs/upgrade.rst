@@ -20,6 +20,14 @@ older Django releases may work, but are officially unsupported. Additionally,
 Backwards-incompatible changes
 ------------------------------
 
+Version 1.9
+```````````
+- Change of return signature of
+  ``RegistrationProfileManager.activate_user``. A tuple containing the
+  User instance and a boolean of whether or not said user was activated
+  is now returned.
+
+
 Version 1.8
 ```````````
 
