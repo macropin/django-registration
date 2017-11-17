@@ -2,7 +2,10 @@
 django-registration-redux changelog
 ===================================
 
-Version 1.9, TBD
+Version 1.10, TBD
+----------------
+
+Version 1.9, 16 November, 2017
 ----------------
 * Bugfix: Fix ``SupervisedRegistrationProfile`` so expiration depends on
 profiles that have completed the entire process or have exceeded the
