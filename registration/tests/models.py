@@ -233,6 +233,37 @@ class RegistrationModelTests(TestCase):
         profile = self.registration_profile.objects.get(user=new_user)
         self.failIf(profile.activation_key_expired())
 
+    def test_active_account_activation_key_expired(self):
+        """
+        ``RegistrationProfile.activation_key_expired()`` is ``True``
+        when the account is already active.
+
+        """
+        new_user = self.registration_profile.objects.create_inactive_user(
+            site=Site.objects.get_current(), **self.user_info)
+        profile = self.registration_profile.objects.get(user=new_user)
+        self.registration_profile.objects.activate_user(
+            profile.activation_key, Site.objects.get_current())
+        profile.refresh_from_db()
+        self.failUnless(profile.activation_key_expired())
+
+    def test_active_account_and_expired_accountactivation_key_expired(self):
+        """
+        ``RegistrationProfile.activation_key_expired()`` is ``True``
+        when the account is already active and the activation window has passed.
+
+        """
+        new_user = self.registration_profile.objects.create_inactive_user(
+            site=Site.objects.get_current(), **self.user_info)
+        new_user.date_joined -= datetime.timedelta(
+            days=settings.ACCOUNT_ACTIVATION_DAYS + 1)
+        new_user.save()
+        profile = self.registration_profile.objects.get(user=new_user)
+        self.registration_profile.objects.activate_user(
+            profile.activation_key, Site.objects.get_current())
+        profile.refresh_from_db()
+        self.failUnless(profile.activation_key_expired())
+
     def test_expired_account(self):
         """
         ``RegistrationProfile.activation_key_expired()`` is ``True``
@@ -756,6 +787,41 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
             new_user, Site.objects.get_current())
 
         self.assertEqual(len(mail.outbox[0].alternatives), 0)
+
+    def test_active_account_activation_key_expired(self):
+        """
+        ``SupervisedRegistrationProfile.activation_key_expired()`` is ``True``
+        when the account is already active.
+
+        """
+        new_user = self.registration_profile.objects.create_inactive_user(
+            site=Site.objects.get_current(), **self.user_info)
+        profile = self.registration_profile.objects.get(user=new_user)
+        self.registration_profile.objects.activate_user(
+            profile.activation_key, Site.objects.get_current())
+        self.registration_profile.objects.admin_approve_user(
+            profile.id, Site.objects.get_current())
+        profile.refresh_from_db()
+        self.failUnless(profile.activation_key_expired())
+
+    def test_active_account_and_expired_accountactivation_key_expired(self):
+        """
+        ``SupervisedRegistrationProfile.activation_key_expired()`` is ``True``
+        when the account is already active and the activation window has passed.
+
+        """
+        new_user = self.registration_profile.objects.create_inactive_user(
+            site=Site.objects.get_current(), **self.user_info)
+        new_user.date_joined -= datetime.timedelta(
+            days=settings.ACCOUNT_ACTIVATION_DAYS + 1)
+        new_user.save()
+        profile = self.registration_profile.objects.get(user=new_user)
+        self.registration_profile.objects.activate_user(
+            profile.activation_key, Site.objects.get_current())
+        self.registration_profile.objects.admin_approve_user(
+            profile.id, Site.objects.get_current())
+        profile.refresh_from_db()
+        self.failUnless(profile.activation_key_expired())
 
     def test_admin_approval_complete_email(self):
         """
