@@ -1,5 +1,5 @@
-from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
+from django.urls import reverse
 
 from .default_backend import DefaultBackendViewTests
 

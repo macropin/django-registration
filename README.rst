@@ -26,22 +26,9 @@
 
 If you have issues with the "django-registration-redux" package then please `raise them here`_.
 
-This is a fairly simple user-registration application for Django,
-designed to make allowing user signups as painless as possible. It
-requires a functional installation of Django 1.8 or newer, but has no
-other dependencies.
-
-Django 2.0 Alpha Pre-Release
-----------------------------
-
-We have a pre-release available to begin testing against Django 2.0.  You can
-install this version by running::
-
-    pip install django-registration-redux==2.0a3
-
-If you find any issues with this alpha release, please submit an issue or a
-pull request (compared against the  `django-2.0 branch <https://github.com/macropin/django-registration/tree/django-2.0>`_). Once Django 2.0 is officially released, we will take our version out of alpha and
-officially drop support for Django<1.11 on master.
+This is a fairly simple user-registration application for Django, designed to
+make allowing user signups as painless as possible. It requires a functional
+installation of Django 1.11 or newer, but has no other dependencies.
 
 
 Installation
@@ -64,7 +51,15 @@ somewhere on your Python path; this is useful if you're working from a
 Git checkout.
 
 Note that this application requires Python 2.7/3.4 or later, and a
-functional installation of Django 1.8 or newer.
+functional installation of Django 1.11 or newer.
+
+If you are running on Django <=1.11, you can install a previous version of
+`django-registration-redux`, which supports older versions of Django. See the
+`CHANGELOG`_ for support details. Older versions will receive minor bug fixes as
+needed, but are no longer actively developed::
+
+    pip install django-registration-redux==1.9
+
 
 Getting started with development
 --------------------------------
@@ -112,3 +107,4 @@ Django-registration-redux is licensed under `BSD License`.
 
 .. _`available online`: https://django-registration-redux.readthedocs.org/
 .. _`raise them here`: https://github.com/macropin/django-registration/issues
+.. _`CHANGELOG`: https://github.com/macropin/django-registration/blob/master/CHANGELOG

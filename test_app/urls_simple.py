@@ -22,6 +22,6 @@ urlpatterns = [
         name='login'),
 
     url(r'^admin/',
-        include(admin.site.urls),
+        admin.site.urls,
         name='admin'),
 ]

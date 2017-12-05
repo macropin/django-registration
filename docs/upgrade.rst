@@ -12,13 +12,20 @@ between versions you should refer to the `CHANGELOG
 Django version requirement
 --------------------------
 
-As of |version|, |project| requires Django 1.8 or newer;
+As of |version|, |project| requires Django 1.11 or newer;
 older Django releases may work, but are officially unsupported. Additionally,
-|project| officially supports Python 2.7, 3.3, 3.4, 3.5, and 3.6.
+|project| officially supports Python 2.7, 3.4, and 3.5, 3.6.
 
 
 Backwards-incompatible changes
 ------------------------------
+Version 2.0
+```````````
+
+- Removed support for Django < 1.11.
+- Removed `registration/urls.py` in favor of
+  `registration/backends/default/urls.py`
+
 
 Version 1.9
 ```````````

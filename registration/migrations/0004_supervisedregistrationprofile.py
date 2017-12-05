@@ -15,7 +15,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='SupervisedRegistrationProfile',
             fields=[
-                ('registrationprofile_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='registration.RegistrationProfile')),
+                ('registrationprofile_ptr', models.OneToOneField(
+                    parent_link=True,
+                    auto_created=True,
+                    on_delete=models.CASCADE,
+                    primary_key=True,
+                    serialize=False,
+                    to='registration.RegistrationProfile')
+                 ),
             ],
             bases=('registration.registrationprofile',),
         ),
