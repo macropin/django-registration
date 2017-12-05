@@ -19,17 +19,13 @@ older Django releases may work, but are officially unsupported. Additionally,
 
 Backwards-incompatible changes
 ------------------------------
-Version 2.0a2
+Version 2.0
 ```````````
 
 - Removed support for Django < 1.11.
 - Removed `registration/urls.py` in favor of
   `registration/backends/default/urls.py`
 
-Version 1.8
-```````````
-
-- None
 
 Version 1.9
 ```````````
