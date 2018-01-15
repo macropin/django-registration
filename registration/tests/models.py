@@ -165,7 +165,7 @@ class RegistrationModelTests(TestCase):
         """
         new_user = self.registration_profile.objects.create_inactive_user(
             site=Site.objects.get_current(), **self.user_info)
-        self.assertEqual(new_user.username, 'alice')
+        self.assertEqual(new_user.get_username(), 'alice')
         self.assertEqual(new_user.email, 'alice@example.com')
         self.failUnless(new_user.check_password('swordfish'))
         self.failIf(new_user.is_active)
@@ -200,7 +200,7 @@ class RegistrationModelTests(TestCase):
         """
         new_user = self.registration_profile.objects.create_inactive_user(
             site=Site.objects.get_current(), **self.user_info)
-        self.assertEqual(new_user.username, 'alice')
+        self.assertEqual(new_user.get_username(), 'alice')
         self.assertEqual(new_user.email, 'alice@example.com')
         self.failUnless(new_user.check_password('swordfish'))
         self.failIf(new_user.is_active)
