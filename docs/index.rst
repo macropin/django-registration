@@ -30,9 +30,9 @@ more detailed information, including how to customize the registration
 process (and support for alternate registration systems), read through
 the documentation listed below.
 
-If you are upgrading from a previous release, please read the
-<https://github.com/macropin/django-registration/blob/master/CHANGELOG>`_
-for information on what's changed.
+If you are upgrading from a previous release, please read the `CHANGELOG
+<https://github.com/macropin/django-registration/blob/master/CHANGELOG>`_ for
+information on what's changed.
 
 Contents:
 

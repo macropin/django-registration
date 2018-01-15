@@ -104,18 +104,18 @@ Multiple Form Inheritance
 Multiple :class:`RegistrationForm` subclasses can be inherited into one class.
 For instance, if your project requires a terms of service and a unique email
 upon registration, those subclasses can be inherited into a single class.  That
-would look like this:
+would look like this::
 
     # myapp/forms.py
-   class CustomForm(RegistrationFormTermsOfService, RegistrationFormUniqueEmail):
+    class CustomForm(RegistrationFormTermsOfService, RegistrationFormUniqueEmail):
       pass
 
 NOTE: If inheriting both :class:`RegistrationFormNoFreeEmail` and
 :class:`RegistrationFormUniqueEmail`.  :class:`RegistrationFormNoFreeEmail`
-must be inherited first, like this:
+must be inherited first, like this::
 
     # myapp/forms.py
-   class CustomForm(RegistrationFormNoFreeEmail, RegistrationFormUniqueEmail):
+    class CustomForm(RegistrationFormNoFreeEmail, RegistrationFormUniqueEmail):
       pass
 
 You can also add any customization to the form, to add additional fields for
