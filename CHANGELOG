@@ -2,6 +2,17 @@
 django-registration-redux changelog
 ===================================
 
+Version 2.2, TBD
+----------------
+
+Version 2.1, 17 December, 2018
+----------------
+* Bugfix: Fix formatting issues in documentation.
+`#319 <https://github.com/macropin/django-registration/pull/319>_`
+* Bugfix: Use ``get_username()`` instead of directly accessing the username to
+support subclasses of ``AbstractBaseUser``
+`#318 <https://github.com/macropin/django-registration/pull/318>_`
+
 Version 2.0, 05 December, 2017
 ----------------
 * BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Django < 1.11.
