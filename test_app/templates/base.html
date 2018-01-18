@@ -12,7 +12,7 @@
     <a href="{% url 'index' %}">{% trans "Home" %}</a> |
 
     {% if user.is_authenticated %}
-        {% trans "Logged in" %}: {{ user.username }}
+        {% trans "Logged in" %}: {{ user.get_username }}
         (<a href="{% url 'auth_logout' %}">{% trans "Log out" %}</a> |
         <a href="{% url 'auth_password_change' %}">{% trans "Change password" %}</a>)
     {% else %}

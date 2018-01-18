@@ -43,7 +43,7 @@ class AdminApprovalBackendViewTests(DefaultBackendViewTests):
                     kwargs={'activation_key': profile.activation_key}))
 
         admin_user = UserModel().objects.create_superuser('admin', 'admin@test.com', 'admin')
-        self.client.login(username=admin_user.username, password=admin_user)
+        self.client.login(username=admin_user.get_username(), password=admin_user)
 
         resp = self.client.get(
             reverse('registration_admin_approve',

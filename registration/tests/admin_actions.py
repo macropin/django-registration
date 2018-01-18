@@ -24,7 +24,7 @@ class AdminCustomActionsTestCase(TestCase):
         self.client = Client()
         admin_user = UserModel().objects.create_superuser(
             'admin', 'admin@test.com', 'admin')
-        self.client.login(username=admin_user.username, password=admin_user)
+        self.client.login(username=admin_user.get_username(), password=admin_user)
 
         self.user_info = {'username': 'alice',
                           'password': 'swordfish',
