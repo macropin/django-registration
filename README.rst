@@ -58,7 +58,7 @@ If you are running on Django <=1.11, you can install a previous version of
 `CHANGELOG`_ for support details. Older versions will receive minor bug fixes as
 needed, but are no longer actively developed::
 
-    pip install django-registration-redux==1.9
+    pip install django-registration-redux==1.10
 
 
 Getting started with development
