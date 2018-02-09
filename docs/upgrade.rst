@@ -19,6 +19,9 @@ older Django releases may work, but are officially unsupported. Additionally,
 
 Backwards-incompatible changes
 ------------------------------
+Version 1.10
+
+-None
 
 Version 1.9
 ```````````

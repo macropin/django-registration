@@ -2,8 +2,13 @@
 django-registration-redux changelog
 ===================================
 
-Version 1.10, TBD
+Version 1.11, TBD
 ----------------
+
+Version 1.10, 09 February, 2018
+----------------
+* Bugfix: Updates Russian translation messages. -
+`#323 <https://github.com/macropin/django-registration/pull/323>_`
 
 Version 1.9, 16 November, 2017
 ----------------

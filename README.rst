@@ -31,17 +31,12 @@ designed to make allowing user signups as painless as possible. It
 requires a functional installation of Django 1.8 or newer, but has no
 other dependencies.
 
-Django 2.0 Alpha Pre-Release
-----------------------------
-
-We have a pre-release available to begin testing against Django 2.0.  You can
-install this version by running::
-
-    pip install django-registration-redux==2.0a3
-
-If you find any issues with this alpha release, please submit an issue or a
-pull request (compared against the  `django-2.0 branch <https://github.com/macropin/django-registration/tree/django-2.0>`_). Once Django 2.0 is officially released, we will take our version out of alpha and
-officially drop support for Django<1.11 on master.
+Deprecation Notice
+-----------------
+If you are running on Django>1.11, you should use the latest version of
+django-registration-redux from master. We have officially dropped support for
+Django<=1.11 and will only do minor fixes or security updates for earlier
+versions.
 
 
 Installation
