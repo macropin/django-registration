@@ -1,5 +1,5 @@
 flake8
 coveralls
-isort
+isort<4.3.0
 tox-travis
 invoke==0.12.2
