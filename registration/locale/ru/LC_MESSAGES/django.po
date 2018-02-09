@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-17 11:22-0400\n"
+"POT-Creation-Date: 2018-02-09 10:41+0300\n"
 "PO-Revision-Date: 2015-09-09 00:39+0300\n"
-"Last-Translator: Andrew Grigorev <andrew@ei-grad.ru>\n"
+"Last-Translator: Rostislav Grigorev <hjcnbckfd@gmail.com>\n"
 "Language-Team: Russian <>\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
@@ -58,27 +58,25 @@ msgstr ""
 "Регистрация с использованием свободных почтовых серверов запрещена. "
 "Пожалуйста, введите другой адрес электронной почты."
 
-#: models.py:274
+#: models.py:304
 msgid "user"
 msgstr "пользователь"
 
-#: models.py:276
+#: models.py:306
 msgid "activation key"
 msgstr "ключ активации"
 
-#: models.py:282
+#: models.py:312
 msgid "registration profile"
 msgstr "карточка регистрации"
 
-#: models.py:283
+#: models.py:313
 msgid "registration profiles"
 msgstr "карточки регистрации"
 
 #: templates/registration/activate.html:4
-#, fuzzy
-#| msgid "Activation email sent"
 msgid "Activation Failure"
-msgstr "Письмо активации отправлено"
+msgstr "Ошибка активации"
 
 #: templates/registration/activate.html:7
 msgid "Account activation failed."
@@ -101,6 +99,8 @@ msgstr "Вы можете войти."
 #: templates/registration/activation_complete_admin_pending.html:10
 msgid "Once a site administrator activates your account you can login."
 msgstr ""
+"Как только администратор сайта активирует вашу учетную запись, вы сможете "
+"авторизоваться."
 
 #: templates/registration/activation_email.html:6
 #: templates/registration/admin_approve_email.html:6
@@ -118,7 +118,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"  Вы (или кто-то выдающий себя за вас) оставил заявку на регистрацию\n"
+"  Вы (или кто-то выдающий себя за вас) оставили заявку на регистрацию\n"
 "  учетной записи на %(site_name)s. Если это были не вы, то проигнорируйте "
 "это сообщение, и ваш почтовый адрес будет удален из наших записей.\n"
 "  "
@@ -134,7 +134,7 @@ msgid ""
 msgstr ""
 "\n"
 "    Чтобы активировать эту учетную запись, перейдите по следующей ссылке в "
-"течении %(expiration_days)s дней:\n"
+"течение %(expiration_days)s дней:\n"
 "    "
 
 #: templates/registration/activation_email.html:30
@@ -160,7 +160,7 @@ msgid ""
 "and your address will be removed from our records.\n"
 msgstr ""
 "\n"
-"Вы (или кто-то выдающий себя за вас) оставил заявку на регистрацию\n"
+"Вы (или кто-то выдающий себя за вас) оставили заявку на регистрацию\n"
 "учетной записи на %(site_name)s. Если это были не вы, то проигнорируйте\n"
 "это сообщение, и ваш почтовый адрес будет удален из наших записей.\n"
 
@@ -173,7 +173,7 @@ msgid ""
 msgstr ""
 "\n"
 "Чтобы активировать эту учетную запись, перейдите по следующей ссылке\n"
-"в течении %(expiration_days)s дней:\n"
+"в течение %(expiration_days)s дней:\n"
 
 #: templates/registration/activation_email.txt:14
 #, python-format
@@ -193,50 +193,46 @@ msgstr "Активация учетной записи на"
 
 #: templates/registration/admin_approve.html:4
 msgid "Approval Failure"
-msgstr ""
+msgstr "Ошибка подтверждения"
 
 #: templates/registration/admin_approve.html:7
-#, fuzzy
-#| msgid "Account activation failed."
 msgid "Account Approval failed."
-msgstr "Активация аккаунта не удалась."
+msgstr "Подтвердить аккаунт не удалось."
 
 #: templates/registration/admin_approve_complete.html:4
-#, fuzzy
-#| msgid "Account Activated"
 msgid "Account Approved"
-msgstr "Учетная запись активирована"
+msgstr "Учетная запись подтверждена"
 
 #: templates/registration/admin_approve_complete.html:8
-#, fuzzy
-#| msgid "Your account is now activated."
 msgid "The user's account is now approved."
-msgstr "Ваша учетная запись теперь активирована."
+msgstr "Ваша учетная запись теперь одобрена."
 
 #: templates/registration/admin_approve_complete_email.html:6
 msgid "admin approval"
-msgstr ""
+msgstr "одобрено администратором"
 
 #: templates/registration/admin_approve_complete_email.html:11
-#, fuzzy
-#| msgid "Your account is now activated."
 msgid ""
 "\n"
 "    Your account is now approved. You can \n"
 "    "
-msgstr "Ваша учетная запись теперь активирована."
+msgstr ""
+"\n"
+"    Ваша учетная запись теперь одобрена. Вы можете \n"
+"    "
 
 #: templates/registration/admin_approve_complete_email.html:14
-#, fuzzy
-#| msgid "log in"
 msgid "log in."
-msgstr "войти"
+msgstr "войти."
 
 #: templates/registration/admin_approve_complete_email.txt:2
 msgid ""
 "\n"
 "Your account is now approved. You can log in using the following link\n"
 msgstr ""
+"\n"
+"Ваша учетная запись одобрена. Вы можете авторизоваться, используя "
+"следующую \n"
 
 #: templates/registration/admin_approve_email.html:11
 #, python-format
@@ -246,6 +242,10 @@ msgid ""
 "    %(site_name)s.\n"
 "    "
 msgstr ""
+"\n"
+"    Пользователь (%(user)s) желает зарегистрировать учетную запись на\n"
+"    %(site_name)s.\n"
+"    "
 
 #: templates/registration/admin_approve_email.html:17
 msgid ""
@@ -253,10 +253,13 @@ msgid ""
 "    To approve this, please\n"
 "    "
 msgstr ""
+"\n"
+"    Чтобы это подтвердить, пожалуйста,\n"
+"    "
 
 #: templates/registration/admin_approve_email.html:20
 msgid "click here"
-msgstr ""
+msgstr "нажмите здесь"
 
 #: templates/registration/admin_approve_email.txt:2
 #, python-format
@@ -265,27 +268,21 @@ msgid ""
 "The following user (%(user)s) has asked to register an account at\n"
 "%(site_name)s.\n"
 msgstr ""
+"\n"
+"Пользователь (%(user)s) желает зарегистрировать учетную запись на\n"
+"%(site_name)s.\n"
 
 #: templates/registration/admin_approve_email.txt:6
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "To activate this account, please click the following link within the "
-#| "next\n"
-#| "%(expiration_days)s days:\n"
 msgid ""
 "\n"
 "To approve this, please click the following link.\n"
 msgstr ""
 "\n"
-"Чтобы активировать эту учетную запись, перейдите по следующей ссылке\n"
-"в течении %(expiration_days)s дней:\n"
+"Чтобы это подтвердить, пожалуйста, перейдите по следующей ссылке.\n"
 
 #: templates/registration/admin_approve_email_subject.txt:1
-#, fuzzy
-#| msgid "Account activation on"
 msgid "Account approval on"
-msgstr "Активация учетной записи на"
+msgstr "Подтверждение учетной записи на"
 
 #: templates/registration/login.html:4 templates/registration/login.html:10
 msgid "Log in"
@@ -339,7 +336,7 @@ msgstr "Ваш пароль был сброшен!"
 #: templates/registration/password_reset_complete.html:9
 #, python-format
 msgid "You may now <a href=\"%(login_url)s\">log in</a>"
-msgstr ""
+msgstr "Теперь вы можете <a href=\"%(login_url)s\">войти</a>"
 
 #: templates/registration/password_reset_confirm.html:10
 msgid "Confirm password reset"
@@ -375,14 +372,7 @@ msgid "Greetings"
 msgstr "Привет"
 
 #: templates/registration/password_reset_email.html:5
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "You are receiving this email because you (or someone pretending to be "
-#| "you)\n"
-#| "requested that your password be reset on the %(domain)s site.  If you do "
-#| "not \n"
-#| "wish to reset your password, please ignore this message.\n"
+#, python-format
 msgid ""
 "\n"
 "You are receiving this email because you (or someone pretending to be you)\n"
@@ -391,8 +381,8 @@ msgid ""
 msgstr ""
 "\n"
 "Вы получили это письмо потому что вы (или кто-то выдающий себя за вас)\n"
-"запросил сброс пароля на сайте %(domain)s. Если это были не вы, то просто\n"
-"проигнорируйте это сообщение.\n"
+"запросил сброс пароля на сайте %(domain)s. Если вы не хотите сбрасывать\n"
+"свой пароль, пожалуйста, проигнорируйте это сообщение.\n"
 
 #: templates/registration/password_reset_email.html:11
 msgid ""
@@ -459,10 +449,8 @@ msgid "Submit"
 msgstr "Отправить"
 
 #: templates/registration/resend_activation_complete.html:4
-#, fuzzy
-#| msgid "Account activation on"
 msgid "Account Activation Resent"
-msgstr "Активация учетной записи на"
+msgstr "Активация учетной записи"
 
 #: templates/registration/resend_activation_complete.html:8
 #, python-format
@@ -471,24 +459,11 @@ msgid ""
 "  We have sent an email to %(email)s with further instructions.\n"
 "  "
 msgstr ""
+"\n"
+"  Мы отправили электронное письмо с дальнейшими инструкциями на адрес "
+"%(email)s.\n"
+"  "
 
 #: templates/registration/resend_activation_form.html:4
-#, fuzzy
-#| msgid "Re-send activation emails"
 msgid "Resend Activation Email"
-msgstr "Выслать ключи активации заново"
-
-#~ msgid "You may now"
-#~ msgstr "Вы можете теперь"
-
-#~ msgid "Username"
-#~ msgstr "Имя пользователя"
-
-#~ msgid "This value must contain only letters, numbers and underscores."
-#~ msgstr "Это поле может содержать только буквы, цифры и подчеркивания"
-
-#~ msgid "Email address"
-#~ msgstr "Адрес электронной почты"
-
-#~ msgid "The two password fields didn't match."
-#~ msgstr "Введенные пароли не совпадают."
+msgstr "Повторное письмо активации"
