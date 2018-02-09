@@ -32,7 +32,7 @@ requires a functional installation of Django 1.8 or newer, but has no
 other dependencies.
 
 Deprecation Notice
------------------
+------------------
 If you are running on Django>1.11, you should use the latest version of
 django-registration-redux from master. We have officially dropped support for
 Django<=1.11 and will only do minor fixes or security updates for earlier
