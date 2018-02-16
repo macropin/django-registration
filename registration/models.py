@@ -311,6 +311,7 @@ class RegistrationProfile(models.Model):
     class Meta:
         verbose_name = _('registration profile')
         verbose_name_plural = _('registration profiles')
+        app_label = 'registration'
 
     def __str__(self):
         return "Registration information for %s" % self.user
@@ -627,6 +628,9 @@ class SupervisedRegistrationProfile(RegistrationProfile):
     # Manager to implement the extra functionality required
     # in admin approval
     objects = SupervisedRegistrationManager()
+
+    class Meta:
+        app_label = 'registration'
 
     def send_admin_approve_complete_email(self, site, request=None):
         """
