@@ -121,6 +121,7 @@ implement whatever workflow is required.
       string. Default value is ``registration/resend_activation_form.html``.
 
    .. method:: resend_activation(self, form)
+
         Given an email, look up user by email and resend activation key
         if user is not already activated or previous activation key has
         not expired. Note that if multiple users exist with the given
@@ -129,5 +130,6 @@ implement whatever workflow is required.
 
 
    .. method:: render_form_submitted_template(self, form)
+
         Renders resend activation complete template with the submitted
         email.
