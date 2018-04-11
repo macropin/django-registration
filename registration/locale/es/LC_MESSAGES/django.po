@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: django-registration 0.3 \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-10 22:33-0400\n"
-"PO-Revision-Date: 2018-04-09 16:18+0200\n"
+"PO-Revision-Date: 2018-04-11 08:50+0200\n"
 "Last-Translator: Jose Antonio Martin <jantoniomartin@gmail.com>\n"
 "Language-Team: Español <es@li.org>\n"
 "Language: \n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: admin.py:26
 msgid "Activate users"
-msgstr "Active usuarios"
+msgstr "Activar usuarios"
 
 #: admin.py:44
 msgid "Re-send activation emails"
@@ -39,7 +39,7 @@ msgstr "He leído y acepto los Términos de Servicio"
 
 #: forms.py:65
 msgid "You must agree to the terms to register"
-msgstr "Debes aceptar los términos para registrar"
+msgstr "Debe aceptar los términos para registrarse"
 
 #: forms.py:81
 msgid ""
@@ -47,15 +47,15 @@ msgid ""
 "address."
 msgstr ""
 "La dirección de correo electrónico ya está siendo usada. Por favor "
-"proporciona otra dirección."
+"proporcione otra dirección."
 
 #: forms.py:108
 msgid ""
 "Registration using free email addresses is prohibited. Please supply a "
 "different email address."
 msgstr ""
-"El registro usando una dirección de correo electrónico gratis está "
-"prohibido. Por favor proporciona otra dirección."
+"El registro usando una dirección de correo electrónico gratuita está "
+"prohibido. Por favor proporcione otra dirección."
 
 #: models.py:304
 msgid "user"
@@ -93,11 +93,11 @@ msgstr "Tu cuenta está activada."
 
 #: templates/registration/activation_complete.html:10
 msgid "You can log in."
-msgstr "Puedes identificarte."
+msgstr "Puedes acceder."
 
 #: templates/registration/activation_complete_admin_pending.html:10
 msgid "Once a site administrator activates your account you can login."
-msgstr "Podrás identificarte después de que un administrador active tu cuenta."
+msgstr "Podrás acceder después de que un administrador active tu cuenta."
 
 #: templates/registration/activation_email.html:6
 #: templates/registration/admin_approve_email.html:6
@@ -191,7 +191,7 @@ msgstr ""
 #: templates/registration/activation_email_subject.txt:1
 #: templates/registration/admin_approve_complete_email_subject.txt:1
 msgid "Account activation on"
-msgstr "Activación de cuenta activada"
+msgstr "Activación de cuenta en"
 
 #: templates/registration/admin_approve.html:4
 msgid "Approval Failure"
@@ -211,7 +211,7 @@ msgstr "La cuenta del usuario ha sido aprobada."
 
 #: templates/registration/admin_approve_complete_email.html:6
 msgid "admin approval"
-msgstr ""
+msgstr "aprobación de administrador"
 
 #: templates/registration/admin_approve_complete_email.html:11
 msgid ""
@@ -260,7 +260,7 @@ msgstr ""
 
 #: templates/registration/admin_approve_email.html:20
 msgid "click here"
-msgstr "oprima aquí"
+msgstr "pulse aquí"
 
 #: templates/registration/admin_approve_email.txt:2
 #, python-format
@@ -283,7 +283,7 @@ msgstr ""
 
 #: templates/registration/admin_approve_email_subject.txt:1
 msgid "Account approval on"
-msgstr "Aprobación de la cuenta encendido."
+msgstr "Aprobación de la cuenta en"
 
 #: templates/registration/login.html:4 templates/registration/login.html:10
 msgid "Log in"
@@ -291,11 +291,11 @@ msgstr "Iniciar sesión"
 
 #: templates/registration/login.html:14
 msgid "Forgot your password?"
-msgstr "¿Olvidaste tu contraseña?"
+msgstr "¿Olvidó su contraseña?"
 
 #: templates/registration/login.html:14
 msgid "Reset it"
-msgstr "Reiniciar"
+msgstr "Restablézcala"
 
 #: templates/registration/login.html:15
 msgid "Not a member?"
@@ -435,7 +435,7 @@ msgstr "El registro está cerrado"
 #: templates/registration/registration_closed.html:7
 msgid "Sorry, but registration is closed at this moment. Come back later."
 msgstr ""
-"Lo sentimos, pero el registro está cerrado en este momento. Inténtalo más "
+"Lo sentimos, pero el registro está cerrado en este momento. Inténtelo más "
 "tarde."
 
 #: templates/registration/registration_complete.html:4
@@ -449,7 +449,7 @@ msgstr ""
 
 #: templates/registration/registration_form.html:4
 msgid "Register for an account"
-msgstr "Registrese para una cuenta"
+msgstr "Registre una cuenta"
 
 #: templates/registration/registration_form.html:10
 #: templates/registration/resend_activation_form.html:10
