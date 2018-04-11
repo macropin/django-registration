@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-registration 0.3 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-10 22:00-0400\n"
+"POT-Creation-Date: 2018-04-10 22:33-0400\n"
 "PO-Revision-Date: 2018-04-09 16:18+0200\n"
 "Last-Translator: Jose Antonio Martin <jantoniomartin@gmail.com>\n"
 "Language-Team: Español <es@li.org>\n"
@@ -287,7 +287,7 @@ msgstr "Aprobación de la cuenta encendido."
 
 #: templates/registration/login.html:4 templates/registration/login.html:10
 msgid "Log in"
-msgstr "Entrar"
+msgstr "Iniciar sesión"
 
 #: templates/registration/login.html:14
 msgid "Forgot your password?"
@@ -337,7 +337,7 @@ msgstr "¡Su contraseña ha sido restablecida!"
 #: templates/registration/password_reset_complete.html:9
 #, python-format
 msgid "You may now <a href=\"%(login_url)s\">log in</a>"
-msgstr "Ahora puede <a href=\"%(login_url)s\">entrar</a>"
+msgstr "Ahora puede <a href=\"%(login_url)s\">iniciar sesión</a>"
 
 #: templates/registration/password_reset_confirm.html:10
 msgid "Confirm password reset"

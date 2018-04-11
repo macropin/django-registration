@@ -19,14 +19,24 @@ older Django releases may work, but are officially unsupported. Additionally,
 
 Backwards-incompatible changes
 ------------------------------
+
+Version 2.3
+```````````
+
+- None
+
+
 Version 2.2
 ```````````
 
 - None
 
+
 Version 2.1
 ```````````
+
 - None
+
 
 Version 2.0
 ```````````

@@ -2,8 +2,14 @@
 django-registration-redux changelog
 ===================================
 
-Version 2.3, TBD
+Version 2.4, TBD
 ----------------
+
+
+Version 2.3, 10 April, 2018
+----------------
+* Bugfix: Updates Spanish translation messages. -
+`#330 <https://github.com/macropin/django-registration/pull/330>_`
 
 Version 2.2, 08 February, 2018
 ----------------
