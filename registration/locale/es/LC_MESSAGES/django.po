@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-registration 0.3 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-17 11:22-0400\n"
+"POT-Creation-Date: 2018-04-10 22:00-0400\n"
 "PO-Revision-Date: 2018-04-09 16:18+0200\n"
 "Last-Translator: Jose Antonio Martin <jantoniomartin@gmail.com>\n"
 "Language-Team: Español <es@li.org>\n"
@@ -19,16 +19,15 @@ msgstr ""
 
 #: admin.py:26
 msgid "Activate users"
-msgstr "Activar usuarios"
+msgstr "Active usuarios"
 
 #: admin.py:44
-#| msgid "activation key"
 msgid "Re-send activation emails"
 msgstr "Reenviar correos de activación"
 
 #: forms.py:36 forms.py:114
 msgid "E-mail"
-msgstr "E-mail"
+msgstr "Correo Electrónico"
 
 #: forms.py:52
 msgid "A user with that username already exists."
@@ -40,7 +39,7 @@ msgstr "He leído y acepto los Términos de Servicio"
 
 #: forms.py:65
 msgid "You must agree to the terms to register"
-msgstr "Tienes que aceptar los términos para registrarte"
+msgstr "Debes aceptar los términos para registrar"
 
 #: forms.py:81
 msgid ""
@@ -58,29 +57,27 @@ msgstr ""
 "El registro usando una dirección de correo electrónico gratis está "
 "prohibido. Por favor proporciona otra dirección."
 
-#: models.py:274
+#: models.py:304
 msgid "user"
 msgstr "usuario"
 
-#: models.py:276
+#: models.py:306
 msgid "activation key"
 msgstr "clave de activación"
 
-#: models.py:282
+#: models.py:312
 msgid "registration profile"
 msgstr "perfil de registro"
 
-#: models.py:283
+#: models.py:313
 msgid "registration profiles"
 msgstr "perfiles de registro"
 
 #: templates/registration/activate.html:4
-#| msgid "activation key"
 msgid "Activation Failure"
 msgstr "Fallo de activación"
 
 #: templates/registration/activate.html:7
-#| msgid "activation key"
 msgid "Account activation failed."
 msgstr "La activación de la cuenta ha fallado."
 
@@ -104,7 +101,6 @@ msgstr "Podrás identificarte después de que un administrador active tu cuenta.
 
 #: templates/registration/activation_email.html:6
 #: templates/registration/admin_approve_email.html:6
-#| msgid "registration profile"
 msgid "registration"
 msgstr "registro"
 
@@ -119,8 +115,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"    Usted (o alguien que se hace pasar por usted) ha solicitado dar de alta una cuenta "
-"en\n"
+"    Usted (o alguien que se hace pasar por usted) ha solicitado dar de alta "
+"una cuenta en\n"
 "    %(site_name)s. Si no ha sido usted, por favor, ignore este email\n"
 "    y su dirección será eliminada de nuestros registros.\n"
 "    "
@@ -163,8 +159,10 @@ msgid ""
 "and your address will be removed from our records.\n"
 msgstr ""
 "\n"
-"Usted (o alguien que se hace pasar por usted) ha solicitado dar de alta una cuenta en\n"
-"%(site_name)s. Si no ha sido usted, por favor ignore este correo\n"
+"Usted (o alguien que se hace pasar por usted) ha solicitado dar de alta una "
+"cuenta en\n"
+"%(site_name)s. Si no ha sido usted, por favor ignore este correo "
+"electrónico\n"
 "y su dirección será borrada de nuestros registros.\n"
 
 #: templates/registration/activation_email.txt:7
@@ -175,7 +173,8 @@ msgid ""
 "%(expiration_days)s days:\n"
 msgstr ""
 "\n"
-"Para activar esta cuenta, por favor pulse el siguiente enlace durante los próximos\n"
+"Para activar esta cuenta, por favor pulse el siguiente enlace durante los "
+"próximos\n"
 "%(expiration_days)s días:\n"
 
 #: templates/registration/activation_email.txt:14
@@ -191,9 +190,8 @@ msgstr ""
 
 #: templates/registration/activation_email_subject.txt:1
 #: templates/registration/admin_approve_complete_email_subject.txt:1
-#| msgid "activation key"
 msgid "Account activation on"
-msgstr "Activación de cuenta en"
+msgstr "Activación de cuenta activada"
 
 #: templates/registration/admin_approve.html:4
 msgid "Approval Failure"
@@ -227,7 +225,7 @@ msgstr ""
 
 #: templates/registration/admin_approve_complete_email.html:14
 msgid "log in."
-msgstr "acceder."
+msgstr "iniciar sesión."
 
 #: templates/registration/admin_approve_complete_email.txt:2
 msgid ""
@@ -262,7 +260,7 @@ msgstr ""
 
 #: templates/registration/admin_approve_email.html:20
 msgid "click here"
-msgstr "pulse aquí"
+msgstr "oprima aquí"
 
 #: templates/registration/admin_approve_email.txt:2
 #, python-format
@@ -285,7 +283,7 @@ msgstr ""
 
 #: templates/registration/admin_approve_email_subject.txt:1
 msgid "Account approval on"
-msgstr "Aprobación de cuenta en"
+msgstr "Aprobación de la cuenta encendido."
 
 #: templates/registration/login.html:4 templates/registration/login.html:10
 msgid "Log in"
@@ -293,11 +291,11 @@ msgstr "Entrar"
 
 #: templates/registration/login.html:14
 msgid "Forgot your password?"
-msgstr "¿Ha olvidado su contraseña?"
+msgstr "¿Olvidaste tu contraseña?"
 
 #: templates/registration/login.html:14
 msgid "Reset it"
-msgstr "Reiníciela"
+msgstr "Reiniciar"
 
 #: templates/registration/login.html:15
 msgid "Not a member?"
@@ -316,7 +314,6 @@ msgid "Successfully logged out"
 msgstr "Se desconectó con éxito"
 
 #: templates/registration/password_change_done.html:4
-#| msgid "password (again)"
 msgid "Password changed"
 msgstr "Contraseña cambiada"
 
@@ -326,7 +323,6 @@ msgstr "¡Se cambió la contraseña con éxito!"
 
 #: templates/registration/password_change_form.html:4
 #: templates/registration/password_change_form.html:10
-#| msgid "password"
 msgid "Change password"
 msgstr "Cambiar contraseña"
 
@@ -352,12 +348,10 @@ msgid "Enter your new password below to reset your password:"
 msgstr "Introduzca su nueva contraseña para restablecerla:"
 
 #: templates/registration/password_reset_confirm.html:18
-#| msgid "password"
 msgid "Set password"
 msgstr "Configurar contraseña"
 
 #: templates/registration/password_reset_done.html:4
-#| msgid "password"
 msgid "Password reset"
 msgstr "Reinicio de contraseña"
 
@@ -370,9 +364,9 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"    Le hemos enviado un email con un enlace para restablecer su contraseña. Por favor "
-"compruebe\n"
-"    su correo y pulse el enlace para continuar.\n"
+"    Le hemos enviado un email con un enlace para restablecer su contraseña. "
+"Por favor compruebe\n"
+"    su correo electrónico y pulse el enlace para continuar.\n"
 "    "
 
 #: templates/registration/password_reset_email.html:3
@@ -388,8 +382,10 @@ msgid ""
 "wish to reset your password, please ignore this message.\n"
 msgstr ""
 "\n"
-"Está recibiendo este email porque usted (o alguien que se hace pasar por usted)\n"
-"solicitó que su contraseña fuera restablecida en %(domain)s. Si usted no desea\n"
+"Está recibiendo este email porque usted (o alguien que se hace pasar por "
+"usted)\n"
+"solicitó que su contraseña fuera restablecida en %(domain)s. Si usted no "
+"desea\n"
 "restablecer su contraseña, por favor ignore este mensaje.\n"
 
 #: templates/registration/password_reset_email.html:11
@@ -400,8 +396,8 @@ msgid ""
 "into your web browser:\n"
 msgstr ""
 "\n"
-"Para restablecer su contraseña, por favor pulse el siguiente enlace, o cópielo y "
-"péguelo en su navegador:\n"
+"Para restablecer su contraseña, por favor pulse el siguiente enlace, o "
+"cópielo y péguelo en su navegador:\n"
 
 #: templates/registration/password_reset_email.html:20
 msgid "Your username, in case you've forgotten:"
@@ -417,7 +413,6 @@ msgstr "Administración"
 
 #: templates/registration/password_reset_form.html:4
 #: templates/registration/password_reset_form.html:15
-#| msgid "password"
 msgid "Reset password"
 msgstr "Restablecer contraseña"
 
@@ -429,31 +424,32 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"    ¿Olvidó su contraseña? Introduzca su email en el siguiente formulario y le "
-"enviaremos instrucciones para restablecerla.\n"
+"    ¿Olvidó su contraseña? Introduzca su email en el siguiente formulario y "
+"le enviaremos instrucciones para restablecerla.\n"
 "    "
 
 #: templates/registration/registration_closed.html:4
-#| msgid "registration profile"
 msgid "Registration is closed"
-msgstr "El registro está deshabilitado"
+msgstr "El registro está cerrado"
 
 #: templates/registration/registration_closed.html:7
 msgid "Sorry, but registration is closed at this moment. Come back later."
-msgstr "Lo lamentamos, pero el registro está deshabilitado en este momento. Inténtelo más tarde."
+msgstr ""
+"Lo sentimos, pero el registro está cerrado en este momento. Inténtalo más "
+"tarde."
 
 #: templates/registration/registration_complete.html:4
-#| msgid "activation key"
 msgid "Activation email sent"
 msgstr "Email de activación enviado"
 
 #: templates/registration/registration_complete.html:7
 msgid "Please check your email to complete the registration process."
-msgstr "Por favor, compruebe su correo para completar el proceso de registro."
+msgstr ""
+"Por favor revise su correo electrónico para completar el proceso de registro."
 
 #: templates/registration/registration_form.html:4
 msgid "Register for an account"
-msgstr "Dar de alta una cuenta"
+msgstr "Registrese para una cuenta"
 
 #: templates/registration/registration_form.html:10
 #: templates/registration/resend_activation_form.html:10
