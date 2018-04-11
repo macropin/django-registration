@@ -174,8 +174,8 @@ Django settings file::
 
     INSTALLED_APPS = (
         'django.contrib.sites',
-        'registration', #should be immediately above 'django.contrib.auth'
-        'django.contrib.auth',
+        'registration', #should be immediately above 'django.contrib.admin'
+        'django.contrib.admin',
         # ...other installed applications...
     )
 
@@ -184,7 +184,7 @@ Django settings file::
 
 Once you've done this, run ``python manage.py migrate`` to install the model
 used by the default setup. Note, in order for the templates to properly work,
-the ``registration`` app **must** appear above ``django.contrib.auth``.
+the ``registration`` app **must** appear above ``django.contrib.admin``.
 
 
 Setting up URLs
