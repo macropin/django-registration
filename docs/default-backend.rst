@@ -4,7 +4,7 @@
 The default backend
 ===================
 
-A default registration backend` is bundled with |project|,
+A default registration backend is bundled with |project|,
 as the module ``registration.backends.default``, and implements a
 simple two-step workflow in which a new user first registers, then
 confirms and activates the new account by following a link sent to the
