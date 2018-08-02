@@ -17,8 +17,9 @@ urlpatterns = [
         TemplateView.as_view(template_name='profile.html'),
         name='profile'),
 
-    url(r'^login/',
-        auth_views.login,
+    url(r'^login/$',
+        auth_views.LoginView.as_view(
+            template_name='registration/login.html'),
         name='login'),
 
     url(r'^admin/',
