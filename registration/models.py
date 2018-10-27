@@ -59,8 +59,7 @@ def send_email(addresses_to, ctx_dict, subject_template, body_template,
     """
 
     prefix = getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '')
-    subject = prefix + render_to_string(
-        subject_template, ctx_dict)
+    subject = prefix + render_to_string(subject_template, ctx_dict)
     # Email subject *must not* contain newlines
     subject = ''.join(subject.splitlines())
     from_email = get_from_email(ctx_dict.get('site'))
