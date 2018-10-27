@@ -4,6 +4,8 @@ django-registration-redux changelog
 
 Version 1.11, TBD
 ----------------
+* Bugfix: Don't delete if user.is_active=True in cleanupregistration. -
+`#342 <https://github.com/macropin/django-registration/pull/342>_`
 
 Version 1.10, 09 February, 2018
 ----------------

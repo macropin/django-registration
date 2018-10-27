@@ -8,11 +8,8 @@ from registration.users import UsernameField
 
 try:
     from importlib import reload  # Python 3.4+
-except ImportError:
-    try:
-        from imp import reload  # Python 3.3
-    except Exception:
-        pass  # Python 2 reload()
+except Exception:
+    pass  # Python 2 reload()
 
 
 @override_settings(AUTH_USER_MODEL='test_app.CustomUser')

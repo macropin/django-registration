@@ -14,7 +14,7 @@ Django version requirement
 
 As of |version|, |project| requires Django 1.8 or newer;
 older Django releases may work, but are officially unsupported. Additionally,
-|project| officially supports Python 2.7, 3.3, 3.4, 3.5, and 3.6.
+|project| officially supports Python 2.7, 3.4, 3.5, and 3.6.
 
 
 Backwards-incompatible changes
