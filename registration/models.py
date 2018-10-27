@@ -57,11 +57,10 @@ def send_email(addresses_to, ctx_dict, subject_template, body_template,
     """
     Function that sends an email
     """
-    subject = (
-        getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '') +
-        render_to_string(
-            subject_template, ctx_dict)
-    )
+
+    prefix = getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '')
+    subject = prefix + render_to_string(
+        subject_template, ctx_dict)
     # Email subject *must not* contain newlines
     subject = ''.join(subject.splitlines())
     from_email = get_from_email(ctx_dict.get('site'))
@@ -354,10 +353,10 @@ class RegistrationProfile(models.Model):
            method returns ``True``.
 
         """
-        expiration_date = datetime.timedelta(
+        max_expiry_days = datetime.timedelta(
             days=settings.ACCOUNT_ACTIVATION_DAYS)
-        return (self.activated or
-                (self.user.date_joined + expiration_date <= datetime_now()))
+        expiration_date = self.user.date_joined + max_expiry_days
+        return self.activated or expiration_date <= datetime_now()
 
     def send_activation_email(self, site, request=None):
         """
@@ -422,9 +421,11 @@ class RegistrationProfile(models.Model):
             'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
             'site': site,
         }
-        subject = (getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '') +
-                   render_to_string(
-                       activation_email_subject, ctx_dict, request=request))
+        prefix = getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '')
+        subject = prefix + render_to_string(
+            activation_email_subject, ctx_dict, request=request
+        )
+
         # Email subject *must not* contain newlines
         subject = ''.join(subject.splitlines())
         from_email = get_from_email(site)

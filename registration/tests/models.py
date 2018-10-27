@@ -169,10 +169,11 @@ class RegistrationModelTests(TestCase):
         self.assertEqual(new_user.email, 'alice@example.com')
         self.failUnless(new_user.check_password('swordfish'))
         self.failIf(new_user.is_active)
-        self.failIf(new_user.date_joined <=
-                    datetime_now() - timedelta(
-                        settings.ACCOUNT_ACTIVATION_DAYS)
-                    )
+
+        expiration_date = datetime_now() - timedelta(
+            settings.ACCOUNT_ACTIVATION_DAYS
+        )
+        self.failIf(new_user.date_joined <= expiration_date)
 
     def test_user_creation_email(self):
         """
@@ -204,10 +205,9 @@ class RegistrationModelTests(TestCase):
         self.assertEqual(new_user.email, 'alice@example.com')
         self.failUnless(new_user.check_password('swordfish'))
         self.failIf(new_user.is_active)
-        self.failIf(new_user.date_joined <=
-                    datetime_now() - timedelta(
-                        settings.ACCOUNT_ACTIVATION_DAYS)
-                    )
+
+        expiry_date = datetime_now() - timedelta(settings.ACCOUNT_ACTIVATION_DAYS)
+        self.failIf(new_user.date_joined <= expiry_date)
 
     def test_unexpired_account_old_date_joined(self):
         """
