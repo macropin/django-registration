@@ -269,9 +269,13 @@ class RegistrationManager(models.Manager):
         be deleted.
 
         """
-        for profile in self.all():
+        profiles = self.filter(
+            models.Q(user__is_active=False) | models.Q(user=None),
+            activated=False,
+        )
+        for profile in profiles:
             try:
-                if profile.activation_key_expired() and not profile.activated:
+                if profile.activation_key_expired():
                     user = profile.user
                     logger.warning('Deleting expired Registration profile {} and user {}.'.format(profile, user))
                     profile.delete()
