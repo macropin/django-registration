@@ -18,8 +18,8 @@ from django.db import transaction
 from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
-from django.utils.module_loading import import_string
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.module_loading import import_string
 from django.utils.timezone import now as datetime_now
 from django.utils.translation import ugettext_lazy as _
 
@@ -58,6 +58,7 @@ def send_email(addresses_to, ctx_dict, subject_template, body_template,
     """
     Function that sends an email
     """
+
     prefix = getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '')
     subject = prefix + render_to_string(subject_template, ctx_dict)
     # Email subject *must not* contain newlines
