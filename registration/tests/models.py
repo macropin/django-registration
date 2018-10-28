@@ -169,10 +169,11 @@ class RegistrationModelTests(TestCase):
         self.assertEqual(new_user.email, 'alice@example.com')
         self.failUnless(new_user.check_password('swordfish'))
         self.failIf(new_user.is_active)
-        self.failIf(new_user.date_joined <=
-                    datetime_now() - timedelta(
-                        settings.ACCOUNT_ACTIVATION_DAYS)
-                    )
+
+        expiration_date = datetime_now() - timedelta(
+            settings.ACCOUNT_ACTIVATION_DAYS
+        )
+        self.failIf(new_user.date_joined <= expiration_date)
 
     def test_user_creation_email(self):
         """
@@ -204,10 +205,9 @@ class RegistrationModelTests(TestCase):
         self.assertEqual(new_user.email, 'alice@example.com')
         self.failUnless(new_user.check_password('swordfish'))
         self.failIf(new_user.is_active)
-        self.failIf(new_user.date_joined <=
-                    datetime_now() - timedelta(
-                        settings.ACCOUNT_ACTIVATION_DAYS)
-                    )
+
+        expiry_date = datetime_now() - timedelta(settings.ACCOUNT_ACTIVATION_DAYS)
+        self.failIf(new_user.date_joined <= expiry_date)
 
     def test_unexpired_account_old_date_joined(self):
         """
@@ -480,6 +480,27 @@ class RegistrationModelTests(TestCase):
         self.assertEqual(self.registration_profile.objects.count(), 1)
         self.assertRaises(UserModel().DoesNotExist,
                           UserModel().objects.get, username='bob')
+
+    def test_manually_registered_account(self):
+        """
+        Test if a user failed to go through the registration flow but was
+        manually marked ``is_active`` in the DB.  Although the profile is
+        expired and not active, we should never delete active users.
+        """
+        active_user = (self.registration_profile.objects
+                       .create_inactive_user(
+                           site=Site.objects.get_current(),
+                           username='bob',
+                           password='secret',
+                           email='bob@example.com'))
+        active_user.date_joined -= datetime.timedelta(
+            days=settings.ACCOUNT_ACTIVATION_DAYS + 1)
+        active_user.is_active = True
+        active_user.save()
+
+        self.registration_profile.objects.delete_expired_users()
+        self.assertEqual(self.registration_profile.objects.count(), 1)
+        self.assertEqual(UserModel().objects.get(username='bob'), active_user)
 
     def test_management_command(self):
         """
