@@ -1,7 +1,7 @@
-from django.test.utils import override_settings
-from django.core import mail
-from django.urls import reverse
 from django.conf import settings
+from django.core import mail
+from django.test.utils import override_settings
+from django.urls import reverse
 
 from .default_backend import DefaultBackendViewTests
 
