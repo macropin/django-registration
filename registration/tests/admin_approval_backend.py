@@ -1,8 +1,7 @@
-from django.test.utils import override_settings
-from django.core import mail
-from django.urls import reverse
-from unittest import mock
 from django.conf import settings
+from django.core import mail
+from django.test.utils import override_settings
+from django.urls import reverse
 
 from .default_backend import DefaultBackendViewTests
 
@@ -10,7 +9,12 @@ from registration.backends.admin_approval.views import RegistrationView
 from registration.models import SupervisedRegistrationProfile
 from registration.users import UserModel
 
+
 def get_registration_admins():
+    """
+    Mock function for testing the admin getter functionality
+
+    """
     return [
         ("Functional admin 1", "func_admin1@fakemail.com"),
         ("Functional admin 2", "func_admin2@fakemail.com")
@@ -88,7 +92,6 @@ class AdminApprovalBackendViewTests(DefaultBackendViewTests):
         self.assertRedirects(resp, reverse('registration_activation_complete'))
         admins_mail = mail.outbox[1]
         self.assertEqual(admins_mail.to, [to[1] for to in settings.REGISTRATION_ADMINS])
-
 
     @override_settings(
         REGISTRATION_ADMINS="registration.tests.admin_approval_backend.get_registration_admins"

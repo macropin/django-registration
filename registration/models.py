@@ -58,11 +58,8 @@ def send_email(addresses_to, ctx_dict, subject_template, body_template,
     """
     Function that sends an email
     """
-    subject = (
-        getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '') +
-        render_to_string(
-            subject_template, ctx_dict)
-    )
+    subject = (getattr(settings, 'REGISTRATION_EMAIL_SUBJECT_PREFIX', '') +
+        render_to_string(subject_template, ctx_dict))
     # Email subject *must not* contain newlines
     subject = ''.join(subject.splitlines())
     from_email = get_from_email(ctx_dict.get('site'))
@@ -602,7 +599,7 @@ class SupervisedRegistrationManager(RegistrationManager):
             'site': site,
         }
         registration_admins = getattr(settings, 'REGISTRATION_ADMINS', None)
-        if isinstance(registration_admins, str): # We have a getter
+        if isinstance(registration_admins, str):  # We have a getter
             admins_getter = import_string(registration_admins)
             admins = admins_getter()
         else:
