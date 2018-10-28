@@ -602,11 +602,11 @@ class SupervisedRegistrationManager(RegistrationManager):
             'site': site,
         }
         registration_admins = getattr(settings, 'REGISTRATION_ADMINS', None)
-        if registration_admins and isinstance(registration_admins, list):
-            admins = registration_admins or getattr(settings, 'ADMINS', None)
-        elif isinstance(registration_admins, str): # We have a getter
+        if isinstance(registration_admins, str): # We have a getter
             admins_getter = import_string(registration_admins)
             admins = admins_getter()
+        else:
+            admins = registration_admins or getattr(settings, 'ADMINS', None)
         if not registration_admins:
             warnings.warn('No registration admin defined in'
                           ' settings.REGISTRATION_ADMINS.'
