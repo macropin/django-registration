@@ -120,7 +120,7 @@ msgstr ""
 "\n"
 "    คุณ (หรือบุคคลอื่น ที่แสดงตัวว่าเป็นคุณ) ได้ทำการสมัครสมาชิก"
 "ที่\n"
-"    %(site_name) ถ้าหากไม่ใช่คุณที่สมัคร โปรดเพิกเฉยต่ออีเมลฉบับนี้\n"
+"    %(site_name)s ถ้าหากไม่ใช่คุณที่สมัคร โปรดเพิกเฉยต่ออีเมลฉบับนี้\n"
 "    และที่อยู่อีเมลของคุณจะถูกลบออกจากระบบของเราโดยอัตโนมัติ\n"
 "    "
 
@@ -136,7 +136,7 @@ msgstr ""
 "\n"
 "    ในการเปิดใช้บัญชี กรุณาคลิกลิงค์ด้านล่าง"
 "ภายใน\n"
-"    %(expiration_days) วัน:\n"
+"    %(expiration_days)s วัน:\n"
 "    "
 
 #: templates/registration/activation_email.html:30
@@ -150,7 +150,7 @@ msgid ""
 msgstr ""
 "\n"
 "    ด้วยความนับถือ\n"
-"    จากผู้ดูแล %(site_name)\n"
+"    จากผู้ดูแล %(site_name)s\n"
 "    "
 
 #: templates/registration/activation_email.txt:2
@@ -163,7 +163,7 @@ msgid ""
 msgstr ""
 "\n"
 "คุณ (หรือบุคคลอื่น ที่แสดงตัวว่าเป็นคุณ) ได้ทำการสมัครสมาชิกที่\n"
-"%(site_name) ถ้าหากไม่ใช่คุณที่สมัคร โปรดเพิกเฉยต่ออีเมลฉบับนี้\n"
+"%(site_name)s ถ้าหากไม่ใช่คุณที่สมัคร โปรดเพิกเฉยต่ออีเมลฉบับนี้\n"
 "และที่อยู่อีเมลของคุณจะถูกลบออกจากระบบของเราโดยอัตโนมัติ\n"
 
 #: templates/registration/activation_email.txt:7
@@ -175,7 +175,7 @@ msgid ""
 msgstr ""
 "\n"
 "ในการเปิดใช้บัญชี กรุณาคลิกลิงค์ด้านล่างภายใน\n"
-"%(expiration_days) วัน:\n"
+"%(expiration_days)s วัน:\n"
 
 #: templates/registration/activation_email.txt:14
 #, python-format
@@ -186,7 +186,7 @@ msgid ""
 msgstr ""
 "\n"
 "ด้วยความนับถือ\n"
-"จากผู้ดูแล %(site_name)\n"
+"จากผู้ดูแล %(site_name)s\n"
 
 #: templates/registration/activation_email_subject.txt:1
 #: templates/registration/admin_approve_complete_email_subject.txt:1
@@ -247,7 +247,7 @@ msgid ""
 msgstr ""
 "\n"
 "    ผู้ใช้ (%(user)s) ได้ทำการลงทะเบียนบัญชี ที่\n"
-"    %(site_name)\n"
+"    %(site_name)s\n"
 "    "
 
 #: templates/registration/admin_approve_email.html:17
@@ -273,7 +273,7 @@ msgid ""
 msgstr ""
 "\n"
 "ผู้ใช้ (%(user)s) ได้ทำการลงทะเบียนบัญชี ที่\n"
-"%(site_name)\n"
+"%(site_name)s\n"
 
 #: templates/registration/admin_approve_email.txt:6
 msgid ""
@@ -393,7 +393,7 @@ msgid ""
 msgstr ""
 "\n"
 "คุณได้รับอีเมลฉบับนี้ เพราะ คุณ (หรือบุคคลอื่นที่อาจจะเป็นคุณ)\n"
-"ได้ทำการร้องขอการรีเซ็ตรหัสผ่านบนเว็บ %(domain) หากคณไม่ต้องการรีเซ็ต\n"
+"ได้ทำการร้องขอการรีเซ็ตรหัสผ่านบนเว็บ %(domain) sหากคณไม่ต้องการรีเซ็ต\n"
 "รหัสผ่านของคุณ โปรดเพิกเฉยต่อข้อความนี้\n"
 
 #: templates/registration/password_reset_email.html:11
@@ -480,7 +480,7 @@ msgid ""
 "  "
 msgstr ""
 "\n"
-"  เราได้ส่งอีเมล ไปยัง %(email) พร้อมกับกระบวนการ\n"
+"  เราได้ส่งอีเมล ไปยัง %(email)s พร้อมกับกระบวนการ\n"
 "  "
 
 #: templates/registration/resend_activation_form.html:4
