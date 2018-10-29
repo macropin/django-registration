@@ -37,4 +37,6 @@ This backend makes use of the same settings documented in
     A list with the same structure as the ``ADMINS`` Django setting containing
     names and emails. Approval emails will be sent to the emails defined here.
     If this setting is not set (or is empty), emails defined in ``ADMINS``
-    will be used.
+    will be used. Optionally, this can be defined as a string with the path
+    of a callable that returns a list of the same structure as the
+    ``ADMINS`` setting.

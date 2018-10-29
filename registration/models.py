@@ -19,6 +19,7 @@ from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.module_loading import import_string
 from django.utils.timezone import now as datetime_now
 from django.utils.translation import ugettext_lazy as _
 
@@ -605,8 +606,11 @@ class SupervisedRegistrationManager(RegistrationManager):
             'site': site,
         }
         registration_admins = getattr(settings, 'REGISTRATION_ADMINS', None)
-        admins = registration_admins or getattr(settings, 'ADMINS', None)
-
+        if isinstance(registration_admins, str):  # We have a getter
+            admins_getter = import_string(registration_admins)
+            admins = admins_getter()
+        else:
+            admins = registration_admins or getattr(settings, 'ADMINS', None)
         if not registration_admins:
             warnings.warn('No registration admin defined in'
                           ' settings.REGISTRATION_ADMINS.'
