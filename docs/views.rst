@@ -17,13 +17,6 @@ implement whatever workflow is required.
    <https://docs.djangoproject.com/en/dev/ref/class-based-views/generic-editing/#formview>`_,
    which provides the infrastructure for supporting user registration.
 
-   Since it's a subclass of ``FormView``, ``RegistrationView`` has all
-   the usual attributes and methods you can override; however, there
-   is one key difference. In order to support additional
-   customization, ``RegistrationView`` also passes the ``HttpRequest``
-   to most of its methods. Subclasses do need to take this into
-   account, and accept the ``request`` argument.
-
    Useful places to override or customize on a ``RegistrationView``
    subclass are:
 
@@ -56,13 +49,13 @@ implement whatever workflow is required.
       string. Default value is
       ``registration/registration_form.html``.
 
-   .. method:: get_form_class(request)
+   .. method:: get_form_class()
 
       Select a form class to use on a per-request basis. If not
       overridden, will use :attr:`~form_class`. Should be the actual
       class object.
 
-   .. method:: get_success_url(request, user)
+   .. method:: get_success_url(user)
 
       Return a URL to redirect to after successful registration, on a
       per-request or per-user basis. If not overridden, will use
@@ -70,17 +63,16 @@ implement whatever workflow is required.
       pattern, or a 3-tuple of arguments suitable for passing to
       Django's ``redirect`` shortcut.
 
-   .. method:: registration_allowed(request)
+   .. method:: registration_allowed()
 
       Should return a boolean indicating whether user registration is
       allowed, either in general or for this specific request.
 
-   .. method:: register(request, **cleaned_data)
+   .. method:: register(form)
 
-      Actually perform the business of registering a new
-      user. Receives both the ``HttpRequest`` object and all of the
-      ``cleaned_data`` from the registration form. Should return the
-      new user who was just registered.
+      Actually perform the business of registering a new user. Receives the
+      registration ``form``. Should return the new user who was just
+      registered.
 
 
 .. class:: ActivationView
@@ -98,19 +90,46 @@ implement whatever workflow is required.
       The template to use for user activation. Should be a
       string. Default value is ``registration/activate.html``.
 
-   .. method:: activate(request, *args, **kwargs)
+   .. method:: activate(*args, **kwargs)
 
-      Actually perform the business of activating a user
-      account. Receives the ``HttpRequest`` object and any positional
-      or keyword arguments passed to the view. Should return the
+      Actually perform the business of activating a user account. Receives any
+      positional or keyword arguments passed to the view. Should return the
       activated user account if activation is successful, or any value
       which evaluates ``False`` in boolean context if activation is
       unsuccessful.
 
-   .. method:: get_success_url(request, user)
+   .. method:: get_success_url(user)
 
       Return a URL to redirect to after successful registration, on a
       per-request or per-user basis. If not overridden, will use
       :attr:`~success_url`. Should be a string, the name of a URL
       pattern, or a 3-tuple of arguments suitable for passing to
       Django's ``redirect`` shortcut.
+
+.. class:: ResendActivationView
+
+   A subclass of Django's FormView`
+   <https://docs.djangoproject.com/en/1.11/ref/class-based-views/generic-editing/#formview>`_
+   which provides support for resending an activation email to a user.
+
+   Useful places to override or customize on an ``ResendActivationView``
+   subclass are:
+
+   .. attribute:: template_name
+
+      The template to use for user activation. Should be a
+      string. Default value is ``registration/resend_activation_form.html``.
+
+   .. method:: resend_activation(self, form)
+
+        Given an email, look up user by email and resend activation key
+        if user is not already activated or previous activation key has
+        not expired. Note that if multiple users exist with the given
+        email, no emails will be sent.  Returns True if activation key
+        was successfully sent, False otherwise.
+
+
+   .. method:: render_form_submitted_template(self, form)
+
+        Renders resend activation complete template with the submitted
+        email.

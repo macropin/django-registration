@@ -9,12 +9,12 @@ you're using a custom model.
 """
 from __future__ import unicode_literals
 
-
 from django import forms
-from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm
+from django.utils.translation import ugettext_lazy as _
 
-from .users import UserModel, UsernameField
+from .users import UserModel
+from .users import UsernameField
 
 User = UserModel()
 
@@ -38,6 +38,20 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = (UsernameField(), "email")
+
+
+class RegistrationFormUsernameLowercase(RegistrationForm):
+    """
+    A subclass of :class:`RegistrationForm` which enforces unique case insensitive
+    usernames, make all usernames to lower case.
+
+    """
+    def clean_username(self):
+        username = self.cleaned_data.get('username', '').lower()
+        if User.objects.filter(**{UsernameField(): username}).exists():
+            raise forms.ValidationError(_('A user with that username already exists.'))
+
+        return username
 
 
 class RegistrationFormTermsOfService(RegistrationForm):
@@ -81,7 +95,7 @@ class RegistrationFormNoFreeEmail(RegistrationForm):
     bad_domains = ['aim.com', 'aol.com', 'email.com', 'gmail.com',
                    'googlemail.com', 'hotmail.com', 'hushmail.com',
                    'msn.com', 'mail.ru', 'mailinator.com', 'live.com',
-                   'yahoo.com']
+                   'yahoo.com', 'outlook.com']
 
     def clean_email(self):
         """
@@ -93,3 +107,8 @@ class RegistrationFormNoFreeEmail(RegistrationForm):
         if email_domain in self.bad_domains:
             raise forms.ValidationError(_("Registration using free email addresses is prohibited. Please supply a different email address."))
         return self.cleaned_data['email']
+
+
+class ResendActivationForm(forms.Form):
+    required_css_class = 'required'
+    email = forms.EmailField(label=_("E-mail"))

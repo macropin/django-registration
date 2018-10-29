@@ -4,7 +4,7 @@
 The default backend
 ===================
 
-A default registration backend` is bundled with |project|,
+A default registration backend is bundled with |project|,
 as the module ``registration.backends.default``, and implements a
 simple two-step workflow in which a new user first registers, then
 confirms and activates the new account by following a link sent to the
@@ -44,6 +44,15 @@ This backend makes use of the following settings:
 
 ``REGISTRATION_FORM``
     A string dotted path to the desired registration form.
+
+``ACTIVATION_EMAIL_SUBJECT``
+    A string slashed path to the desired template for the activation email subject.
+    
+``ACTIVATION_EMAIL_BODY``
+    A string slashed path to the desired template for the activation email body.
+    
+``ACTIVATION_EMAIL_HTML``
+    A string slashed path tot the desired template for the activation email html.
 
 By default, this backend uses
 :class:`registration.forms.RegistrationForm` as its form class for
@@ -199,7 +208,7 @@ Additionally, :class:`RegistrationProfile` has a custom manager
    This manager provides several convenience methods for creating and
    working with instances of :class:`RegistrationProfile`:
 
-   .. method:: activate_user(activation_key)
+   .. method:: activate_user(activation_key, site)
 
       Validates ``activation_key`` and, if valid, activates the
       associated account by setting its ``is_active`` field to
@@ -208,13 +217,15 @@ Additionally, :class:`RegistrationProfile` has a custom manager
       :class:`RegistrationProfile` for the account will be set to
       ``True`` after successful activation.
 
-      Returns the ``User`` instance representing the account if
-      activation is successful, ``False`` otherwise.
+      Returns a tuple of (``User``, ``activated``) representing the account if
+      activation is successful and whether the ``User`` was activated or not.
 
       :param activation_key: The activation key to use for the
          activation.
       :type activation_key: string, a 40-character SHA1 hexdigest
-      :rtype: ``User`` or bool
+      :type site: ``django.contrib.sites.models.Site`` or
+        ``django.contrib.sites.models.RequestSite``
+      :rtype: (``User``, ``bool)
 
    .. method:: delete_expired_users
 

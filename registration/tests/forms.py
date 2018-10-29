@@ -1,14 +1,11 @@
 from __future__ import unicode_literals
-from distutils.version import StrictVersion
 
-from django import get_version
+import django
 from django.test import TestCase
+from django.utils import six
 
 from registration import forms
 from registration.users import UserModel
-
-
-DJANGO_VERSION = StrictVersion(get_version())
 
 
 class RegistrationFormTests(TestCase):
@@ -26,31 +23,34 @@ class RegistrationFormTests(TestCase):
         # Create a user so we can verify that duplicate usernames aren't
         # permitted.
         UserModel().objects.create_user('alice', 'alice@example.com', 'secret')
-
-        bad_username_error = 'This value may contain only letters, numbers and @/./+/-/_ characters.'
-        if DJANGO_VERSION >= StrictVersion('1.8'):
-            bad_username_error = 'Enter a valid username. ' + bad_username_error
-
+        bad_username_error = (
+            'Enter a valid username. This value may contain only letters, '
+            'numbers, and @/./+/-/_ characters.'
+        )
+        if django.VERSION < (1, 10):
+            bad_username_error = bad_username_error.replace('numbers,', 'numbers')
+        elif six.PY2:
+            bad_username_error = bad_username_error.replace('letters', 'English letters')
         invalid_data_dicts = [
             # Non-alphanumeric username.
             {'data': {'username': 'foo/bar',
                       'email': 'foo@example.com',
                       'password1': 'foo',
                       'password2': 'foo'},
-            'error': ('username', [bad_username_error])},
+             'error': ('username', [bad_username_error])},
             # Already-existing username.
             {'data': {'username': 'alice',
                       'email': 'alice@example.com',
                       'password1': 'secret',
                       'password2': 'secret'},
-            'error': ('username', ["A user with that username already exists."])},
+             'error': ('username', ["A user with that username already exists."])},
             # Mismatched passwords.
             {'data': {'username': 'foo',
                       'email': 'foo@example.com',
                       'password1': 'foo',
                       'password2': 'bar'},
-            'error': ('password2', ["The two password fields didn't match."])},
-            ]
+             'error': ('password2', ["The two password fields didn't match."])},
+        ]
 
         for invalid_dict in invalid_data_dicts:
             form = forms.RegistrationForm(data=invalid_dict['data'])
@@ -62,6 +62,30 @@ class RegistrationFormTests(TestCase):
                                             'email': 'foo@example.com',
                                             'password1': 'foo',
                                             'password2': 'foo'})
+        self.failUnless(form.is_valid())
+
+    def test_registration_form_username_lowercase(self):
+        """
+        Test that ``RegistrationFormUniqueEmail`` validates uniqueness
+        of email addresses.
+
+        """
+        # Create a user so we can verify that duplicate addresses
+        # aren't permitted.
+        UserModel().objects.create_user('alice', 'alice@example.com', 'secret')
+
+        form = forms.RegistrationFormUsernameLowercase(data={'username': 'Alice',
+                                                             'email': 'alice@example.com',
+                                                             'password1': 'foo',
+                                                             'password2': 'foo'})
+        self.failIf(form.is_valid())
+        self.assertEqual(form.errors['username'],
+                         ["A user with that username already exists."])
+
+        form = forms.RegistrationFormUsernameLowercase(data={'username': 'foo',
+                                                             'email': 'alice@example.com',
+                                                             'password1': 'foo',
+                                                             'password2': 'foo'})
         self.failUnless(form.is_valid())
 
     def test_registration_form_tos(self):

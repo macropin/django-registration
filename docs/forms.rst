@@ -34,16 +34,12 @@ mind, but may also be useful in other situations.
    ``password2``
       The password to use for the new account. This represented as a
       password input (``input type="password"`` in the rendered HTML).
+      Password mismatches are recorded as errors of ``password2``.
 
    The constraints on usernames and email addresses match those
    enforced by Django's default authentication backend for instances
    of ``django.contrib.auth.models.User``. The repeated entry of the
    password serves to catch typos.
-
-   Because it does not apply to any single field of the form, the
-   validation error for mismatched passwords is attached to the form
-   itself, and so must be accessed via the form's
-   ``non_field_errors()`` method.
 
 
 .. class:: RegistrationFormTermsOfService
@@ -96,5 +92,34 @@ mind, but may also be useful in other situations.
 
    * ``yahoo.com``
 
+   * ``outlook.com``
+
    To change this, subclass this form and set the class attribute
    ``bad_domains`` to a list of domains you wish to disallow.
+
+
+Multiple Form Inheritance
+-------------------------
+
+Multiple :class:`RegistrationForm` subclasses can be inherited into one class.
+For instance, if your project requires a terms of service and a unique email
+upon registration, those subclasses can be inherited into a single class.  That
+would look like this::
+
+    # myapp/forms.py
+    class CustomForm(RegistrationFormTermsOfService, RegistrationFormUniqueEmail):
+      pass
+
+NOTE: If inheriting both :class:`RegistrationFormNoFreeEmail` and
+:class:`RegistrationFormUniqueEmail`.  :class:`RegistrationFormNoFreeEmail`
+must be inherited first, like this::
+
+    # myapp/forms.py
+    class CustomForm(RegistrationFormNoFreeEmail, RegistrationFormUniqueEmail):
+      pass
+
+You can also add any customization to the form, to add additional fields for
+example. Once you have built your form you must update the
+``REGISTRATION_FORM`` reflect the string dotted path to the form you wish
+to use. For our example in ``settings.py`` you would change
+``REGISTRATION_FORM = 'myapp.forms.CustomForm'``.

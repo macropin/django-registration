@@ -25,7 +25,7 @@ To use this backend, simply include the URLconf
 ``registration.backends.simple.urls`` somewhere in your site's own URL
 configuration. For example::
 
-    (r'^accounts/', include('registration.backends.simple.urls')),
+    url(r'^accounts/', include('registration.backends.simple.urls')),
 
 No additional settings are required, but one optional setting is
 supported:
@@ -35,8 +35,9 @@ supported:
     registration of new accounts is currently permitted. A default of
     ``True`` will be assumed if this setting is not supplied.
 
-Upon successful registration, the default redirect is to the
-``registration_complete`` view (at ``accounts/register/complete/``).
+``SIMPLE_BACKEND_REDIRECT_URL``
+    Redirection url after successful registration.
+    Default value is ``/``
 
 The default form class used for account registration will be
 :class:`registration.forms.RegistrationForm`, although this can be

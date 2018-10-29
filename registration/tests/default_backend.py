@@ -1,18 +1,21 @@
 import datetime
 
 from django.conf import settings
+from django.contrib.auth.models import AnonymousUser
 from django.core import mail
-from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
+from django.urls import reverse
 
-from registration.forms import RegistrationForm
 from registration.backends.default.views import RegistrationView
+from registration.forms import RegistrationForm
 from registration.models import RegistrationProfile
 from registration.users import UserModel
 
 
+@override_settings(ROOT_URLCONF='test_app.urls_default',
+                   ACCOUNT_ACTIVATION_DAYS=7)
 class DefaultBackendViewTests(TestCase):
     """
     Test the default registration backend.
@@ -23,42 +26,23 @@ class DefaultBackendViewTests(TestCase):
     the default backend.
 
     """
-    urls = 'test_app.urls_default'
 
-    def setUp(self):
-        """
-        Create an instance of the default backend for use in testing,
-        and set ``ACCOUNT_ACTIVATION_DAYS`` if it's not set already.
+    registration_profile = RegistrationProfile
 
-        """
-        self.old_activation = getattr(settings,
-                                      'ACCOUNT_ACTIVATION_DAYS', None)
-        if self.old_activation is None:
-            settings.ACCOUNT_ACTIVATION_DAYS = 7  # pragma: no cover
+    registration_view = RegistrationView
 
-    def tearDown(self):
-        """
-        Yank ``ACCOUNT_ACTIVATION_DAYS`` back out if it wasn't
-        originally set.
-
-        """
-        if self.old_activation is None:
-            # pragma: no cover
-            settings.ACCOUNT_ACTIVATION_DAYS = self.old_activation
-
-    def test_allow(self):
+    @override_settings(REGISTRATION_OPEN=True)
+    def test_registration_open(self):
         """
         The setting ``REGISTRATION_OPEN`` appropriately controls
         whether registration is permitted.
 
         """
-        old_allowed = getattr(settings, 'REGISTRATION_OPEN', True)
-        settings.REGISTRATION_OPEN = True
-
         resp = self.client.get(reverse('registration_register'))
         self.assertEqual(200, resp.status_code)
 
-        settings.REGISTRATION_OPEN = False
+    @override_settings(REGISTRATION_OPEN=False)
+    def test_registration_closed(self):
 
         # Now all attempts to hit the register view should redirect to
         # the 'registration is closed' message.
@@ -72,8 +56,6 @@ class DefaultBackendViewTests(TestCase):
                                       'password2': 'secret'})
         self.assertRedirects(resp, reverse('registration_disallowed'))
 
-        settings.REGISTRATION_OPEN = old_allowed
-
     def test_registration_get(self):
         """
         HTTP ``GET`` to the registration view uses the appropriate
@@ -85,7 +67,7 @@ class DefaultBackendViewTests(TestCase):
         self.assertTemplateUsed(resp,
                                 'registration/registration_form.html')
         self.failUnless(isinstance(resp.context['form'],
-                        RegistrationForm))
+                                   RegistrationForm))
 
     def test_registration(self):
         """
@@ -111,7 +93,7 @@ class DefaultBackendViewTests(TestCase):
 
         # A registration profile was created, and an activation email
         # was sent.
-        self.assertEqual(RegistrationProfile.objects.count(), 1)
+        self.assertEqual(self.registration_profile.objects.count(), 1)
         self.assertEqual(len(mail.outbox), 1)
 
     def test_registration_no_email(self):
@@ -120,20 +102,22 @@ class DefaultBackendViewTests(TestCase):
         associated class variable is set to ``False``
 
         """
-        class RegistrationNoEmailView(RegistrationView):
+        class RegistrationNoEmailView(self.registration_view):
             SEND_ACTIVATION_EMAIL = False
 
         request_factory = RequestFactory()
         view = RegistrationNoEmailView.as_view()
-        view(request_factory.post('/', data={
+        request = request_factory.post('/', data={
             'username': 'bob',
             'email': 'bob@example.com',
             'password1': 'secret',
-            'password2': 'secret'}))
+            'password2': 'secret'})
+        request.user = AnonymousUser()
+        view(request)
 
         UserModel().objects.get(username='bob')
         # A registration profile was created, and no activation email was sent.
-        self.assertEqual(RegistrationProfile.objects.count(), 1)
+        self.assertEqual(self.registration_profile.objects.count(), 1)
         self.assertEqual(len(mail.outbox), 0)
 
     @override_settings(
@@ -160,7 +144,7 @@ class DefaultBackendViewTests(TestCase):
 
         self.failIf(new_user.is_active)
 
-        self.assertEqual(RegistrationProfile.objects.count(), 1)
+        self.assertEqual(self.registration_profile.objects.count(), 1)
         self.assertEqual(len(mail.outbox), 1)
 
     def test_registration_failure(self):
@@ -188,7 +172,7 @@ class DefaultBackendViewTests(TestCase):
                                       'password1': 'secret',
                                       'password2': 'secret'})
 
-        profile = RegistrationProfile.objects.get(user__username='bob')
+        profile = self.registration_profile.objects.get(user__username='bob')
 
         resp = self.client.get(
             reverse('registration_activate',
@@ -207,7 +191,7 @@ class DefaultBackendViewTests(TestCase):
                                       'password1': 'secret',
                                       'password2': 'secret'})
 
-        profile = RegistrationProfile.objects.get(user__username='bob')
+        profile = self.registration_profile.objects.get(user__username='bob')
         user = profile.user
         user.date_joined -= datetime.timedelta(
             days=settings.ACCOUNT_ACTIVATION_DAYS)
@@ -222,3 +206,32 @@ class DefaultBackendViewTests(TestCase):
         self.assertTemplateUsed(resp, 'registration/activate.html')
         user = UserModel().objects.get(username='bob')
         self.assertFalse(user.is_active)
+
+    def test_resend_activation(self):
+        """
+        Resend activation functions properly.
+
+        """
+        resp = self.client.post(reverse('registration_register'),
+                                data={'username': 'bob',
+                                      'email': 'bob@example.com',
+                                      'password1': 'secret',
+                                      'password2': 'secret'})
+
+        profile = self.registration_profile.objects.get(user__username='bob')
+
+        resp = self.client.post(reverse('registration_resend_activation'),
+                                data={'email': profile.user.email})
+        self.assertTemplateUsed(resp,
+                                'registration/resend_activation_complete.html')
+        self.assertEqual(resp.context['email'], profile.user.email)
+
+    def test_resend_activation_invalid_email(self):
+        """
+        Calling resend with an invalid email shows the same template.
+
+        """
+        resp = self.client.post(reverse('registration_resend_activation'),
+                                data={'email': 'invalid@example.com'})
+        self.assertTemplateUsed(resp,
+                                'registration/resend_activation_complete.html')

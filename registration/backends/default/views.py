@@ -1,13 +1,13 @@
-from django.apps import apps
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
-from django.contrib.sites.requests import RequestSite
+from django.shortcuts import render
 
 from ... import signals
 from ...models import RegistrationProfile
+from ...users import UserModel
 from ...views import ActivationView as BaseActivationView
 from ...views import RegistrationView as BaseRegistrationView
-from ...users import UserModel
+from ...views import ResendActivationView as BaseResendActivationView
 
 
 class RegistrationView(BaseRegistrationView):
@@ -59,7 +59,9 @@ class RegistrationView(BaseRegistrationView):
     SEND_ACTIVATION_EMAIL = getattr(settings, 'SEND_ACTIVATION_EMAIL', True)
     success_url = 'registration_complete'
 
-    def register(self, request, form):
+    registration_profile = RegistrationProfile
+
+    def register(self, form):
         """
         Given a username, email address and password, register a new
         user account, which will initially be inactive.
@@ -83,7 +85,7 @@ class RegistrationView(BaseRegistrationView):
         class of this backend as the sender.
 
         """
-        site = get_current_site(request)
+        site = get_current_site(self.request)
 
         if hasattr(form, 'save'):
             new_user_instance = form.save()
@@ -91,18 +93,18 @@ class RegistrationView(BaseRegistrationView):
             new_user_instance = (UserModel().objects
                                  .create_user(**form.cleaned_data))
 
-        new_user = RegistrationProfile.objects.create_inactive_user(
+        new_user = self.registration_profile.objects.create_inactive_user(
             new_user=new_user_instance,
             site=site,
             send_email=self.SEND_ACTIVATION_EMAIL,
-            request=request,
+            request=self.request,
         )
         signals.user_registered.send(sender=self.__class__,
                                      user=new_user,
-                                     request=request)
+                                     request=self.request)
         return new_user
 
-    def registration_allowed(self, request):
+    def registration_allowed(self):
         """
         Indicate whether account registration is currently permitted,
         based on the value of the setting ``REGISTRATION_OPEN``. This
@@ -119,7 +121,10 @@ class RegistrationView(BaseRegistrationView):
 
 
 class ActivationView(BaseActivationView):
-    def activate(self, request, activation_key):
+
+    registration_profile = RegistrationProfile
+
+    def activate(self, *args, **kwargs):
         """
         Given an an activation key, look up and activate the user
         account corresponding to that key (if possible).
@@ -130,13 +135,46 @@ class ActivationView(BaseActivationView):
         the class of this backend as the sender.
 
         """
-        activated_user = (RegistrationProfile.objects
-                          .activate_user(activation_key))
-        if activated_user:
+        activation_key = kwargs.get('activation_key', '')
+        site = get_current_site(self.request)
+        user, activated = self.registration_profile.objects.activate_user(
+            activation_key, site)
+        if activated:
             signals.user_activated.send(sender=self.__class__,
-                                        user=activated_user,
-                                        request=request)
-        return activated_user
+                                        user=user,
+                                        request=self.request)
+        return user
 
-    def get_success_url(self, request, user):
+    def get_success_url(self, user):
         return ('registration_activation_complete', (), {})
+
+
+class ResendActivationView(BaseResendActivationView):
+
+    registration_profile = RegistrationProfile
+
+    def resend_activation(self, form):
+        """
+        Given an email, look up user by email and resend activation key
+        if user is not already activated or previous activation key has
+        not expired. Note that if multiple users exist with the given
+        email, no emails will be sent.
+
+        Returns True if activation key was successfully sent, False otherwise.
+
+        """
+        site = get_current_site(self.request)
+        email = form.cleaned_data['email']
+        return self.registration_profile.objects.resend_activation_mail(
+            email, site, self.request)
+
+    def render_form_submitted_template(self, form):
+        """
+        Renders resend activation complete template with the submitted email.
+
+        """
+        email = form.cleaned_data['email']
+        context = {'email': email}
+        return render(self.request,
+                      'registration/resend_activation_complete.html',
+                      context)

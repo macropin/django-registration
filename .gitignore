@@ -58,3 +58,6 @@ docs/_build/
 
 # Pycharm
 .idea
+
+# PIP
+pip-selfcheck.json
