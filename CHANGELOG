@@ -4,6 +4,9 @@ django-registration-redux changelog
 
 Version 2.6, TBD
 ----------------
+* Bugfix: Pass `user` instance instead of `user.get_username()` to template
+context. -
+`#350 <https://github.com/macropin/django-registration/pull/350>_`
 
 Version 2.5, 27 October, 2018
 ----------------
