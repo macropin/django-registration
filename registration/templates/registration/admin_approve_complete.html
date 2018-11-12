@@ -13,7 +13,21 @@
 {% comment %}
 **registration/admin_approve_complete.html**
 
-Used after admin successfully approves a user's account. This template has no context
-variables of its own, and should simply inform the admin that the user's
-account is now active.
+Used to generate the html body of the admin activation email. Should display a
+link for an admin to approve activation of the account. This template has the
+following context:
+
+``site``
+    An object representing the site on which the user registered;
+    depending on whether ``django.contrib.sites`` is installed, this
+    may be an instance of either ``django.contrib.sites.models.Site``
+    (if the sites application is installed) or
+    ``django.contrib.sites.requests.RequestSite`` (if not). Consult `the
+    documentation for the Django sites framework
+    <http://docs.djangoproject.com/en/dev/ref/contrib/sites/>`_ for
+    details regarding these objects' interfaces.
+
+``user``
+    The new user account
+
 {% endcomment %}
