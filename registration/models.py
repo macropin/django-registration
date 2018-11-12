@@ -690,7 +690,7 @@ class SupervisedRegistrationProfile(RegistrationProfile):
             'registration/admin_approve_complete_email.html')
 
         ctx_dict = {
-            'user': self.user.get_username(),
+            'user': self.user,
             'site': site,
         }
         send_email(
