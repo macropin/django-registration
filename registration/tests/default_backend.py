@@ -66,8 +66,7 @@ class DefaultBackendViewTests(TestCase):
         self.assertEqual(200, resp.status_code)
         self.assertTemplateUsed(resp,
                                 'registration/registration_form.html')
-        self.failUnless(isinstance(resp.context['form'],
-                                   RegistrationForm))
+        self.assertIsInstance(resp.context['form'], RegistrationForm)
 
     def test_registration(self):
         """
@@ -85,11 +84,11 @@ class DefaultBackendViewTests(TestCase):
 
         new_user = UserModel().objects.get(username='bob')
 
-        self.failUnless(new_user.check_password('secret'))
+        self.assertTrue(new_user.check_password('secret'))
         self.assertEqual(new_user.email, 'bob@example.com')
 
         # New user must not be active.
-        self.failIf(new_user.is_active)
+        self.assertFalse(new_user.is_active)
 
         # A registration profile was created, and an activation email
         # was sent.
@@ -139,10 +138,10 @@ class DefaultBackendViewTests(TestCase):
 
         new_user = UserModel().objects.get(username='bob')
 
-        self.failUnless(new_user.check_password('secret'))
+        self.assertTrue(new_user.check_password('secret'))
         self.assertEqual(new_user.email, 'bob@example.com')
 
-        self.failIf(new_user.is_active)
+        self.assertFalse(new_user.is_active)
 
         self.assertEqual(self.registration_profile.objects.count(), 1)
         self.assertEqual(len(mail.outbox), 1)
@@ -158,7 +157,7 @@ class DefaultBackendViewTests(TestCase):
                                       'password1': 'secret',
                                       'password2': 'notsecret'})
         self.assertEqual(200, resp.status_code)
-        self.failIf(resp.context['form'].is_valid())
+        self.assertFalse(resp.context['form'].is_valid())
         self.assertEqual(0, len(mail.outbox))
 
     def test_activation(self):

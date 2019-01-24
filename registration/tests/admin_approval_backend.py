@@ -49,6 +49,7 @@ class AdminApprovalBackendViewTests(DefaultBackendViewTests):
                                       'password2': 'secret'})
 
         profile = self.registration_profile.objects.get(user__username='bob')
+        self.assertFalse(profile.user.is_active)
 
         resp = self.client.get(
             reverse('registration_activate',
@@ -62,9 +63,8 @@ class AdminApprovalBackendViewTests(DefaultBackendViewTests):
             reverse('registration_admin_approve',
                     args=(),
                     kwargs={'profile_id': profile.id}))
-        user = profile.user
-        # fail if the user is active (this should not happen yet)
-        self.failIf(not user.is_active)
+        profile.user.refresh_from_db()
+        self.assertTrue(profile.user.is_active)
         self.assertRedirects(resp, reverse('registration_approve_complete'))
 
     @override_settings(
