@@ -45,8 +45,7 @@ class SimpleBackendViewTests(TestCase):
         self.assertEqual(200, resp.status_code)
         self.assertTemplateUsed(resp,
                                 'registration/registration_form.html')
-        self.failUnless(isinstance(resp.context['form'],
-                                   RegistrationForm))
+        self.assertIsInstance(resp.context['form'], RegistrationForm)
 
     def test_registration(self):
         """
@@ -60,18 +59,18 @@ class SimpleBackendViewTests(TestCase):
                                       'password2': 'secret'})
         new_user = UserModel().objects.get(username='bob')
         self.assertEqual(302, resp.status_code)
-        self.failUnless(getattr(settings, 'SIMPLE_BACKEND_REDIRECT_URL', '/')
-                        in resp['Location'])
+        self.assertIn(getattr(settings, 'SIMPLE_BACKEND_REDIRECT_URL', '/'),
+                      resp['Location'])
 
-        self.failUnless(new_user.check_password('secret'))
+        self.assertTrue(new_user.check_password('secret'))
         self.assertEqual(new_user.email, 'bob@example.com')
 
         # New user must be active.
-        self.failUnless(new_user.is_active)
+        self.assertTrue(new_user.is_active)
 
         # New user must be logged in.
         resp = self.client.get(reverse('registration_register'), follow=True)
-        self.failUnless(resp.context['user'].is_authenticated)
+        self.assertTrue(resp.context['user'].is_authenticated)
 
     def test_registration_failure(self):
         """
@@ -84,4 +83,4 @@ class SimpleBackendViewTests(TestCase):
                                       'password1': 'secret',
                                       'password2': 'notsecret'})
         self.assertEqual(200, resp.status_code)
-        self.failIf(resp.context['form'].is_valid())
+        self.assertFalse(resp.context['form'].is_valid())
