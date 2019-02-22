@@ -3,7 +3,7 @@ import datetime
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.core import mail
-from django.test import TestCase
+from django.test import TransactionTestCase
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
 from django.urls import reverse
@@ -16,7 +16,7 @@ from registration.users import UserModel
 
 @override_settings(ROOT_URLCONF='test_app.urls_default',
                    ACCOUNT_ACTIVATION_DAYS=7)
-class DefaultBackendViewTests(TestCase):
+class DefaultBackendViewTests(TransactionTestCase):
     """
     Test the default registration backend.
 
