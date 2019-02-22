@@ -11,7 +11,7 @@ from django.conf import settings
 from django.core import mail
 from django.core import management
 from django.core.exceptions import ImproperlyConfigured
-from django.test import TestCase
+from django.test import TransactionTestCase
 from django.test import override_settings
 from django.utils import six
 from django.utils.timezone import now as datetime_now
@@ -27,7 +27,7 @@ Site = apps.get_model('sites', 'Site')
                    REGISTRATION_DEFAULT_FROM_EMAIL='registration@email.com',
                    REGISTRATION_EMAIL_HTML=True,
                    DEFAULT_FROM_EMAIL='django@email.com')
-class RegistrationModelTests(TestCase):
+class RegistrationModelTests(TransactionTestCase):
     """
     Test the model and manager used in the default backend.
 
