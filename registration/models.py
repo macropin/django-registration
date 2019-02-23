@@ -187,8 +187,12 @@ class RegistrationManager(models.Manager):
             registration_profile = self.create_profile(
                 new_user, **profile_info)
 
-        if send_email:
-            registration_profile.send_activation_email(site, request)
+            # send email only if desired and transaction succeeds
+            if send_email:
+                transaction.on_commit(
+                    lambda: registration_profile.send_activation_email(
+                        site, request)
+                )
 
         return new_user
 

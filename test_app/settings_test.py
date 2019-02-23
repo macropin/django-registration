@@ -60,3 +60,5 @@ REGISTRATION_ADMINS = (
     ('admin1', 'registration_admin1@mail.server.com'),
     ('admin2', 'registration_admin2@mail.server.com'),
 )
+
+ACCOUNT_ACTIVATION_DAYS = 7
