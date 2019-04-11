@@ -29,9 +29,9 @@ release: clean lint test
 	git clean -dxf
 	git tag $(TAG_NAME)
 	git push --tags
-	# To check whether the README formats properly.
-	python setup.py check -s --restructuredtext
 	# Create the wheels for Python2 and Python3.
 	python setup.py sdist bdist_wheel --universal
+	# To check whether the README formats properly.
+	twine check dist/*
 	# Upload to pypi.
 	twine upload dist/*
