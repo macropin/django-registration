@@ -2,7 +2,10 @@
 django-registration-redux changelog
 ===================================
 
-Version 2.6, TBD
+Version 2.7, TBD
+----------------
+
+Version 2.6, 10 April, 2019
 ----------------
 * Bugfix: Pass `user` instance instead of `user.get_username()` to template
 context. -
@@ -10,6 +13,8 @@ context. -
 * Feature: Add testing for Django 2.2 and Python 3.7 (no code changes
   required). - `#352
   <https://github.com/macropin/django-registration/pull/352>_`
+* Bugfix: Send emails on commit `#355
+<https://github.com/macropin/django-registration/pull/355>_`
 
 Version 2.5, 27 October, 2018
 ----------------
