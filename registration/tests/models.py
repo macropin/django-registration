@@ -44,7 +44,7 @@ class RegistrationModelTests(TransactionTestCase):
     def test_profile_creation(self):
         """
         Creating a registration profile for a user populates the
-        profile with the correct user and a SHA1 hash to use as
+        profile with the correct user and a SHA256 hash to use as
         activation key.
 
         """
@@ -53,7 +53,7 @@ class RegistrationModelTests(TransactionTestCase):
 
         self.assertEqual(self.registration_profile.objects.count(), 1)
         self.assertEqual(profile.user.id, new_user.id)
-        self.assertTrue(re.match('^[a-f0-9]{40}$', profile.activation_key))
+        self.assertTrue(re.match('^[a-f0-9]{64}$', profile.activation_key))
         self.assertEqual(six.text_type(profile),
                          "Registration information for alice")
 
@@ -346,7 +346,7 @@ class RegistrationModelTests(TransactionTestCase):
 
     def test_activation_invalid_key(self):
         """
-        Attempting to activate with a key which is not a SHA1 hash
+        Attempting to activate with a key which is not a SHA256 hash
         fails.
 
         """
@@ -399,7 +399,7 @@ class RegistrationModelTests(TransactionTestCase):
         """
         # Due to the way activation keys are constructed during
         # registration, this will never be a valid key.
-        invalid_key = hashlib.sha1(six.b('foo')).hexdigest()
+        invalid_key = hashlib.sha256(six.b('foo')).hexdigest()
         _, activated = self.registration_profile.objects.activate_user(
             invalid_key, Site.objects.get_current())
         self.assertFalse(activated)
@@ -621,13 +621,13 @@ class RegistrationModelTests(TransactionTestCase):
         current_method = self.registration_profile.create_new_activation_key
 
         def old_method(self, save=True):
-            salt = hashlib.sha1(six.text_type(random.random())
+            salt = hashlib.sha256(six.text_type(random.random())
                                 .encode('ascii')).hexdigest()[:5]
             salt = salt.encode('ascii')
             user_pk = str(self.user.pk)
             if isinstance(user_pk, six.text_type):
                 user_pk = user_pk.encode('utf-8')
-            self.activation_key = hashlib.sha1(salt + user_pk).hexdigest()
+            self.activation_key = hashlib.sha256(salt + user_pk).hexdigest()
             if save:
                 self.save()
             return self.activation_key
@@ -991,13 +991,13 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
         current_method = self.registration_profile.create_new_activation_key
 
         def old_method(self, save=True):
-            salt = hashlib.sha1(six.text_type(random.random())
+            salt = hashlib.sha256(six.text_type(random.random())
                                 .encode('ascii')).hexdigest()[:5]
             salt = salt.encode('ascii')
             user_pk = str(self.user.pk)
             if isinstance(user_pk, six.text_type):
                 user_pk = user_pk.encode('utf-8')
-            self.activation_key = hashlib.sha1(salt + user_pk).hexdigest()
+            self.activation_key = hashlib.sha256(salt + user_pk).hexdigest()
             if save:
                 self.save()
             return self.activation_key
