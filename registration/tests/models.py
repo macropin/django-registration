@@ -622,7 +622,7 @@ class RegistrationModelTests(TransactionTestCase):
 
         def old_method(self, save=True):
             salt = hashlib.sha256(six.text_type(random.random())
-                            .encode('ascii')).hexdigest()[:5]
+                .encode('ascii')).hexdigest()[:5]
             salt = salt.encode('ascii')
             user_pk = str(self.user.pk)
             if isinstance(user_pk, six.text_type):
@@ -992,7 +992,7 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
 
         def old_method(self, save=True):
             salt = hashlib.sha256(six.text_type(random.random())
-                            .encode('ascii')).hexdigest()[:5]
+                .encode('ascii')).hexdigest()[:5]
             salt = salt.encode('ascii')
             user_pk = str(self.user.pk)
             if isinstance(user_pk, six.text_type):
