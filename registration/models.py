@@ -138,7 +138,7 @@ class RegistrationManager(models.Manager):
         # Make sure the key we're trying conforms to the pattern of a
         # SHA256 hash; if it doesn't, no point trying to look it up in
         # the database.
-        # The or statement is used 
+        # The or statement is used
         if SHA256_RE.search(activation_key):
             try:
                 profile = self.get(activation_key=activation_key)
