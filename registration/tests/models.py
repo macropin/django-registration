@@ -621,8 +621,9 @@ class RegistrationModelTests(TransactionTestCase):
         current_method = self.registration_profile.create_new_activation_key
 
         def old_method(self, save=True):
-            salt = hashlib.sha256(six.text_type(random.random())
-                .encode('ascii')).hexdigest()[:5]
+            salt = hashlib.sha256(
+                six.text_type(random.random()).encode('ascii')
+            ).hexdigest()[:5]
             salt = salt.encode('ascii')
             user_pk = str(self.user.pk)
             if isinstance(user_pk, six.text_type):
@@ -991,8 +992,9 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
         current_method = self.registration_profile.create_new_activation_key
 
         def old_method(self, save=True):
-            salt = hashlib.sha256(six.text_type(random.random())
-                .encode('ascii')).hexdigest()[:5]
+            salt = hashlib.sha256(
+                six.text_type(random.random()).encode('ascii')
+            ).hexdigest()[:5]
             salt = salt.encode('ascii')
             user_pk = str(self.user.pk)
             if isinstance(user_pk, six.text_type):
