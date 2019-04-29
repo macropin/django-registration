@@ -115,8 +115,8 @@ the database, using the following model:
 
    .. attribute:: activation_key
 
-      A 40-character ``CharField``, storing the activation key for the
-      account. The activation key is the hexdigest of a SHA1 hash.
+      A 64-character ``CharField``, storing the activation key for the
+      account. The activation key is the hexdigest of a SHA256 hash.
 
    .. attribute:: activated
 
@@ -222,7 +222,7 @@ Additionally, :class:`RegistrationProfile` has a custom manager
 
       :param activation_key: The activation key to use for the
          activation.
-      :type activation_key: string, a 40-character SHA1 hexdigest
+      :type activation_key: string, a 64-character SHA256 hexdigest
       :type site: ``django.contrib.sites.models.Site`` or
         ``django.contrib.sites.models.RequestSite``
       :rtype: (``User``, ``bool)
@@ -282,7 +282,7 @@ Additionally, :class:`RegistrationProfile` has a custom manager
       the account represented by ``user``.
 
       The ``RegistrationProfile`` created by this method will have its
-      :attr:`~RegistrationProfile.activation_key` set to a SHA1 hash
+      :attr:`~RegistrationProfile.activation_key` set to a SHA256 hash
       generated from a combination of the account's username and a
       random salt.
 

@@ -27,7 +27,10 @@ from .users import UserModel
 from .users import UserModelString
 
 logger = logging.getLogger(__name__)
-SHA1_RE = re.compile('^[a-f0-9]{40}$')
+
+# Adding some backwards compatibility for SHA1
+# The 40 probably should be removed later on
+SHA256_RE = re.compile('^[a-f0-9]{40,64}$')
 
 
 def get_from_email(site=None):
@@ -133,9 +136,10 @@ class RegistrationManager(models.Manager):
 
         """
         # Make sure the key we're trying conforms to the pattern of a
-        # SHA1 hash; if it doesn't, no point trying to look it up in
+        # SHA256 hash; if it doesn't, no point trying to look it up in
         # the database.
-        if SHA1_RE.search(activation_key):
+        # The or statement is used
+        if SHA256_RE.search(activation_key):
             try:
                 profile = self.get(activation_key=activation_key)
             except self.model.DoesNotExist:
@@ -202,7 +206,7 @@ class RegistrationManager(models.Manager):
         ``User``, and return the ``RegistrationProfile``.
 
         The activation key for the ``RegistrationProfile`` will be a
-        SHA1 hash, generated from a secure random string.
+        SHA256 hash, generated from a secure random string.
 
         """
         profile = self.model(user=user, **profile_info)
@@ -310,7 +314,7 @@ class RegistrationProfile(models.Model):
         on_delete=models.CASCADE,
         verbose_name=_('user'),
     )
-    activation_key = models.CharField(_('activation key'), max_length=40)
+    activation_key = models.CharField(_('activation key'), max_length=64)
     activated = models.BooleanField(default=False)
 
     objects = RegistrationManager()
@@ -328,7 +332,7 @@ class RegistrationProfile(models.Model):
         """
         random_string = get_random_string(
             length=32, allowed_chars=string.printable)
-        self.activation_key = hashlib.sha1(
+        self.activation_key = hashlib.sha256(
             random_string.encode('utf-8')).hexdigest()
 
         if save:
