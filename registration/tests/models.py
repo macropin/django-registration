@@ -617,8 +617,8 @@ class RegistrationModelTests(TransactionTestCase):
 
     def test_activation_key_backwards_compatibility(self):
         """
-        Make sure that users created witht the old create_new_activation_key method can still be
-        activated.
+        Make sure that users created with the old create_new_activation_key
+        method can still be activated.
         """
         current_method = self.registration_profile.create_new_activation_key
 
@@ -655,8 +655,8 @@ class RegistrationModelTests(TransactionTestCase):
 
     def test_activation_key_backwards_compatibility_sha1(self):
         """
-        Make sure that users created witht the old create_new_activation_key method can still be
-        activated.
+        Make sure that users created with the old create_new_activation_key
+        method can still be activated.
         """
         current_method = self.registration_profile.create_new_activation_key
 
