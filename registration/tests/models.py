@@ -2,8 +2,8 @@ import datetime
 import hashlib
 import random
 import re
-import warnings
 import string
+import warnings
 from copy import copy
 from datetime import timedelta
 
@@ -15,8 +15,8 @@ from django.core.exceptions import ImproperlyConfigured
 from django.test import TransactionTestCase
 from django.test import override_settings
 from django.utils import six
-from django.utils.timezone import now as datetime_now
 from django.utils.crypto import get_random_string
+from django.utils.timezone import now as datetime_now
 
 from registration.models import RegistrationProfile
 from registration.models import SupervisedRegistrationProfile
