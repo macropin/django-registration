@@ -88,7 +88,7 @@ class RegistrationView(BaseRegistrationView):
         site = get_current_site(self.request)
 
         if hasattr(form, 'save'):
-            new_user_instance = form.save()
+            new_user_instance = form.save(commit=False)
         else:
             new_user_instance = (UserModel().objects
                                  .create_user(**form.cleaned_data))

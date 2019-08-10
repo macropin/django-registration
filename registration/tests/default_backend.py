@@ -3,10 +3,12 @@ import datetime
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.core import mail
+from django.db import DatabaseError
 from django.test import TransactionTestCase
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
 from django.urls import reverse
+from mock import patch
 
 from registration.backends.default.views import RegistrationView
 from registration.forms import RegistrationForm
@@ -159,6 +161,22 @@ class DefaultBackendViewTests(TransactionTestCase):
         self.assertEqual(200, resp.status_code)
         self.assertFalse(resp.context['form'].is_valid())
         self.assertEqual(0, len(mail.outbox))
+
+    @patch('registration.models.RegistrationManager.create_inactive_user')
+    def test_registration_exception(self, create_inactive_user):
+        """
+        User is not created beforehand if an exception occurred at
+        creating registration profile.
+        """
+        create_inactive_user.side_effect = DatabaseError()
+        valid_data = {'username': 'bob',
+                      'email': 'bob@example.com',
+                      'password1': 'secret',
+                      'password2': 'secret'}
+        with self.assertRaises(DatabaseError):
+            self.client.post(reverse('registration_register'),
+                             data=valid_data)
+        assert not UserModel().objects.filter(username='bob').exists()
 
     def test_activation(self):
         """
