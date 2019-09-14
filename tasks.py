@@ -1,7 +1,6 @@
 from invoke import run
 from invoke import task
 
-
 @task
 def clean(all=False):
     if all:
@@ -27,4 +26,4 @@ def test():
 def lint():
     run("rst2html.py README.rst > /dev/null")
     run("flake8 registration")
-    run("isort --recursive --check-only registration")
+    run("isort --recursive --check-only --verbose registration")
