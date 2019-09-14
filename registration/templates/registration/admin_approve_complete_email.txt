@@ -2,7 +2,7 @@
 {% blocktrans %}
 Your account is now approved. You can log in using the following link
 {% endblocktrans %}
-http://{{site.domain}}{% url 'login' %}
+http://{{site.domain}}{% url 'auth_login' %}
 
 {% comment %}
 **registration/admin_approve_complete_email.txt**
