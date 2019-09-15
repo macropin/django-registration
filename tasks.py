@@ -1,6 +1,7 @@
 from invoke import run
 from invoke import task
 
+
 @task
 def clean(all=False):
     if all:
