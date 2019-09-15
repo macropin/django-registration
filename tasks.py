@@ -26,4 +26,4 @@ def test():
 def lint():
     run("rst2html.py README.rst > /dev/null")
     run("flake8 registration")
-    run("isort --recursive --check-only --verbose registration")
+    run("isort --recursive --check-only registration")
