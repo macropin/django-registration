@@ -5,3 +5,4 @@ tox-travis
 invoke==0.12.2
 docutils==0.13.1
 mock
+pytest-django==3.4.8
