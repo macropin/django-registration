@@ -7,6 +7,7 @@ import warnings
 from copy import copy
 from datetime import timedelta
 
+import six
 from django.apps import apps
 from django.conf import settings
 from django.core import mail
@@ -14,7 +15,6 @@ from django.core import management
 from django.core.exceptions import ImproperlyConfigured
 from django.test import TransactionTestCase
 from django.test import override_settings
-from django.utils import six
 from django.utils.crypto import get_random_string
 from django.utils.timezone import now as datetime_now
 

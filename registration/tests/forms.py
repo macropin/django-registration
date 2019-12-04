@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import django
 from django.test import TestCase
-from django.utils import six
+import six
 
 from registration import forms
 from registration.users import UserModel
@@ -31,6 +31,11 @@ class RegistrationFormTests(TestCase):
             bad_username_error = bad_username_error.replace('numbers,', 'numbers')
         elif six.PY2:
             bad_username_error = bad_username_error.replace('letters', 'English letters')
+
+        password_didnt_match_error = "The two password fields didn't match."
+        if(django.VERSION[0] >= 3):
+            password_didnt_match_error = password_didnt_match_error.replace("'", "’")
+
         invalid_data_dicts = [
             # Non-alphanumeric username.
             {'data': {'username': 'foo/bar',
@@ -49,7 +54,7 @@ class RegistrationFormTests(TestCase):
                       'email': 'foo@example.com',
                       'password1': 'foo',
                       'password2': 'bar'},
-             'error': ('password2', ["The two password fields didn't match."])},
+             'error': ('password2', [password_didnt_match_error])},
         ]
 
         for invalid_dict in invalid_data_dicts:
