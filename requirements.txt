@@ -3,3 +3,4 @@ Sphinx
 twine
 pytest>3.2.1
 Django>1.11
+six
