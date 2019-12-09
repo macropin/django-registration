@@ -1,8 +1,9 @@
 from __future__ import unicode_literals
 
 import django
-from django.test import TestCase
 import six
+
+from django.test import TestCase
 
 from registration import forms
 from registration.users import UserModel

@@ -2,12 +2,12 @@ import datetime
 import hashlib
 import random
 import re
+import six
 import string
 import warnings
 from copy import copy
 from datetime import timedelta
 
-import six
 from django.apps import apps
 from django.conf import settings
 from django.core import mail
