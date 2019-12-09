@@ -5,6 +5,7 @@ import hashlib
 import logging
 import re
 import string
+import sys
 import warnings
 
 from django.apps import apps
@@ -22,8 +23,6 @@ from django.utils.module_loading import import_string
 from django.utils.timezone import now as datetime_now
 from django.utils.translation import ugettext_lazy as _
 
-from six import python_2_unicode_compatible
-
 from .users import UserModel
 from .users import UserModelString
 
@@ -32,6 +31,44 @@ logger = logging.getLogger(__name__)
 # Adding some backwards compatibility for SHA1
 # The 40 probably should be removed later on
 SHA256_RE = re.compile('^[a-f0-9]{40,64}$')
+
+
+def python_2_unicode_compatible(klass):
+    """
+    from Benjamin Peterson's six: https://github.com/benjaminp/six/blob/master/six.py
+    # Copyright (c) 2010-2019 Benjamin Peterson
+    #
+    # Permission is hereby granted, free of charge, to any person obtaining a copy
+    # of this software and associated documentation files (the "Software"), to deal
+    # in the Software without restriction, including without limitation the rights
+    # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    # copies of the Software, and to permit persons to whom the Software is
+    # furnished to do so, subject to the following conditions:
+    #
+    # The above copyright notice and this permission notice shall be included in all
+    # copies or substantial portions of the Software.
+    #
+    # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    # SOFTWARE.
+
+    A class decorator that defines __unicode__ and __str__ methods under Python 2.
+    Under Python 3 it does nothing.
+    To support Python 2 and 3 with a single code base, define a __str__ method
+    returning text and apply this decorator to the class.
+    """
+    if sys.version_info[0] == 2:
+        if '__str__' not in klass.__dict__:
+            raise ValueError("@python_2_unicode_compatible cannot be applied "
+                             "to %s because it doesn't define __str__()." %
+                             klass.__name__)
+        klass.__unicode__ = klass.__str__
+        klass.__str__ = lambda self: self.__unicode__().encode('utf-8')
+    return klass
 
 
 def get_from_email(site=None):
