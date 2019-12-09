@@ -35,8 +35,10 @@ class RegistrationFormTests(TestCase):
             bad_username_error = bad_username_error.replace('letters', 'English letters')
 
         password_didnt_match_error = "The two password fields didn't match."
-        if(django.VERSION[0] >= 3):
-            password_didnt_match_error = password_didnt_match_error.replace("'", u"’")
+
+        if six.PY3:
+            if(django.VERSION[0] >= 3):
+                password_didnt_match_error = password_didnt_match_error.replace("'", u"’")
 
         invalid_data_dicts = [
             # Non-alphanumeric username.
