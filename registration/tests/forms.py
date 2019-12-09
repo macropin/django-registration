@@ -1,3 +1,4 @@
+# coding = utf-8
 from __future__ import unicode_literals
 
 import six
@@ -35,7 +36,7 @@ class RegistrationFormTests(TestCase):
 
         password_didnt_match_error = "The two password fields didn't match."
         if(django.VERSION[0] >= 3):
-            password_didnt_match_error = password_didnt_match_error.replace("'", "’")
+            password_didnt_match_error = password_didnt_match_error.replace("'", "\xe2")
 
         invalid_data_dicts = [
             # Non-alphanumeric username.
