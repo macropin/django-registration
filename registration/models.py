@@ -27,7 +27,7 @@ from .users import UserModel
 from .users import UserModelString
 
 # Compatibility decorator removed in Django 3
-if DJANGO_VERSION[0] < 2:
+if DJANGO_VERSION[0] < 3:
     from django.utils.encoding import python_2_unicode_compatible
 else:
     from functools import wraps
