@@ -2,10 +2,12 @@ from __future__ import unicode_literals
 
 import django
 from django.test import TestCase
-from django.utils import six
 
 from registration import forms
 from registration.users import UserModel
+
+if django.VERSION[0] < 3:
+    from django.utils import six
 
 
 class RegistrationFormTests(TestCase):
@@ -29,7 +31,7 @@ class RegistrationFormTests(TestCase):
         )
         if django.VERSION < (1, 10):
             bad_username_error = bad_username_error.replace('numbers,', 'numbers')
-        elif six.PY2:
+        elif django.VERSION < (3, 0) and six.PY2:
             bad_username_error = bad_username_error.replace('letters', 'English letters')
         invalid_data_dicts = [
             # Non-alphanumeric username.
