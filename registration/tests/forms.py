@@ -36,7 +36,7 @@ class RegistrationFormTests(TestCase):
 
         password_didnt_match_error = "The two password fields didn't match."
         if django.VERSION >= (3, 0):
-            password_didnt_match_error = "The two password fields didn’t match."
+            password_didnt_match_error = "The two password fields didn\u2019t match."
 
         invalid_data_dicts = [
             # Non-alphanumeric username.
