@@ -33,6 +33,11 @@ class RegistrationFormTests(TestCase):
             bad_username_error = bad_username_error.replace('numbers,', 'numbers')
         elif django.VERSION < (3, 0) and six.PY2:
             bad_username_error = bad_username_error.replace('letters', 'English letters')
+
+        password_didnt_match_error = "The two password fields didn't match."
+        if django.VERSION >= (3, 0):
+            password_didnt_match_error = "The two password fields didn’t match."
+
         invalid_data_dicts = [
             # Non-alphanumeric username.
             {'data': {'username': 'foo/bar',
@@ -51,7 +56,7 @@ class RegistrationFormTests(TestCase):
                       'email': 'foo@example.com',
                       'password1': 'foo',
                       'password2': 'bar'},
-             'error': ('password2', ["The two password fields didn't match."])},
+             'error': ('password2', [password_didnt_match_error])},
         ]
 
         for invalid_dict in invalid_data_dicts:
