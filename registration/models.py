@@ -30,13 +30,8 @@ from .users import UserModelString
 if DJANGO_VERSION[0] < 3:
     from django.utils.encoding import python_2_unicode_compatible
 else:
-    from functools import wraps
-
-    def python_2_unicode_compatible(f):
-        @wraps(f)
-        def wrapper(*args, **kwargs):
-            return f(*args, **kwargs)
-        return wrapper
+    def python_2_unicode_compatible(c):
+        return c
 
 
 logger = logging.getLogger(__name__)
