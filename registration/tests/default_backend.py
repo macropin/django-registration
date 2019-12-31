@@ -99,7 +99,7 @@ class DefaultBackendViewTests(TransactionTestCase):
 
     def test_registration_no_email(self):
         """
-        Overriden Registration view does not send an activation email if the
+        Overridden Registration view does not send an activation email if the
         associated class variable is set to ``False``
 
         """

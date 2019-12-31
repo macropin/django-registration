@@ -256,7 +256,7 @@ class RegistrationManager(models.Manager):
         Regularly clearing out accounts which have never been
         activated serves two useful purposes:
 
-        1. It alleviates the ocasional need to reset a
+        1. It alleviates the occasional need to reset a
            ``RegistrationProfile`` and/or re-send an activation email
            when a user does not receive or does not act upon the
            initial activation email; since the account will be
@@ -372,7 +372,7 @@ class RegistrationProfile(models.Model):
         ``RegistrationProfile``.
 
         The activation email will use the following templates,
-        which can be overriden by setting ACTIVATION_EMAIL_SUBJECT,
+        which can be overridden by setting ACTIVATION_EMAIL_SUBJECT,
         ACTIVATION_EMAIL_BODY, and ACTIVATION_EMAIL_HTML appropriately:
 
         ``registration/activation_email_subject.txt``
@@ -550,7 +550,7 @@ class SupervisedRegistrationManager(RegistrationManager):
         approve this user.
 
         The approval email will use the following templates,
-        which can be overriden by setting APPROVAL_EMAIL_SUBJECT,
+        which can be overridden by setting APPROVAL_EMAIL_SUBJECT,
         APPROVAL_EMAIL_BODY, and APPROVAL_EMAIL_HTML appropriately:
 
         ``registration/admin_approve_email_subject.txt``
@@ -650,7 +650,7 @@ class SupervisedRegistrationProfile(RegistrationProfile):
         ``SupervisedRegistrationProfile``.
 
         The email will use the following templates,
-        which can be overriden by settings APPROVAL_COMPLETE_EMAIL_SUBJECT,
+        which can be overridden by settings APPROVAL_COMPLETE_EMAIL_SUBJECT,
         APPROVAL_COMPLETE_EMAIL_BODY, and APPROVAL_COMPLETE_EMAIL_HTML appropriately:
 
         ``registration/admin_approve_complete_email_subject.txt``
