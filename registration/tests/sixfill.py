@@ -30,6 +30,7 @@ class SixDynamicPolyfillTestCase(TestCase):
             return
         wrapped = nowrap(unwrapped)
         self.assertIs(wrapped, unwrapped)
+        unwrapped()  # hack: ensure the return statement will count as tested
 
     def test_python_2_unicode_compatible_defined_in_polyfill_is_the_right_one(self):
         """
