@@ -7,8 +7,6 @@ import re
 import string
 import warnings
 
-from six import python_2_unicode_compatible
-
 from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
@@ -24,6 +22,7 @@ from django.utils.module_loading import import_string
 from django.utils.timezone import now as datetime_now
 from django.utils.translation import ugettext_lazy as _
 
+from .sixfill import python_2_unicode_compatible
 from .users import UserModel
 from .users import UserModelString
 
