@@ -1,8 +1,10 @@
 from __future__ import unicode_literals
 
+import six
+from packaging import version
+
 import django
 from django.test import TestCase
-from django.utils import six
 
 from registration import forms
 from registration.users import UserModel
@@ -51,6 +53,9 @@ class RegistrationFormTests(TestCase):
                       'password2': 'bar'},
              'error': ('password2', ["The two password fields didn't match."])},
         ]
+        if version.parse(django.__version__) >= version.parse("3"):
+            password_mismatch_errors = invalid_data_dicts[2]['error'][1]
+            password_mismatch_errors[0] = password_mismatch_errors[0].replace("\u0027", "\u2019")
 
         for invalid_dict in invalid_data_dicts:
             form = forms.RegistrationForm(data=invalid_dict['data'])
