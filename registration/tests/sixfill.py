@@ -36,7 +36,7 @@ class SixDynamicPolyfillTestCase(TestCase):
         Test that enusres `python_2_unicode_compatible` found in six polyfill
         contains the right implementation for this python interpreter
         """
-        if sys.version_info == (2,):
+        if sys.version_info.major == 2:
             self.assertIs(python_2_unicode_compatible, six.python_2_unicode_compatible)
         else:
             self.assertIs(python_2_unicode_compatible, nowrap)
