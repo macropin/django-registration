@@ -7,6 +7,7 @@ import re
 import string
 import warnings
 
+from django import VERSION as DJANGO_VERSION
 from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
@@ -18,13 +19,20 @@ from django.db import transaction
 from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.module_loading import import_string
 from django.utils.timezone import now as datetime_now
 from django.utils.translation import ugettext_lazy as _
 
 from .users import UserModel
 from .users import UserModelString
+
+# Compatibility decorator removed in Django 3
+if DJANGO_VERSION[0] < 3:
+    from django.utils.encoding import python_2_unicode_compatible
+else:
+    def python_2_unicode_compatible(c):
+        return c
+
 
 logger = logging.getLogger(__name__)
 
