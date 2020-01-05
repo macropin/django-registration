@@ -2,10 +2,17 @@
 django-registration-redux changelog
 ===================================
 
-Version 2.7, TBD
+Version 2.8, TBD
 ----------------
+
+Version 2.7, 4 January, 2020
+----------------
+* Feature: Django 3.0 support - `#373
+<https://github.com/macropin/django-registration/pull/373>_`
 * Feature: Use SHA256 instead of SHA1 for `activation_key` - `#362
 <https://github.com/macropin/django-registration/pull/362>_`
+* Bugfix: Changed path reference from 'login' to 'auth_login'. -
+`#335 <https://github.com/macropin/django-registration/pull/335>_`
 
 Version 2.6, 10 April, 2019
 ----------------
