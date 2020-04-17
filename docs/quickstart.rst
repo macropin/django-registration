@@ -172,12 +172,12 @@ your project, and specifying one additional setting:
 For example, you might have something like the following in your
 Django settings file::
 
-    INSTALLED_APPS = (
+    INSTALLED_APPS = [
         'django.contrib.sites',
         'registration', #should be immediately above 'django.contrib.admin'
         'django.contrib.admin',
         # ...other installed applications...
-    )
+    ]
 
     ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
     REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
