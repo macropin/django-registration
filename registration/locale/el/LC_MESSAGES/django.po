@@ -19,13 +19,11 @@ msgstr ""
 
 #: admin.py:26
 msgid "Activate users"
-msgstr ""
+msgstr "Ενεργοποίηση χρηστών"
 
 #: admin.py:44
-#, fuzzy
-#| msgid "activation key"
 msgid "Re-send activation emails"
-msgstr "κλειδί ενεργοποίησης"
+msgstr "Να σταλεί ξανά το κλειδί ενεργοποίησης"
 
 #: forms.py:36 forms.py:114
 msgid "E-mail"
@@ -33,31 +31,31 @@ msgstr ""
 
 #: forms.py:52
 msgid "A user with that username already exists."
-msgstr ""
+msgstr "Υπάρχει ήδη χρήστης με αυτό το όνομα."
 
 #: forms.py:64
 msgid "I have read and agree to the Terms of Service"
-msgstr "Διάβασα και συμφωνώ με τους Όρους της Υπηρεσίας"
+msgstr "Διάβασα τους όρους χρήσης και συμφωνώ."
 
 #: forms.py:65
 msgid "You must agree to the terms to register"
-msgstr "Πρέπει να συμφωνείται με τους όρους για να εγγραφείτε"
+msgstr "Πρέπει να συμφωνήσετε με τους όρους για να εγγραφείτε"
 
 #: forms.py:81
 msgid ""
 "This email address is already in use. Please supply a different email "
 "address."
 msgstr ""
-"Η συγκεκριμένη διεύθυνση ηλεκτρονικού ταχυδρομείου χρησιμοποιείται ήδη. "
-"Παρακαλώ δώστε κάποια άλλη."
+"Αυτή η διεύθυνση email χρησιμοποιείται ήδη. "
+"Προσδιορίστε άλλη."
 
 #: forms.py:108
 msgid ""
 "Registration using free email addresses is prohibited. Please supply a "
 "different email address."
 msgstr ""
-"Η εγγραφή μέσω δωρεάν διευθύνσεων ηλεκτρονικού ταχυδρομείου απαγορεύεται. "
-"Παρακαλώ δώστε κάποια άλλη."
+"Η εγγραφή με δωρεάν διευθύνσεις email απαγορεύεται. "
+"Προσδιορίστε άλλη διεύθυνση."
 
 #: models.py:274
 msgid "user"
@@ -76,41 +74,37 @@ msgid "registration profiles"
 msgstr "προφίλ εγγραφών"
 
 #: templates/registration/activate.html:4
-#, fuzzy
-#| msgid "activation key"
 msgid "Activation Failure"
-msgstr "κλειδί ενεργοποίησης"
+msgstr "Αποτυχία ενεργοποίησης"
 
 #: templates/registration/activate.html:7
-#, fuzzy
-#| msgid "activation key"
 msgid "Account activation failed."
-msgstr "κλειδί ενεργοποίησης"
+msgstr "Η ενεργοποίηση του λογαριασμού απέτυχε."
 
 #: templates/registration/activation_complete.html:4
 #: templates/registration/activation_complete_admin_pending.html:4
 msgid "Account Activated"
-msgstr ""
+msgstr "Λογαριασμός ενεργοποιημένος"
 
 #: templates/registration/activation_complete.html:8
 #: templates/registration/activation_complete_admin_pending.html:8
 msgid "Your account is now activated."
-msgstr ""
+msgstr "Ο λογαριασμός σας ενεργοποιήθηκε."
 
 #: templates/registration/activation_complete.html:10
 msgid "You can log in."
-msgstr ""
+msgstr "Μπορείτε να πραγματοποιήσετε είσοδο στο σύστημα."
 
 #: templates/registration/activation_complete_admin_pending.html:10
 msgid "Once a site administrator activates your account you can login."
 msgstr ""
+"Θα μπορέσετε να πραγματοποιήσετε είσοδο στο σύστημα μόλις ένας "
+"διαχειριστής ενεργοποιήσει το λογαριασμό σας."
 
 #: templates/registration/activation_email.html:6
 #: templates/registration/admin_approve_email.html:6
-#, fuzzy
-#| msgid "registration profile"
 msgid "registration"
-msgstr "προφίλ εγγραφής"
+msgstr "εγγραφή"
 
 #: templates/registration/activation_email.html:11
 #, python-format
@@ -122,6 +116,11 @@ msgid ""
 "    and your address will be removed from our records.\n"
 "    "
 msgstr ""
+"\n"
+"    Κάποιος ζήτησε να δημιουργηθεί λογαριασμός για σας στο %(site_name)s.\n"
+"    Αν δεν ήσασταν εσείς, αγνοήστε αυτό το email και η διεύθυνσή σας θα\n"
+"    διαγραφεί από τα αρχεία μας.\n"
+"    "
 
 #: templates/registration/activation_email.html:18
 #, python-format
@@ -132,6 +131,10 @@ msgid ""
 "    %(expiration_days)s days:\n"
 "    "
 msgstr ""
+"\n"
+"    Για να ενεργοποιηθεί ο λογαριασμός, ακολουθήστε τον παρακάτω σύνδεσμο\n"
+"    πριν περάσουν %(expiration_days)s μέρες:\n"
+"    "
 
 #: templates/registration/activation_email.html:30
 #: templates/registration/admin_approve_email.html:23
@@ -142,6 +145,10 @@ msgid ""
 "    %(site_name)s Management\n"
 "    "
 msgstr ""
+"\n"
+"    Με εκτίμηση,\n"
+"    Η διαχείριση του %(site_name)s\n"
+"    "
 
 #: templates/registration/activation_email.txt:2
 #, python-format
@@ -151,6 +158,10 @@ msgid ""
 "%(site_name)s.  If this wasn't you, please ignore this email\n"
 "and your address will be removed from our records.\n"
 msgstr ""
+"\n"
+"Κάποιος ζήτησε να δημιουργηθεί λογαριασμός για σας στο %(site_name)s.\n"
+"Αν δεν ήσασταν εσείς, αγνοήστε αυτό το email και η διεύθυνσή σας θα\n"
+"διαγραφεί από τα αρχεία μας.\n"
 
 #: templates/registration/activation_email.txt:7
 #, python-format
@@ -159,6 +170,9 @@ msgid ""
 "To activate this account, please click the following link within the next\n"
 "%(expiration_days)s days:\n"
 msgstr ""
+"\n"
+"Για να ενεργοποιηθεί ο λογαριασμός, ακολουθήστε τον παρακάτω σύνδεσμο\n"
+"πριν περάσουν %(expiration_days)s μέρες:\n"
 
 #: templates/registration/activation_email.txt:14
 #, python-format
@@ -167,33 +181,34 @@ msgid ""
 "Sincerely,\n"
 "%(site_name)s Management\n"
 msgstr ""
+"\n"
+"Με εκτίμηση,\n"
+"Η διαχείριση του %(site_name)s\n"
 
 #: templates/registration/activation_email_subject.txt:1
 #: templates/registration/admin_approve_complete_email_subject.txt:1
-#, fuzzy
-#| msgid "activation key"
 msgid "Account activation on"
-msgstr "κλειδί ενεργοποίησης"
+msgstr "Ενεργοποίηση λογαριασμού στο"
 
 #: templates/registration/admin_approve.html:4
 msgid "Approval Failure"
-msgstr ""
+msgstr "Αποτυχία έγκρισης"
 
 #: templates/registration/admin_approve.html:7
 msgid "Account Approval failed."
-msgstr ""
+msgstr "Η έγκριση του λογαριασμού απέτυχε."
 
 #: templates/registration/admin_approve_complete.html:4
 msgid "Account Approved"
-msgstr ""
+msgstr "Λογαριασμός εγκρίθηκε"
 
 #: templates/registration/admin_approve_complete.html:8
 msgid "The user's account is now approved."
-msgstr ""
+msgstr "Ο λογαριασμός του χρήστη εγκρίθηκε."
 
 #: templates/registration/admin_approve_complete_email.html:6
 msgid "admin approval"
-msgstr ""
+msgstr "— έγκριση διαχειριστή"
 
 #: templates/registration/admin_approve_complete_email.html:11
 msgid ""
@@ -201,16 +216,22 @@ msgid ""
 "    Your account is now approved. You can \n"
 "    "
 msgstr ""
+"\n"
+"    Ο λογαριασμός σας έχει εγκριθεί. Μπορείτε να \n"
+"    "
 
 #: templates/registration/admin_approve_complete_email.html:14
 msgid "log in."
-msgstr ""
+msgstr "πραγματοποιήσετε είσοδο."
 
 #: templates/registration/admin_approve_complete_email.txt:2
 msgid ""
 "\n"
 "Your account is now approved. You can log in using the following link\n"
 msgstr ""
+"\n"
+"Ο λογαριασμός σας εγκρίθηκε. Μπορείτε τώρα να πραγματοποιήσετε είσοδο\n"
+"με τον παρακάτω σύνδεσμο\n"
 
 #: templates/registration/admin_approve_email.html:11
 #, python-format
@@ -220,6 +241,10 @@ msgid ""
 "    %(site_name)s.\n"
 "    "
 msgstr ""
+"\n"
+"    Ο παρακάτω χρήστης (%(user)s) ζήτησε να καταχωρήσει λογαριασμό στο\n"
+"    %(site_name)s.\n"
+"    "
 
 #: templates/registration/admin_approve_email.html:17
 msgid ""
@@ -227,10 +252,13 @@ msgid ""
 "    To approve this, please\n"
 "    "
 msgstr ""
+"\n"
+"    Για να εγκρίνετε, παρακαλώ\n"
+"    "
 
 #: templates/registration/admin_approve_email.html:20
 msgid "click here"
-msgstr ""
+msgstr "κλικ εδώ"
 
 #: templates/registration/admin_approve_email.txt:2
 #, python-format
@@ -239,94 +267,91 @@ msgid ""
 "The following user (%(user)s) has asked to register an account at\n"
 "%(site_name)s.\n"
 msgstr ""
+"\n"
+"Ο παρακάτω χρήστης (%(user)s) ζήτησε να καταχωρήσει λογαριασμό στο\n"
+"%(site_name)s.\n"
 
 #: templates/registration/admin_approve_email.txt:6
 msgid ""
 "\n"
 "To approve this, please click the following link.\n"
 msgstr ""
+"\n"
+"Για να εγκρίνετε, παρακαλώ ακολουθήστε τον παρακάτω σύνδεσμο.\n"
 
 #: templates/registration/admin_approve_email_subject.txt:1
 msgid "Account approval on"
-msgstr ""
+msgstr "Έγκριση λογαριασμού στο"
 
 #: templates/registration/login.html:4 templates/registration/login.html:10
 msgid "Log in"
-msgstr ""
+msgstr "Είσοδος"
 
 #: templates/registration/login.html:14
 msgid "Forgot your password?"
-msgstr ""
+msgstr "Ξεχάσατε το συνθηματικό;"
 
 #: templates/registration/login.html:14
 msgid "Reset it"
-msgstr ""
+msgstr "Επαναφορά"
 
 #: templates/registration/login.html:15
 msgid "Not a member?"
-msgstr ""
+msgstr "Δεν έχετε λογαριασμό;"
 
 #: templates/registration/login.html:15
 msgid "Register"
-msgstr ""
+msgstr "Εγγραφή"
 
 #: templates/registration/logout.html:4
 msgid "Logged out"
-msgstr ""
+msgstr "Αποσυνδεθήκατε"
 
 #: templates/registration/logout.html:7
 msgid "Successfully logged out"
-msgstr ""
+msgstr "Αποσυνδεθήκατε επιτυχώς"
 
 #: templates/registration/password_change_done.html:4
-#, fuzzy
-#| msgid "password (again)"
 msgid "Password changed"
-msgstr "συνθηματικό (ξανά)"
+msgstr "Το συνθηματικό άλλαξε"
 
 #: templates/registration/password_change_done.html:7
 msgid "Password successfully changed!"
-msgstr ""
+msgstr "Το συνθηματικό άλλαξε επιτυχώς"
 
 #: templates/registration/password_change_form.html:4
 #: templates/registration/password_change_form.html:10
-#, fuzzy
-#| msgid "password"
 msgid "Change password"
-msgstr "συνθηματικό"
+msgstr "Αλλαγή συνθηματικού"
 
 #: templates/registration/password_reset_complete.html:4
 msgid "Password reset complete"
-msgstr ""
+msgstr "Ολοκλήρωση επαναφοράς συνθηματικού"
 
 #: templates/registration/password_reset_complete.html:8
 msgid "Your password has been reset!"
-msgstr ""
+msgstr "Το νέο συνθηματικό σας είναι έτοιμο."
 
 #: templates/registration/password_reset_complete.html:9
 #, python-format
 msgid "You may now <a href=\"%(login_url)s\">log in</a>"
-msgstr ""
+msgstr "Μπορείτε τώρα να <a href=\"%(login_url)s\">πραγματοποιήσετε είσοδο</a>"
 
 #: templates/registration/password_reset_confirm.html:10
 msgid "Confirm password reset"
-msgstr ""
+msgstr "Επιβεβαίωση ορισμού νέου συνθηματικού"
 
 #: templates/registration/password_reset_confirm.html:14
 msgid "Enter your new password below to reset your password:"
-msgstr ""
+msgstr "Προσδιορίστε νέο συνθηματικό:"
 
 #: templates/registration/password_reset_confirm.html:18
-#, fuzzy
-#| msgid "password"
 msgid "Set password"
-msgstr "συνθηματικό"
+msgstr "Ορισμός συνθηματικού"
 
 #: templates/registration/password_reset_done.html:4
-#, fuzzy
-#| msgid "password"
 msgid "Password reset"
-msgstr "συνθηματικό"
+msgstr "Επαναφορά συνθηματικού"
 
 #: templates/registration/password_reset_done.html:8
 msgid ""
@@ -336,10 +361,14 @@ msgid ""
 "    your email and click the link to continue.\n"
 "    "
 msgstr ""
+"\n"
+"    Σας στείλαμε email με σύνδεσμο για ορισμό νέου συνθηματικού.\n"
+"    Ελέγξτε το email σας και ακολουθήστε το σύνδεσμο.\n"
+"    "
 
 #: templates/registration/password_reset_email.html:3
 msgid "Greetings"
-msgstr ""
+msgstr "Γεια σας"
 
 #: templates/registration/password_reset_email.html:5
 #, python-format
@@ -349,6 +378,10 @@ msgid ""
 "requested that your password be reset on the %(domain)s site. If you do not\n"
 "wish to reset your password, please ignore this message.\n"
 msgstr ""
+"\n"
+"Λαμβάνετε αυτό το email γιατί ζητήσατε να οριστεί νέο συνθηματικό\n"
+"στον ιστότοπο %(domain)s. Αν δεν θέλετε να ορίσετε νέο συνθηματικό,\n"
+"αγνοήστε αυτό το μήνυμα.\n"
 
 #: templates/registration/password_reset_email.html:11
 msgid ""
@@ -357,25 +390,26 @@ msgid ""
 "it\n"
 "into your web browser:\n"
 msgstr ""
+"\n"
+"Για να ορίσετε νέο συνθηματικό, ακολουθήστε τον παρακάτω σύνδεσμο\n"
+"ή αντιγράψτε τον στον περιηγητή σας:\n"
 
 #: templates/registration/password_reset_email.html:20
 msgid "Your username, in case you've forgotten:"
-msgstr ""
+msgstr "Το όνομα χρήστη σας, σε περίπτωση που το ξεχάσατε:"
 
 #: templates/registration/password_reset_email.html:23
 msgid "Best regards"
-msgstr ""
+msgstr "Χαιρετισμούς"
 
 #: templates/registration/password_reset_email.html:24
 msgid "Management"
-msgstr ""
+msgstr "— Η διαχείριση"
 
 #: templates/registration/password_reset_form.html:4
 #: templates/registration/password_reset_form.html:15
-#, fuzzy
-#| msgid "password"
 msgid "Reset password"
-msgstr "συνθηματικό"
+msgstr "Επαναφορά συνθηματικού"
 
 #: templates/registration/password_reset_form.html:8
 msgid ""
@@ -384,39 +418,39 @@ msgid ""
 "you instructions for creating a new one.\n"
 "    "
 msgstr ""
+"\n"
+"    Ξεχάσατε το συνθηματικό; Προσδιορίστε το email σας και θα σας στείλουμε "
+"οδηγίες για να ορίσετε νέο.\n"
+"    "
 
 #: templates/registration/registration_closed.html:4
-#, fuzzy
-#| msgid "registration profile"
 msgid "Registration is closed"
-msgstr "προφίλ εγγραφής"
+msgstr "Δεν γίνονται εγγραφές"
 
 #: templates/registration/registration_closed.html:7
 msgid "Sorry, but registration is closed at this moment. Come back later."
-msgstr ""
+msgstr "Δεν επιτρέπονται εγγραφές επί του παρόντος. Δοκιμάστε αργότερα."
 
 #: templates/registration/registration_complete.html:4
-#, fuzzy
-#| msgid "activation key"
 msgid "Activation email sent"
-msgstr "κλειδί ενεργοποίησης"
+msgstr "Εστάλη το email για ενεργοποίηση"
 
 #: templates/registration/registration_complete.html:7
 msgid "Please check your email to complete the registration process."
-msgstr ""
+msgstr "Ελέγξτε το email σας για να ολοκληρώσετε τη διαδικασία εγγραφής."
 
 #: templates/registration/registration_form.html:4
 msgid "Register for an account"
-msgstr ""
+msgstr "Εγγραφή"
 
 #: templates/registration/registration_form.html:10
 #: templates/registration/resend_activation_form.html:10
 msgid "Submit"
-msgstr ""
+msgstr "Υποβολή"
 
 #: templates/registration/resend_activation_complete.html:4
 msgid "Account Activation Resent"
-msgstr ""
+msgstr "Το email ενεργοποίησης εστάλη εκ νέου"
 
 #: templates/registration/resend_activation_complete.html:8
 #, python-format
@@ -425,25 +459,10 @@ msgid ""
 "  We have sent an email to %(email)s with further instructions.\n"
 "  "
 msgstr ""
+"\n"
+"  Στείλαμε email με οδηγίες στο %(email)s.\n"
+"  "
 
 #: templates/registration/resend_activation_form.html:4
 msgid "Resend Activation Email"
-msgstr ""
-
-#~ msgid "username"
-#~ msgstr "όνομα χρήστη"
-
-#~ msgid "email address"
-#~ msgstr "διεύθυνση ηλεκτρονικού ταχυδρομείου"
-
-#~ msgid "Usernames can only contain letters, numbers and underscores"
-#~ msgstr ""
-#~ "Τα ονόματα χρηστών μπορούν να περιλαμβάνουν μόνο γράμματα, αριθμούς και "
-#~ "υπογραμμίσεις"
-
-#~ msgid "This username is already taken. Please choose another."
-#~ msgstr ""
-#~ "Αυτό το όνομα χρήστη χρησιμοποίειται ήδη. Παρακαλώ διαλέξτε ένα άλλο."
-
-#~ msgid "You must type the same password each time"
-#~ msgstr "Πρέπει να εισάγετε το ίδιο συνθηματικό κάθε φορά"
+msgstr "Εκ νέου αποστολή του email ενεργοποίησης"
