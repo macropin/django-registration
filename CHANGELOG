@@ -2,8 +2,14 @@
 django-registration-redux changelog
 ===================================
 
-Version 2.8, TBD
+Version 2.9, TBD
 ----------------
+
+
+Version 2.8, 7 May, 2020
+----------------
+* Feature: Greek translations -  `#381
+<https://github.com/macropin/django-registration/pull/381>_`
 
 Version 2.7, 4 January, 2020
 ----------------
