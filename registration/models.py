@@ -21,10 +21,10 @@ from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
 from django.utils.module_loading import import_string
 from django.utils.timezone import now as datetime_now
-from django.utils.translation import ugettext_lazy as _
 
 from .users import UserModel
 from .users import UserModelString
+from .utils import _
 
 # Compatibility decorator removed in Django 3
 if DJANGO_VERSION[0] < 3:

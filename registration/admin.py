@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.contrib.sites.shortcuts import get_current_site
-from django.utils.translation import ugettext_lazy as _
 
 from .models import RegistrationProfile
 from .users import UsernameField
+from .utils import _
 
 
 class RegistrationAdmin(admin.ModelAdmin):
