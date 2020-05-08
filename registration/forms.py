@@ -16,7 +16,6 @@ from .users import UserModel
 from .users import UsernameField
 from .utils import _
 
-
 User = UserModel()
 
 
