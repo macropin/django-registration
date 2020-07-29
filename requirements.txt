@@ -1,5 +1,5 @@
 -rtest-requirements.txt
 Sphinx
 twine
-pytest==5.4.3
+pytest>3.2.1
 Django>1.11
