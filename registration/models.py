@@ -161,10 +161,7 @@ class RegistrationManager(models.Manager):
                 # again. If the User is active, return the User. Else,
                 # return False as the User has been deactivated by a site
                 # administrator.
-                if profile.user.is_active:
-                    return (profile.user, False)
-                else:
-                    return (profile.user, False)
+                return (profile.user, False)
 
             if not profile.activation_key_expired():
                 return (self._activate(profile, site, get_profile), True)
@@ -296,7 +293,7 @@ class RegistrationManager(models.Manager):
                     profile.delete()
                     user.delete()
             except UserModel().DoesNotExist:
-                logger.warning('Deleting expired Registration profile'.format(profile))
+                logger.warning('Deleting expired Registration profile {}'.format(profile))
                 profile.delete()
 
 
