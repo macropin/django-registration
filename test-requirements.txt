@@ -1,6 +1,6 @@
 flake8
 coveralls
-isort
+isort==4.3.21
 tox-travis
 invoke==0.12.2
 docutils==0.13.1
