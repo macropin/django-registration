@@ -1,8 +1,8 @@
 flake8
 coveralls
-isort
+isort==4.3.21
 tox-travis
 invoke==0.12.2
 docutils==0.13.1
 mock
-pytest-django==3.4.8
+pytest-django==3.9.0
