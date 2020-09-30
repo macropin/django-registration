@@ -8,7 +8,7 @@ source = registration
 
 [report]
 exclude_lines =
-  # Have to re-enable the standard pragma
+  # Have to re-enable the standard pragma with no cover
   pragma: no cover
   
   # Don't complain if tests don't hit defensive assertion code:
