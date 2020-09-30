@@ -98,6 +98,11 @@ For example, `django-allauth <http://www.intenct.nl/projects/django-allauth/>`_
 is an alternative to django-registration-redux that provides user registration
 in addition to social authentication and email address management.
 
+Django Auth and User libraries are provided by django for user registration,login,logout,change password and other basic fregistration based features.
+These can be cutomised as per requirements.
+Some references include : https://techwithtim.net/tutorials/django/user-registration/
+                          https://docs.djangoproject.com/en/3.1/topics/auth/default/
+
 License
 -------
 
