@@ -108,3 +108,7 @@ Django-registration-redux is licensed under `BSD License`.
 .. _`available online`: https://django-registration-redux.readthedocs.org/
 .. _`raise them here`: https://github.com/macropin/django-registration/issues
 .. _`CHANGELOG`: https://github.com/macropin/django-registration/blob/master/CHANGELOG
+
+RESOURCES FOR LEARNING:
+1: https://www.youtube.com/watch?v=JxzZxdht-XY
+2: https://www.youtube.com/watch?v=rfscVS0vtbw
