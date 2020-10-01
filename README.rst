@@ -50,7 +50,10 @@ directory somewhere on your Python path, or symlink to it from
 somewhere on your Python path; this is useful if you're working from a
 Git checkout.
 
-Note that this application requires Python 2.7/3.5 or later, and a
+Notice
+------
+
+This application requires Python 2.7/3.5 or later, and a
 functional installation of Django 1.11 or newer.
 
 If you are running on Django <=1.11, you can install a previous version of
