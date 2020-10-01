@@ -1,5 +1,5 @@
 .. -*-restructuredtext-*-
-
+logr - An Amazing superb Project
 :Description: Django-registration provides user registration functionality for Django websites.
 :maintainers: Macropin_, DiCato_, and joshblum_
 :contributors: `list of contributors <https://github.com/macropin/django-registration/graphs/contributors>`_
