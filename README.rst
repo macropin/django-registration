@@ -24,7 +24,7 @@
 .. image:: https://img.shields.io/pypi/pyversions/django-registration-redux.svg
     :target: https://pypi.python.org/pypi/django-registration-redux
 
-If you have issues with the "django-registration-redux" package then please `raise them here`_.
+If you have issues with the "django-registration-redux" package then please 'raise them here'_.
 
 This is a fairly simple user-registration application for Django, designed to
 make allowing user signups as painless as possible. It requires a functional
@@ -45,7 +45,7 @@ To install it manually, run the following command inside this source directory::
     python setup.py install
 
 
-Or if you'd prefer you can simply place the included ``registration``
+Or if you'd prefer you can simply place the included "registration"
 directory somewhere on your Python path, or symlink to it from
 somewhere on your Python path; this is useful if you're working from a
 Git checkout.
@@ -54,8 +54,8 @@ Note that this application requires Python 2.7/3.5 or later, and a
 functional installation of Django 1.11 or newer.
 
 If you are running on Django <=1.11, you can install a previous version of
-`django-registration-redux`, which supports older versions of Django. See the
-`CHANGELOG`_ for support details. Older versions will receive minor bug fixes as
+'django-registration-redux', which supports older versions of Django. See the
+'CHANGELOG'_ for support details. Older versions will receive minor bug fixes as
 needed, but are no longer actively developed::
 
     pip install django-registration-redux==1.10
@@ -68,8 +68,8 @@ To get started with development, first install the required packages::
 
     make installdeps
 
-For convenience a ``Makefile`` is included which wraps the Python `invoke
-<http://www.pyinvoke.org/>`_ library. Once you work on a patch, you can test
+For convenience a "Makefile" is included which wraps the Python 'invoke
+<http://www.pyinvoke.org/>'_ library. Once you work on a patch, you can test
 the functionality by running::
 
     make test
@@ -78,8 +78,8 @@ Or equivalently::
 
     invoke test
 
-Command line arguments can be passed to the ``invoke`` script through the
-``Makefile`` via the ``ARGS`` parameter. For example::
+Command line arguments can be passed to the "invoke" script through the
+"Makefile" via the "ARGS" parameter. For example::
 
     make build ARGS=--docs
 
