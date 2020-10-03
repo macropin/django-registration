@@ -234,6 +234,8 @@ emails, all of these are rendered using a ``RequestContext`` and so will also
 receive any additional variables provided by `context processors
 <http://docs.djangoproject.com/en/dev/ref/templates/api/#id1>`_.
 
+.. _registration/registration_form.html:
+
 **registration/registration_form.html**
 
 Used to show the form users will fill out to register. By default, has
@@ -245,12 +247,16 @@ the following context:
     <http://docs.djangoproject.com/en/dev/topics/forms/>`_ for
     information on how to display this in a template.
 
+.. _registration/registration_complete.html:
+
 **registration/registration_complete.html**
 
 Used after successful completion of the registration form. This
 template has no context variables of its own, and should simply inform
 the user that an email containing account-activation information has
 been sent.
+
+.. _registration/activate.html:
 
 **registration/activate.html**
 
@@ -259,11 +265,15 @@ Used if account activation fails. With the default setup, has the following cont
 ``activation_key``
     The activation key used during the activation attempt.
 
+.. _registration/activation_complete.html:
+
 **registration/activation_complete.html**
 
 Used after successful account activation. This template has no context
 variables of its own, and should simply inform the user that their
 account is now active.
+
+.. _registration/activation_email_subject.txt:
 
 **registration/activation_email_subject.txt**
 
@@ -288,6 +298,8 @@ being used. This template has the following context:
     documentation for the Django sites framework
     <http://docs.djangoproject.com/en/dev/ref/contrib/sites/>`_ for
     details regarding these objects' interfaces.
+
+.. _registration/activation_email.txt:
 
 **registration/activation_email.txt**
 
@@ -319,6 +331,8 @@ following context:
 ``user``
     The new user account
 
+.. _registration/activation_email.html:
+
 **registration/activation_email.html**
 
 This template is used to generate the html body of the activation email.
@@ -326,6 +340,7 @@ Should display the same content as the text version of the activation email.
 
 The context available is the same as the text version of the template.
 
+.. _registration/admin_approve_email_subject.txt:
 
 **registration/admin_approve_email_subject.txt**
 
@@ -343,6 +358,8 @@ being used. This template has the following context:
     documentation for the Django sites framework
     <http://docs.djangoproject.com/en/dev/ref/contrib/sites/>`_ for
     details regarding these objects' interfaces.
+
+.. _registration/admin_approve_email.txt:
 
 **registration/admin_approve_email.txt**
 
@@ -367,6 +384,8 @@ This template has the following context:
     <http://docs.djangoproject.com/en/dev/ref/contrib/sites/>`_ for
     details regarding these objects' interfaces.
 
+.. _registration/admin_approve_email.html:
+
 **registration/admin_approve_email.html**
 
 This template is used to generate the html body of the approval email sent to
@@ -375,11 +394,15 @@ Should display the same content as the text version of the approval email.
 
 The context available is the same as the text version of the template.
 
+.. _registration/admin_approve_complete.html:
+
 **registration/admin_approve_complete.html**
 
 Used after successful account approval. This template has no context
 variables of its own, and should simply inform the admin that the user
 account is now approved.
+
+.. _registration/admin_approve_complete_email_subject.txt:
 
 **registration/admin_approve_complete_email_subject.txt**
 
@@ -397,6 +420,8 @@ being used. This template has the following context:
     documentation for the Django sites framework
     <http://docs.djangoproject.com/en/dev/ref/contrib/sites/>`_ for
     details regarding these objects' interfaces.
+
+.. _registration/admin_approve_complete_email.txt:
 
 **registration/admin_approve_complete_email.txt**
 
@@ -417,6 +442,7 @@ This template has the following context:
     <http://docs.djangoproject.com/en/dev/ref/contrib/sites/>`_ for
     details regarding these objects' interfaces.
 
+.. _registration/admin_approve_complete_email.html:
 
 **registration/admin_approve_complete_email.html**
 

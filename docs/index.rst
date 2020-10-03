@@ -47,6 +47,7 @@ Contents:
    admin-approval-backend
    forms
    views
+   urls
    signals
    faq
 
