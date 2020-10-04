@@ -4,7 +4,7 @@
 Registration urls
 ==================
 
-If you do not wish to configure all of your own URLs for the various registration views, there are several default definitions that you can include in your `urls.py` file.
+If you do not wish to configure all of your own URLs for the various registration views, there are several default definitions that you can include in your ``urls.py`` file.
 
 There is an URL file for :ref:`each of the default backends <basic-urls>`. These files provide all the URLs that you will need for normal interaction.
 
@@ -46,10 +46,10 @@ These URLs are provided by any of the following:
 
 **register/**
  * View: :py:class:`registration.views.RegistrationView`
- * Template: :ref:`registration_form.html <registration/registration_form.html>`
+ * Template: :ref:`registration_form.html`
 
 **register/closed/**
- * Template: :ref:`registration_closed.html <registration/registration_closed.html>`
+ * Template: :ref:`registration_closed.html`
 
 .. _authentication-urls:
 
@@ -59,18 +59,18 @@ Authentication URLs
 Provided by ``registration.auth_urls``, or any of the above includes.
 
 **activate/complete/**
- * Template: :ref:`activation_complete.html <registration/activation_complete.html>`
+ * Template: :ref:`activation_complete.html`
 
 **activate/resend/**
  * View: :py:class:`registration.views.ResendActivationView`
- * Template: :ref:`resend_activation_complete.html <registration/resend_activation_complete.html>`
+ * Template: :ref:`resend_activation_complete.html`
 
 **activate/{key}/**
  * View: :py:class:`registration.views.ActivationView`
- * Template: :ref:`activate.html <registration/activate.html>`
+ * Template: :ref:`activate.html`
 
 **register/complete/**
- * Template: :ref:`registration_complete.html <registration/registration_complete.html>`
+ * Template: :ref:`registration_complete.html`
 
 Admin approval backend
 ~~~~~~~~~~~~~~~~~~~~~~
