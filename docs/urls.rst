@@ -6,6 +6,12 @@ Registration urls
 
 If you do not wish to configure all of your own URLs for the various registration views, there are several default definitions that you can include in your `urls.py` file.
 
+There is an URL file for :ref:`each of the default backends <basic-urls>`. These files provide all the URLs that you will need for normal interaction.
+
+If you wish to include just the authentication URLs, either because you want to expose them under a different path, or because you want to manually configure the URLs for the other views, there is a separate :ref:`include for that <authentication-urls>`.
+
+.. _basic-urls:
+
 Basic URLs
 ~~~~~~~~~~
 
@@ -15,28 +21,28 @@ These URLs are provided by any of the following:
  * ``registration.backends.simple.urls``
 
 **login/**
- * View: `django.contrib.auth.views.LoginView`
+ * View: ``django.contrib.auth.views.LoginView``
 
 **logout/**
- * View: `django.contrib.auth.views.LogoutView`
+ * View: ``django.contrib.auth.views.LogoutView``
 
 **password/change/**
- * View: `django.contrib.auth.views.PasswordChangeDoneView`
+ * View: ``django.contrib.auth.views.PasswordChangeDoneView``
 
 **password/change/done/**
- * View: `django.contrib.auth.views.PasswordResetView`
+ * View: ``django.contrib.auth.views.PasswordResetView``
 
 **password/reset/**
- * View: `django.contrib.auth.views.PasswordResetView`
+ * View: ``django.contrib.auth.views.PasswordResetView``
 
 **password/reset/complete/**
- * View: `django.contrib.auth.views.PasswordResetCompleteView`
+ * View: ``django.contrib.auth.views.PasswordResetCompleteView``
 
 **password/reset/done/**
- * View: `django.contrib.auth.views.PasswordResetDoneView`
+ * View: ``django.contrib.auth.views.PasswordResetDoneView``
 
 **password/reset/confirm/{token}/**
- * View: `django.contrib.auth.views.PasswordResetConfirmView`
+ * View: ``django.contrib.auth.views.PasswordResetConfirmView``
 
 **register/**
  * View: :py:class:`registration.views.RegistrationView`
@@ -45,7 +51,9 @@ These URLs are provided by any of the following:
 **register/closed/**
  * Template: :ref:`registration_closed.html <registration/registration_closed.html>`
 
-Authentication views
+.. _authentication-urls:
+
+Authentication URLs
 ~~~~~~~~~~~~~~~~~~~~
 
 Provided by ``registration.auth_urls``, or any of the above includes.
@@ -67,9 +75,9 @@ Provided by ``registration.auth_urls``, or any of the above includes.
 Admin approval backend
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Provided by `registration.backends.admin_approval.urls`
+This URL is only provided by ``registration.backends.admin_approval.urls``.
 
 **approve/{profile}/**
  * View: :py:class:`registration.backends.admin_approval.views.ApprovalView`
- * Template: `registration/admin_approve.html`
+ * Template: ``registration/admin_approve.html``
 
