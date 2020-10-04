@@ -256,6 +256,12 @@ template has no context variables of its own, and should simply inform
 the user that an email containing account-activation information has
 been sent.
 
+.. _registration/registration_closed.html:
+
+**registration/registration_closed.html**
+
+Used when new account registration has been closed by an administrator.
+
 .. _registration/activate.html:
 
 **registration/activate.html**
@@ -272,6 +278,16 @@ Used if account activation fails. With the default setup, has the following cont
 Used after successful account activation. This template has no context
 variables of its own, and should simply inform the user that their
 account is now active.
+
+.. _registration/resend_activation_complete.html:
+
+**registration/resend_activation_complete.html**
+
+Used after form for resending account activation is submitted. By default has
+the following context:
+
+``email``
+    The email address submitted in the resend activation form.
 
 .. _registration/activation_email_subject.txt:
 

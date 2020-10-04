@@ -43,7 +43,7 @@ These URLs are provided by any of the following:
  * Template: :ref:`registration_form.html <registration/registration_form.html>`
 
 **register/closed/**
- * Template: `registration/registration_closed.html`
+ * Template: :ref:`registration_closed.html <registration/registration_closed.html>`
 
 Authentication views
 ~~~~~~~~~~~~~~~~~~~~
@@ -55,7 +55,7 @@ Provided by ``registration.auth_urls``, or any of the above includes.
 
 **activate/resend/**
  * View: :py:class:`registration.views.ResendActivationView`
- * Template: `registration/resend_activation_complete.html`
+ * Template: :ref:`resend_activation_complete.html <registration/resend_activation_complete.html>`
 
 **activate/{key}/**
  * View: :py:class:`registration.views.ActivationView`
@@ -63,9 +63,6 @@ Provided by ``registration.auth_urls``, or any of the above includes.
 
 **register/complete/**
  * Template: :ref:`registration_complete.html <registration/registration_complete.html>`
-
-**register/closed/**
- * Template: `registration/registration_closed.html`
 
 Admin approval backend
 ~~~~~~~~~~~~~~~~~~~~~~
