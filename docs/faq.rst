@@ -166,20 +166,23 @@ Tips and tricks
 	For example, if your email template is ``registration/password_reset_email.html``,
 	your ``urls.py`` could look like::
 
-	    from django.conf.urls import url, include
+	    from django.conf.urls import include
 	    from django.contrib.auth import views as auth_views
-	    from django.urls import reverse_lazy
+	    from django.urls import path, reverse_lazy
 	
-	    url(r'^password/reset/$',
+	    path(
+	        'password/reset/',
 	        auth_views.PasswordResetView.as_view(
-                    success_url=reverse_lazy('auth_password_reset_done'),
-		    html_email_template_name='registration/password_reset_email.html'
-	     ), name='auth_password_reset'),
+	            success_url=reverse_lazy('auth_password_reset_done'),
+	            html_email_template_name='registration/password_reset_email.html'
+	        ),
+	        name='auth_password_reset',
+	    ),
 
 	    # other url patterns
 
 	    # last the default registration backends
-	    url(r'', include('registration.backends.default.urls')),
+	    path('', include('registration.backends.default.urls')),
 	
 	We provide default HTML templates in the 
 	``registration/templates/registration`` directory.

@@ -1,28 +1,28 @@
 from django.conf.urls import include
-from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.urls import path
 from django.views.generic import TemplateView
 
 urlpatterns = [
 
-    url(r'^$',
+    path('',
         TemplateView.as_view(template_name='index.html'),
         name='index'),
 
-    url(r'^accounts/',
+    path('accounts/',
         include('registration.backends.default.urls')),
 
-    url(r'^accounts/profile/',
+    path('accounts/profile/',
         TemplateView.as_view(template_name='profile.html'),
         name='profile'),
 
-    url(r'^login/$',
+    path('login/',
         auth_views.LoginView.as_view(
             template_name='registration/login.html'),
         name='login'),
 
-    url(r'^admin/',
+    path('admin/',
         admin.site.urls,
         name='admin'),
 ]
