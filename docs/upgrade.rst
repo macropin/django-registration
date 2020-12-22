@@ -12,13 +12,18 @@ between versions you should refer to the `CHANGELOG
 Django version requirement
 --------------------------
 
-As of |version|, |project| requires Django 1.11 or newer;
+As of |version|, |project| requires Django 2.0 or newer;
 older Django releases may work, but are officially unsupported. Additionally,
-|project| officially supports Python 2.7, 3.5, 3.6, 3.7 and 3.8.
+|project| officially supports Python 3.5, 3.6, 3.7 and 3.8.
 
 
 Backwards-incompatible changes
 ------------------------------
+
+Version 2.9
+```````````
+
+- Removed support for Django 1.11 and Python 2.7.
 
 Version 2.8
 ```````````

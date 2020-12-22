@@ -4,7 +4,8 @@ django-registration-redux changelog
 
 Version 2.9, TBD
 ----------------
-
+* BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Django 1.11 and Python 2.7.
+* Feature: Django 3.1 support.
 
 Version 2.8, 7 May, 2020
 ----------------

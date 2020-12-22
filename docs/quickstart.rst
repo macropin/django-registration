@@ -5,7 +5,7 @@ Quick start guide
 
 Before installing |project|, you'll need to have a copy of
 `Django <http://www.djangoproject.com>`_ already installed. For the
-|version| release, Django 1.11 or newer is required.
+|version| release, Django 2.0 or newer is required.
 
 For further information, consult the `Django download page
 <http://www.djangoproject.com/download/>`_, which offers convenient
@@ -200,7 +200,7 @@ in your project's root URL configuration. For example, to place the
 URLs under the prefix ``/accounts/``, you could add the following to
 your project's root ``URLconf``::
 
-    url(r'^accounts/', include('registration.backends.default.urls')),
+    path('accounts/', include('registration.backends.default.urls')),
 
 Users would then be able to register by visiting the URL
 ``/accounts/register/``, login (once activated) at

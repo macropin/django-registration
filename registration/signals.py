@@ -4,13 +4,13 @@ from django.contrib.auth import login
 from django.dispatch import Signal
 
 # An admin has approved a user's account
-user_approved = Signal(providing_args=["user", "request"])
+user_approved = Signal()
 
 # A new user has registered.
-user_registered = Signal(providing_args=["user", "request"])
+user_registered = Signal()
 
 # A user has activated his or her account.
-user_activated = Signal(providing_args=["user", "request"])
+user_activated = Signal()
 
 
 def login_user(sender, user, request, **kwargs):
