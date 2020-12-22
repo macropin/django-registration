@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from django.contrib.admin import helpers
 from django.core import mail
 from django.test import TestCase

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 # django-registration documentation build configuration file, created by
 # sphinx-quickstart on Mon Jun 22 02:57:42 2009.
 #
