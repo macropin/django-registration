@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import datetime
 import hashlib
 import logging
@@ -7,7 +5,6 @@ import re
 import string
 import warnings
 
-from django import VERSION as DJANGO_VERSION
 from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
@@ -25,14 +22,6 @@ from django.utils.timezone import now as datetime_now
 from .users import UserModel
 from .users import UserModelString
 from .utils import _
-
-# Compatibility decorator removed in Django 3
-if DJANGO_VERSION[0] < 3:
-    from django.utils.encoding import python_2_unicode_compatible
-else:
-    def python_2_unicode_compatible(c):
-        return c
-
 
 logger = logging.getLogger(__name__)
 
@@ -297,7 +286,6 @@ class RegistrationManager(models.Manager):
                 profile.delete()
 
 
-@python_2_unicode_compatible
 class RegistrationProfile(models.Model):
     """
     A simple profile which stores an activation key for use during

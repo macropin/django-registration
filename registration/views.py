@@ -50,7 +50,7 @@ class RegistrationView(FormView):
 
         if not self.registration_allowed():
             return redirect(self.disallowed_url)
-        return super(RegistrationView, self).dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         new_user = self.register(form)
@@ -86,7 +86,7 @@ class RegistrationView(FormView):
         Use the new user when constructing success_url.
 
         """
-        return super(RegistrationView, self).get_success_url()
+        return super().get_success_url()
 
 
 class ActivationView(TemplateView):
@@ -107,7 +107,7 @@ class ActivationView(TemplateView):
                 return redirect(success_url)
             else:
                 return redirect(to, *args, **kwargs)
-        return super(ActivationView, self).get(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
     def activate(self, *args, **kwargs):
         """
@@ -165,7 +165,7 @@ class ApprovalView(TemplateView):
                 return redirect(success_url)
             else:
                 return redirect(to, *args, **kwargs)
-        return super(ApprovalView, self).get(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
     def approve(self, *args, **kwargs):
         """

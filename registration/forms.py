@@ -7,8 +7,6 @@ needs of custom user models, you will need to write your own forms if
 you're using a custom model.
 
 """
-from __future__ import unicode_literals
-
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
