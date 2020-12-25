@@ -7,7 +7,6 @@ import warnings
 from copy import copy
 from datetime import timedelta
 
-import django
 from django.apps import apps
 from django.conf import settings
 from django.core import mail
@@ -21,14 +20,6 @@ from django.utils.timezone import now as datetime_now
 from registration.models import RegistrationProfile
 from registration.models import SupervisedRegistrationProfile
 from registration.users import UserModel
-
-if django.VERSION[0] < 3:
-    from django.utils.six import text_type, b as six_b
-else:
-    text_type = str
-
-    def six_b(s):
-        return s.encode("latin-1")
 
 Site = apps.get_model('sites', 'Site')
 
@@ -64,7 +55,7 @@ class RegistrationModelTests(TransactionTestCase):
         self.assertEqual(self.registration_profile.objects.count(), 1)
         self.assertEqual(profile.user.id, new_user.id)
         self.assertTrue(re.match('^[a-f0-9]{40,64}$', profile.activation_key))
-        self.assertEqual(text_type(profile),
+        self.assertEqual(str(profile),
                          "Registration information for alice")
 
     def test_activation_email(self):
@@ -409,7 +400,7 @@ class RegistrationModelTests(TransactionTestCase):
         """
         # Due to the way activation keys are constructed during
         # registration, this will never be a valid key.
-        invalid_key = hashlib.sha256(six_b('foo')).hexdigest()
+        invalid_key = hashlib.sha256('foo'.encode('latin-1')).hexdigest()
         _, activated = self.registration_profile.objects.activate_user(
             invalid_key, Site.objects.get_current())
         self.assertFalse(activated)
@@ -632,11 +623,11 @@ class RegistrationModelTests(TransactionTestCase):
 
         def old_method(self, save=True):
             salt = hashlib.sha1(
-                text_type(random.random()).encode('ascii')
+                str(random.random()).encode('ascii')
             ).hexdigest()[:5]
             salt = salt.encode('ascii')
             user_pk = str(self.user.pk)
-            if isinstance(user_pk, text_type):
+            if isinstance(user_pk, str):
                 user_pk = user_pk.encode('utf-8')
             self.activation_key = hashlib.sha1(salt + user_pk).hexdigest()
             if save:
@@ -1035,11 +1026,11 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
 
         def old_method(self, save=True):
             salt = hashlib.sha1(
-                text_type(random.random()).encode('ascii')
+                str(random.random()).encode('ascii')
             ).hexdigest()[:5]
             salt = salt.encode('ascii')
             user_pk = str(self.user.pk)
-            if isinstance(user_pk, text_type):
+            if isinstance(user_pk, str):
                 user_pk = user_pk.encode('utf-8')
             self.activation_key = hashlib.sha1(salt + user_pk).hexdigest()
             if save:
