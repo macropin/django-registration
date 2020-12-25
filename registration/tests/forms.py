@@ -27,9 +27,7 @@ class RegistrationFormTests(TestCase):
             'Enter a valid username. This value may contain only letters, '
             'numbers, and @/./+/-/_ characters.'
         )
-        if django.VERSION < (1, 10):
-            bad_username_error = bad_username_error.replace('numbers,', 'numbers')
-        elif django.VERSION < (3, 0) and six.PY2:
+        if django.VERSION < (3, 0) and six.PY2:
             bad_username_error = bad_username_error.replace('letters', 'English letters')
 
         password_didnt_match_error = "The two password fields didn't match."
