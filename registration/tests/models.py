@@ -628,7 +628,7 @@ class RegistrationModelTests(TransactionTestCase):
             salt = salt.encode('ascii')
             user_pk = str(self.user.pk)
             if isinstance(user_pk, str):
-                user_pk = user_pk.encode('utf-8')
+                user_pk = user_pk.encode()
             self.activation_key = hashlib.sha1(salt + user_pk).hexdigest()
             if save:
                 self.save()
@@ -661,7 +661,7 @@ class RegistrationModelTests(TransactionTestCase):
 
         def old_method(self, save=True):
             random_string = get_random_string(length=32, allowed_chars=string.printable)
-            self.activation_key = hashlib.sha1(random_string.encode('utf-8')).hexdigest()
+            self.activation_key = hashlib.sha1(random_string.encode()).hexdigest()
             if save:
                 self.save()
             return self.activation_key
@@ -1031,7 +1031,7 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
             salt = salt.encode('ascii')
             user_pk = str(self.user.pk)
             if isinstance(user_pk, str):
-                user_pk = user_pk.encode('utf-8')
+                user_pk = user_pk.encode()
             self.activation_key = hashlib.sha1(salt + user_pk).hexdigest()
             if save:
                 self.save()
@@ -1064,7 +1064,7 @@ class SupervisedRegistrationModelTests(RegistrationModelTests):
 
         def old_method(self, save=True):
             random_string = get_random_string(length=32, allowed_chars=string.printable)
-            self.activation_key = hashlib.sha1(random_string.encode('utf-8')).hexdigest()
+            self.activation_key = hashlib.sha1(random_string.encode()).hexdigest()
             if save:
                 self.save()
             return self.activation_key

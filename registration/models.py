@@ -326,7 +326,7 @@ class RegistrationProfile(models.Model):
         random_string = get_random_string(
             length=32, allowed_chars=string.printable)
         self.activation_key = hashlib.sha256(
-            random_string.encode('utf-8')).hexdigest()
+            random_string.encode()).hexdigest()
 
         if save:
             self.save()
