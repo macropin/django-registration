@@ -4,9 +4,6 @@ from django.test import TestCase
 from registration import forms
 from registration.users import UserModel
 
-if django.VERSION[0] < 3:
-    from django.utils import six
-
 
 class RegistrationFormTests(TestCase):
     """
@@ -27,14 +24,9 @@ class RegistrationFormTests(TestCase):
             'Enter a valid username. This value may contain only letters, '
             'numbers, and @/./+/-/_ characters.'
         )
-        if django.VERSION < (1, 10):
-            bad_username_error = bad_username_error.replace('numbers,', 'numbers')
-        elif django.VERSION < (3, 0) and six.PY2:
-            bad_username_error = bad_username_error.replace('letters', 'English letters')
-
         password_didnt_match_error = "The two password fields didn't match."
         if django.VERSION >= (3, 0):
-            password_didnt_match_error = "The two password fields didn\u2019t match."
+            password_didnt_match_error = "The two password fields didn’t match."
 
         invalid_data_dicts = [
             # Non-alphanumeric username.
