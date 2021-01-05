@@ -1,13 +1,10 @@
+from importlib import reload
+
 from django.test import TestCase
 from django.test.utils import override_settings
 
 from registration import forms
 from registration.users import UsernameField
-
-try:
-    from importlib import reload  # Python 3.4+
-except ImportError:
-    pass  # Python 2 reload()
 
 
 @override_settings(AUTH_USER_MODEL='test_app.CustomUser')
