@@ -2,10 +2,18 @@
 django-registration-redux changelog
 ===================================
 
-Version 2.9, TBD
+Version 2.10, TBD
 ----------------
-* BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Django 1.11 and Python 2.7.
+
+Version 2.9, 1 January, 2021
+----------------
+* BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Django 1.11 and Python
+2.7.
 * Feature: Django 3.1 support.
+`#398 <https://github.com/macropin/django-registration/pull/398>_`
+`#399 <https://github.com/macropin/django-registration/pull/399>_`
+`#400 <https://github.com/macropin/django-registration/pull/400>_`
+`#401 <https://github.com/macropin/django-registration/pull/401>_`
 
 Version 2.8, 7 May, 2020
 ----------------
