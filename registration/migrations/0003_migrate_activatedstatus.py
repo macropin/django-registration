@@ -23,6 +23,4 @@ class Migration(migrations.Migration):
         ('registration', '0002_registrationprofile_activated'),
     ]
 
-    operations = [
-        migrations.RunPython(migrate_activated_status)
-    ]
+    operations = [migrations.RunPython(migrate_activated_status, migrations.RunPython.noop)]
