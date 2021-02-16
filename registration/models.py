@@ -274,6 +274,7 @@ class RegistrationManager(models.Manager):
             models.Q(user__is_active=False) | models.Q(user=None),
             activated=False,
         )
+        deleted_count = 0
         for profile in profiles:
             try:
                 if profile.activation_key_expired():
@@ -281,9 +282,12 @@ class RegistrationManager(models.Manager):
                     logger.warning('Deleting expired Registration profile {} and user {}.'.format(profile, user))
                     profile.delete()
                     user.delete()
+                    deleted_count += 1
             except UserModel().DoesNotExist:
                 logger.warning('Deleting expired Registration profile {}'.format(profile))
                 profile.delete()
+                deleted_count += 1
+        return deleted_count
 
 
 class RegistrationProfile(models.Model):
