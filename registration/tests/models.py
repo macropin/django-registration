@@ -423,7 +423,8 @@ class RegistrationModelTests(TransactionTestCase):
             days=settings.ACCOUNT_ACTIVATION_DAYS + 1)
         expired_user.save()
 
-        self.registration_profile.objects.delete_expired_users()
+        deleted_count = self.registration_profile.objects.delete_expired_users()
+        self.assertEqual(deleted_count, 1)
         self.assertEqual(self.registration_profile.objects.count(), 1)
         self.assertRaises(UserModel().DoesNotExist,
                           UserModel().objects.get, username='bob')
@@ -450,7 +451,8 @@ class RegistrationModelTests(TransactionTestCase):
             days=settings.ACCOUNT_ACTIVATION_DAYS + 1)
         user.save()
 
-        self.registration_profile.objects.delete_expired_users()
+        deleted_count = self.registration_profile.objects.delete_expired_users()
+        self.assertEqual(deleted_count, 0)
         self.assertEqual(self.registration_profile.objects.count(), 1)
         self.assertEqual(UserModel().objects.get(username='bob'), user)
 
@@ -473,10 +475,12 @@ class RegistrationModelTests(TransactionTestCase):
             days=settings.ACCOUNT_ACTIVATION_DAYS + 1)
         expired_user.save()
         # Ensure that we cleanup the expired profile even if the user does not
-        # exist
-        expired_user.delete()
+        # exist. We simulate this with raw SQL, calling `expired_user.delete()`
+        # would result in the profile being deleted on cascade.
+        UserModel().objects.raw('DELETE FROM users WHERE username="bob"')
 
-        self.registration_profile.objects.delete_expired_users()
+        deleted_count = self.registration_profile.objects.delete_expired_users()
+        self.assertEqual(deleted_count, 1)
         self.assertEqual(self.registration_profile.objects.count(), 1)
         self.assertRaises(UserModel().DoesNotExist,
                           UserModel().objects.get, username='bob')
@@ -498,7 +502,8 @@ class RegistrationModelTests(TransactionTestCase):
         active_user.is_active = True
         active_user.save()
 
-        self.registration_profile.objects.delete_expired_users()
+        deleted_count = self.registration_profile.objects.delete_expired_users()
+        self.assertEqual(deleted_count, 0)
         self.assertEqual(self.registration_profile.objects.count(), 1)
         self.assertEqual(UserModel().objects.get(username='bob'), active_user)
 
