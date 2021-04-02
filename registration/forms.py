@@ -9,6 +9,9 @@ you're using a custom model.
 """
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import MultipleObjectsReturned
+from django.core.exceptions import ObjectDoesNotExist
+from registration.models import RegistrationProfile
 
 from .users import UserModel
 from .users import UsernameField
@@ -110,3 +113,20 @@ class RegistrationFormNoFreeEmail(RegistrationForm):
 class ResendActivationForm(forms.Form):
     required_css_class = 'required'
     email = forms.EmailField(label=_("E-mail"))
+
+    def clean_email(self):
+        """
+        Validate the supplied email address for various exception in resend activation email.
+
+        """
+        try:
+            profile = RegistrationProfile.objects.get(user__email__iexact=self.cleaned_data['email'])
+            if profile.activated:
+                raise forms.ValidationError(_("This user is already acitivated."))
+            elif profile.activation_key_expired():
+                raise forms.ValidationError(_("This user's activation key was expired."))
+        except ObjectDoesNotExist:
+            raise forms.ValidationError(_("This user doesn't exist."))
+        except MultipleObjectsReturned:
+            raise forms.ValidationError(_("There are multiple users."))
+        return self.cleaned_data['email']
