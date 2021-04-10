@@ -4,6 +4,8 @@ django-registration-redux changelog
 
 Version 2.10, TBD
 ----------------
+* Feature: Django 3.2 support.
+`#416 <https://github.com/macropin/django-registration/pull/416>_`
 
 Version 2.9, 1 January, 2021
 ----------------
