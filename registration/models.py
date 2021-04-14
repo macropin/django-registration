@@ -306,6 +306,8 @@ class RegistrationProfile(models.Model):
     account registration and activation.
 
     """
+    default_auto_field = 'django.db.models.AutoField'
+
     user = models.OneToOneField(
         UserModelString(),
         on_delete=models.CASCADE,
