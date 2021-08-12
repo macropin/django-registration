@@ -29,7 +29,7 @@ msgstr "klucz aktywacyjny"
 
 #: forms.py:36 forms.py:114
 msgid "E-mail"
-msgstr ""
+msgstr "Email"
 
 #: forms.py:52
 msgid "A user with that username already exists."
@@ -88,16 +88,16 @@ msgstr "klucz aktywacyjny"
 #: templates/registration/activation_complete.html:4
 #: templates/registration/activation_complete_admin_pending.html:4
 msgid "Account Activated"
-msgstr ""
+msgstr "Konto aktywne."
 
 #: templates/registration/activation_complete.html:8
 #: templates/registration/activation_complete_admin_pending.html:8
 msgid "Your account is now activated."
-msgstr ""
+msgstr "Twoje konto jest teraz aktywne."
 
 #: templates/registration/activation_complete.html:10
 msgid "You can log in."
-msgstr ""
+msgstr "Możesz się zalogować."
 
 #: templates/registration/activation_complete_admin_pending.html:10
 msgid "Once a site administrator activates your account you can login."
@@ -129,7 +129,12 @@ msgid ""
 "next\n"
 "    %(expiration_days)s days:\n"
 "    "
-msgstr ""
+msgstr  ""
+"\n"
+"    Aby aktywować to konto, kliknij w poniższy link w ciągu "
+"next\n"
+"    %(expiration_days)s dni:\n"
+"    "
 
 #: templates/registration/activation_email.html:30
 #: templates/registration/admin_approve_email.html:23
@@ -165,6 +170,9 @@ msgid ""
 "Sincerely,\n"
 "%(site_name)s Management\n"
 msgstr ""
+"\n"
+"Z pozdrowieniami,\n"
+"% Zarząd (site_name)s \n"
 
 #: templates/registration/activation_email_subject.txt:1
 #: templates/registration/admin_approve_complete_email_subject.txt:1
@@ -225,10 +233,13 @@ msgid ""
 "    To approve this, please\n"
 "    "
 msgstr ""
+"\n"
+"    Aby zatwierdzić, proszę \n"
+"    "
 
 #: templates/registration/admin_approve_email.html:20
 msgid "click here"
-msgstr ""
+msgstr "kliknij"
 
 #: templates/registration/admin_approve_email.txt:2
 #, python-format
@@ -237,6 +248,9 @@ msgid ""
 "The following user (%(user)s) has asked to register an account at\n"
 "%(site_name)s.\n"
 msgstr ""
+"\n"
+"Użytkownik (%(user)s) poprosił o rejestrację konta na stronie:"
+"%(site_name)s.\n"
 
 #: templates/registration/admin_approve_email.txt:6
 msgid ""
@@ -246,27 +260,27 @@ msgstr ""
 
 #: templates/registration/admin_approve_email_subject.txt:1
 msgid "Account approval on"
-msgstr ""
+msgstr "Akceptacja konta"
 
 #: templates/registration/login.html:4 templates/registration/login.html:10
 msgid "Log in"
-msgstr ""
+msgstr "Zaloguj"
 
 #: templates/registration/login.html:14
 msgid "Forgot your password?"
-msgstr ""
+msgstr "Zapomniałeś hasła?"
 
 #: templates/registration/login.html:14
 msgid "Reset it"
-msgstr ""
+msgstr "Zresetuj"
 
 #: templates/registration/login.html:15
 msgid "Not a member?"
-msgstr ""
+msgstr "Nie masz konta?"
 
 #: templates/registration/login.html:15
 msgid "Register"
-msgstr ""
+msgstr "Zarejestruj"
 
 #: templates/registration/logout.html:4
 msgid "Logged out"
@@ -274,7 +288,7 @@ msgstr ""
 
 #: templates/registration/logout.html:7
 msgid "Successfully logged out"
-msgstr ""
+msgstr "Wylogowano"
 
 #: templates/registration/password_change_done.html:4
 #, fuzzy
@@ -284,35 +298,35 @@ msgstr "hasło (ponownie)"
 
 #: templates/registration/password_change_done.html:7
 msgid "Password successfully changed!"
-msgstr ""
+msgstr "Udało się zmienic hasło!"
 
 #: templates/registration/password_change_form.html:4
 #: templates/registration/password_change_form.html:10
 #, fuzzy
 #| msgid "password"
 msgid "Change password"
-msgstr "hasło"
+msgstr "Zmień hasło"
 
 #: templates/registration/password_reset_complete.html:4
 msgid "Password reset complete"
-msgstr ""
+msgstr "Hasło zresetowane"
 
 #: templates/registration/password_reset_complete.html:8
 msgid "Your password has been reset!"
-msgstr ""
+msgstr "Twoje hasło zostaało zresetowane!"
 
 #: templates/registration/password_reset_complete.html:9
 #, python-format
 msgid "You may now <a href=\"%(login_url)s\">log in</a>"
-msgstr ""
+msgstr "Możesz teraz <a href=\"%(login_url)s\">się zalogować</a>"
 
 #: templates/registration/password_reset_confirm.html:10
 msgid "Confirm password reset"
-msgstr ""
+msgstr "Potwierdź reset hasła"
 
 #: templates/registration/password_reset_confirm.html:14
 msgid "Enter your new password below to reset your password:"
-msgstr ""
+msgstr "Wprowaðx ponizej nowe hasło, by zresetować swoje hasło"
 
 #: templates/registration/password_reset_confirm.html:18
 #, fuzzy
