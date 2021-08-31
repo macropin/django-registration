@@ -132,7 +132,7 @@ msgid ""
 msgstr  ""
 "\n"
 "    Aby aktywować to konto, kliknij w poniższy link w ciągu "
-"next\n"
+"kolejnych\n"
 "    %(expiration_days)s dni:\n"
 "    "
 
@@ -313,12 +313,12 @@ msgstr "Hasło zresetowane"
 
 #: templates/registration/password_reset_complete.html:8
 msgid "Your password has been reset!"
-msgstr "Twoje hasło zostaało zresetowane!"
+msgstr "Twoje hasło zostało zresetowane!"
 
 #: templates/registration/password_reset_complete.html:9
 #, python-format
 msgid "You may now <a href=\"%(login_url)s\">log in</a>"
-msgstr "Możesz teraz <a href=\"%(login_url)s\">się zalogować</a>"
+msgstr "Możesz się teraz <a href=\"%(login_url)s\">zalogować</a>"
 
 #: templates/registration/password_reset_confirm.html:10
 msgid "Confirm password reset"
@@ -326,7 +326,7 @@ msgstr "Potwierdź reset hasła"
 
 #: templates/registration/password_reset_confirm.html:14
 msgid "Enter your new password below to reset your password:"
-msgstr "Wprowaðx ponizej nowe hasło, by zresetować swoje hasło"
+msgstr "Wprowadź poniżej nowe hasło, by zresetować swoje hasło:"
 
 #: templates/registration/password_reset_confirm.html:18
 #, fuzzy
