@@ -17,9 +17,9 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - name: Install test dependencies
-        run: |
+      run: |
         pip install -r test-requirements.txt
       - name: Test
-        run: |
+      run: |
         make lint && tox
         coveralls
