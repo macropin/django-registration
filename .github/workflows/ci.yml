@@ -20,7 +20,8 @@ jobs:
         run: |
           pip install -r test-requirements.txt
       - name: Test
-        env: GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           make lint && tox
           coveralls
