@@ -23,7 +23,6 @@ jobs:
         run: |
           make lint && tox
       - name: Coveralls GitHub Action
-        uses: coverallsapp/github-action@1.1.3
+        uses: AndreMiras/coveralls-python-action@develop
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: .coverage
