@@ -8,8 +8,8 @@
 .. _DiCato: https://github.com/dicato
 .. _joshblum: https://github.com/joshblum
 
-.. image:: https://travis-ci.org/macropin/django-registration.svg?branch=master
-    :target: https://travis-ci.org/macropin/django-registration
+.. image:: https://github.com/macropin/django-registration/actions/workflows/ci.yml/badge.svg
+    :target: https://github.com/macropin/django-registration/actions
 
 .. image:: https://coveralls.io/repos/macropin/django-registration/badge.svg?branch=master
     :target: https://coveralls.io/r/macropin/django-registration/

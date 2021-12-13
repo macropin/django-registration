@@ -3,6 +3,7 @@ branch = True
 omit = 
   */migrations/*
   */south_migrations/*
+relative_files = True
 
 source = registration
 

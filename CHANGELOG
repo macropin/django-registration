@@ -6,6 +6,8 @@ Version 2.10, TBD
 ----------------
 * Feature: Django 3.2 support.
 `#412 <https://github.com/macropin/django-registration/pull/412>_`
+* Feature: Django 4.0 support.
+`#419 <https://github.com/macropin/django-registration/pull/419>_`
 
 Version 2.9, 1 January, 2021
 ----------------
