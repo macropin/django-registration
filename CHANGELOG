@@ -2,8 +2,17 @@
 django-registration-redux changelog
 ===================================
 
-Version 2.10, TBD
-----------------
+## Version 2.11, TBD
+
+## Version 2.10, 8 March, 2022
+
+* BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Django < 3.1 and Python
+3.5
+* Bugfix: Update Polish translations.
+`#417 <https://github.com/macropin/django-registration/pull/417>_`
+`#418 <https://github.com/macropin/django-registration/pull/418>_`
+* Bugfix: Set default_auto_field on RegistrationProfile
+`#414 <https://github.com/macropin/django-registration/pull/414>_`
 * Feature: Django 3.2 support.
 `#412 <https://github.com/macropin/django-registration/pull/412>_`
 * Feature: Django 4.0 support.
