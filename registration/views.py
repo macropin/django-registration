@@ -4,9 +4,11 @@ Views which allow users to create and activate accounts.
 """
 
 from django.conf import settings
+from django.db import OperationalError
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.utils.module_loading import import_string
+from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
@@ -53,7 +55,11 @@ class RegistrationView(FormView):
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        new_user = self.register(form)
+        try:
+            new_user = self.register(form)
+        except OperationalError:
+            form.add_error(None, _("invalid characters destected in name or email"))
+            return super().form_invalid(form)
         success_url = self.get_success_url(new_user)
 
         # success_url may be a simple string, or a tuple providing the
