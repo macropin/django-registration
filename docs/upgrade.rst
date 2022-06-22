@@ -7,7 +7,7 @@ The |version| release of |project| is not compatible with the legacy
 django-registration (previously maintained by James Bennett). Major backwards
 incompatible changes will be recorded here, but for a full list of changes
 between versions you should refer to the `CHANGELOG
-<https://github.com/macropin/django-registration/blob/master/CHANGELOG>`_.
+<https://github.com/macropin/django-registration/blob/main/CHANGELOG>`_.
 
 Django version requirement
 --------------------------

@@ -1,4 +1,4 @@
-.. django-registration-redux documentation master file, created by
+.. django-registration-redux documentation main file, created by
    sphinx-quickstart on Mon Jun 22 02:57:42 2009.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
@@ -31,7 +31,7 @@ process (and support for alternate registration systems), read through
 the documentation listed below.
 
 If you are upgrading from a previous release, please read the `CHANGELOG
-<https://github.com/macropin/django-registration/blob/master/CHANGELOG>`_ for
+<https://github.com/macropin/django-registration/blob/main/CHANGELOG>`_ for
 information on what's changed.
 
 Contents:

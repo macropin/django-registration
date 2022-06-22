@@ -11,7 +11,7 @@
 .. image:: https://github.com/macropin/django-registration/actions/workflows/ci.yml/badge.svg
     :target: https://github.com/macropin/django-registration/actions
 
-.. image:: https://coveralls.io/repos/macropin/django-registration/badge.svg?branch=master
+.. image:: https://coveralls.io/repos/macropin/django-registration/badge.svg?branch=main
     :target: https://coveralls.io/r/macropin/django-registration/
 
 .. image:: https://badge.fury.io/py/django-registration-redux.svg
@@ -107,4 +107,4 @@ Django-registration-redux is licensed under `BSD License`.
 
 .. _`available online`: https://django-registration-redux.readthedocs.org/
 .. _`raise them here`: https://github.com/macropin/django-registration/issues
-.. _`CHANGELOG`: https://github.com/macropin/django-registration/blob/master/CHANGELOG
+.. _`CHANGELOG`: https://github.com/macropin/django-registration/blob/main/CHANGELOG
