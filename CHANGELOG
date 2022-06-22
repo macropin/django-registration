@@ -2,7 +2,12 @@
 django-registration-redux changelog
 ===================================
 
-## Version 2.11, TBD
+## Version 2.12, TBD
+
+## Version 2.11, 21 June, 2022
+
+* Bugfix: Update French translations.
+`#424 <https://github.com/macropin/django-registration/pull/424>_`
 
 ## Version 2.10, 8 March, 2022
 
