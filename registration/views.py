@@ -56,6 +56,9 @@ class RegistrationView(FormView):
         new_user = self.register(form)
         success_url = self.get_success_url(new_user)
 
+        if hasattr(self.request, "session"):
+            self.request.session['registration_email'] = form.cleaned_data['email']
+
         # success_url may be a simple string, or a tuple providing the
         # full argument set for redirect(). Attempting to unpack it
         # tells us which one it is.
