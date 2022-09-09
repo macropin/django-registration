@@ -118,7 +118,7 @@ msgstr ""
 "\n"
 "    Vous (ou quelqu'un se faisant passer pour vous) a demandé à créer un "
 "compte sur le site\n"
-"    %(site.name)s.  Si ce n'était pas vous, veuillez ignorer cet email\n"
+"    %(site_name)s.  Si ce n'était pas vous, veuillez ignorer cet email\n"
 "    et votre adresse sera retirée de notre base.\n"
 "    "
 
@@ -161,7 +161,7 @@ msgstr ""
 "\n"
 "Vous (ou quelqu'un se faisant passer pour vous) a demandé à créer un compte "
 "sur le site\n"
-"%(site.name)s.  Si ce n'était pas vous, veuillez ignorer cet email\n"
+"%(site_name)s.  Si ce n'était pas vous, veuillez ignorer cet email\n"
 "    et votre adresse sera retirée de notre base.\n"
 
 #: templates/registration/activation_email.txt:7
