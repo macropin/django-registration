@@ -2,6 +2,7 @@ import datetime
 
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
+from django.contrib.sessions.middleware import SessionMiddleware
 from django.core import mail
 from django.db import DatabaseError
 from django.test import TransactionTestCase
@@ -114,12 +115,15 @@ class DefaultBackendViewTests(TransactionTestCase):
             'password1': 'secret',
             'password2': 'secret'})
         request.user = AnonymousUser()
+        middleware = SessionMiddleware()
+        middleware.process_request(request)
         view(request)
 
         UserModel().objects.get(username='bob')
         # A registration profile was created, and no activation email was sent.
         self.assertEqual(self.registration_profile.objects.count(), 1)
         self.assertEqual(len(mail.outbox), 0)
+        self.assertEqual(request.session.get('registration_email'), "bob@example.com")
 
     @override_settings(
         INSTALLED_APPS=('django.contrib.auth', 'registration',)
