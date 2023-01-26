@@ -58,7 +58,7 @@ class RegistrationView(FormView):
         try:
             new_user = self.register(form)
         except OperationalError:
-            form.add_error(None, _("invalid characters destected in name or email"))
+            form.add_error(None, _("User create error. Invalid characters detected in name or email ?"))
             return super().form_invalid(form)
         success_url = self.get_success_url(new_user)
 
