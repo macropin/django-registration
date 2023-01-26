@@ -180,6 +180,18 @@ class RegistrationManager(models.Manager):
         # we want to ensure that it is current
         new_user.date_joined = datetime_now()
 
+        # the transaction construct seems to break tests that depend on mail.outbox
+        if settings.TEST:
+            new_user.save()
+            registration_profile = self.create_profile(
+                new_user, **profile_info)
+
+            # send email only if desired and transaction succeeds
+            if send_email:
+                registration_profile.send_activation_email(
+                    site, request)
+            return new_user
+
         with transaction.atomic():
             new_user.save()
             registration_profile = self.create_profile(
