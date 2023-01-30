@@ -181,7 +181,7 @@ class RegistrationManager(models.Manager):
         new_user.date_joined = datetime_now()
 
         # the transaction construct seems to break tests that depend on mail.outbox
-        if settings.get('TESTING', False):
+        if getattr(settings, 'TESTING', False):
             new_user.save()
             registration_profile = self.create_profile(
                 new_user, **profile_info)
