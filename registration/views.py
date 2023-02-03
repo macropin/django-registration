@@ -8,7 +8,11 @@ from django.db import OperationalError
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.utils.module_loading import import_string
-from django.utils.translation import ugettext_lazy as _
+from django import VERSION as DJANGO_VERSION
+if DJANGO_VERSION[0] < 3:
+    from django.utils.translation import ugettext_lazy as _  # noqa
+else:
+    from django.utils.translation import gettext_lazy as _  # noqa
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
