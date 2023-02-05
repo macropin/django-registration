@@ -3,6 +3,6 @@ coveralls
 isort==4.3.21
 tox
 invoke
-docutils==0.13.1
+docutils
 mock
 pytest-django
