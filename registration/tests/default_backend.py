@@ -116,7 +116,7 @@ class DefaultBackendViewTests(TransactionTestCase):
             'password2': 'secret'})
         request.user = AnonymousUser()
 
-        def dummy_get_response(request):
+        def dummy_get_response(request):  # pragma: no cover
             return None
 
         middleware = SessionMiddleware(dummy_get_response)
