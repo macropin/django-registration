@@ -3,7 +3,7 @@ from invoke import task
 
 
 @task
-def clean(all=False):
+def clean(ctx, all=False):
     if all:
         flag = "--all"
     else:
@@ -12,19 +12,19 @@ def clean(all=False):
 
 
 @task
-def build(docs=False):
+def build(ctx, docs=False):
     run("python setup.py build")
     if docs:
         run("sphinx-build docs docs/_build")
 
 
 @task
-def test():
+def test(ctx):
     run("python setup.py test")
 
 
 @task
-def lint():
+def lint(ctx):
     run("rst2html.py README.rst > /dev/null")
     run("flake8 registration")
     run("isort --recursive --check-only registration")
