@@ -1,4 +1,7 @@
-VERSION = (2, 11, 0, 'final', 0)
+VERSION = (2, 12, 0, 'final', 0)
+
+# for Django-3.1 and prior
+default_app_config = 'registration.apps.RegistrationConfig'
 
 
 def get_version():
