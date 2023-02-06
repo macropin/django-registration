@@ -2,7 +2,19 @@
 django-registration-redux changelog
 ===================================
 
-## Version 2.12, TBD
+## Version 2.13, TBD
+
+## Version 2.12, 5 February, 2023
+
+* BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Python 3.6
+* Bugfix: Show registration email on registation complete page
+`#427 <https://github.com/macropin/django-registration/pull/427>_`
+* Bugfix: Update French compiled messages
+`#429 <https://github.com/macropin/django-registration/pull/429>_`
+* Feature: Test against Django 4.1 and Python 3.11
+`#432 <https://github.com/macropin/django-registration/pull/432>_`
+* Bugfix: Add default_app_config (for Django 3.1 and prior)
+`#430 <https://github.com/macropin/django-registration/pull/430>_`
 
 ## Version 2.11, 21 June, 2022
 
