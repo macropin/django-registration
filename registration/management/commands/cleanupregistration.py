@@ -19,6 +19,6 @@ class Command(BaseCommand):
         self.stdout.write('Running cleanupregistration.')
         deleted_count = RegistrationProfile.objects.delete_expired_users()
         if deleted_count == 0:
-            self.stdout.write('cleanupregistration completed. There is no user has to be deleted.')
+            self.stdout.write('cleanupregistration completed. There is no user that has to be deleted.')
         else:
             self.stdout.write('cleanupregistration completed. Deleted user count=%d' % deleted_count)
