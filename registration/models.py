@@ -281,7 +281,10 @@ class RegistrationManager(models.Manager):
                     user = profile.user
                     logger.warning('Deleting expired Registration profile {} and user {}.'.format(profile, user))
                     profile.delete()
-                    user.delete()
+                    try:
+                        user.delete()
+                    except (models.ProtectedError, models.RestrictedError) as e:
+                        logger.error('Deletion of user {} is prevented: {}'.format(user, e))
                     deleted_count += 1
             except UserModel().DoesNotExist:
                 logger.warning('Deleting expired Registration profile {}'.format(profile))
