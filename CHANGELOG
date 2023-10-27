@@ -2,559 +2,534 @@
 django-registration-redux changelog
 ===================================
 
-## Version 2.13, TBD
+## Version 2.14, TBD
+
+## Version 2.13, 26 October, 2023
+
+- Feature: Add Bahasa Indonesia translations
+  `#434 <https://github.com/macropin/django-registration/pull/434>_`
+- Bugfix: Update German translations
+  `#438 <https://github.com/macropin/django-registration/pull/438>_`
+- Feature: Test against Django 4.2
+  `#439 <https://github.com/macropin/django-registration/pull/439>_`
+- Bugfixes:
+  `#436 <https://github.com/macropin/django-registration/pull/436>_`
+  `#437 <https://github.com/macropin/django-registration/pull/437>_`
+  `#440 <https://github.com/macropin/django-registration/pull/440>_`
+  `#441 <https://github.com/macropin/django-registration/pull/441>_`
 
 ## Version 2.12, 5 February, 2023
 
-* BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Python 3.6
-* Bugfix: Show registration email on registation complete page
-`#427 <https://github.com/macropin/django-registration/pull/427>_`
-* Bugfix: Update French compiled messages
-`#429 <https://github.com/macropin/django-registration/pull/429>_`
-* Feature: Test against Django 4.1 and Python 3.11
-`#432 <https://github.com/macropin/django-registration/pull/432>_`
-* Bugfix: Add default_app_config (for Django 3.1 and prior)
-`#430 <https://github.com/macropin/django-registration/pull/430>_`
+- BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Python 3.6
+- Bugfix: Show registration email on registration complete page
+  `#427 <https://github.com/macropin/django-registration/pull/427>_`
+- Bugfix: Update French compiled messages
+  `#429 <https://github.com/macropin/django-registration/pull/429>_`
+- Feature: Test against Django 4.1 and Python 3.11
+  `#432 <https://github.com/macropin/django-registration/pull/432>_`
+- Bugfix: Add default*app_config (for Django 3.1 and prior)
+  `#430 <https://github.com/macropin/django-registration/pull/430>*`
 
 ## Version 2.11, 21 June, 2022
 
-* Bugfix: Update French translations.
-`#424 <https://github.com/macropin/django-registration/pull/424>_`
+- Bugfix: Update French translations.
+  `#424 <https://github.com/macropin/django-registration/pull/424>_`
 
 ## Version 2.10, 8 March, 2022
 
-* BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Django < 3.1 and Python
-3.5
-* Bugfix: Update Polish translations.
-`#417 <https://github.com/macropin/django-registration/pull/417>_`
-`#418 <https://github.com/macropin/django-registration/pull/418>_`
-* Bugfix: Set default_auto_field on RegistrationProfile
-`#414 <https://github.com/macropin/django-registration/pull/414>_`
-* Feature: Django 3.2 support.
-`#412 <https://github.com/macropin/django-registration/pull/412>_`
-* Feature: Django 4.0 support.
-`#419 <https://github.com/macropin/django-registration/pull/419>_`
+- BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Django < 3.1 and Python
+  3.5
+- Bugfix: Update Polish translations.
+  `#417 <https://github.com/macropin/django-registration/pull/417>_`
+  `#418 <https://github.com/macropin/django-registration/pull/418>_`
+- Bugfix: Set default*auto_field on RegistrationProfile
+  `#414 <https://github.com/macropin/django-registration/pull/414>*`
+- Feature: Django 3.2 support.
+  `#412 <https://github.com/macropin/django-registration/pull/412>_`
+- Feature: Django 4.0 support.
+  `#419 <https://github.com/macropin/django-registration/pull/419>_`
 
-Version 2.9, 1 January, 2021
-----------------
-* BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Django 1.11 and Python
-2.7.
-* Feature: Django 3.1 support.
-`#398 <https://github.com/macropin/django-registration/pull/398>_`
-`#399 <https://github.com/macropin/django-registration/pull/399>_`
-`#400 <https://github.com/macropin/django-registration/pull/400>_`
-`#401 <https://github.com/macropin/django-registration/pull/401>_`
+## Version 2.9, 1 January, 2021
 
-Version 2.8, 7 May, 2020
-----------------
-* Feature: Greek translations -  `#381
+- BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Django 1.11 and Python
+  2.7.
+- Feature: Django 3.1 support.
+  `#398 <https://github.com/macropin/django-registration/pull/398>_`
+  `#399 <https://github.com/macropin/django-registration/pull/399>_`
+  `#400 <https://github.com/macropin/django-registration/pull/400>_`
+  `#401 <https://github.com/macropin/django-registration/pull/401>_`
+
+## Version 2.8, 7 May, 2020
+
+- Feature: Greek translations - `#381
 <https://github.com/macropin/django-registration/pull/381>_`
 
-Version 2.7, 4 January, 2020
-----------------
-* Feature: Django 3.0 support - `#373
-<https://github.com/macropin/django-registration/pull/373>_`
-* Feature: Use SHA256 instead of SHA1 for `activation_key` - `#362
-<https://github.com/macropin/django-registration/pull/362>_`
-* Bugfix: Changed path reference from 'login' to 'auth_login'. -
-`#335 <https://github.com/macropin/django-registration/pull/335>_`
+## Version 2.7, 4 January, 2020
 
-Version 2.6, 10 April, 2019
-----------------
-* Bugfix: Pass `user` instance instead of `user.get_username()` to template
-context. -
-`#350 <https://github.com/macropin/django-registration/pull/350>_`
-* Feature: Add testing for Django 2.2 and Python 3.7 (no code changes
-required). - `#352
+- Feature: Django 3.0 support - `#373
+<https://github.com/macropin/django-registration/pull/373>_`
+- Feature: Use SHA256 instead of SHA1 for `activation_key` - `#362
+<https://github.com/macropin/django-registration/pull/362>_`
+- Bugfix: Changed path reference from 'login' to 'auth*login'. -
+  `#335 <https://github.com/macropin/django-registration/pull/335>*`
+
+## Version 2.6, 10 April, 2019
+
+- Bugfix: Pass `user` instance instead of `user.get_username()` to template
+  context. -
+  `#350 <https://github.com/macropin/django-registration/pull/350>_`
+- Feature: Add testing for Django 2.2 and Python 3.7 (no code changes
+  required). - `#352
 <https://github.com/macropin/django-registration/pull/352>_`
-* Bugfix: Send emails on commit `#355
+- Bugfix: Send emails on commit `#355
 <https://github.com/macropin/django-registration/pull/355>_`
 
-Version 2.5, 27 October, 2018
-----------------
-* Feature: Add support for Django 2.1. -
-`#337 <https://github.com/macropin/django-registration/pull/337>_`
-* Bugfix: Don't delete if user.is_active=True in cleanupregistration. -
-`#342 <https://github.com/macropin/django-registration/pull/342>_`
+## Version 2.5, 27 October, 2018
 
-Version 2.4, 11 April, 2018
-----------------
-* Bugfix: Updates Spanish translation messages. -
-`#333 <https://github.com/macropin/django-registration/pull/333>_`
+- Feature: Add support for Django 2.1. -
+  `#337 <https://github.com/macropin/django-registration/pull/337>_`
+- Bugfix: Don't delete if user.is*active=True in cleanupregistration. -
+  `#342 <https://github.com/macropin/django-registration/pull/342>*`
 
-Version 2.3, 10 April, 2018
-----------------
-* Bugfix: Updates Spanish translation messages. -
-`#330 <https://github.com/macropin/django-registration/pull/330>_`
+## Version 2.4, 11 April, 2018
 
-Version 2.2, 08 February, 2018
-----------------
-* Bugfix: Updates Russian translation messages. -
-`#321 <https://github.com/macropin/django-registration/pull/321>_`
+- Bugfix: Updates Spanish translation messages. -
+  `#333 <https://github.com/macropin/django-registration/pull/333>_`
 
-Version 2.1, 17 December, 2018
-----------------
-* Bugfix: Fix formatting issues in documentation.
-`#319 <https://github.com/macropin/django-registration/pull/319>_`
-* Bugfix: Use ``get_username()`` instead of directly accessing the username to
-support subclasses of ``AbstractBaseUser``
-`#318 <https://github.com/macropin/django-registration/pull/318>_`
+## Version 2.3, 10 April, 2018
 
-Version 2.0, 05 December, 2017
-----------------
-* BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Django < 1.11.
-* BACKWARDS-INCOMPATIBLE CHANGE: Remove `registration/urls.py` in favor of
-`registration/backends/default/urls.py`
-* Feature: Add compatibility for Django 2.0.
+- Bugfix: Updates Spanish translation messages. -
+  `#330 <https://github.com/macropin/django-registration/pull/330>_`
 
-Version 1.9, 16 November, 2017
-----------------
-* Bugfix: Fix ``SupervisedRegistrationProfile`` so expiration depends on
-profiles that have completed the entire process or have exceeded the
-``ACCOUNT_ACTIVATION_DAYS``  -
-`#310 <https://github.com/macropin/django-registration/pull/310>_`
-* Bugfix: Prevent resending an activation email if multiple
-``RegistrationProfile`` objects exist for the given email address. -
-`#311 <https://github.com/macropin/django-registration/pull/311>_`
-* Bugfix: Add logging to ``RegistrationProfile.delete_expired_users``, use
-``profile.activated`` instead of ``user.is_active``. -
-`#308 <https://github.com/macropin/django-registration/pull/308>_`
-* BACKWARDS-INCOMPATIBLE CHANGE: Change of return signature of
-``RegistrationProfileManager.activate_user``. A tuple containing the User
-instance and a boolean of whether or not said user was activated is now
-returned. -
-`#309 <https://github.com/macropin/django-registration/pull/309>`_.
-* Bugfix: Updates `pt_BR` translation messages. -
-`#305 <https://github.com/macropin/django-registration/pull/305>_`
-* Bugfix: Update all translation strings with `django-admin makemessages --all`. -
-`#304 <https://github.com/macropin/django-registration/pull/304>_`
-* Feature: Configure from email address from ``Site`` object. -
-`#294 <https://github.com/macropin/django-registration/pull/294>_`
+## Version 2.2, 08 February, 2018
 
-Version 1.8, 03 October, 2017
-----------------
-* Bugfix: Add `outlook.com` to the list of free email providers. -
-`#287 <https://github.com/macropin/django-registration/pull/287>_`
-* Documentation: Add possible settings for activation emails. -
-`#283 <https://github.com/macropin/django-registration/pull/282>_`
-* Feature: Added `REGISTRATION_ADMINS` setting to support different admins
-(than those in `ADMINS`) in charge of registration. Falls back to `ADMINS` in
-case this is not set. -
-`#279 <https://github.com/macropin/django-registration/pull/279>_`
-* Documentation: Added documentation regarding admin approval registration. -
-`#279 <https://github.com/macropin/django-registration/pull/279>_`
-* Redirect logged in users away from the registration page if authenticated. -
-`#262 <https://github.com/macropin/django-registration/pull/262>_`
-* Document how to send password reset email with HTML content. -
-`#276 <https://github.com/macropin/django-registration/pull/276>_`
+- Bugfix: Updates Russian translation messages. -
+  `#321 <https://github.com/macropin/django-registration/pull/321>_`
 
-Version 1.7, 18 July, 2017
-----------------
-* Fix security issue of leaking password reset token through the Referer
-header. - `#268 <https://github.com/macropin/django-registration/pull/268>_`
-* Fix migration issue when using multiple databases - `#264 <https://github.com/macropin/django-registration/pull/264>_`
-* Improve German translation - `#259 <https://github.com/macropin/django-registration/pull/259>_`
-* Fix bug in templates if password reset is unsuccessful - `#269
+## Version 2.1, 17 December, 2018
+
+- Bugfix: Fix formatting issues in documentation.
+  `#319 <https://github.com/macropin/django-registration/pull/319>_`
+- Bugfix: Use `get_username()` instead of directly accessing the username to
+  support subclasses of `AbstractBaseUser`
+  `#318 <https://github.com/macropin/django-registration/pull/318>_`
+
+## Version 2.0, 05 December, 2017
+
+- BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Django < 1.11.
+- BACKWARDS-INCOMPATIBLE CHANGE: Remove `registration/urls.py` in favor of
+  `registration/backends/default/urls.py`
+- Feature: Add compatibility for Django 2.0.
+
+## Version 1.9, 16 November, 2017
+
+- Bugfix: Fix `SupervisedRegistrationProfile` so expiration depends on
+  profiles that have completed the entire process or have exceeded the
+  `ACCOUNT_ACTIVATION_DAYS` -
+  `#310 <https://github.com/macropin/django-registration/pull/310>_`
+- Bugfix: Prevent resending an activation email if multiple
+  `RegistrationProfile` objects exist for the given email address. -
+  `#311 <https://github.com/macropin/django-registration/pull/311>_`
+- Bugfix: Add logging to `RegistrationProfile.delete_expired_users`, use
+  `profile.activated` instead of `user.is_active`. -
+  `#308 <https://github.com/macropin/django-registration/pull/308>_`
+- BACKWARDS-INCOMPATIBLE CHANGE: Change of return signature of
+  `RegistrationProfileManager.activate_user`. A tuple containing the User
+  instance and a boolean of whether or not said user was activated is now
+  returned. -
+  `#309 <https://github.com/macropin/django-registration/pull/309>`\_.
+- Bugfix: Updates `pt_BR` translation messages. -
+  `#305 <https://github.com/macropin/django-registration/pull/305>_`
+- Bugfix: Update all translation strings with `django-admin makemessages --all`. -
+  `#304 <https://github.com/macropin/django-registration/pull/304>_`
+- Feature: Configure from email address from `Site` object. -
+  `#294 <https://github.com/macropin/django-registration/pull/294>_`
+
+## Version 1.8, 03 October, 2017
+
+- Bugfix: Add `outlook.com` to the list of free email providers. -
+  `#287 <https://github.com/macropin/django-registration/pull/287>_`
+- Documentation: Add possible settings for activation emails. -
+  `#283 <https://github.com/macropin/django-registration/pull/282>_`
+- Feature: Added `REGISTRATION_ADMINS` setting to support different admins
+  (than those in `ADMINS`) in charge of registration. Falls back to `ADMINS` in
+  case this is not set. -
+  `#279 <https://github.com/macropin/django-registration/pull/279>_`
+- Documentation: Added documentation regarding admin approval registration. -
+  `#279 <https://github.com/macropin/django-registration/pull/279>_`
+- Redirect logged in users away from the registration page if authenticated. -
+  `#262 <https://github.com/macropin/django-registration/pull/262>_`
+- Document how to send password reset email with HTML content. -
+  `#276 <https://github.com/macropin/django-registration/pull/276>_`
+
+## Version 1.7, 18 July, 2017
+
+- Fix security issue of leaking password reset token through the Referer
+  header. - `#268 <https://github.com/macropin/django-registration/pull/268>_`
+- Fix migration issue when using multiple databases - `#264 <https://github.com/macropin/django-registration/pull/264>_`
+- Improve German translation - `#259 <https://github.com/macropin/django-registration/pull/259>_`
+- Fix bug in templates if password reset is unsuccessful - `#269
 <https://github.com/macropin/django-registration/pull/269>_`
 
-Version 1.6, 25 April, 2017
-----------------
+## Version 1.6, 25 April, 2017
 
-* Feature: Make search for email case insensitive when resending activation
-email.
-  `#250 <https://github.com/macropin/django-registration/pull/250>`_.
-* Feature: Add ``RegistrationFormUsernameLowercase`` to force all usernames to
-lowercase.
-  `#251 <https://github.com/macropin/django-registration/pull/251>`_.
+- Feature: Make search for email case insensitive when resending activation
+  email.
+  `#250 <https://github.com/macropin/django-registration/pull/250>`\_.
+- Feature: Add `RegistrationFormUsernameLowercase` to force all usernames to
+  lowercase.
+  `#251 <https://github.com/macropin/django-registration/pull/251>`\_.
 
-Version 1.5, 08 April, 2017
-----------------
+## Version 1.5, 08 April, 2017
 
-* BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Django 1.7.
-* BACKWARDS-INCOMPATIBLE CHANGE: Change signature of
-``RegistrationProfileManager.activate_user``.
-``site`` is now a required positional argument.
-  `#244 <https://github.com/macropin/django-registration/pull/244>`_.
-* Feature: Added workflow to resend activation email. See
-  `#161 <https://github.com/macropin/django-registration/pull/161>`_.
-* Enhancement: Separate logic between account creation and activation.
-  See: `#171 <https://github.com/macropin/django-registration/issues/171>`_.
-* Bugfix: Add page title to `activate.html`
-* Feature: Added a 3-step registration flow requiring manual admin approval.
-  See: `#184 <https://github.com/macropin/django-registration/pull/184>`_.
-* Enhancement: Using a more cryptographically secure method for generating
-activation keys.
-  See: `#213 <https://github.com/macropin/django-registration/issues/213>`_.
-* Bugfix: Add redirection setting for simple backend after successful
-registration.
-  See: `#239 <https://github.com/macropin/django-registration/pull/239>`_.
-* Bugfix: Use dict instead of `RequestContext` when sending activation email.
--
-  See: `#194 <https://github.com/macropin/django-registration/pull/194>`_.
+- BACKWARDS-INCOMPATIBLE CHANGE: Remove support for Django 1.7.
+- BACKWARDS-INCOMPATIBLE CHANGE: Change signature of
+  `RegistrationProfileManager.activate_user`.
+  `site` is now a required positional argument.
+  `#244 <https://github.com/macropin/django-registration/pull/244>`\_.
+- Feature: Added workflow to resend activation email. See
+  `#161 <https://github.com/macropin/django-registration/pull/161>`\_.
+- Enhancement: Separate logic between account creation and activation.
+  See: `#171 <https://github.com/macropin/django-registration/issues/171>`\_.
+- Bugfix: Add page title to `activate.html`
+- Feature: Added a 3-step registration flow requiring manual admin approval.
+  See: `#184 <https://github.com/macropin/django-registration/pull/184>`\_.
+- Enhancement: Using a more cryptographically secure method for generating
+  activation keys.
+  See: `#213 <https://github.com/macropin/django-registration/issues/213>`\_.
+- Bugfix: Add redirection setting for simple backend after successful
+  registration.
+  See: `#239 <https://github.com/macropin/django-registration/pull/239>`\_.
+- Bugfix: Use dict instead of `RequestContext` when sending activation email.
 
-Version 1.4, 21 February, 2016
-------------------------------
+* See: `#194 <https://github.com/macropin/django-registration/pull/194>`\_.
 
-* BACKWARDS-INCOMPATIBLE CHANGE: Remove unnecessary `_RequestPassingFormView`.
-  See `#56 <https://github.com/macropin/django-registration/pull/56>`_.
+## Version 1.4, 21 February, 2016
 
-* Compatibility: Added support for Django 1.10
+- BACKWARDS-INCOMPATIBLE CHANGE: Remove unnecessary `_RequestPassingFormView`.
+  See `#56 <https://github.com/macropin/django-registration/pull/56>`\_.
 
-* Bugfix: Pass request object into `resend_activation_mail` so the email
+- Compatibility: Added support for Django 1.10
+
+- Bugfix: Pass request object into `resend_activation_mail` so the email
   template can render the site URL with the correct schema (HTTP, HTTPS).
 
-* Bugfix: Ensure `register` method has consistent arguments.
-  See `#153 <https://github.com/macropin/django-registration/pull/153>`_.
+- Bugfix: Ensure `register` method has consistent arguments.
+  See `#153 <https://github.com/macropin/django-registration/pull/153>`\_.
 
-* Enhancement: Add invoke tasks, requirements.txt file, and make wrapper to
+- Enhancement: Add invoke tasks, requirements.txt file, and make wrapper to
   help developers get setup.
-  See `#154 <https://github.com/macropin/django-registration/pull/154>`_.
+  See `#154 <https://github.com/macropin/django-registration/pull/154>`\_.
 
-Version 1.3, 12 January, 2016
------------------------------
+## Version 1.3, 12 January, 2016
 
-* Add support for Django 1.9. django-registration supports Django 1.7 and newer.
+- Add support for Django 1.9. django-registration supports Django 1.7 and newer.
 
-* Feature: Added `resend_activation_mail` method to `RegistrationManager`.
+- Feature: Added `resend_activation_mail` method to `RegistrationManager`.
 
-* Feature: Added support for additional registration forms;
+- Feature: Added support for additional registration forms;
   `RegistrationFormTOSAndUniqueEmail` and `RegistrationFormTOSAndNoFreeEmail`.
-  See `#113 <https://github.com/macropin/django-registration/pull/113>`_.
+  See `#113 <https://github.com/macropin/django-registration/pull/113>`\_.
 
-* Bugfix: Properly extend the base registration template.
+- Bugfix: Properly extend the base registration template.
 
-* Enhancement: Re-enable Python 3.3 support.
+- Enhancement: Re-enable Python 3.3 support.
 
-* Enhancement: Distinguish between account activation failure and attempted
-  reactivation. See `#72 <https://github.com/macropin/django-registration/pull/72>`_.
+- Enhancement: Distinguish between account activation failure and attempted
+  reactivation. See `#72 <https://github.com/macropin/django-registration/pull/72>`\_.
 
-* Bugfix: Install an unzipped package in order to support running migrations.
-  See `#104 <https://github.com/macropin/django-registration/pull/104>`_.
+- Bugfix: Install an unzipped package in order to support running migrations.
+  See `#104 <https://github.com/macropin/django-registration/pull/104>`\_.
 
-* Feature: Added Thai, Hungarian, and Russian localizations.
+- Feature: Added Thai, Hungarian, and Russian localizations.
 
-* Feature: Added support for specifying template paths for activation email.
+- Feature: Added support for specifying template paths for activation email.
 
+## Version 1.2, 11 May, 2015
 
-Version 1.2, 11 May, 2015
--------------------------
-
-* BACKWARDS-INCOMPATIBLE CHANGE: When overriding the
+- BACKWARDS-INCOMPATIBLE CHANGE: When overriding the
   `registration/activation_email.txt` template, you must also now override the
   `registration/activation_email.html` template or set the setting
   (`REGISTRATION_EMAIL_HTML`) to `False`.
 
-* BACKWARDS-INCOMPATIBLE CHANGE: An initial migration for Django > 1.7 has been
+- BACKWARDS-INCOMPATIBLE CHANGE: An initial migration for Django > 1.7 has been
   provided. South users will need to configure a null migration with
   (`SOUTH_MIGRATION_MODULES`).
 
-* BACKWARDS-INCOMPATIBLE CHANGE: A `base.html` template is now assumed to
+- BACKWARDS-INCOMPATIBLE CHANGE: A `base.html` template is now assumed to
   exist.
 
-* Feature: Added support for disabling HTML emails using the setting option
+- Feature: Added support for disabling HTML emails using the setting option
   `REGISTRATION_EMAIL_HTML`.
 
-* Feature: Added settings' options that allows to exlude the default auth urls
+- Feature: Added settings' options that allows to exlude the default auth urls
   (`INCLUDE_AUTH_URLS`) and register url (`INCLUDE_REGISTER_URL`).
 
-* Feature: Added support to dynamically import any chosen registration form
+- Feature: Added support to dynamically import any chosen registration form
   using the settings option `REGISTRATION_FORM`.
 
-* Enhancement: Make `RegistrationForm` a subclass of Django's
+- Enhancement: Make `RegistrationForm` a subclass of Django's
   `UserCreationForm`
 
-* Enhancement: Use registration form `save` method to create user instance,
+- Enhancement: Use registration form `save` method to create user instance,
   whenever form is a subclass of Django's `ModelForm`.
 
-
-
-Version 1.1, 19 September, 2014
--------------------------------
+## Version 1.1, 19 September, 2014
 
 This represents the first release of `django-registration-redux`.
 It is based off the defunct v1.0 `django-registration` abandoned by James Bennett.
 
-* Compatibility: Added support for Python 3.x.
+- Compatibility: Added support for Python 3.x.
 
-* Compatibility: Added support for Django 1.6, 1.7.
+- Compatibility: Added support for Django 1.6, 1.7.
 
-* Feature: Added support for mime/multipart HTML / Text registration
+- Feature: Added support for mime/multipart HTML / Text registration
   emails.
 
-* Feature: Added `REGISTRATION_EMAIL_SUBJECT_PREFIX` config.
+- Feature: Added `REGISTRATION_EMAIL_SUBJECT_PREFIX` config.
 
-* Feature: Added support for `REGISTRATION_AUTO_LOGIN` config.
+- Feature: Added support for `REGISTRATION_AUTO_LOGIN` config.
 
-* Feature: Added support for `SEND_ACTIVATION_EMAIL` config.
+- Feature: Added support for `SEND_ACTIVATION_EMAIL` config.
 
-* Bugfix: Signal "user_activated" was being sent twice.
+- Bugfix: Signal "user_activated" was being sent twice.
 
-* Bugfix: Fixed broken tests.
+- Bugfix: Fixed broken tests.
 
 The change log below is from the versions maintained
 by James Bennett.
 
-
-Version 1.0, 17 June 2013
--------------------------
+## Version 1.0, 17 June 2013
 
 (Taken from release-notes.rst in this release)
 
-* The 1.0 release of django-registration represents a complete
+- The 1.0 release of django-registration represents a complete
   rewrite of the previous codebase. For information on upgrading,
   consult :ref:`the upgrade guide <upgrade>`.
 
-* The largest overall change is that in place of the monolithic backend
+- The largest overall change is that in place of the monolithic backend
   classes and function-based views found in django-registration 0.8, in
   1.0 all views are class-based. A "backend" now consists of,
   typically, one or two subclasses of :ref:`the built-in base views
-  <views>`.
+<views>`.
 
-* Implementing these as class-based views allows for far simpler
+- Implementing these as class-based views allows for far simpler
   configuration and customization, without the overhead involved in
   supporting large numbers of optional keyword arguments to
   function-based views, or the need to provide a separate class-based
   infrastructure for implementing the logic of registration.
 
-* Notably, this implementation is also completely backwards-compatible
+- Notably, this implementation is also completely backwards-compatible
   for users of django-registration 0.8 who simply used the recommended
   default URLConf for one of the supplied backends; those URLConfs exist
   in the same locations, and have been rewritten to point to the
   appropriate class-based views with the appropriate options.
 
+## Version 0.8, 24 March 2012:
 
-Version 0.8, 24 March 2012:
----------------------------
+- Backend-based rewrite. See docs/upgrade.rst for details.
 
-* Backend-based rewrite. See docs/upgrade.rst for details.
+- Compatibility through Django 1.4.
 
-* Compatibility through Django 1.4.
+## Version 0.7, 6 November 2008:
 
-
-Version 0.7, 6 November 2008:
------------------------------
-
-* Project hosting moved from Google Code to Bitbucket, and from a
+- Project hosting moved from Google Code to Bitbucket, and from a
   Subversion repository to Mercurial.
 
-* Added test suite.
+- Added test suite.
 
-* Full Django 1.0 compatibility.
+- Full Django 1.0 compatibility.
 
-* Registration and activation views now accept an ``extra_context``
+- Registration and activation views now accept an `extra_context`
   argument, identical to the way that argument works in Django's
   generic views.
 
-* Added a custom management command for cleaning up expired
-  registrations; you can now run ``manage.py cleanupregistration`` to
+- Added a custom management command for cleaning up expired
+  registrations; you can now run `manage.py cleanupregistration` to
   handle this.
 
-* BACKWARDS-INCOMPATIBLE CHANGE: The "username" field in
-  ``RegistrationForm`` is now a ``RegexField``.
+- BACKWARDS-INCOMPATIBLE CHANGE: The "username" field in
+  `RegistrationForm` is now a `RegexField`.
 
-* BACKWARDS-INCOMPATIBLE CHANGE: Removed the standalone script for
+- BACKWARDS-INCOMPATIBLE CHANGE: Removed the standalone script for
   deleting expired user registrations; use the new management command
   instead.
 
+## Version 0.6, 29 July 2008:
 
-Version 0.6, 29 July 2008:
---------------------------
+- Packaged from revision 166 in Subversion.
 
-* Packaged from revision 166 in Subversion.
-
-* Fixed a multiple-objects exception in
-  ``RegistrationFormUniqueEmail`` when multiple users already have the
+- Fixed a multiple-objects exception in
+  `RegistrationFormUniqueEmail` when multiple users already have the
   same email address.
 
-* Changed the ``success_url`` of the ``register()`` view to use
+- Changed the `success_url` of the `register()` view to use
   reverse URL resolution.
 
-* Added an ``extra_context`` argument to the ``register`` and
-  ``activate`` views, mimicking its functionality in Django's generic
+- Added an `extra_context` argument to the `register` and
+  `activate` views, mimicking its functionality in Django's generic
   views.
 
-* BACKWARDS-INCOMPATIBLE CHANGE: Switched the admin declaration to be
+- BACKWARDS-INCOMPATIBLE CHANGE: Switched the admin declaration to be
   compliant with the newforms-admin refactor; the admin declaration
-  now lives in ``registration/admin.py``.
+  now lives in `registration/admin.py`.
 
-* BACKWARDS-INCOMPATIBLE CHANGE: Switched form imports from using
-  ``django.newforms`` to using ``django.forms``; the old style now
+- BACKWARDS-INCOMPATIBLE CHANGE: Switched form imports from using
+  `django.newforms` to using `django.forms`; the old style now
   raises a deprecation warning on Django trunk and on Django 1.0
   alpha.
 
+## Version 0.5, 4 June 2008:
 
-Version 0.5, 4 June 2008:
--------------------------
+- Packaged from revision 155 in Subversion.
 
-* Packaged from revision 155 in Subversion.
+- Added Serbian translation.
 
-* Added Serbian translation.
+- Added Italian translation.
 
-* Added Italian translation.
-
-* Username/email uniqueness checks are now case-insensitive. This is
+- Username/email uniqueness checks are now case-insensitive. This is
   potentially backwards-incompatible if you relied on them being
   case-sensitive, but I don't know of any reason why you'd be doing
   that.
 
-* Included forms now use lazy translations.
+- Included forms now use lazy translations.
 
-* The ``register`` view can now handle files submitted for use in form
+- The `register` view can now handle files submitted for use in form
   processing.
 
-* Reactivation of a manually-deactivated account is now prevented by
+- Reactivation of a manually-deactivated account is now prevented by
   changing the activation key, on successful activation, to a dummy
   string which will fail on subsequent activation attempts.
 
+## Version 0.4p2, 10 Feburary 2008:
 
-Version 0.4p2, 10 Feburary 2008:
---------------------------------
+- Added Brazilian Portuguese translation.
 
-* Added Brazilian Portuguese translation.
+- Added Japanese translation.
 
-* Added Japanese translation.
+- Added Hebrew translation.
 
-* Added Hebrew translation.
+- Minor documentation fixes.
 
-* Minor documentation fixes.
+## Version 0.4p1, 16 December 2007:
 
+- Packaged from revision 129 in Subversion.
 
-Version 0.4p1, 16 December 2007:
---------------------------------
+- Added Polish translation.
 
-* Packaged from revision 129 in Subversion.
+## Version 0.4, 8 December 2007:
 
-* Added Polish translation.
+- Packaged from revision 122 in Subversion.
 
+- Added Greek translation.
 
-Version 0.4, 8 December 2007:
------------------------------
+- Added Russian translation.
 
-* Packaged from revision 122 in Subversion.
-
-* Added Greek translation.
-
-* Added Russian translation.
-
-* Changed ``maxlength`` to ``max_length`` now that Django issues a
+- Changed `maxlength` to `max_length` now that Django issues a
   deprecation warning for it.
 
-* BACKWARDS-INCOMPATIBLE CHANGE: Changed the password validation to be
-  on ``clean()`` instead of ``clean_password2()``. This means that
-  errors from this must be accessed via ``non_field_errors()``.
+- BACKWARDS-INCOMPATIBLE CHANGE: Changed the password validation to be
+  on `clean()` instead of `clean_password2()`. This means that
+  errors from this must be accessed via `non_field_errors()`.
 
+## Version 0.3p5, 6 October 2007:
 
-Version 0.3p5, 6 October 2007:
-------------------------------
+- Packaged from revision 112 in Subversion.
 
-* Packaged from revision 112 in Subversion.
+- Added German translation.
 
-* Added German translation.
-
-* Fixed a mismatch between the default ``RegistrationForm``'s maximum
+- Fixed a mismatch between the default `RegistrationForm`'s maximum
   length on email addresses and the actual maximum length on Django's
-  ``User`` model.
+  `User` model.
 
-* Fixed a situation where bad input for the ``password1`` field on
-  ``RegistrationForm`` could cause validation of ``password2`` to fail
+- Fixed a situation where bad input for the `password1` field on
+  `RegistrationForm` could cause validation of `password2` to fail
   with an exception.
 
+## Version 0.3p4, 4 October 2007:
 
-Version 0.3p4, 4 October 2007:
-------------------------------
+- Packaged from revision 101 in Subversion.
 
-* Packaged from revision 101 in Subversion.
-
-* BACKWARDS-INCOMPATIBLE CHANGE: In response to larger numbers of
+- BACKWARDS-INCOMPATIBLE CHANGE: In response to larger numbers of
   complaints from people trying to use the example templates as-is,
   the example templates have been removed.
 
+## Version 0.3p2, 23 September 2007:
 
-Version 0.3p2, 23 September 2007:
----------------------------------
+- Packaged from revision 100 in Subversion.
 
-* Packaged from revision 100 in Subversion.
-
-* Fixed ``activate`` view to actually take the ``template_name``
+- Fixed `activate` view to actually take the `template_name`
   argument.
 
+## Version 0.3p1, 22 September 2007:
 
-Version 0.3p1, 22 September 2007:
----------------------------------
+- Packaged from revision 99 in Subversion.
 
-* Packaged from revision 99 in Subversion.
+- Fixed a typo in docs/overview.txt.
 
-* Fixed a typo in docs/overview.txt.
+- Fixed a typo in bin/delete_expired_users.py.
 
-* Fixed a typo in bin/delete_expired_users.py.
+- Added French translation.
 
-* Added French translation.
-
-
-Version 0.3, 19 September 2007:
--------------------------------
+## Version 0.3, 19 September 2007:
 
 Packaged from revision 89 in Subversion; download at
 http://django-registration.googlecode.com/files/registration-0.3.tar.gz
 
-* Changed ``register`` and ``activate`` views to accept
-  ``template_name`` keyword argument for selecting a custom template.
+- Changed `register` and `activate` views to accept
+  `template_name` keyword argument for selecting a custom template.
 
-* Changed ``register`` view to accept ``form_class`` keyword
+- Changed `register` view to accept `form_class` keyword
   argument specifying the form to use.
 
-* BACKWARDS-INCOMPATIBLE CHANGE: Changed
-  ``RegistrationManager.create_inactive_user`` to use a template for
+- BACKWARDS-INCOMPATIBLE CHANGE: Changed
+  `RegistrationManager.create_inactive_user` to use a template for
   the subject of the activation email.
 
-* BACKWARDS-INCOMPATIBLE CHANGE: Removed the ``tos`` field from
-  ``RegistrationForm``; if you were relying on it, switch to using
-  ``RegistrationFormTermsOfService`` instead.
+- BACKWARDS-INCOMPATIBLE CHANGE: Removed the `tos` field from
+  `RegistrationForm`; if you were relying on it, switch to using
+  `RegistrationFormTermsOfService` instead.
 
-* BACKWARDS-INCOMPATIBLE CHANGE: The activation email template now
-  receives the current ``Site`` object as the context variable
-  ``site``, and the ``current_site`` variable, which only held the
+- BACKWARDS-INCOMPATIBLE CHANGE: The activation email template now
+  receives the current `Site` object as the context variable
+  `site`, and the `current_site` variable, which only held the
   domain, is no longer available.
 
-* Added script ``bin/delete_expired_users.py`` with instructions on
+- Added script `bin/delete_expired_users.py` with instructions on
   how to use it as a cron job to clean up expired/inactive accounts.
 
-* Marked strings for translation and added ``locale`` directory so
+- Marked strings for translation and added `locale` directory so
   that translations can be added.
 
-* Updated to deal with merge of Django's Unicode branch into trunk;
+- Updated to deal with merge of Django's Unicode branch into trunk;
   now using Unicode-aware functions everywhere.
 
-
-Version 0.2, 29 May 2007:
--------------------------
+## Version 0.2, 29 May 2007:
 
 Packaged from revision 76 in Subversion; download at
 http://django-registration.googlecode.com/files/registration-0.2.tar.gz
 
-* Added ability to specify a callback in
-  ``RegistrationManager.create_inactive_user`` or in the ``register``
+- Added ability to specify a callback in
+  `RegistrationManager.create_inactive_user` or in the `register`
   view to enable creation of site-specific user profile.
 
-* Separated out the logic of creating the profile into a new method on
-  ``RegistrationManager``: ``create_profile``.
+- Separated out the logic of creating the profile into a new method on
+  `RegistrationManager`: `create_profile`.
 
-* Added URLConf support for various useful views in
-  ``django.contrib.auth``.
+- Added URLConf support for various useful views in
+  `django.contrib.auth`.
 
-* BACKWARDS-INCOMPATIBLE CHANGE: removed the ``key_generated`` field
-  from ``RegistrationProfile``; activation key expiration is now
-  calculated based on the ``date_joined`` field in the ``User`` model.
-  Drop the ``key_generated`` column from your database when upgrading
+- BACKWARDS-INCOMPATIBLE CHANGE: removed the `key_generated` field
+  from `RegistrationProfile`; activation key expiration is now
+  calculated based on the `date_joined` field in the `User` model.
+  Drop the `key_generated` column from your database when upgrading
   from 0.1.
 
-
-Version 0.1, 23 May 2007:
--------------------------
+## Version 0.1, 23 May 2007:
 
 Packaged from revision 56 in Subversion; download at
 http://django-registration.googlecode.com/files/registration-0.1.tar.gz
 
-* First packaged version using distutils.
+- First packaged version using distutils.
 
-* Added docs/ directory and overview.
+- Added docs/ directory and overview.

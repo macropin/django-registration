@@ -280,8 +280,8 @@ class RegistrationManager(models.Manager):
                 if profile.activation_key_expired():
                     user = profile.user
                     logger.warning('Deleting expired Registration profile {} and user {}.'.format(profile, user))
-                    profile.delete()
                     try:
+                        profile.delete()
                         user.delete()
                     except (models.ProtectedError, models.RestrictedError) as e:
                         logger.error('Deletion of user {} is prevented: {}'.format(user, e))
