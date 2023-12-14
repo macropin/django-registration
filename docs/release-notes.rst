@@ -3,5 +3,5 @@
 Release notes
 =============
 
-The |version| release of |project| supports Python 3.7, 3.8, 3.9, 3.10 and
-Django 3.1, 3.2, 4.0, and 4.1.
+The |version| release of |project| supports Python 3.8, 3.9, 3.10, 3.11, 3.12
+and Django 4.2 and 5.0

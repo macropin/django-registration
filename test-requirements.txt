@@ -1,6 +1,7 @@
 flake8
 coveralls
 isort==4.3.21
+setuptools
 tox
 invoke
 docutils
