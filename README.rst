@@ -23,6 +23,8 @@
 
 .. image:: https://img.shields.io/pypi/pyversions/django-registration-redux.svg
     :target: https://pypi.python.org/pypi/django-registration-redux
+.. image:: https://img.shields.io/badge/_4.2_|_5.0-blue?color=0C4B33&label=django&logo=django&logoColor=white
+    :target: https://github.com/django/django
 
 If you have issues with the "django-registration-redux" package then please `raise them here`_.
 
