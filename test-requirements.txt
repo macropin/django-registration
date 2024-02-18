@@ -7,3 +7,4 @@ invoke
 docutils
 mock
 pytest-django
+tox-gh-actions
