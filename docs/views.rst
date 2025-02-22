@@ -108,8 +108,8 @@ implement whatever workflow is required.
 
 .. class:: ResendActivationView
 
-   A subclass of Django's FormView`
-   <https://docs.djangoproject.com/en/1.11/ref/class-based-views/generic-editing/#formview>`_
+   A subclass of Django's FormView
+   `<https://docs.djangoproject.com/en/dev/ref/class-based-views/generic-editing/#formview>`_
    which provides support for resending an activation email to a user.
 
    Useful places to override or customize on an ``ResendActivationView``
