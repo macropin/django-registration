@@ -4,7 +4,7 @@ isort==4.3.21
 setuptools
 tox
 invoke
-docutils
+docutils==0.20.1
 mock
 pytest-django
 tox-gh-actions
